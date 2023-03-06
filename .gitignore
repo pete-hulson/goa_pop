@@ -1,4 +1,36 @@
+<<<<<<< HEAD
+*.p0*
+*.p1*
+*.b0*
+*.b1*
+*.r0*
+*.r1*
+*.std
+*.htp
+*.eva
+*.tds
+*.bar
+*.cov
+*.dep
+*.hes
+*.rpt
+*.cpp
+*.log
+*.obj
+*.tmp
+*.ecm
+*.mc2
+*.mcm
+*.hst
+*.psv
+*.exe
+*.bat
+\.Rhistory
+*\.Rproj
+.Rproj.user
+=======
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
+>>>>>>> 05529f557f6e5966840907c17194b53353e0538e
