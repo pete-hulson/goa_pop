@@ -28,9 +28,8 @@
 \.Rhistory
 *\.Rproj
 .Rproj.user
-=======
-.Rproj.user
 .Rhistory
 .RData
 .Ruserdata
->>>>>>> 05529f557f6e5966840907c17194b53353e0538e
+raw\fsh_catch_data.csv
+raw\obs_catch_data.csv
