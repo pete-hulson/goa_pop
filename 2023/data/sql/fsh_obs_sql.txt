@@ -1,0 +1,18 @@
+<SQL>
+SELECT *
+FROM (
+  SELECT
+    "LHS"."YEAR" AS "year",
+    "LHS"."HAUL_DATE" AS "haul_date",
+    "SPECIES" AS "species",
+    "FMP_SUBAREA" AS "fmp_subarea",
+    "GEAR_TYPE" AS "gear_type",
+    "EXTRAPOLATED_WEIGHT" AS "extrapolated_weight"
+  FROM (norpac.debriefed_spcomp_mv) "LHS"
+  LEFT JOIN (norpac.debriefed_haul_mv) "RHS"
+    ON ("LHS"."JOIN_KEY" = "RHS"."JOIN_KEY")
+) "q01"
+WHERE
+  ("year" >= (2023.0 - 3.0) AND "year" <= (2023.0 - 1.0)) AND
+  ("species" IN (301.0)) AND
+  ("fmp_subarea" IN ('WG', 'CG', 'WY', 'EY', 'SE'))

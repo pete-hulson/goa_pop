@@ -1,0 +1,19 @@
+<SQL>
+SELECT
+  "YEAR" AS "year",
+  "PERFORMANCE" AS "performance",
+  "SPECIMEN_TYPE" AS "specimen_type",
+  "SPECIES" AS "species",
+  "FMP_GEAR" AS "fmp_gear",
+  "FMP_AREA" AS "fmp_area",
+  "FMP_SUBAREA" AS "fmp_subarea",
+  "AGE" AS "age",
+  "LENGTH" AS "length",
+  "WEIGHT" AS "weight"
+FROM (norpac.debriefed_age_mv) "q01"
+WHERE
+  ("YEAR" <= 2023.0 AND "YEAR" > 0.0) AND
+  ("FMP_SUBAREA" IN ('WG', 'CG', 'WY', 'EY', 'SE')) AND
+  ("SPECIES" IN (301.0)) AND
+  (NOT(("AGE" IS NULL)))
+ORDER BY "year"
