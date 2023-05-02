@@ -31,5 +31,4 @@
 .Rhistory
 .RData
 .Ruserdata
-raw\fsh_catch_data.csv
-raw\obs_catch_data.csv
+*raw\fsh_catch_data.csv
