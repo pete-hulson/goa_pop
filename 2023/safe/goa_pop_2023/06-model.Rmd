@@ -3,12 +3,13 @@
 ## General Model Structure
 Prior to 2001, the stock assessment was based on an age-structured model using an early FORTRAN version of the stock synthesis framework (Methot 1990). Since then it was modified and written in to AD Model Builder software (see Fournier et al. 2012 for recent reference) as described in Courtney et al. (2007). The population dynamics, with parameter descriptions and notation are shown in Table 9-11. The formulae to estimate the observed data by the POP assessment are shown in Table 9-12. Finally, the likelihood and penalty functions used to optimize the POP assessment are shown in Table 9-13.
 Since its initial adaptation in 2001, the models’ attributes have been explored and changes have been made to the template to adapt to POP and other species. The following changes have been adopted within the POP assessment since the initial model in 2001:
-•	2003: Size to age matrix added for the 1960s and 1970s to adjust for density-dependent growth, natural mortality and bottom trawl survey catchability estimated within model
-•	2009: Fishery selectivity estimated for three time periods describing the transition from a foreign to domestic fishery, MCMC projections used with a pre-specified proportion of ABC for annual catch
-•	2014: Maturity at age estimated conditionally with addition of new maturity data
-•	2015: Extended ageing error matrix adopted to improve fit to plus age group and adjacent age classes
-•	2017: Length bins for fishery length composition data set at 1cm, removed 1984 and 1987 trawl survey data, time block added to fishery selectivity starting in 2007 to coincide with the Central GOA rockfish program
-•	2020: Fishery age composition data constructed with age-length key, prior for bottom trawl catchability set at 1.15 (Jones et al. 2021), and prior for natural mortality set at 0.0614 (Hamel 2015)
+
+-	2003: Size to age matrix added for the 1960s and 1970s to adjust for density-dependent growth, natural mortality and bottom trawl survey catchability estimated within model
+- 2009: Fishery selectivity estimated for three time periods describing the transition from a foreign to domestic fishery, MCMC projections used with a pre-specified proportion of ABC for annual catch
+- 2014: Maturity at age estimated conditionally with addition of new maturity data
+- 2015: Extended ageing error matrix adopted to improve fit to plus age group and adjacent age classes
+- 2017: Length bins for fishery length composition data set at 1cm, removed 1984 and 1987 trawl survey data, time block added to fishery selectivity starting in 2007 to coincide with the Central GOA rockfish program
+- 2020: Fishery age composition data constructed with age-length key, prior for bottom trawl catchability set at 1.15 (Jones et al. 2021), and prior for natural mortality set at 0.0614 (Hamel 2015)
 
 ## Description of Alternative Models
 
