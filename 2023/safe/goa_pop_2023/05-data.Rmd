@@ -1,12 +1,6 @@
 # Data
 
-(If the data for any particular component described here are so voluminous that the corresponding tables would comprise more than 2 pages, the tables may be placed on an ftp site referenced in the chapter.)
-For Tiers 1-3, insert a text table summarizing the data used in the assessment model (source, type, years included). 
-Data which should be presented as time series (starting no later than 1977, if possible):
-The following is a typical example:
-
-
-The following table summarizes the data used in the stock assessment model for northern rockfish (bold denotes new data for this assessment):
+The following table summarizes the data used for this assessment (bold font denotes new data to this year’s assessment):
 
 ```{r}
 
@@ -38,24 +32,38 @@ data.frame(Source = c(rep("NMFS Groundfish survey", 2),
 
 ### Catch
 
-Catch as used in the model (by area and gear if that is how it is used in the model). 
-This table may omitted if this table simply duplicates the catch table shown under “Management units/measures”).
-In an appendix, present removals from sources other than those that are included in the Alaska Region’s official estimate of catch (e.g., removals due to scientific surveys, subsistence fishing, recreational fishing, fisheries managed under other FMPs.)  
+Catches ranged from 2,500 t to 350,000 t since 1961. The detailed catch information for POP is listed in Table 9-1 and annual summaries shown graphically in Figure 9-1 (these annual values are used in the assessment model). Additional research and non-commercial catches (excluded from the directed fishery analysis) have been generally less than 100 t annually and are presented (as required) in Appendix 9-A.
 
 ### Age and Size Composition
 
-Catch at age or catch at length (including sample sizes), as appropriate
+Observers aboard fishing vessels and at onshore processing facilities have provided data on size and age composition of the commercial catch of POP. Ages were determined from the break-and-burn method (Chilton and Beamish 1982). Table 9-7 summarizes the fishery length compositions from the most recent 10 years, Table 9-8 summarizes age compositions for the fishery, and Figures 9-2 and 9-3 show the distributions graphically for fishery age and length composition data fit by the assessment. The age compositions for the fishery prior to 2004 show strong 1986 and 1987 year classes. After 2004 the fishery age composition data show the presence of several relatively strong year classes including the 1993, 1994, and 1998 year classes. Each of these year classes, with the exception of the 1993 and 1994 year classes, have also been identified in the trawl survey age composition data. 
+Fishery length composition is available from the early 1960s to present (Figure 9-3 and Table 9-7). Due to the availability of age data from both the fishery and trawl survey we do not fit the recent fishery length composition, but rather use the historical fishery length composition data shown in Figure 9-3. We note that the fishery length samples are used to determine the fishery age composition through the use of an age-length key, which weights the age samples from the fishery by the length samples. Fishery length composition data prior to the mid-1970s indicates that the mean length of POP was smaller than after the mid-1970s. We hypothesize that rather than year classes moving into the population in these years (and thus reducing the mean length) that there were differences in growth, thus, we use a different size age transition matrix in these years (as described in the Parameters Estimated Outside the Assessment Model section below). In general, because of the selectivity of the fishery at older ages, there is no strong recruitment signal in the fishery length composition data.
+
 
 ## Survey
 
 ### Biomass Estimates from Trawl Surveys
+Bottom trawl surveys were conducted on a triennial basis in the GOA in 1984, 1987, 1990, 1993, 1996, and a biennial survey schedule has been used since the 1999 survey. The surveys provide much information on POP, including an abundance index, age composition, and growth characteristics. The surveys are theoretically an estimate of absolute biomass, but we treat them as a relative index in the stock assessment.  The surveys covered typically cover all of the NMFS areas of the GOA out to a depth of 500 m. In some years the surveys extended to 1,000 m and in the 2001 the survey covered only the central and western GOA (budget limitations affected the ability to cover the Eastern GOA). Regional and Gulf-wide biomass estimates (with corresponding coefficients of variation in total biomass) for POP are shown in Table 9-9. Gulf-wide biomass estimates for with 95% confidence intervals are shown in Figure 9-4.
+Biomass estimates of POP were relatively low in 1990, increased markedly in both 1993 and 1996, and remained around the 1996 value in 1999 and 2001 (Table 9-9 and Figure 9-4). These surveys were characterized with relatively larger uncertainty with coefficients of variation (CV) greater than 20% (reaching a maximum in 1999 of 53%). Large catches of an aggregated species like POP in just a few individual hauls can greatly influence biomass estimates and are a source of much variability. Biomass estimates of POP decreased in 2003, then increased in 2005 and remained relatively stable until 2011, indicating that the biomass in 2003 may have been anomalously small. In 2013 biomass estimates increased markedly and have remained above one million tons since. The largest biomass estimate of the time series occurred in 2017. Since the 2003 survey biomass estimates of POP have been associated with relatively small uncertainty, with CVs below 20% in all but one year (2017, with a CV of 22%). This reduced uncertainty is because POP continue to be more uniformly distributed than in the past, as indicated by increasing proportion of tows that catch POP in the survey as well as declining uncertainty in the trawl survey catch per unit effort (CPUE, Figure 9-5).
+The 2021 survey biomass estimate is the second largest on record and is 22% larger than the 2019 biomass estimate. Regionally, both the Central and Western GOA increased while the estimate for the Eastern GOA declined from 2019 (Table 9-9). The general distribution of CPUE in the 2021 survey were comparable to 2017 and 2019 in the Central and Eastern GOA (Figure 9-5). The most notable difference in POP CPUE distribution in 2021 compared to 2019 and 2017 is in the far western part of the Western GOA.
 
-Survey biomass estimates, including at least one measure of sampling variability such as standard error, CV, or 95% confidence interval (for stocks managed as complexes, be sure to report the sampling variability for the complex-wide survey biomass estimate, not just the individual stocks). 
-Complex-wide variance could be computed simply by summing the variances from the survey estimates.
 
 ### Age and Size Composition 
 
-Survey numbers at age or numbers at length (including sample sizes), as appropriate
+Ages were determined from the break-and-burn method (Chilton and Beamish 1982). The survey age compositions from 1990-2017 surveys showed that although the fish ranged in age up to 84 years, most of the population was relatively young; mean survey age has increased from 9.2 years in 1990 to 15.6 years in 2017 (Table 9-10). The first four surveys identified relatively strong year classes in the mid-1980s (1984-1988) and also showed a period of very weak year classes during the 1970s to mid-19080s (Figure 9-6). The weak year classes through this period of time may have delayed recovery of POP populations after they were depleted by the foreign fishery. Since the 1999 survey the age compositions have indicated several stronger than average year classes. Starting with the 2003 and through the 2009 survey the age composition data indicated relatively strong year classes in 1998, 2000, and 2002. Since the 2009 survey the age composition data has distinguished relatively strong year classes in 2006, 2008, and 2010. The 2017 survey age composition indicates that the 2007 year class could also be relatively strong and the plus age group of 25 and older has increased to 0.15 (from an average of 0.04 prior to 2011). The 2019 survey age composition indicates the possible emergence of a strong 2016 year class. These relatively strong year classes since 1998 may be contributing to the increase in survey biomass observed since 2013.
+Gulf-wide population size compositions for POP are shown in Figure 9-7. These size composition data identify several year classes that have moved through the population since 2001. The 2001 and 2009 survey length compositions indicated relatively strong year classes in 1998 and 2006 (which were ~17-21 cm in these surveys). The 2006 year class was again relatively strong in the 2011 data (which would have been ~24-28 cm) and both the 1998 and 2006 year classes were corroborated with the survey age composition data. The 2019 survey length compositions indicated a mode at ~17-21 cm (age-3), which would be the 2016 year class. The most recent length composition data from the 2021 survey detects this mode but it is not as strong as that seen in 2019. Survey size data are used in constructing the age-length transition matrix, but not used as data to be fitted in the stock assessment model.
 
-### Maturity Data
+### Summer Acoustic-Trawl Survey
+
+Acoustic-trawl (AT) surveys designed to evaluate walleye pollock abundance in the Gulf of Alaska have been conducted by the Alaska Fisheries Science Center (AFSC) in summer months (June – August) on odd years from 2013 to 2021 aboard the NOAA ship Oscar Dyson (Jones et al. 2014, Jones et al. 2017, Jones et al. 2019). POP are routinely encountered during these surveys and abundance estimates for POP are available for the surveyed area. The surveys cover the Gulf of Alaska continental shelf and shelfbreak from depths of 50 to 1000 m, including associated bays and troughs, and extend from the continental shelf south of the Islands of Four Mountains in the Aleutian Islands eastward to Yakutat Bay. The surveys consist of widely-spaced (25 nmi) parallel transects along the shelf, and more closely spaced transects (1-15 nmi) in troughs, bays, and Shelikof Strait. Mid-water and bottom trawls are used to identify species and size of acoustic targets. 
+Surveys prior to 2019 used a single length distribution of POP caught in combined hauls to scale the acoustic data to abundance and biomass. Starting in 2019, the length distribution from the haul nearest to the acoustic signal was used for scaling. A generalized physoclist target strength (TS) to length (L) relationship (TS = 20Log10(L)-67.5; Foote 1987) was used to scale acoustic signal to length. More specific computational details of the AT methods for abundance estimation can be found in Jones et al. 2019.
+The summer Gulf AT survey data is not currently used in the assessment model, but biomass estimates are available since the 2013 survey. We will continue to report these estimates in the POP SAFE as current research is exploring the potential for including this information into the assessment model. The following table includes the biomass estimates provided by the AT survey:
+
+Year 	2013	2015	2017	2019	2021
+Biomass (mt)	262,889	438,545	172,388	144,045	277,941
+
+Figure 9-8 shows the distribution of POP within the AT survey for the most recent three surveys. Compared to 2019, the biomass of POP was more spread out across the transects, with a large estimate south of Kodiak Island (Figure 9-8).
+
+
+ 
 
