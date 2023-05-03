@@ -59,8 +59,10 @@ Acoustic-trawl (AT) surveys designed to evaluate walleye pollock abundance in th
 Surveys prior to 2019 used a single length distribution of POP caught in combined hauls to scale the acoustic data to abundance and biomass. Starting in 2019, the length distribution from the haul nearest to the acoustic signal was used for scaling. A generalized physoclist target strength (TS) to length (L) relationship (TS = 20Log10(L)-67.5; Foote 1987) was used to scale acoustic signal to length. More specific computational details of the AT methods for abundance estimation can be found in Jones et al. 2019.
 The summer Gulf AT survey data is not currently used in the assessment model, but biomass estimates are available since the 2013 survey. We will continue to report these estimates in the POP SAFE as current research is exploring the potential for including this information into the assessment model. The following table includes the biomass estimates provided by the AT survey:
 
-Year 	2013	2015	2017	2019	2021
-Biomass (mt)	262,889	438,545	172,388	144,045	277,941
+Year    2013    2015    2017    2019    2021 
+----    ----    ----    ----    ----    ----
+Biomass(mt)	262,889	438,545	172,388	144,045	277,941
+  
 
 Figure 9-8 shows the distribution of POP within the AT survey for the most recent three surveys. Compared to 2019, the biomass of POP was more spread out across the transects, with a large estimate south of Kodiak Island (Figure 9-8).
 
