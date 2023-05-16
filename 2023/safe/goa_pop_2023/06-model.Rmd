@@ -57,11 +57,15 @@ Maturity-at-age is modeled with the logistic function conditionally within the a
 
 Other parameters estimated conditionally include, but are not limited to: mean recruitment, fishing mortality, and spawners per recruit levels. The numbers of estimated parameters for the recommended model are shown below. Other derived parameters are described in Box 1. 
 
-
-Parameter name	Symbol	Number
-Natural mortality	M	1
-Catchability	q	1
-Log-mean-recruitment	μ_r	1
+Parameter   Symbol     Number    
+------- ------ ---------- 
+Natural mortality M        1         
+    Catchability 123        123        
+      Log-mean-recruitment 1            1         
+      
+ 
+	q	1
+	μ_r	1
 Recruitment variability	σ_r	1
 Spawners-per-recruit levels	F_(35%),F_(40%),F_(100%)  	3
 Recruitment deviations	ε_y^r	87

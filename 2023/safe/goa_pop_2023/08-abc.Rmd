@@ -1,31 +1,26 @@
 ## Harvest recommendations
-
-(Items in this section pertain to the authors’ recommended model or approach. 
-If the structure of the recommended model or approach differs substantively from the model or approach most recently accepted by the SSC after reviewing either last year’s final SAFE report or the current year’s preliminary SAFE report, a set of parallel results for the previously accepted model or approach should be included in an attachment.)
-
+ 
 
 ### Amendment 56 Reference Points
-
 Amendment 56 to the GOA Groundfish Fishery Management Plan defines the “overfishing level”
-(OFL), the fishing mortality rate used to set OFL ($F_{OFL}$), the maximum permissible ABC, and the fishing mortality rate used to set the maximum permissible ABC. 
-The fishing mortality rate used to set ABC ($F_{ABC}$) may be less than this maximum permissible level, but not greater. 
-Because reliable estimates of reference points related to maximum sustainable yield (MSY) are currently not available but reliable estimates of reference points related to spawning per recruit are available, Northern rockfish in the GOA are managed under Tier 3 of Amendment 56. 
-Tier 3 uses the following reference points: $B_{40\%}$, equal to 40% of the equilibrium spawning biomass that would be obtained in the absence of fishing; $F_{35\%}$,,equal to the fishing mortality rate that reduces the equilibrium level of spawning per recruit to 35% of the level that would be obtained in the absence of fishing; and $F_{40\%}$, equal to the fishing mortality rate that reduces the equilibrium level of spawning per recruit to 40% of the level that would be obtained in the absence of fishing.
-Estimation of the $B_{40\%}$ reference point requires an assumption regarding the equilibrium level of recruitment. 
-In this assessment, it is assumed that the equilibrium level of recruitment is equal to the average of age-2 recruitments between 1979 and `r year - 2`. 
-Because of uncertainty in very recent recruitment estimates, we lag 2 years behind model estimates in our projection. 
-Other useful biomass reference points which can be calculated using this assumption are $B_{100\%}$ and $B_{35\%}$, defined analogously to $B_{40\%}$. 
-The `r year` estimates of these reference points are:
+(OFL), the fishing mortality rate used to set OFL (FOFL), the maximum permissible ABC, and the fishing mortality rate used to set the maximum permissible ABC. The fishing mortality rate used to set ABC (FABC) may be less than this maximum permissible level, but not greater. Because reliable estimates of reference points related to maximum sustainable yield (MSY) are currently not available but reliable estimates of reference points related to spawning per recruit are available, POP in the GOA are managed under Tier 3 of Amendment 56. Tier 3 uses the following reference points: $B_{40}$%, equal to 40% of the equilibrium spawning biomass that would be obtained in the absence of fishing; $F_{35}$%,,equal to the fishing mortality rate that reduces the equilibrium level of spawning per recruit to 35% of the level that would be obtained in the absence of fishing; and $F_{40}$%, equal to the fishing mortality rate that reduces the equilibrium level of spawning per recruit to 40% of the level that would be obtained in the absence of fishing.
 
-**TABLE HERE**
+Estimation of the $B_{40}$% reference point requires an assumption regarding the equilibrium level of recruitment. In this assessment, it is assumed that the equilibrium level of recruitment is equal to the average of age-2 recruitments between 1979 and 2019 (i.e., the 1977 – 2017 year classes). Because of uncertainty in very recent recruitment estimates, we lag 2 years behind model estimates in our projection. Other useful biomass reference points which can be calculated using this assumption are $B_{100}$% and $B_{35}$%, defined analogously to $B_{40}$%. The 2022 estimates of these reference points are: 
+
+
+ 
+|$B_{100}$%  |	331,917|
+|$B_{40}$%	 | 132,767|
+|$B_{35}$%	 | 116,171|
+|$F_{40}$% | 0.10|
+|$F_{35}$%	 | 0.12|
+
+
 
 
 ### Specification of OFL and Maximum Permissible ABC
 
-Female spawning biomass for `r year` is estimated at 40,462 t. 
-This is above the $B_{40\%}$ value of 33,933 t. 
-Under Amendment 56, Tier 3, the maximum permissible fishing mortality for ABC is $F_{40\%}$ and fishing mortality for OFL is $F_{35\%}$. 
-Applying these fishing mortality rates for `r year`, yields the following ABC and OFL:
+Female spawning biomass for 2022 is estimated at 216,635 t. This is above the B40% value of 132,767 t. Under Amendment 56, Tier 3, the maximum permissible fishing mortality for ABC is F40% and fishing mortality for OFL is F35%. Applying these fishing mortality rates for 2022, yields the following ABC and OFL:
 
 **TABLE HERE**
 
