@@ -1,0 +1,26 @@
+<SQL>
+SELECT
+  "SURVEY" AS "survey",
+  "YEAR" AS "year",
+  "REGULATORY_AREA_NAME" AS "regulatory_area_name",
+  "SPECIES_CODE" AS "species_code",
+  "HAUL_COUNT" AS "haul_count",
+  "CATCH_COUNT" AS "catch_count",
+  "MEAN_WGT_CPUE" AS "mean_wgt_cpue",
+  "VAR_WGT_CPUE" AS "var_wgt_cpue",
+  "MEAN_NUM_CPUE" AS "mean_num_cpue",
+  "VAR_NUM_CPUE" AS "var_num_cpue",
+  "AREA_BIOMASS" AS "area_biomass",
+  "BIOMASS_VAR" AS "biomass_var",
+  "MIN_BIOMASS" AS "min_biomass",
+  "MAX_BIOMASS" AS "max_biomass",
+  "AREA_POP" AS "area_pop",
+  "POP_VAR" AS "pop_var",
+  "MIN_POP" AS "min_pop",
+  "MAX_POP" AS "max_pop",
+  "AKFIN_LOAD_DATE" AS "akfin_load_date"
+FROM (afsc.race_biomassareaaigoa) "q01"
+WHERE
+  ("YEAR" <= 2023.0) AND
+  ("SPECIES_CODE" IN (30060.0)) AND
+  ("SURVEY" = 'GOA')

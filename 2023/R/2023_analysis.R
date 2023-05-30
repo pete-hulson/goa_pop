@@ -24,6 +24,7 @@ species = "POP"
 # setup_folders(year)
 
 # query data ----
+## you must be on the VPN for this to work
 goa_pop(year)
 
 # clean data ----

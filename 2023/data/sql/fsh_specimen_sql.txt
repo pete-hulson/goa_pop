@@ -3,6 +3,8 @@ SELECT
   "YEAR" AS "year",
   "PERFORMANCE" AS "performance",
   "SPECIMEN_TYPE" AS "specimen_type",
+  "HAUL_JOIN" AS "haul_join",
+  "PORT_JOIN" AS "port_join",
   "SPECIES" AS "species",
   "FMP_GEAR" AS "fmp_gear",
   "FMP_AREA" AS "fmp_area",
