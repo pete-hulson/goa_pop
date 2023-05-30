@@ -23,7 +23,7 @@ cbind(catch_old = catches_old, Yr = 1961:2021) %>%
   merge(., catches_91, by = 'Yr', all = T) %>%
   mutate(seas = 1, catch_use = ifelse(Yr <1991, catch_old, catch), fleet = 1, cv = 0.01) %>% 
   select(Yr, seas, fleet, catch = catch_use, cv) %>%
-  write.csv(.,here('2023','data','for_ss',paste0(Sys.Date(),'-catches.csv')))
+  write.csv(.,here('2023','data','for_ss',paste0(Sys.Date(),'-catches.csv')), row.names = FALSE)
 
 
 ## survey obs ----
@@ -38,5 +38,5 @@ trawl %>%
   select(Yr = year, seas = 7, fleet, cpue, cv) %>%
   arrange(Yr) %>%
   filter(Yr >= 1990) %>%
-  write.csv(.,here('2023','data','for_ss',paste0(Sys.Date(),'-cpue.csv')))
+  write.csv(.,here('2023','data','for_ss',paste0(Sys.Date(),'-cpue.csv')), row.names = FALSE)
 
