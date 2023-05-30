@@ -10,14 +10,14 @@
 #V3.30.17.00;_2021_06_11;_safe;_Stock_Synthesis_by_Richard_Methot_(NOAA)_using_ADMB_12.3
 #Stock Synthesis (SS) is a work of the U.S. Government and is not subject to copyright protection in the United States.
 #Foreign copyrights may apply. See copyright.txt for more information.
-1978 #_StartYr
-2022 #_EndYr
+1961 #_StartYr
+2023 #_EndYr
 1 #_Nseas
  12 #_months/season
 2 #_Nsubseasons (even number, minimum is 2)
-1 #_spawn_month
+5 #_spawn_month
 2 #_Ngenders: 1, 2, -1  (use -1 for 1 sex setup with SSB multiplied by female_frac parameter)
-29 #_Nages=accumulator age, first age is always age 0
+28 #_Nages=accumulator age, first age is always age 0
 1 #_Nareas
 2 #_Nfleets (including surveys)
 #_fleet_type: 1=catch fleet; 2=bycatch only fleet; 3=survey; 4=ignore 
@@ -148,8 +148,8 @@
 -1 1e-05 1 0 0 0 1 #_fleet:2_Survey
 # sex codes:  0=combined; 1=use female only; 2=use male only; 3=use both as joint sexxlength distribution
 # partition codes:  (0=combined; 1=discard; 2=retained
-33 #_N_LengthBins; then enter lower edge of each length bin
- 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70
+30 #_N_LengthBins; then enter lower edge of each length bin
+ 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45
 #_yr month fleet sex part Nsamp datavector(female-male)
 1982	7	1	3	0	35	0	0	0	0	0	0.000921384	0.000606063	0.001722024	0.00117944	0.004944678	0.00888167	0.017713059	0.046256975	0.070617637	0.081706601	0.089199685	0.11506525	0.097972178	0.054859874	0.011551253	0.001055157	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.000246532	0.000793084	0.00164278	0.010448411	0.027853097	0.060654448	0.107860234	0.119567193	0.052071395	0.012232853	0.001808662	0.000398546	0.000169839	0	0	0	0	0	0	0	0	0	0	0	0	0	0
 1983	7	-1	3	0	6	0	0	0	0	0	0	0	0	0	0.004433345	0.022065924	0.041915002	0.055566109	0.096761931	0.094390967	0.076109875	0.041341589	0.031494109	0.012367044	0.002437082	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.001553659	0.000532146	0.005103581	0.023574568	0.087432633	0.144013324	0.139696271	0.086770515	0.02069074	0.004602873	0.002623062	0.00093114	0.002746551	0	0	0	0.000845961	0	0	0	0	0	0	0	0	0	0
