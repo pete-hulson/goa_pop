@@ -30,13 +30,16 @@ cbind(catch_old = catches_old, Yr = 1961:2021) %>%
 ## there is a singleLL survey observation in 1999 in an observed mt of 1000 (?) and SE 100
 trawl <- read.csv(here('2023','data','raw','goa_total_bts_biomass_data.csv'))
 ## back out CV given lwr and upr are 1.96 * se
-trawl %>%  
-  mutate(fleet = 2, 
+trawl0 <- trawl %>%  
+  mutate(fleet = 2, seas = 7,
          cpue = round(total_biomass),
          se = (total_biomass-min_biomass)/1.96,
          cv = round(se/total_biomass,2)) %>%
-  select(Yr = year, seas = 7, fleet, cpue, cv) %>%
+  select(Yr = year, seas , fleet, cpue, cv) %>%
   arrange(Yr) %>%
-  filter(Yr >= 1990) %>%
-  write.csv(.,here('2023','data','for_ss',paste0(Sys.Date(),'-cpue.csv')), row.names = FALSE)
+  filter(Yr >= 1990) 
+
+rnorm(1, mean = mean(trawl0$cpue), sd = 370950.77 ) ## placeholder 2023 value
+
+write.csv(trawl0,here('2023','data','for_ss',paste0(Sys.Date(),'-cpue.csv')), row.names = FALSE)
 
