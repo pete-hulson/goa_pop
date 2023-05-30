@@ -6,7 +6,9 @@
 
 # load ----
 # devtools::unload("afscassess")
+# devtools::install_github("afsc-assessments/afscassess")
 library(afscdata)
+# devtools::install_github("BenWilliams-NOAA/afscassess")
 library(afscassess)
 
 # previous accepted model
