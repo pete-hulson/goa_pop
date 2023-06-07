@@ -1,0 +1,42 @@
+<SQL>
+SELECT *
+FROM (
+  SELECT
+    "LHS"."RECORD_TYPE" AS "record_type",
+    "LHS"."JOIN_KEY" AS "join_key",
+    "SPECIES_KEY" AS "species_key",
+    "SEX_KEY" AS "sex_key",
+    "LHS"."T_TABLE" AS "t_table",
+    "LHS"."CRUISE" AS "cruise",
+    "LHS"."PERMIT" AS "permit",
+    "LHS"."HAUL_SEQ" AS "haul_seq",
+    "LHS"."HAUL_JOIN" AS "haul_join",
+    "LHS"."VESSEL" AS "vessel",
+    "LHS"."HAUL_DATE" AS "haul_date",
+    "LHS"."HAUL" AS "haul",
+    "SEX" AS "sex",
+    "SPECIES" AS "species",
+    "SPECIES_NAME" AS "species_name",
+    "SAMPLE_TYPE" AS "sample_type",
+    "SAMPLE_NUMBER" AS "sample_number",
+    "SAMPLE_SIZE" AS "sample_size",
+    "SAMPLE_WEIGHT" AS "sample_weight",
+    "EXTRAPOLATED_WEIGHT" AS "extrapolated_weight",
+    "EXTRAPOLATED_NUMBER" AS "extrapolated_number",
+    "PERCENT_RETAINED" AS "percent_retained",
+    "LHS"."YEAR" AS "year",
+    "LHS"."DATE_OF_ENTRY" AS "date_of_entry",
+    "LHS"."AKFIN_LOAD_DATE" AS "akfin_load_date",
+    "AKR_SPECIES_CODE" AS "akr_species_code",
+    "LHS"."GEAR_MODIFIER_DESCRIPTION" AS "gear_modifier_description",
+    "LHS"."AKFIN_VDATE" AS "akfin_vdate",
+    "FMP_SUBAREA" AS "fmp_subarea",
+    "GEAR_TYPE" AS "gear_type"
+  FROM (norpac.debriefed_spcomp_mv) "LHS"
+  LEFT JOIN (norpac.debriefed_haul_mv) "RHS"
+    ON ("LHS"."JOIN_KEY" = "RHS"."JOIN_KEY")
+) "q01"
+WHERE
+  ("year" <= 2023.0) AND
+  ("species" IN (301.0)) AND
+  ("fmp_subarea" IN ('WG', 'CG', 'WY', 'EY', 'SE'))
