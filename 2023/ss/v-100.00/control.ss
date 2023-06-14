@@ -14,8 +14,8 @@
 1 # not yet implemented; Future usage: Spawner-Recruitment: 1=global; 2=by area
 1 #  number of recruitment settlement assignments 
 0 # unused option
-#GPattern month  area  age (for each settlement assignment)
- 5 1 1 0
+#GPattern month  area  age (for each settlement assignment) !REVISIT
+ 1 1 1 1
 #
 #_Cond 0 # N_movement_definitions goes here if Nareas > 1
 #_Cond 1.0 # first age that moves (real age at begin of season, not integer) also cond on do_migration>0
