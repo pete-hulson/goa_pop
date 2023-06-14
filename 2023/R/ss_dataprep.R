@@ -138,7 +138,7 @@ scan(here('2023','base','goa_pop_2021.dat'),
          Nsamp = fsh_len2$nsamples_fsh_len) %>%
   select(yr, month, fleet, sex, part, Nsamp, 
          everything()) %>%
-  write.csv(.,here('2023','data','for_ss',paste0(Sys.Date(),'-fishery_ages.csv')), row.names = FALSE)
+  write.csv(.,here('2023','data','for_ss',paste0(Sys.Date(),'-fishery_lengths.csv')), row.names = FALSE)
 
 
 # fsh_len0 <- read.csv(here('2023','data','raw','fsh_length_data.csv'))
@@ -213,10 +213,7 @@ cat(1 ,'\t#_Nareas')
 cat(2 ,'\t#_Nfleets (including surveys)')
 cat(2 ,'\t#_Nsubseasons')
 
-
- 
 cat(length(16:45),'\t#_N_LengthBins' ,  '\n', 16:45)
-
 cat(length(2:25),'\t#_N_age_bins' ,  '\n', 2:25)
 
 #* ageing error matrix ----
