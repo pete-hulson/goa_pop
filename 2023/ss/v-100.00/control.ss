@@ -213,8 +213,8 @@
 #Pattern:_42; parm=2+special+3; // cubic spline; with 2 additional param for scaling (average over bin range)
 #Age patterns entered with value >100 create Min_selage from first digit and pattern from remainder
 #_Pattern Discard Male Special
- 20 0 3 0 # 1 Fishery
- 20 0 3 0 # 2 Survey
+ 20 0 0 0 # 1 Fishery
+ 20 0 0 0 # 2 Survey
 #
 #_          LO            HI          INIT         PRIOR         PR_SD       PR_type      PHASE    env-var    use_dev   dev_mnyr   dev_mxyr     dev_PH      Block    Blk_Fxn  #  parm_name
 # 1   Fishery LenSelex
@@ -226,11 +226,6 @@
             -2            15             8           3.4             5             0         -3          0          0          0          0          0          0          0  #  Age_DblN_descend_se_Fishery(1)
            -12             5           -10          -999             5             0         -4          0          0          0          0          0          0          0  #  Age_DblN_start_logit_Fishery(1)
             -5             20          15           999             5             0         -4          0          0          0          0          0          0          0  #  Age_DblN_end_logit_Fishery(1)
-           -15            15     -0.983588             0             5             0          2          0          0          0          0          0          0          0  #  AgeSel_1Male_Peak_Fishery
-           -15            15     -0.115692             0             5             0          3          0          0          0          0          0          0          0  #  AgeSel_1Male_Ascend_Fishery
-           -15            15             0             0             5             0         -3          0          0          0          0          0          0          0  #  AgeSel_1Male_Descend_Fishery
-           -15            15             1             0             5             0         -3          0          0          0          0          0          0          0  #  AgeSel_1Male_Final_Fishery
-           -15            15             1             0             5             0         -4          0          0          0          0          0          0          0  #  AgeSel_1Male_Scale_Fishery
 # 2   Survey AgeSelex
              1            20       7.24603            11             5             0          1          0          0          0          0          0          0          0  #  Age_DblN_peak_Survey(2)
             -5            50            30            30             5             0         -3          0          0          0          0          0          0          0  #  Age_DblN_top_logit_Survey(2)
@@ -238,11 +233,6 @@
             -2            15             8           3.4             5             0         -3          0          0          0          0          0          0          0  #  Age_DblN_descend_se_Survey(2)
          -1000             5           -10          -999             5             0         -4          0          0          0          0          0          0          0  #  Age_DblN_start_logit_Survey(2)
             -5            20           15           999             5             0         -4          0          0          0          0          0          0          0  #  Age_DblN_end_logit_Survey(2)
-           -15            15     -0.671623             0             5             0          2          0          0          0          0          0          0          0  #  AgeSel_2Male_Peak_Survey
-           -15            15     -0.303925             0             5             0          2          0          0          0          0          0          0          0  #  AgeSel_2Male_Ascend_Survey
-           -15            15             0             0             5             0         -3          0          0          0          0          0          0          0  #  AgeSel_2Male_Descend_Survey
-           -15            15             0             0             5             0         -3          0          0          0          0          0          0          0  #  AgeSel_2Male_Final_Survey
-           -15            15             1             0             5             0         -4          0          0          0          0          0          0          0  #  AgeSel_2Male_Scale_Survey
 #_No_Dirichlet parameters
 #_no timevary selex parameters
 #
