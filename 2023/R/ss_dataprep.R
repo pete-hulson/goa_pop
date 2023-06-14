@@ -77,10 +77,11 @@ ggplot(fsh_age_plot, aes(x = variable, y = value )) +
   geom_bar(stat = 'identity')+
   facet_wrap(~year, ncol = 2)
 
-fsh_age3 %>% mutate(month = 7, fleet = 1, sex = 1, part = 1, ageerr = 1, Lbin_lo = -1,
+fsh_age3 %>% mutate(`2` = 0,
+                    month = 7, fleet = 1, sex = 1, part = 1, ageerr = 1, Lbin_lo = -1,
                     Lbin_hi = -1, Nsamp = fsh_age2$nsamples_fish_age) %>%
   select(yr = year, month, fleet, sex, part, ageerr, Lbin_lo, Lbin_hi, Nsamp, 
-         everything()) %>%
+         `2`,everything()) %>%
   write.csv(.,here('2023','data','for_ss',paste0(Sys.Date(),'-fishery_ages.csv')), row.names = FALSE)
 
 
@@ -110,10 +111,13 @@ ggplot(srv_age_plot, aes(x = variable, y = value )) +
   geom_bar(stat = 'identity')+
   facet_wrap(~year, ncol = 2)
 
-srv_age3 %>% mutate(month = 7, fleet = 2, sex = 1, part = 1, ageerr = 1, Lbin_lo = -1,
+srv_ages<- srv_age3 %>% mutate(month = 7, fleet = 2, sex = 1, part = 1, ageerr = 1, Lbin_lo = -1,
                     Lbin_hi = -1, Nsamp = srv_age2$nsamples_srv_age) %>%
   select(yr = year, month, fleet, sex, part, ageerr, Lbin_lo, Lbin_hi, Nsamp, 
-         everything()) %>%
+         everything()) 
+  
+  rbind(srv_ages,
+        c(-9999, rep(0, ncol(srv_ages)-1))) %>%
   write.csv(.,here('2023','data','for_ss',paste0(Sys.Date(),'-goa_bts_ages.csv')), row.names = FALSE)
 
 
@@ -129,7 +133,7 @@ fsh_len2 <- scan(here('2023','base','goa_pop_2021.dat'),
   mutate(year =fish_len_years) %>%
   select(year, nsamples_fsh_len)
 
-scan(here('2023','base','goa_pop_2021.dat'), 
+fsh_len0 <- scan(here('2023','base','goa_pop_2021.dat'), 
      skip = 170, nlines = 20) %>% 
   matrix(ncol = length(16:45)) %>%
   data.frame()%>%
@@ -137,7 +141,11 @@ scan(here('2023','base','goa_pop_2021.dat'),
   mutate(month = 7, fleet = 2, sex = 1, part = 1, 
          Nsamp = fsh_len2$nsamples_fsh_len) %>%
   select(yr, month, fleet, sex, part, Nsamp, 
-         everything()) %>%
+         everything())
+
+rbind(fsh_len0,
+      c(-9999, rep(0, ncol(fsh_len0)-1))) %>%
+
   write.csv(.,here('2023','data','for_ss',paste0(Sys.Date(),'-fishery_lengths.csv')), row.names = FALSE)
 
 
@@ -218,3 +226,6 @@ cat(length(2:25),'\t#_N_age_bins' ,  '\n', 2:25)
 
 #* ageing error matrix ----
 # the bespoke model has this hard coded. we instead need the mean bias and imprecision
+# this is a placeholder
+cat(rep(-1, length(0:28))) ## must match the poplenbins
+cat(rep(0.001, length(0:28)))
