@@ -4,8 +4,8 @@
 #_user_support_available_at:NMFS.Stock.Synthesis@noaa.gov
 #_user_info_available_at:https://vlab.noaa.gov/group/stock-synthesis
 
-StartTime: Wed Jun 14 13:12:30 2023
-EndTime: Wed Jun 14 13:12:43 2023
+StartTime: Wed Jun 14 13:20:35 2023
+EndTime: Wed Jun 14 13:20:48 2023
 This run took: 0 hours, 0 minutes, 13 seconds.
 Data_File: data.ss
 Control_File: control.ss
