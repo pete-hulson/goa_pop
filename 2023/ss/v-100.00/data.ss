@@ -11,12 +11,12 @@
 #Stock Synthesis (SS) is a work of the U.S. Government and is not subject to copyright protection in the United States.
 #Foreign copyrights may apply. See copyright.txt for more information.
 1961 #_StartYr
-2023 #_EndYr
+2021 #_EndYr
 1 #_Nseas
  12 #_months/season
 2 #_Nsubseasons (even number, minimum is 2)
 5 #_spawn_month
-2 #_Ngenders: 1, 2, -1  (use -1 for 1 sex setup with SSB multiplied by female_frac parameter)
+1 #_Ngenders: 1, 2, -1  (use -1 for 1 sex setup with SSB multiplied by female_frac parameter)
 28 #_Nages=accumulator age, first age is always age 0
 1 #_Nareas
 2 #_Nfleets (including surveys)
