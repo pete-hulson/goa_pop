@@ -192,7 +192,11 @@
 #
 24 #_N_age_bins
  2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
-0 #_N_ageerror_definitions
+2 #_N_ageerror_definitions
+ -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+ 0.322608 0.322608 0.322608 0.322608 0.619687 0.756323 0.886566 1.01885 1.15415 1.28533 1.42618 1.56013 1.69356 1.83793 1.96672 2.11447 2.22643 2.30149 2.30149 2.30149 2.30149 2.30149 2.30149 2.30149 2.30149 2.30149 2.30149 2.30149 2.30149 2.30149
+ -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+ 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001
 #_mintailcomp: upper and lower distribution for females and males separately are accumulated until exceeding this level.
 #_addtocomp:  after accumulation of tails; this value added to all bins
 #_combM+F: males and females treated as combined gender below this bin number 
