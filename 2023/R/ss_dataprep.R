@@ -3,7 +3,12 @@
 ## data was pulled using funciton in 2023_analysis.R; stored in data/raw
 require(dplyr)
 require(here)
+require(reshape2)
+require(ggplot2)
 
+theme_set(theme_minimal())
+
+## SECTION 1: RAW DATA DOWNLOAD AND PROCESSING FOR SS----
 ## catches ----
 ## these begin in 1991
 catches_new <- read.csv(here('2023','data','raw','fsh_catch_data.csv'))
@@ -43,3 +48,176 @@ rnorm(1, mean = mean(trawl0$cpue), sd = 370950.77 ) ## placeholder 2023 value
 
 write.csv(trawl0,here('2023','data','for_ss',paste0(Sys.Date(),'-cpue.csv')), row.names = FALSE)
 
+## age comps----
+#* fishery agecomps ----
+# bins 2-25
+# it looks like the sqrt(nsamples) is what gets passed to the likelihood function
+# these are in the 100s-1000s; nhauls is unused
+fsh_age0 <- read.csv(here('2023','data','raw','fsh_specimen_data.csv'))
+
+fsh_age1 <- fsh_age0 %>%
+  filter(year %in% c(1990,1998:2002,2004:2006,seq(2008,2020,2))) %>%
+  mutate(age = ifelse(age > 25,25,age)) %>% 
+  group_by(year, age) %>%
+  summarise(n =n())
+
+ 
+fsh_age2 <- fsh_age1 %>% group_by(year) %>%
+  summarise(nsamples_fish_age = sum(n)) 
+
+fsh_age3 <- merge(fsh_age2, fsh_age1, by = 'year') %>%
+  mutate(freq = n/nsamples_fish_age) %>%
+  tidyr::pivot_wider(., id_cols = year, 
+                     names_from = age, values_from = freq,
+                     values_fill = 0) 
+
+fsh_age_plot <- melt(fsh_age3, id = 'year')
+
+ggplot(fsh_age_plot, aes(x = variable, y = value )) +
+  geom_bar(stat = 'identity')+
+  facet_wrap(~year, ncol = 2)
+
+fsh_age3 %>% mutate(month = 7, fleet = 1, sex = 1, part = 1, ageerr = 1, Lbin_lo = -1,
+                    Lbin_hi = -1, Nsamp = fsh_age2$nsamples_fish_age) %>%
+  select(yr = year, month, fleet, sex, part, ageerr, Lbin_lo, Lbin_hi, Nsamp, 
+         everything()) %>%
+  write.csv(.,here('2023','data','for_ss',paste0(Sys.Date(),'-fishery_ages.csv')), row.names = FALSE)
+
+
+#* survey agecomps----
+srv_age0 <- read.csv(here('2023','data','raw','bts_specimen_data.csv'))
+srv_age1 <- srv_age0 %>%
+  filter(year %in% c(1990, 1993, 1996 ,1999 ,2003, 2005 ,2007, 2009 ,
+                     2011 ,2013, 2015, 2017 ,2019)) %>%
+  filter(!is.na(age)) %>%
+  mutate(age = ifelse(age > 25,25,age)) %>% 
+  mutate(age = ifelse(age<2,2,age)) %>% 
+  group_by(year, age) %>%
+  summarise(n =n())
+
+srv_age2 <- srv_age1 %>% group_by(year) %>%
+  summarise(nsamples_srv_age = sum(n)) 
+
+srv_age3 <- merge(srv_age2, srv_age1, by = 'year') %>%
+  mutate(freq = n/nsamples_srv_age) %>%
+  tidyr::pivot_wider(., id_cols = year, 
+                     names_from = age, values_from = freq,
+                     values_fill = 0) 
+
+srv_age_plot <- melt(srv_age3, id = 'year')
+
+ggplot(srv_age_plot, aes(x = variable, y = value )) +
+  geom_bar(stat = 'identity')+
+  facet_wrap(~year, ncol = 2)
+
+srv_age3 %>% mutate(month = 7, fleet = 2, sex = 1, part = 1, ageerr = 1, Lbin_lo = -1,
+                    Lbin_hi = -1, Nsamp = srv_age2$nsamples_srv_age) %>%
+  select(yr = year, month, fleet, sex, part, ageerr, Lbin_lo, Lbin_hi, Nsamp, 
+         everything()) %>%
+  write.csv(.,here('2023','data','for_ss',paste0(Sys.Date(),'-goa_bts_ages.csv')), row.names = FALSE)
+
+
+#* fishery length comps ----
+## raw data before 1987 is not available here
+## i struggled to get these too look write, going to read from file for now
+fish_len_years<- c(1963, 1964, 1965, 1966, 1967, 1968 ,1969 ,1970, 1971,
+                   1972, 1973 ,1974, 1975, 1976, 1977 ,1991, 1992, 1995, 1996 ,1997)
+
+fsh_len2 <- scan(here('2023','base','goa_pop_2021.dat'), 
+                 skip = 164, nlines = 1) %>%
+  data.frame(nsamples_fsh_len=.) %>%
+  mutate(year =fish_len_years) %>%
+  select(year, nsamples_fsh_len)
+
+scan(here('2023','base','goa_pop_2021.dat'), 
+     skip = 170, nlines = 20) %>% 
+  matrix(ncol = length(16:45)) %>%
+  data.frame()%>%
+  mutate(yr = fish_len_years) %>%
+  mutate(month = 7, fleet = 2, sex = 1, part = 1, 
+         Nsamp = fsh_len2$nsamples_fsh_len) %>%
+  select(yr, month, fleet, sex, part, Nsamp, 
+         everything()) %>%
+  write.csv(.,here('2023','data','for_ss',paste0(Sys.Date(),'-fishery_ages.csv')), row.names = FALSE)
+
+
+# fsh_len0 <- read.csv(here('2023','data','raw','fsh_length_data.csv'))
+# 
+# fsh_len1 <- fsh_len0 %>%
+#   filter(year %in%fish_len_years) %>%
+#   # filter(!is.na(length )) %>%
+#   mutate(length = ifelse(length  > 45,45,length )) %>% 
+#   mutate(length = ifelse(length <16,16,length )) %>% 
+#   group_by(year, length ) %>%
+#   summarise(n =n())
+# 
+# ## get nsamples -- these are not intuitive for me, read from file
+# # fsh_len2 <- fsh_len1 %>%
+# #   group_by(year) %>%
+# #   summarise(nsamples_fsh_len = sum(n))
+# 
+# 
+# 
+# fsh_len3 <- merge(fsh_len2, fsh_len1, by = 'year') %>%
+#   mutate(freq = n/nsamples_fsh_len) %>%
+#   tidyr::pivot_wider(., id_cols = year, 
+#                      names_from = length, values_from = freq,
+#                      values_fill = 0) 
+# 
+# fsh_lcomps_old <- scan(here('2023','base','goa_pop_2021.dat'), 
+#                        skip = 170, nlines = 20) %>%
+#   matrix(ncol = length(16:45)) %>%
+#   data.frame()%>%
+#   mutate(year =fish_len_years ) %>%
+#   filter(year < min(fsh_len1$year)) %>%
+#   select(year, everything())
+# 
+# names(fsh_lcomps_old) <- names(fsh_len3)
+# 
+# 
+# fsh_len4<- bind_rows(fsh_lcomps_old, fsh_len3)
+# 
+# 
+# fsh_len_plot <- melt(fsh_len3, id = 'year')
+# 
+# ggplot(fsh_len_plot, aes(x = variable, y = value )) +
+#   geom_bar(stat = 'identity')+
+#   facet_wrap(~year, ncol = 2)
+# 
+# fsh_len3 %>% mutate(month = 7, fleet = 2, sex = 1, part = 1, ageerr = 1, Lbin_lo = -1,
+#                     Lbin_hi = -1, Nsamp = fsh_len2$nsamples_fsh_len) %>%
+#   select(yr = year, month, fleet, sex, part, ageerr, Lbin_lo, Lbin_hi, Nsamp, 
+#          everything()) %>%
+#   write.csv(.,here('2023','data','for_ss',paste0(Sys.Date(),'-goa_bts_ages.csv')), row.names = FALSE)
+
+
+
+#* unused: trawl survey (bts) length comps -----
+## these are NOT USED IN MODEL; ghosted here
+
+#* unused: ll survey length comps -----
+## these are NOT USED IN MODEL; ghosted here
+
+## SECTION 2: ADDITIONAL STUFF FOR SS MODEL----
+
+#* extra DAT file stuff (copy paste) ----
+cat(1961 ,'\t#_StartYr')
+cat(2021 ,'\t#_EndYr')
+cat(1 ,'\t#_Nseas')
+cat(12 ,'\t#_months/season')
+cat(2 ,'\t#_Nsubseasons (even number, minimum is 2)')
+cat(5 ,'\t#_spawn_month')
+cat(1 ,'\t#_Ngenders: 1, 2, -1  (use -1 for 1 sex setup with SSB multiplied by female_frac parameter)')
+cat(28 ,'\t#_Nages=accumulator age, first age is always age 0')
+cat(1 ,'\t#_Nareas')
+cat(2 ,'\t#_Nfleets (including surveys)')
+cat(2 ,'\t#_Nsubseasons')
+
+
+ 
+cat(length(16:45),'\t#_N_LengthBins' ,  '\n', 16:45)
+
+cat(length(2:25),'\t#_N_age_bins' ,  '\n', 2:25)
+
+#* ageing error matrix ----
+# the bespoke model has this hard coded. we instead need the mean bias and imprecision
