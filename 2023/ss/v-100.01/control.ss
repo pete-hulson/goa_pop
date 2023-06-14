@@ -66,7 +66,7 @@
 #_growth_parms
 #_ LO HI INIT PRIOR PR_SD PR_type PHASE env_var&link dev_link dev_minyr dev_maxyr dev_PH Block Block_Fxn
 # Sex: 1  BioPattern: 1  NatMort
- 0.4 0.7 0.0753423 0 0.1 0 -3 0 0 0 0 0 0 0 # NatM_uniform_Fem_GP_1
+ 0.4 0.1 0.0753423 0 0.1 0 -3 0 0 0 0 0 0 0 # NatM_uniform_Fem_GP_1
 # Sex: 1  BioPattern: 1  Growth
  2 20 3.5 0 0.2 0 2 0 0 0 0 0 0 0 # L_at_Amin_Fem_GP_1
  25 80 41.6 0 0.2 0 3 0 0 0 0 0 0 0 # L_at_Amax_Fem_GP_1
@@ -116,7 +116,7 @@
  6 #_recdev_early_phase
  -1 #_forecast_recruitment phase (incl. late recr) (0 value resets to maxphase+1)
  1 #_lambda for Fcast_recr_like occurring before endyr+1
- 1950.3 #_last_yr_nobias_adj_in_MPD; begin of ramp
+ 1977.3 #_last_yr_nobias_adj_in_MPD; begin of ramp
  1992.6 #_first_yr_fullbias_adj_in_MPD; begin of plateau
  2015.8 #_last_yr_fullbias_adj_in_MPD
  2021.6 #_end_yr_for_ramp_in_MPD (can be in forecast to shape ramp, but SS sets bias_adj to 0.0 for fcast yrs)

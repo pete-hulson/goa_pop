@@ -1,0 +1,17 @@
+#V3.30.17.00;_2021_06_11;_safe;_Stock_Synthesis_by_Richard_Methot_(NOAA)_using_ADMB_12.3
+#Stock Synthesis (SS) is a work of the U.S. Government and is not subject to copyright protection in the United States.
+#Foreign copyrights may apply. See copyright.txt for more information.
+Wed Jun 14 13:12:30 2023
+
+This file contains warnings, suggestions and notes generated as files are read and processed
+
+1 Forecast=0 or -1, so rest of forecast file will not be read and can be omitted;
+1 A one year forecast using recent F will be done automatically
+2 parameter init value is less than parameter min 0.0753423 < 0.4 for parm: 1 ; search for <now check> in echoinput for parm_type, will exit if prior requested
+3 Minimum pop size bin:_16; is > L at Amin for sex: 1; Gpat: 1; L= 3.5
+4 Final gradient: 0.00173771 is larger than final_conv: 0.0001
+5 warning: poor convergence in Fmsy, final dy/dy2= -0.263851
+6 Fmsy is >3x of Fspr are you sure?  check for convergence 
+7 Fmsy is close to max allowed; check for convergence 
+8  Number_of_active_parameters_on_or_near_bounds: 2
+N warnings: 8
