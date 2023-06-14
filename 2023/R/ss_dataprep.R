@@ -78,7 +78,7 @@ ggplot(fsh_age_plot, aes(x = variable, y = value )) +
   facet_wrap(~year, ncol = 2)
 
 fsh_age3 %>% mutate(`2` = 0,
-                    month = 7, fleet = 1, sex = 1, part = 1, ageerr = 1, Lbin_lo = -1,
+                    month = 7, fleet = 1, sex = 1, part = 0, ageerr = 1, Lbin_lo = -1,
                     Lbin_hi = -1, Nsamp = fsh_age2$nsamples_fish_age) %>%
   select(yr = year, month, fleet, sex, part, ageerr, Lbin_lo, Lbin_hi, Nsamp, 
          `2`,everything()) %>%
@@ -111,7 +111,7 @@ ggplot(srv_age_plot, aes(x = variable, y = value )) +
   geom_bar(stat = 'identity')+
   facet_wrap(~year, ncol = 2)
 
-srv_ages<- srv_age3 %>% mutate(month = 7, fleet = 2, sex = 1, part = 1, ageerr = 1, Lbin_lo = -1,
+srv_ages<- srv_age3 %>% mutate(month = 7, fleet = 2, sex = 1, part = 0, ageerr = 1, Lbin_lo = -1,
                     Lbin_hi = -1, Nsamp = srv_age2$nsamples_srv_age) %>%
   select(yr = year, month, fleet, sex, part, ageerr, Lbin_lo, Lbin_hi, Nsamp, 
          everything()) 
@@ -138,7 +138,7 @@ fsh_len0 <- scan(here('2023','base','goa_pop_2021.dat'),
   matrix(ncol = length(16:45)) %>%
   data.frame()%>%
   mutate(yr = fish_len_years) %>%
-  mutate(month = 7, fleet = 2, sex = 1, part = 1, 
+  mutate(month = 7, fleet = 2, sex = 1, part = 0, 
          Nsamp = fsh_len2$nsamples_fsh_len) %>%
   select(yr, month, fleet, sex, part, Nsamp, 
          everything())
@@ -192,7 +192,7 @@ rbind(fsh_len0,
 #   geom_bar(stat = 'identity')+
 #   facet_wrap(~year, ncol = 2)
 # 
-# fsh_len3 %>% mutate(month = 7, fleet = 2, sex = 1, part = 1, ageerr = 1, Lbin_lo = -1,
+# fsh_len3 %>% mutate(month = 7, fleet = 2, sex = 1, part = 0, ageerr = 1, Lbin_lo = -1,
 #                     Lbin_hi = -1, Nsamp = fsh_len2$nsamples_fsh_len) %>%
 #   select(yr = year, month, fleet, sex, part, ageerr, Lbin_lo, Lbin_hi, Nsamp, 
 #          everything()) %>%
@@ -221,6 +221,10 @@ cat(1 ,'\t#_Nareas')
 cat(2 ,'\t#_Nfleets (including surveys)')
 cat(2 ,'\t#_Nsubseasons')
 
+
+## length bins don't hae to match the observations
+## because LMIN is less than 16, make this go from 1 to 45
+cat(length(1:45),'\t#_N_LengthBins' ,  '\n', 1:45)
 cat(length(16:45),'\t#_N_LengthBins' ,  '\n', 16:45)
 cat(length(2:25),'\t#_N_age_bins' ,  '\n', 2:25)
 
