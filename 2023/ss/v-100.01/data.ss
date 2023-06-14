@@ -129,7 +129,7 @@
 2017	7	2	1570359	0.23
 2019	7	2	1212145	0.15
 2021	7	2	1478940	0.21
-2023	7	2	328159.7 0.21 # placeholder for 2023 survey
+#2023	7	2	328159.7 0.21 # placeholder for 2023 survey
 -9999 1 1 1 1 # terminator for survey observations 
 #
 0 #_N_fleets_with_discard
