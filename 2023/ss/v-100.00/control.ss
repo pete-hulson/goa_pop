@@ -81,17 +81,6 @@
  -3 3 -0.773 -0.773 0.8 0 -3 0 0 0 0 0 0 0 # Mat_slope_Fem_GP_1
  -3 3 1 1 0.8 0 -3 0 0 0 0 0 0 0 # Eggs/kg_inter_Fem_GP_1
  -3 4 0 0 0.8 0 -3 0 0 0 0 0 0 0 # Eggs/kg_slope_wt_Fem_GP_1
-# Sex: 2  BioPattern: 1  NatMort
- 0.1 0.3 0.2 0 0.8 0 -3 0 0 0 0 0 0 0 # NatM_uniform_Mal_GP_1
-# Sex: 2  BioPattern: 1  Growth
- 1 45 9.54299 10.17 0.8 0 2 0 0 0 0 0 0 0 # L_at_Amin_Mal_GP_1
- 20 70 36.8597 37.36 0.8 0 3 0 0 0 0 0 0 0 # L_at_Amax_Mal_GP_1
- 0.05 0.35 0.25617 0.204 0.8 0 2 0 0 0 0 0 0 0 # VonBert_K_Mal_GP_1
- 0.0001 2 0.127792 2 0.8 0 3 0 0 0 0 0 0 0 # CV_young_Mal_GP_1
- 0.0001 2 0.0806053 0.2 0.8 0 4 0 0 0 0 0 0 0 # CV_old_Mal_GP_1
-# Sex: 2  BioPattern: 1  WtLen
- 0 0.5 4.28e-06 4.8e-06 0.2 0 -3 0 0 0 0 0 0 0 # Wtlen_1_Mal_GP_1
- 2.5 4.5 3.2298 3.2298 0.2 0 -3 0 0 0 0 0 0 0 # Wtlen_2_Mal_GP_1
 # Hermaphroditism
 #  Cohort growth dev base
  -4 4 1 1 0 0 -4 0 0 0 0 0 0 0 # CohortGrowDev
