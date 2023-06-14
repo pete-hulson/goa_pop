@@ -15,7 +15,7 @@
 1 #  number of recruitment settlement assignments 
 0 # unused option
 #GPattern month  area  age (for each settlement assignment)
- 1 1 1 1
+ 1 1 1 2
 #
 #_Cond 0 # N_movement_definitions goes here if Nareas > 1
 #_Cond 1.0 # first age that moves (real age at begin of season, not integer) also cond on do_migration>0
@@ -48,7 +48,7 @@
   #_no additional input for selected M option; read 1P per morph
 #
 1 # GrowthModel: 1=vonBert with L1&L2; 2=Richards with L1&L2; 3=age_specific_K_incr; 4=age_specific_K_decr; 5=age_specific_K_each; 6=NA; 7=NA; 8=growth cessation
-2 #_Age(post-settlement)_for_L1;linear growth below this
+3 #_Age(post-settlement)_for_L1;linear growth below this
 999 #_Growth_Age_for_L2 (999 to use as Linf)
 -999 #_exponential decay for growth above maxage (value should approx initial Z; -999 replicates 3.24; -998 to not allow growth above maxage)
 0  #_placeholder for future growth feature
@@ -68,9 +68,9 @@
 # Sex: 1  BioPattern: 1  NatMort
  0.4 0.7 0.0753423 0 0.1 0 -3 0 0 0 0 0 0 0 # NatM_uniform_Fem_GP_1
 # Sex: 1  BioPattern: 1  Growth
- 2 20 18.6706 0 0.2 0 2 0 0 0 0 0 0 0 # L_at_Amin_Fem_GP_1
- 25 80 33.4144 0 0.2 0 3 0 0 0 0 0 0 0 # L_at_Amax_Fem_GP_1
- 0.01 2 0.528797 0 0.8 0 2 0 0 0 0 0 0 0 # VonBert_K_Fem_GP_1
+ 2 20 9 0 0.2 0 2 0 0 0 0 0 0 0 # L_at_Amin_Fem_GP_1
+ 25 80 41.5 0 0.2 0 3 0 0 0 0 0 0 0 # L_at_Amax_Fem_GP_1
+ 0.01 2 0.15 0 0.8 0 2 0 0 0 0 0 0 0 # VonBert_K_Fem_GP_1
  0.0001 2 0.000100003 2 0.8 0 3 0 0 0 0 0 0 0 # CV_young_Fem_GP_1
  0.0001 2 0.29154 0.2 0.8 0 4 0 0 0 0 0 0 0 # CV_old_Fem_GP_1
 # Sex: 1  BioPattern: 1  WtLen
@@ -117,7 +117,7 @@
  6 #_recdev_early_phase
  -1 #_forecast_recruitment phase (incl. late recr) (0 value resets to maxphase+1)
  1 #_lambda for Fcast_recr_like occurring before endyr+1
- 1950.3 #_last_yr_nobias_adj_in_MPD; begin of ramp
+ 1977.3 #_last_yr_nobias_adj_in_MPD; begin of ramp
  1992.6 #_first_yr_fullbias_adj_in_MPD; begin of plateau
  2015.8 #_last_yr_fullbias_adj_in_MPD
  2021.6 #_end_yr_for_ramp_in_MPD (can be in forecast to shape ramp, but SS sets bias_adj to 0.0 for fcast yrs)
