@@ -135,13 +135,21 @@ fsh_len2 <- scan(here('2023','base','goa_pop_2021.dat'),
 
 fsh_len0 <- scan(here('2023','base','goa_pop_2021.dat'), 
      skip = 170, nlines = 20) %>% 
-  matrix(ncol = length(16:45)) %>%
+  matrix(ncol = length(16:45), byrow = TRUE) %>%
   data.frame()%>%
   mutate(yr = fish_len_years) %>%
   mutate(month = 7, fleet = 2, sex = 1, part = 0, 
          Nsamp = fsh_len2$nsamples_fsh_len) %>%
   select(yr, month, fleet, sex, part, Nsamp, 
          everything())
+
+
+fsh_len_plot <- melt(fsh_len0, id = 'yr')
+
+ggplot(fsh_len_plot, aes(x = variable, y = value )) +
+  geom_bar(stat = 'identity')+
+  facet_wrap(~year, ncol = 2)
+
 
 rbind(fsh_len0,
       c(-9999, rep(0, ncol(fsh_len0)-1))) %>%
