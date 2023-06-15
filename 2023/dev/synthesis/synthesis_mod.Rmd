@@ -1,0 +1,44 @@
+---
+title: "POP Parallel SS Model"
+output: html_notebook
+---
+
+```{r}
+# remotes::install_github("r4ss/r4ss")
+require(r4ss)
+require(dplyr)
+require(here)
+theme_set(theme_minimal())
+```
+
+```{r}
+## load in derived quants from previous model for comparisons
+mod21 <- read.csv(here('2023','data','output','2021_derived_quants.csv'))
+mod21$value <- as.numeric(gsub(',','',mod21$value))
+```
+
+# Evaluating life history inputs
+```{r}
+mod100_01 <- SS_output(here('2023','ss','v-100.02'))
+
+SSplotBiology(mod100_01, subplots = c(1,5,9))
+SSplotIndices(mod100_01, subplots = 2)
+SSplotTimeseries(mod100_01,subplot = 1)
+SSplotRecdevs(mod100_01, subplots = 1)
+SSplotComps(mod100_01,kind = 'LEN')
+SSplotComps(mod100_01,kind = 'AGE')
+
+SSplotTimeseries(mod100_01,subplot = 7)
+compdf<- mod100_01$timeseries%>% filter(Era == 'TIME')  %>% select(Yr, SpawnBio) %>%
+  melt(., id = 'Yr') %>% 
+  mutate(source = 'SS mod') %>%
+  bind_rows(., mod21 %>% 
+              filter(VARIABLE == 'SPAWNBIO') %>%
+              select(Yr = YEAR, value ) %>% 
+              mutate(source = '2021 Assessment'))
+
+ggplot(compdf, aes(x = Yr, y = value, color = source)) +
+  geom_line()
+
+```
+ 
