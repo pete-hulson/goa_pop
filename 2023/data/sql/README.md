@@ -1,1 +1,0 @@
-SQL query calls used for the 2023 assessment are housed here
