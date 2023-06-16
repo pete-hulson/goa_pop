@@ -25,24 +25,37 @@ library(afscassess)
 year = 2023
 rec_age = 2
 plus_age = 25
+lengths = 16:45
 TAC = c(31238, 36177, 38268) # previous 3 years
 species = "POP"
+admb_home = "C:/ADMB-13.0" # I use this because I have multiple admb versions
 
+
+afscassess::sp_switch(species)
 # setup folder structure - only run this once
-# setup_folders(year)
+# afscdata::setup_folders(year)
+# setup .tpl files
+# afscassess::setup_tpl(year)
 
 # query data ----
 ## you must be on the VPN for this to work
 afscdata::goa_pop(year)
 
 # clean data ----
+clean_catch(year = year, species = species, TAC = TAC)
+bts_biomass(year = year, rmv_yrs = c(1984, 1987))
 
-# fishery catch ----
-catch <- afscassess::clean_catch(year = year, species = species, TAC = TAC)
+# !!! I'm having trouble running this function via R2admb so stepped out and ran it command line, works fine if I compile it command line and then use the R2admb run function, maybe I'll pass the .exe instead of rebuilding the .tpl each year?
+age_error(year=year, reader_tester="reader_tester.csv", admb_home=admb_home, species=species, rec_age=rec_age, plus_age=plus_age)
+size_at_age(year=year, admb_home=admb_home, lenbins=lengths)
+weight_at_age(year=year, admb_home=admb_home, rec_age=rec_age, area = "goa")
+fish_age_comp(year=year, rec_age=rec_age, plus_age=plus_age)
+fish_length_comp(year=year, rec_age=rec_age, lenbins=lengths)
+# bts_age_comp(year=year, area="goa", rec_age=rec_age, plus_age=plus_age, rmv_yrs=c(1984,1987))
+# bts_length_comp(...)
 
-# bottom trawl survey biomass ----
 
-bts_biom <- afscassess::bts_biomass(year = year, rmv_yrs = c(1984, 1987))
+
 
 # fishery age comp ----
 
