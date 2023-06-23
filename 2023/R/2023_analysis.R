@@ -5,16 +5,15 @@
 # ben.williams@noaa.gov
 
 # load ----
-# devtools::unload("afscassess")
 
-devtools::unload("afscdata")
+# devtools::unload("afscdata")
 devtools::unload("afscassess")
 
-devtools::install_github("afsc-assessments/afscdata", force = TRUE)
-devtools::install_github("BenWilliams-NOAA/afscassess@ph_dev", force = TRUE)
+# devtools::install_github("afsc-assessments/afscdata", force = TRUE)
+devtools::install_github("BenWilliams-NOAA/afscassess@devph", force = TRUE)
 # devtools::install_github("BenWilliams-NOAA/afscassess", force = TRUE)
 
-library(afscdata)
+# library(afscdata)
 library(afscassess)
 
 # previous accepted model
@@ -41,91 +40,142 @@ afscassess::sp_switch(species)
 ## you must be on the VPN for this to work
 afscdata::goa_pop(year)
 
-# clean data ----
-clean_catch(year = year, species = species, TAC = TAC)
-bts_biomass(year = year, rmv_yrs = c(1984, 1987))
+# get data file parts ----
 
-# !!! I'm having trouble running this function via R2admb so stepped out and ran it command line, works fine if I compile it command line and then use the R2admb run function, maybe I'll pass the .exe instead of rebuilding the .tpl each year?
-age_error(year=year, reader_tester="reader_tester.csv", admb_home=admb_home, species=species, rec_age=rec_age, plus_age=plus_age)
-size_at_age(year=year, admb_home=admb_home, lenbins=lengths)
-weight_at_age(year=year, admb_home=admb_home, rec_age=rec_age, area = "goa")
-fish_age_comp(year=year, rec_age=rec_age, plus_age=plus_age)
-fish_length_comp(year=year, rec_age=rec_age, lenbins=lengths)
-# bts_age_comp(year=year, area="goa", rec_age=rec_age, plus_age=plus_age, rmv_yrs=c(1984,1987))
-# bts_length_comp(...)
+# weight-at-age
+# note from ben on these admb called functions: !!! I'm having trouble running this function via R2admb so stepped out and ran it command line, works fine if I compile it command line and then use the R2admb run function, maybe I'll pass the .exe instead of rebuilding the .tpl each year?
+waa <- afscassess::weight_at_age(year=year, admb_home=admb_home, rec_age=rec_age, area = "goa")
+
+# fishery catch
+catch <- afscassess::clean_catch(year = year, 
+                                 species = species, 
+                                 TAC = TAC)
+
+# bottom trawl survey biomass
+bts_biom <- afscassess::bts_biomass(year = year, 
+                                    rmv_yrs = c(1984, 1987))
+
+# fishery size comp
+fish_lc <- afscassess::fish_length_comp_pop(year = year,
+                                            rec_age = rec_age,
+                                            lenbins = lengths,
+                                            rmv_yrs = c(1988, 1993, 1994, 2003, 2007, 2009, 2011, 2013, 2015, 2017, 2019, 2021, 2022, 2023))
+
+# 60s size-age matrix
+sz_age_60 <- afscassess::size_at_age_pop_60(year = year,
+                                            rec_age = rec_age,
+                                            lenbins = lengths)
+
+# current size-age matrix
+sz_age <- afscassess::size_at_age(year = year,
+                                  admb_home = admb_home,
+                                  rec_age = rec_age,
+                                  lenbins = lengths)
+
+# ageing error matrix
+ae_mtx <- afscassess::age_error(year = year, 
+                                reader_tester = "reader_tester.csv", 
+                                admb_home = admb_home, 
+                                species = species, 
+                                rec_age = rec_age, 
+                                plus_age = plus_age)
+
+
+
+# stuff that still needs work ---
+# fishery age composition
+fish_age_comp(year = year, 
+              rec_age = rec_age, 
+              plus_age = plus_age)
 
 
 
 
-# fishery age comp ----
 
-# need to rename 'fsh_specimen_data.csv' as output from afscdata to 'fsh_age_comp_data.csv' as read in by afscassess
-# also getting error could not find function "." when using summarise fcn - maybe has to do with error in pipe?
-file.rename(from = here::here('2023', 'data', 'raw', 'fsh_specimen_data.csv'),
-            to = here::here('2023', 'data', 'raw', 'fsh_age_comp_data.csv'))
+# bottom trawl survey age comp
+bts_age_comp(year = year,
+             area = "goa",
+             rec_age = rec_age,
+             plus_age = plus_age,
+             rmv_yrs=c(1984,1987))
 
 
 
-afscassess::fish_age_comp(year = year, rec_age = rec_age, plus_age = plus_age)
 
-fish_age_comp(year = year, rec_age = rec_age, plus_age = plus_age)
+# bottom trawl survey size comp
+
+
 
 #' fishery age composition analysis
 #'
 #' @param year assessment year
-#' @param fishery default is fsh1, change if age comps from multiple fisheries (e.g., fsh2)
+#' @param fishery default is fsh, change if age comps from multiple fisheries (e.g., fsh1, fsh2)
+#' @param exp_meth expansion method: marg - use marginal ages, marg_len - expand by marginal lengths, exp_len - expand by expanded lengths
 #' @param rec_age recruitment age
 #' @param plus_age plus age group
-#' @param exp_type age comp expansion type: 'none' (just uses the raw ages), 
-#' 'unwtd' (expands with length comps that are not catch weighted), 
-#' 'wtd' (expands with length comps that are weighted by catch)
-#' @param save whether to save the file
+#' @param rmv_yrs any years to remove form the age comp e.g. c(1987, 1989)
+#' @param alt alternate folder to save to - will be placed in "year/alt/data" folder
+#' @param save whether to save the file - wll be placed in "year/data/output" folder
 #'
 #' @return
 #' @export  fish_age_comp
 #'
 #' @examples
 #' \dontrun{
-#' fish_age_comp(year, fishery = "fsh1", rec_age, plus_age)
+#' fish_age_comp(year, fishery = "fsh", rec_age, plus_age)
 #' }
-fish_age_comp <- function(year, fishery = "fsh", rec_age, plus_age, exp_type = 'none', save = TRUE){
+fish_age_comp <- function(year, fishery = "fsh", exp_meth, rec_age, plus_age, rmv_yrs = NULL, alt=NULL, save = TRUE){
   
-  if(exp_type == 'none'){
-    vroom::vroom(here::here(year, "data", "raw", paste0(fishery, "_age_comp_data.csv")),
-                 col_types = list(HAUL_JOIN = "c",
-                                  PORT_JOIN = "c")) %>%
-      dplyr::rename_all(tolower) %>%
-      dplyr::filter(age>=rec_age) %>%
-      dplyr::mutate(age = ifelse(age>plus_age, plus_age, age)) %>%
-      dplyr::group_by(year) %>%
-      dplyr::mutate(tot = dplyr::n()) %>%
-      dplyr::filter(tot>49) %>%
-      dplyr::mutate(n_h = length(unique(na.omit(haul_join))) +
-                      length(unique(na.omit(port_join)))) %>%
-      dplyr::group_by(year, age) %>%
-      dplyr::summarise(n_s = mean(tot),
-                       n_h = mean(n_h),
-                       age_tot = dplyr::n()) %>%
-      dplyr::mutate(prop = age_tot / n_s) %>%
-      dplyr::left_join(expand.grid(year = unique(.$year),
-                                   age = rec_age:plus_age), .) %>%
-      tidyr::replace_na(list(prop = 0)) %>%
-      dplyr::group_by(year) %>%
-      dplyr::mutate(AA_Index = 1,
-                    n_s = mean(n_s, na.rm = T),
-                    n_h = mean(n_h, na.rm = T)) %>%
-      dplyr::select(-age_tot) %>%
-      tidyr::pivot_wider(names_from = age, values_from = prop) -> fac
-    
-    if(!(isTRUE(save)) | !(isFALSE(save)) | (!is.null(save))) {
-      readr::write_csv(fac, here::here(year, alt, "data", paste0(fishery, "_age_comp.csv")))
-      fac
-    } else if(isTRUE(save)) {
-      readr::write_csv(fac, here::here(year, "data", "output", paste0(fishery, "_age_comp.csv")))
-      fac
-    } else {
-      fac
-    }
+  # compute age comps with marginal ages
+  if(exp_meth == 'marg'){
+    vroom::vroom(here::here(year, "data", "raw", paste0(fishery, "_specimen_data.csv"))) %>%
+      tidytable::filter(age>=rec_age, !(year %in% rmv_yrs), !is.na(length), !is.na(performance)) %>%
+      tidytable::mutate(age = ifelse(age>plus_age, plus_age, age)) %>%
+      tidytable::mutate(tot = tidytable::n(), .by = year) %>%
+      tidytable::filter(tot>49) %>%
+      tidytable::mutate(n_h = length(unique(na.omit(haul_join))) +
+                          length(unique(na.omit(port_join))),
+                        .by = year) %>%
+      tidytable::summarise(n_s = mean(tot),
+                           n_h = mean(n_h),
+                           age_tot = tidytable::n(),
+                           .by = c(year, age)) %>%
+      tidytable::mutate(prop = age_tot / n_s) %>%
+      tidytable::left_join(expand.grid(year = unique(.$year),
+                                       age = rec_age:plus_age), .) %>%
+      tidytable::replace_na(list(prop = 0)) %>%
+      tidytable::mutate(AA_Index = 1,
+                        n_s = mean(n_s, na.rm = T),
+                        n_h = mean(n_h, na.rm = T),
+                        .by = year) %>%
+      tidytable::select(-age_tot) %>%
+      tidytable::pivot_wider(names_from = age, values_from = prop) -> fac
+  }
+  
+  # expand age comps with marginal lengths
+  if(exp_meth == 'marg_len'){
+    vroom::vroom(here::here(year, "data", "raw", paste0(fishery, "_specimen_data.csv"))) %>%
+      tidytable::filter(age>=rec_age, !(year %in% rmv_yrs), !is.na(length), !is.na(performance)) %>%
+      tidytable::mutate(age = ifelse(age>plus_age, plus_age, age)) %>%
+      tidytable::mutate(tot = tidytable::n(), .by = year) %>%
+      tidytable::filter(tot>49) %>%
+      tidytable::mutate(n_h = length(unique(na.omit(haul_join))) +
+                          length(unique(na.omit(port_join))),
+                        .by = year) %>%
+      tidytable::summarise(n_s = mean(tot),
+                           n_h = mean(n_h),
+                           age_tot = tidytable::n(),
+                           .by = c(year, age)) %>%
+      tidytable::mutate(prop = age_tot / n_s) %>%
+      tidytable::left_join(expand.grid(year = unique(.$year),
+                                       age = rec_age:plus_age), .) %>%
+      tidytable::replace_na(list(prop = 0)) %>%
+      tidytable::mutate(AA_Index = 1,
+                        n_s = mean(n_s, na.rm = T),
+                        n_h = mean(n_h, na.rm = T),
+                        .by = year) %>%
+      tidytable::select(-age_tot) %>%
+      tidytable::pivot_wider(names_from = age, values_from = prop) -> fac
   }
   
   
@@ -133,70 +183,16 @@ fish_age_comp <- function(year, fishery = "fsh", rec_age, plus_age, exp_type = '
   
   
   
+  
+  if(!is.null(alt)) {
+    vroom::vroom_write(fac, here::here(year, alt, "data", paste0(fishery, "_age_comp.csv")), ",")
+    fac
+  } else if(isTRUE(save)) {
+    vroom::vroom_write(fac, here::here(year, "data", "output", paste0(fishery, "_age_comp.csv")), ",")
+    fac
+  } else {
+    fac
+  }
+  
 }
-
-
-# from dusky assessment ----
-
-
-# load ----
-library(groundfishr)
-devtools::unload("groundfishr")
-library(gfdata)
-library(funcr)
-ggplot2::theme_set(theme_report())
-library(scico)
-
-# globals ----
-year = 2022
-species <- "DUSK"
-area = "goa"
-afsc_species1 =  30150
-afsc_species2 = 30152
-norpac_species = 330
-TAC <- c(3700, 3676, 5389)
-fishery = "fsh"
-
-
-pwds <- readRDS(here::here('pwds.rds'))
-afsc_user = pwds$afsc_user
-afsc_pwd = pwds$afsc_pwd
-akfin_user = pwds$akfin_user
-akfin_pwd = pwds$akfin_pwd
-
-# setup(year = year)
-
-species = "DUSK"
-area = "GOA"
-afsc_species1 =  30150
-afsc_species2 = 30152
-norpac_species = 330
-
-rec_age = 4
-plus_age = 25
-
-# data ----
-# data query
-goa_dusk(year, akfin_user, akfin_pwd, afsc_user, afsc_pwd)
-
-groundfishr::clean_catch(year=year, species=species, TAC=TAC)
-groundfishr::age_error(reader_tester = "reader_tester.csv", species, year, rec_age=rec_age, plus_age = plus_age)
-groundfishr::fish_age_comp(year=year, rec_age=rec_age, plus_age=plus_age)
-groundfishr::ts_age_comp(year=year, rec_age=rec_age, plus_age=plus_age, rmv_yrs = c(1984, 1987))
-groundfishr::fish_length_comp(year=year, rec_age=rec_age, lenbins = 'lbins.csv')
-groundfishr::ts_length_comp(year=year, lenbins = 'lbins.csv', bysex = FALSE,  rmv_yrs = c(1984, 1987))
-groundfishr::size_at_age(year=year, rec_age=rec_age, lenbins="lbins.csv")
-groundfishr::weight_at_age(year=year, rec_age=rec_age)
-
-# note: must provide file for VAST or DB estimates are output
-
-# Base model w/updated data & diff surveys
-# design-based model
-groundfishr::ts_biomass(year=year, rmv_yrs = c(1984, 1987))
-# base model with design-based survey
-groundfishr::concat_dat(year=year, species=species, model="db", dat_name='goa_dr_2022', spawn_mo=3, rec_age=rec_age, plus_age=plus_age)
-
-
-
-
 

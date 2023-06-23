@@ -1,0 +1,15 @@
+Starting optimization of 'allometric' in phase 1 of 1 at Fri Jun 23 08:54:58 2023
+phase= 1 | nvar=  2 | iter=  0 | nll=7.97e+04 | mag=1.24e+07 | par[  1]=alpha
+phase= 1 | nvar=  2 | iter= 20 | nll=1.76e+02 | mag=5.37e+00 | par[  1]=alpha
+phase= 1 | nvar=  2 | iter= 23 | nll=1.76e+02 | mag=2.77e-05 | par[  1]=alpha
+Optimization completed after 0.002 s with final statistics:
+  nll=176.263159 | mag=2.77187e-05 | par[  1]=alpha
+
+Warning: the following parameters had issues
+  alpha is within 0.1% of lower bound: 1e-18 < 1.0552e-05 < 1
+
+Calculating Hessian: 1, 2 done (0 s) 
+Inverting Hessian: 1, 2 done (0.007 s) 
+Starting standard error calculations...  done (0.016 s) 
+
+Finished running model 'allometric' after 0.03 s.
