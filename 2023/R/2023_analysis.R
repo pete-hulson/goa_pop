@@ -6,14 +6,14 @@
 
 # load ----
 
-# devtools::unload("afscdata")
+devtools::unload("afscdata")
 devtools::unload("afscassess")
 
-# devtools::install_github("afsc-assessments/afscdata", force = TRUE)
+devtools::install_github("afsc-assessments/afscdata", force = TRUE)
 devtools::install_github("BenWilliams-NOAA/afscassess@devph", force = TRUE)
 # devtools::install_github("BenWilliams-NOAA/afscassess", force = TRUE)
 
-# library(afscdata)
+library(afscdata)
 library(afscassess)
 
 # previous accepted model
@@ -55,11 +55,26 @@ catch <- afscassess::clean_catch(year = year,
 bts_biom <- afscassess::bts_biomass(year = year, 
                                     rmv_yrs = c(1984, 1987))
 
+# fishery age comp
+
+
+# bottom trawl survey age comp
+bts_ac <- afscassess::bts_age_comp(year = year,
+                                   area = "goa",
+                                   rec_age = rec_age,
+                                   plus_age = plus_age,
+                                   rmv_yrs = c(1984,1987))
+
 # fishery size comp
 fish_lc <- afscassess::fish_length_comp_pop(year = year,
                                             rec_age = rec_age,
                                             lenbins = lengths,
                                             rmv_yrs = c(1988, 1993, 1994, 2003, 2007, 2009, 2011, 2013, 2015, 2017, 2019, 2021, 2022, 2023))
+
+# bottom trawl survey size comp
+bts_lc <- afscassess::bts_length_comp(year = year,
+                                      area = "goa",
+                                      lenbins = lengths)
 
 # 60s size-age matrix
 sz_age_60 <- afscassess::size_at_age_pop_60(year = year,
@@ -82,6 +97,14 @@ ae_mtx <- afscassess::age_error(year = year,
 
 
 
+
+
+
+
+
+
+
+
 # stuff that still needs work ---
 # fishery age composition
 fish_age_comp(year = year, 
@@ -92,12 +115,12 @@ fish_age_comp(year = year,
 
 
 
-# bottom trawl survey age comp
-bts_age_comp(year = year,
-             area = "goa",
-             rec_age = rec_age,
-             plus_age = plus_age,
-             rmv_yrs=c(1984,1987))
+
+
+
+
+
+
 
 
 
