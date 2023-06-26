@@ -56,7 +56,12 @@ bts_biom <- afscassess::bts_biomass(year = year,
                                     rmv_yrs = c(1984, 1987))
 
 # fishery age comp
-
+fish_ac <- afscassess::fish_age_comp(year = year,
+                                     exp_meth = 'marg_len',
+                                     rec_age = rec_age, 
+                                     plus_age = plus_age,
+                                     lenbins = lengths,
+                                     rmv_yrs = c(1987, 1989))
 
 # bottom trawl survey age comp
 bts_ac <- afscassess::bts_age_comp(year = year,
@@ -101,121 +106,4 @@ ae_mtx <- afscassess::age_error(year = year,
 
 
 
-
-
-
-
-# stuff that still needs work ---
-# fishery age composition
-fish_age_comp(year = year, 
-              rec_age = rec_age, 
-              plus_age = plus_age)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# bottom trawl survey size comp
-
-
-
-#' fishery age composition analysis
-#'
-#' @param year assessment year
-#' @param fishery default is fsh, change if age comps from multiple fisheries (e.g., fsh1, fsh2)
-#' @param exp_meth expansion method: marg - use marginal ages, marg_len - expand by marginal lengths, exp_len - expand by expanded lengths
-#' @param rec_age recruitment age
-#' @param plus_age plus age group
-#' @param rmv_yrs any years to remove form the age comp e.g. c(1987, 1989)
-#' @param alt alternate folder to save to - will be placed in "year/alt/data" folder
-#' @param save whether to save the file - wll be placed in "year/data/output" folder
-#'
-#' @return
-#' @export  fish_age_comp
-#'
-#' @examples
-#' \dontrun{
-#' fish_age_comp(year, fishery = "fsh", rec_age, plus_age)
-#' }
-fish_age_comp <- function(year, fishery = "fsh", exp_meth, rec_age, plus_age, rmv_yrs = NULL, alt=NULL, save = TRUE){
-  
-  # compute age comps with marginal ages
-  if(exp_meth == 'marg'){
-    vroom::vroom(here::here(year, "data", "raw", paste0(fishery, "_specimen_data.csv"))) %>%
-      tidytable::filter(age>=rec_age, !(year %in% rmv_yrs), !is.na(length), !is.na(performance)) %>%
-      tidytable::mutate(age = ifelse(age>plus_age, plus_age, age)) %>%
-      tidytable::mutate(tot = tidytable::n(), .by = year) %>%
-      tidytable::filter(tot>49) %>%
-      tidytable::mutate(n_h = length(unique(na.omit(haul_join))) +
-                          length(unique(na.omit(port_join))),
-                        .by = year) %>%
-      tidytable::summarise(n_s = mean(tot),
-                           n_h = mean(n_h),
-                           age_tot = tidytable::n(),
-                           .by = c(year, age)) %>%
-      tidytable::mutate(prop = age_tot / n_s) %>%
-      tidytable::left_join(expand.grid(year = unique(.$year),
-                                       age = rec_age:plus_age), .) %>%
-      tidytable::replace_na(list(prop = 0)) %>%
-      tidytable::mutate(AA_Index = 1,
-                        n_s = mean(n_s, na.rm = T),
-                        n_h = mean(n_h, na.rm = T),
-                        .by = year) %>%
-      tidytable::select(-age_tot) %>%
-      tidytable::pivot_wider(names_from = age, values_from = prop) -> fac
-  }
-  
-  # expand age comps with marginal lengths
-  if(exp_meth == 'marg_len'){
-    vroom::vroom(here::here(year, "data", "raw", paste0(fishery, "_specimen_data.csv"))) %>%
-      tidytable::filter(age>=rec_age, !(year %in% rmv_yrs), !is.na(length), !is.na(performance)) %>%
-      tidytable::mutate(age = ifelse(age>plus_age, plus_age, age)) %>%
-      tidytable::mutate(tot = tidytable::n(), .by = year) %>%
-      tidytable::filter(tot>49) %>%
-      tidytable::mutate(n_h = length(unique(na.omit(haul_join))) +
-                          length(unique(na.omit(port_join))),
-                        .by = year) %>%
-      tidytable::summarise(n_s = mean(tot),
-                           n_h = mean(n_h),
-                           age_tot = tidytable::n(),
-                           .by = c(year, age)) %>%
-      tidytable::mutate(prop = age_tot / n_s) %>%
-      tidytable::left_join(expand.grid(year = unique(.$year),
-                                       age = rec_age:plus_age), .) %>%
-      tidytable::replace_na(list(prop = 0)) %>%
-      tidytable::mutate(AA_Index = 1,
-                        n_s = mean(n_s, na.rm = T),
-                        n_h = mean(n_h, na.rm = T),
-                        .by = year) %>%
-      tidytable::select(-age_tot) %>%
-      tidytable::pivot_wider(names_from = age, values_from = prop) -> fac
-  }
-  
-  
-  
-  
-  
-  
-  
-  if(!is.null(alt)) {
-    vroom::vroom_write(fac, here::here(year, alt, "data", paste0(fishery, "_age_comp.csv")), ",")
-    fac
-  } else if(isTRUE(save)) {
-    vroom::vroom_write(fac, here::here(year, "data", "output", paste0(fishery, "_age_comp.csv")), ",")
-    fac
-  } else {
-    fac
-  }
-  
-}
 
