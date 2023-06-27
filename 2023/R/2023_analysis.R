@@ -115,7 +115,7 @@ afscassess::concat_dat_pop(year = year,
 
 # write ctl file, for now writing it to output folder in data
 afscassess::write_ctl_pop(year = year,
-                          base_mdl_fldr = "2020.1 (2021)",
+                          base_mdl_fldr = "2020.1-2021",
                           mdl_name = "Model_1",
                           ctl_name = "goa_pop",
                           folder = "data/output")
