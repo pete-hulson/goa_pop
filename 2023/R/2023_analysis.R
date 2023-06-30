@@ -7,13 +7,13 @@
 # load ----
 
 # devtools::unload("afscdata")
-# devtools::unload("afscassess")
+devtools::unload("afscassess")
 
-devtools::install_github("afsc-assessments/afscdata", force = TRUE)
+# devtools::install_github("afsc-assessments/afscdata", force = TRUE)
 devtools::install_github("BenWilliams-NOAA/afscassess@devph", force = TRUE)
 # devtools::install_github("BenWilliams-NOAA/afscassess", force = TRUE)
 
-library(afscdata)
+# library(afscdata)
 library(afscassess)
 
 # previous accepted model
@@ -66,6 +66,7 @@ afscassess::fish_age_comp(year = year,
                           lenbins = lengths,
                           rmv_yrs = c(1987, 1989))
 
+
 # bottom trawl survey age comp
 afscassess::bts_age_comp(year = year,
                          area = "goa",
@@ -115,8 +116,9 @@ afscassess::concat_dat_pop(year = year,
 
 # write ctl file, for now writing it to output folder in data
 afscassess::write_ctl_pop(year = year,
-                          base_mdl_fldr = "2020.1-2021",
+                          base_mdl_fldr = '2020.1-2021',
                           mdl_name = "Model_1",
                           ctl_name = "goa_pop",
+                          dat_name = "goa_pop",
                           folder = "data/output")
 
