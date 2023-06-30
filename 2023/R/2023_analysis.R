@@ -59,13 +59,21 @@ afscassess::bts_biomass(year = year,
                         rmv_yrs = c(1984, 1987))
 
 # fishery age comp
+# base case (currently used)
 afscassess::fish_age_comp(year = year,
                           exp_meth = 'marg_len',
                           rec_age = rec_age, 
                           plus_age = plus_age,
                           lenbins = lengths,
                           rmv_yrs = c(1987, 1989))
-
+# expanded comps (expanded in years with obs catch data)
+afscassess::fish_age_comp(year = year,
+                          exp_meth = 'exp_len',
+                          rec_age = rec_age, 
+                          plus_age = plus_age,
+                          lenbins = lengths,
+                          rmv_yrs = c(1987, 1989),
+                          id = "exp")
 
 # bottom trawl survey age comp
 afscassess::bts_age_comp(year = year,
