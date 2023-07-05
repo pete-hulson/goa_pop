@@ -17,15 +17,41 @@ Maia - dig into mortality tool and show alternatives, do a profile over M to get
 
 The 2021 model based the prior mean for M on Hamel (2015) using a max age approach, with a "relatively precise" cv of 10%:
 ```{r}
-mean_m = 0.0614
-cv_m = 0.1
-hist(rnorm(10000,mean = mean_m, sd = 0.0614*cv_m), main = 'Prior on M (2021)')
+mean_m_21 = 0.0614
+cv_m_21 = 0.1
+sd_m_21 = mean_m_21*cv_m_21
+hist(rnorm(10000,mean = mean_m_21, sd = sd_m_21), main = 'Prior on M (2021)')
 ```
 ## FishLife for M prior
 ```{r}
 remotes::install_git(url = 'https://github.com/James-Thorson-NOAA/FishLife')
 library( FishLife )
-Plot_taxa( Search_species(Genus="Sebastes",Species="alutus")$match_taxonomy )
+params = matrix( c("K","M", "G","ln_MASPS"), ncol=2, byrow=TRUE)
+
+png(here('2023','dev','cie_0_newM','fishlife_dwnld.png'),
+height = 6, width = 10, unit = 'in', res = 420)
+#par(mfrow = c(2,3))
+Plot_taxa( Search_species(Genus="Sebastes",Species="alutus")$match_taxonomy, mfrow = c(2,3) )
+dev.off()
+
+predict <- Plot_taxa( Search_species(Genus="Sebastes",Species="alutus")$match_taxonomy )
+log_mean_M <- predict[[1]]$Mean_pred[6]
+log_var_M <- predict[[1]]$Cov_pred[6,6]
+log_sd_M <- sqrt(var_M)
+mean_M_fl <- exp(log_mean_M + var_M/2) ## get back the mean via bias correction
+sd_m_fl = mean_M_fl*sqrt(exp(log_sd_M)^2-1) ## conversion to non log space
+
+## plot comparison of old and new prior
+png(here('2023','dev','cie_0_newM','prior_compare.png'))
+plot(density(rnorm(10000,mean = mean_m_21, sd = 0.0614*cv_m_21)),
+xlim = c(0,0.2),
+lwd = 3,
+type = 'l', xlab = 'Natural Mortality', main = 'Priors for M')
+lines(density(x=rnorm(10000,mean = mean_M_fl, sd = sd_m_fl)), lwd =3, col = 'blue')
+legend('topright', col = c('black','blue'),lwd = 3,
+legend = c('2021 Prior (0.0614,0.00614)', 'FishBase Prior (0.939,0.0527)'))
+dev.off()
+
 ```
 
 
