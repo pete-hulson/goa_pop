@@ -1,0 +1,8 @@
+---
+title: "CIE explorations"
+author: "MK"
+date: "2023-07-05"
+output: html_document
+---
+This is a scratch file where I organize, document and perform "T1" tasks from the CIE review.
+May create another file or set of quarto pages for public-facing documentation after this is complete.
