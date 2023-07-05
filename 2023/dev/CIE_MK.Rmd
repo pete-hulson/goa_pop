@@ -29,18 +29,32 @@ Plot_taxa( Search_species(Genus="Sebastes",Species="alutus")$match_taxonomy )
 ```
 
 
+# Fishery vs Survey WAA
+Pete says this is a higher priority. Basically want to know if the WAA 
+in the observed data is statistically different between fishery and survey (aka does it make sense to use the same matrix).
+
+1) Pete needs to get growth func "up and running" ??
+2) Revisit survey data for fishery application.
+In 2021\Body condition there's a script to run an allometric model,
+check out the residuals
+
+
+
 # Add Lcomp Data
 For the fishery, as a sensitivity we could add length data in the years we don't have age data. An additional step in this is to develop expansion code for length comps (rather than using marginal lengths like we do now).
-Need expansion code from Pete
+Need expansion code from Pete.
 
 # Catch History 
-There's some uncertainty in the early years of the fishery. Instead of trying to revisit the full reconstruction. Instead, leverage the fact that the model already has early (wt_ssqcatch) and late (wt_ssqcatch2) weights for the time series of catches and monkey with various levels of confidence in the early time series as-is.
+There's some uncertainty in the early years of the fishery. Instead of trying to revisit the full reconstruction. Instead, leverage the fact that the model already has early (`wt_ssqcatch`) and late (`wt_ssqcatch2`) weights for the time series of catches and monkey with various levels of confidence in the early time series as-is.
 
 Right now these are both set to "50". Will do a run with the early time series weight set to 10, 25, and 75.
 Show what this is equivalent to in terms of a time series (confidence interval), as well as derived quants.
 
 do a quick weighting sensitivity, as the model is set up to weight the 'early' catch and 'later' catch. it would be a time suck rabbit hole to go back and (1) try to figure out how the catch history was constructed to then (2) look at alternative estimators. From previous authors this was done by looking at Japanese catch of 'red rockfish' which was divvied up between pop, northerns, and duskies.
 
-# Fishery vs Survey WAA
+
 # Plus Group
+
 # F vs Sigma R
+Looks like we can simply remove the prior on the sigma R and/or the constraint on the rec-devs,
+perhaps a combo of the two.
