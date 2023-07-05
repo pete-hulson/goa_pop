@@ -21,12 +21,15 @@ mod21$value <- as.numeric(gsub(',','',mod21$value))
 ```{r}
 mod100_01 <- SS_output(here('2023','ss','v-100.02'))
 
+SSplotData(mod100_01)
 SSplotBiology(mod100_01, subplots = c(1,5,9))
 SSplotIndices(mod100_01, subplots = 2)
 SSplotTimeseries(mod100_01,subplot = 1)
+SSplotTimeseries(mod100_01, subplot = 11)
 SSplotRecdevs(mod100_01, subplots = 1)
 SSplotComps(mod100_01,kind = 'LEN')
 SSplotComps(mod100_01,kind = 'AGE')
+SSplotSelex(mod100_01)
 
 SSplotTimeseries(mod100_01,subplot = 7)
 compdf<- mod100_01$timeseries%>% filter(Era == 'TIME')  %>% select(Yr, SpawnBio) %>%
