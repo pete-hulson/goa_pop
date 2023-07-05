@@ -6,3 +6,41 @@ output: html_document
 ---
 This is a scratch file where I organize, document and perform "T1" tasks from the CIE review.
 May create another file or set of quarto pages for public-facing documentation after this is complete.
+
+# M Prior
+PH comment: I've looked into the tool to estimate a prior for M (the current prior is based on this), we also have a SSC request to look at how the prior may be constraining the estimate of M. Would be a good low-hanging fruit sensitivity. There's also a dangling SSC comment related to M that needs to be addressed this year.
+
+Tier 1 - can take another look at M tool, think Thorson may have something new out there too.
+
+Taskings:
+Maia - dig into mortality tool and show alternatives, do a profile over M to get at whether current prior is constraining (SSC comment)
+
+The 2021 model based the prior mean for M on Hamel (2015) using a max age approach, with a "relatively precise" cv of 10%:
+```{r}
+mean_m = 0.0614
+cv_m = 0.1
+hist(rnorm(10000,mean = mean_m, sd = 0.0614*cv_m), main = 'Prior on M (2021)')
+```
+## FishLife for M prior
+```{r}
+remotes::install_git(url = 'https://github.com/James-Thorson-NOAA/FishLife')
+library( FishLife )
+Plot_taxa( Search_species(Genus="Sebastes",Species="alutus")$match_taxonomy )
+```
+
+
+# Add Lcomp Data
+For the fishery, as a sensitivity we could add length data in the years we don't have age data. An additional step in this is to develop expansion code for length comps (rather than using marginal lengths like we do now).
+Need expansion code from Pete
+
+# Catch History 
+There's some uncertainty in the early years of the fishery. Instead of trying to revisit the full reconstruction. Instead, leverage the fact that the model already has early (wt_ssqcatch) and late (wt_ssqcatch2) weights for the time series of catches and monkey with various levels of confidence in the early time series as-is.
+
+Right now these are both set to "50". Will do a run with the early time series weight set to 10, 25, and 75.
+Show what this is equivalent to in terms of a time series (confidence interval), as well as derived quants.
+
+do a quick weighting sensitivity, as the model is set up to weight the 'early' catch and 'later' catch. it would be a time suck rabbit hole to go back and (1) try to figure out how the catch history was constructed to then (2) look at alternative estimators. From previous authors this was done by looking at Japanese catch of 'red rockfish' which was divvied up between pop, northerns, and duskies.
+
+# Fishery vs Survey WAA
+# Plus Group
+# F vs Sigma R
