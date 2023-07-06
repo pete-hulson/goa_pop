@@ -7,6 +7,14 @@ output: html_document
 This is a scratch file where I organize, document and perform "T1" tasks from the CIE review.
 May create another file or set of quarto pages for public-facing documentation after this is complete.
 
+# Base model
+Don't monkey with this, but do copy & paste stuff from here to create new models.
+The goals is that literally everything from model manipulation to execution can be done via this/some script.
+```{r}
+base_21 <- "C:/Users/maia.kapur/Work/assessments/2023/GOA_POP/goa_pop/2023/mgmt/2020.1-2021"
+base_21_rep <- 
+```
+
 # M Prior
 PH comment: I've looked into the tool to estimate a prior for M (the current prior is based on this), we also have a SSC request to look at how the prior may be constraining the estimate of M. Would be a good low-hanging fruit sensitivity. There's also a dangling SSC comment related to M that needs to be addressed this year.
 
@@ -22,7 +30,9 @@ cv_m_21 = 0.1
 sd_m_21 = mean_m_21*cv_m_21
 hist(rnorm(10000,mean = mean_m_21, sd = sd_m_21), main = 'Prior on M (2021)')
 ```
-## FishLife for M prior
+## Generate new prior for M using fishlife
+
+By default we are using the latest version which corresponds to Thorosn et al 2023.
 ```{r}
 remotes::install_git(url = 'https://github.com/James-Thorson-NOAA/FishLife')
 library( FishLife )
@@ -38,8 +48,9 @@ predict <- Plot_taxa( Search_species(Genus="Sebastes",Species="alutus")$match_ta
 log_mean_M <- predict[[1]]$Mean_pred[6]
 log_var_M <- predict[[1]]$Cov_pred[6,6]
 log_sd_M <- sqrt(var_M)
-mean_M_fl <- exp(log_mean_M + var_M/2) ## get back the mean via bias correction
+mean_M_fl <- exp(log_mean_M + var_M/2) ## get back the MEAN via bias correction
 sd_m_fl = mean_M_fl*sqrt(exp(log_sd_M)^2-1) ## conversion to non log space
+cv_m_fl <- sd_m_fl/mean_M_fl ## the model uses a CV
 
 ## plot comparison of old and new prior
 png(here('2023','dev','cie_0_newM','prior_compare.png'))
@@ -54,7 +65,36 @@ dev.off()
 
 ```
 
+## Implement new M prior
+```{r}
+## make & populate a new folder with the base stuff
+new_dir <- here('2021_cie','cie_0_newM',paste0(Sys.Date(),'-newM'))
+dir.create(new_dir)
+file.copy(from = list.files(base_21, full.names = TRUE), to = new_dir, overwrite = TRUE)
 
+## populate the relevant lines in the CTL
+ctl_file <- list.files(new_dir, pattern = "*.ctl", full.names = TRUE)
+newctl <- read.delim(ctl_file, sep = '\t', header = FALSE)
+newctl$V1[which(newctl$V2 == '# mprior')] <- round(mean_M_fl,4)
+newctl$V1[which(newctl$V2 == '# cvmprior')] <- round(cv_m_fl,4)
+newctl$V1 <- newctl$V1
+
+## save it without misc formatting 
+write.table(newctl, ctl_file, quote = FALSE,row.names = FALSE, col.names = FALSE)
+
+## run the model
+setwd(new_dir)
+shell('admb Model_20_1.tpl')
+shell('Model_20_1')
+
+## plot the comparison SSB trajectory
+
+```
+
+## Likelihood profile on M
+
+
+ 
 # Fishery vs Survey WAA
 Pete says this is a higher priority. Basically want to know if the WAA 
 in the observed data is statistically different between fishery and survey (aka does it make sense to use the same matrix).
