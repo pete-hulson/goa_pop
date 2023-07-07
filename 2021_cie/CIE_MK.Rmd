@@ -20,28 +20,28 @@ year = 2023
 years = 1961:2021
 surv_years <-  c(1990, 1993, 1996, 1999, 2001 ,2003 ,2005, 2007, 2009 ,2011 ,2013 ,2015, 2017, 2019, 2021)
 
-get_bio <- function(x, name = 'Model'){
-bind_rows(as.numeric(unlist(strsplit(x[415]," "))[3:(2+length(years))]) %>%
-data.frame(value = ., year = years, variable = 'sbio'),
-as.numeric(unlist(strsplit(x[416]," "))[3:(2+length(years))]) %>%
-data.frame(value = ., year = years, variable = 'totbio'),
-as.numeric(unlist(strsplit(x[417]," "))[3:(2+length(years))]) %>%
-data.frame(value = ., year = years, variable = 'recruitment'),
-as.numeric(unlist(strsplit(x[405]," "))[5:(4+length(surv_years))]) %>%
-data.frame(value = ., year = surv_years, variable = 'obs_trawl_bio'),
-as.numeric(unlist(strsplit(x[404]," "))[5:(4+length(surv_years))]) %>%
-data.frame(value = ., year = surv_years, variable = 'pred_trawl_bio'),
-as.numeric(unlist(strsplit(x[406]," "))[5:(4+length(surv_years))]) %>%
-data.frame(value = ., year = surv_years, variable = 'obs_trawl_bio_se')) %>%
-mutate(model = name)
-}
+get_bio <- function(x, name = 'Model'){ 
+bind_rows(as.numeric(unlist(strsplit(x[415]," "))[3:(2+length(years))]) %>% 
+data.frame(value = ., year = years, variable = 'sbio'), 
+as.numeric(unlist(strsplit(x[416]," "))[3:(2+length(years))]) %>%   
+data.frame(value = ., year = years, variable = 'totbio'),   
+as.numeric(unlist(strsplit(x[417]," "))[3:(2+length(years))]) %>%   
+data.frame(value = ., year = years, variable = 'recruitment'),  
+as.numeric(unlist(strsplit(x[405]," "))[5:(4+length(surv_years))]) %>%  
+data.frame(value = ., year = surv_years, variable = 'obs_trawl_bio'),   
+as.numeric(unlist(strsplit(x[404]," "))[5:(4+length(surv_years))]) %>%  
+data.frame(value = ., year = surv_years, variable = 'pred_trawl_bio'),  
+as.numeric(unlist(strsplit(x[406]," "))[5:(4+length(surv_years))]) %>%  
+data.frame(value = ., year = surv_years, variable = 'obs_trawl_bio_se')) %>%    
+mutate(model = name)    
+}   
 
 ```
 # Base model
 Don't monkey with this, but do copy & paste stuff from here to create new models.
 The goals is that literally everything from model manipulation to execution can be done via this/some script.
 ```{r}
-base_21 <- here::here(year, "mgmt", "2020.1-2021")
+base_21 <- here::here("goa_pop",year, "mgmt", "2020.1-2021")
 base_21_rep <- readLines(here::here(base_21, "model_20_1.rep"))
 base_21_bio <-  get_bio(x = base_21_rep, name = 'Base (2021)')
 ```
@@ -99,9 +99,9 @@ dev.off()
 ## Implement new M prior
 ```{r}
 ## make & populate a new folder with the base stuff
-new_dir <- here('2021_cie','cie_0_newM',paste0(Sys.Date(),'-newM'))
+new_dir <- here('goa_pop','2021_cie','cie_0_newM',paste0(Sys.Date(),'-newM'))
 dir.create(new_dir)
-file.copy(from = list.files(base_21, full.names = TRUE), to = new_dir, overwrite = TRUE)
+file.copy(from = list.files(base_21,full.names = TRUE), to = new_dir, overwrite = TRUE)
 
 ## populate the relevant lines in the CTL
 ctl_file <- list.files(new_dir, pattern = "*.ctl", full.names = TRUE)
@@ -119,7 +119,8 @@ shell('admb Model_20_1.tpl')
 shell('Model_20_1')
 
 ## plot the comparison SSB trajectory
-newM_rep <- readLines("C:/Users/maia.kapur/Work/assessments/2023/GOA_POP/goa_pop/2021_cie/CIE_0_newM/2023-07-05-newM/model_20_1.rep")
+ 
+newM_rep <- readLines(paste0(new_dir,"model_20_1.rep"))
 newm_Bio <-  get_bio(x = newM_rep, name = 'Fishlife M Prior')
 
 tmp <- rbind(newm_Bio, base_21_bio)
