@@ -14,7 +14,9 @@ require(ggplot2)
 require(here)
 
 theme_set(theme_minimal(base_size = 15))
-
+# global
+year = 2023
+# data 
 years = 1961:2021
 surv_years <-  c(1990, 1993, 1996, 1999, 2001 ,2003 ,2005, 2007, 2009 ,2011 ,2013 ,2015, 2017, 2019, 2021)
 
@@ -39,8 +41,8 @@ mutate(model = name)
 Don't monkey with this, but do copy & paste stuff from here to create new models.
 The goals is that literally everything from model manipulation to execution can be done via this/some script.
 ```{r}
-base_21 <- "C:/Users/maia.kapur/Work/assessments/2023/GOA_POP/goa_pop/2023/mgmt/2020.1-2021"
-base_21_rep <- readLines("C:/Users/maia.kapur/Work/assessments/2023/GOA_POP/goa_pop/2023/mgmt/2020.1-2021/model_20_1.rep")
+base_21 <- here::here(year, "mgmt", "2020.1-2021")
+base_21_rep <- readLines(here::here(base_21, "model_20_1.rep"))
 base_21_bio <-  get_bio(x = base_21_rep, name = 'Base (2021)')
 ```
 
