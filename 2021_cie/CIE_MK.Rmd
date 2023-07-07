@@ -10,10 +10,15 @@ May create another file or set of quarto pages for public-facing documentation a
 ```{r}
 require(dplyr)
 require(reshape2)
+require(ggplot2)
+require(here)
+
+theme_set(theme_minimal(base_size = 15))
+
 years = 1961:2021
 surv_years <-  c(1990, 1993, 1996, 1999, 2001 ,2003 ,2005, 2007, 2009 ,2011 ,2013 ,2015, 2017, 2019, 2021)
 
-get_bio <- function(x){
+get_bio <- function(x, name = 'Model'){
 bind_rows(as.numeric(unlist(strsplit(x[415]," "))[3:(2+length(years))]) %>%
 data.frame(value = ., year = years, variable = 'sbio'),
 as.numeric(unlist(strsplit(x[416]," "))[3:(2+length(years))]) %>%
@@ -21,9 +26,12 @@ data.frame(value = ., year = years, variable = 'totbio'),
 as.numeric(unlist(strsplit(x[417]," "))[3:(2+length(years))]) %>%
 data.frame(value = ., year = years, variable = 'recruitment'),
 as.numeric(unlist(strsplit(x[405]," "))[5:(4+length(surv_years))]) %>%
-data.frame(value = ., year = surv_years, variable = 'obs_trawl-bio'),
+data.frame(value = ., year = surv_years, variable = 'obs_trawl_bio'),
 as.numeric(unlist(strsplit(x[404]," "))[5:(4+length(surv_years))]) %>%
-data.frame(value = ., year = surv_years, variable = 'pred_trawl_bio'))
+data.frame(value = ., year = surv_years, variable = 'pred_trawl_bio'),
+as.numeric(unlist(strsplit(x[406]," "))[5:(4+length(surv_years))]) %>%
+data.frame(value = ., year = surv_years, variable = 'obs_trawl_bio_se')) %>%
+mutate(model = name)
 }
 
 ```
@@ -33,13 +41,7 @@ The goals is that literally everything from model manipulation to execution can 
 ```{r}
 base_21 <- "C:/Users/maia.kapur/Work/assessments/2023/GOA_POP/goa_pop/2023/mgmt/2020.1-2021"
 base_21_rep <- readLines("C:/Users/maia.kapur/Work/assessments/2023/GOA_POP/goa_pop/2023/mgmt/2020.1-2021/model_20_1.rep")
-
-
-base_21_bio <-  get_bio(x = base_21_rep)
-
-
- 
-
+base_21_bio <-  get_bio(x = base_21_rep, name = 'Base (2021)')
 ```
 
 # M Prior
@@ -115,16 +117,61 @@ shell('admb Model_20_1.tpl')
 shell('Model_20_1')
 
 ## plot the comparison SSB trajectory
+newM_rep <- readLines("C:/Users/maia.kapur/Work/assessments/2023/GOA_POP/goa_pop/2021_cie/CIE_0_newM/2023-07-05-newM/model_20_1.rep")
+newm_Bio <-  get_bio(x = newM_rep, name = 'Fishlife M Prior')
+
+tmp <- rbind(newm_Bio, base_21_bio)
+
+filter(tmp, variable %in% c("recruitment", "sbio", "totbio")) %>%
+ggplot(., aes(x = year, y = value, color = model)) +
+geom_line() +
+facet_wrap(~variable, scales = 'free_y')
+
+tmp_surv <- merge(subset(tmp, variable == 'obs_trawl_bio' & model == 'Base (2021)'),
+subset(tmp, variable == 'obs_trawl_bio_se' & model == 'Base (2021)'), by = 'year') %>%
+select(year, model =model.x,
+ value = value.x, se = value.y) %>% mutate(lci = value-se, uci = value + se)
+
+ggplot(NULL, aes(x = year, y = value, color = model)) +
+geom_line(data = subset(tmp, variable == 'pred_trawl_bio')) +
+geom_point(data = tmp_surv) +
+geom_errorbar(data =tmp_surv, aes(ymin = lci, ymax = uci), width =0)
 
 ```
 
 ## Likelihood profile on M
+Obviously even shifting up the mean & uncertainty on M has a big effect.
+Let's do a profiling exercise and see if we can't dig out what's happening.
+In this case I'm going to assume the same degree of confidence as before (0.1).
+The loop should go through, lock up (negate) the lines in the control file and run a new model.
 
+Then I will lapply to pull out the likelihood for each component for each element of mvec (lines 435-453 in rep).
+```{r}
+mvec = seq(0.02,0.2,0.02)
+
+new_dir <- here('goa_pop','2021_cie','cie_0_newM',paste0(Sys.Date(),'-Mprofile_M=',mvec[m]))
+dir.create(new_dir)
+file.copy(from = list.files(base_21, full.names = TRUE), to = new_dir, overwrite = TRUE)
+
+## populate the relevant lines in the CTL
+ctl_file <- list.files(new_dir, pattern = "*.ctl", full.names = TRUE)
+newctl <- read.delim(ctl_file, sep = '\t', header = FALSE)
+newctl$V1[which(newctl$V2 == '# mprior')] <- -mvec[m]
+newctl$V1[which(newctl$V2 == '# cvmprior')] <- -0.1
+newctl$V1 <- newctl$V1
+write.table(newctl, ctl_file, quote = FALSE,row.names = FALSE, col.names = FALSE)
+setwd(new_dir)
+shell('admb Model_20_1.tpl')
+shell('Model_20_1')
+
+
+```
 
  
 # Fishery vs Survey WAA
 Pete says this is a higher priority. Basically want to know if the WAA 
-in the observed data is statistically different between fishery and survey (aka does it make sense to use the same matrix).
+in the observed data is statistically different between fishery and survey (aka does it make 
+sense to use the same matrix).
 
 1) Pete needs to get growth func "up and running" ??
 2) Revisit survey data for fishery application.
