@@ -174,7 +174,7 @@ if(MCMC){
 
   data.frame(B40 = STD$value[which(STD$name=="B40")],
              B35 = as.numeric(REP[(grep("B_35",REP)+1):(grep("F_40",REP)[1]-1)]),
-             yld_rat = as.numeric(unlist(base::strsplit(CTL[grep("yieldratio", CTL)], "\t"))[1])) %>%
+             yld_rat = as.numeric(unlist(base::strsplit(CTL[grep("yieldratio", CTL)], " "))[1])) %>%
     write.csv(paste0(model_dir, "/processed/b35_b40_yld.csv"), row.names = FALSE)
 
   # size comps ----
