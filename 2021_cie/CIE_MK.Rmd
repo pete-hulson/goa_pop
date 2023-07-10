@@ -12,6 +12,10 @@ require(dplyr)
 require(reshape2)
 require(ggplot2)
 require(here)
+library(tidyverse)
+
+## Ben's extractor fns
+source("https://raw.githubusercontent.com/afsc-assessments/goa_dusky/25cd6a57d58a6b4e58266a8efd0d1f1c61051baf/2022/code/functions.R")
 
 theme_set(afscasess::theme_report())
 # global
@@ -152,6 +156,7 @@ Then I will lapply to pull out the likelihood for each component for each elemen
 ```{r}
 mvec = seq(0.02,0.2,0.02)
 
+for(m in seq_along(mvec)){
 new_dir <- here('goa_pop','2021_cie','cie_0_newM',paste0(Sys.Date(),'-Mprofile_M=',mvec[m]))
 dir.create(new_dir)
 file.copy(from = list.files(base_21, full.names = TRUE), to = new_dir, overwrite = TRUE)
@@ -159,13 +164,20 @@ file.copy(from = list.files(base_21, full.names = TRUE), to = new_dir, overwrite
 ## populate the relevant lines in the CTL
 ctl_file <- list.files(new_dir, pattern = "*.ctl", full.names = TRUE)
 newctl <- read.delim(ctl_file, sep = '\t', header = FALSE)
-newctl$V1[which(newctl$V2 == '# mprior')] <- -mvec[m]
-newctl$V1[which(newctl$V2 == '# cvmprior')] <- -0.1
+newctl$V1[which(newctl$V2 == '# mprior')] <- mvec[m]
+newctl$V1[which(newctl$V2 == '# cvmprior')] <- 0.1
+newctl$V1[which(newctl$V2 == '# ph_m')] <- -1
 newctl$V1 <- newctl$V1
 write.table(newctl, ctl_file, quote = FALSE,row.names = FALSE, col.names = FALSE)
+
+## run the new model
 setwd(new_dir)
 shell('admb Model_20_1.tpl')
 shell('Model_20_1')
+}
+
+## plot likelihoods by component
+## note that Cole has some code here to pull things out
 
 
 ```
