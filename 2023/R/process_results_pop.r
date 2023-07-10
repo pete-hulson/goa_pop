@@ -1,7 +1,6 @@
 #' @param year  assessment year
-#' @param model_dir  full path of model being evaluated
-#' @param model_name   basename of the model files (e.g. REP)
-#' @param dat_name name of dat and ctl file e.g., goa_nr_2020
+#' @param model_dir  full path of model being evaluated  
+#' @param MCMC  logical, does this run include MCMC evaluations to be processed?
 #' @param rec_age recruitment age
 #' @param plus_age plus age group
 #' @param mcmc number of mcmcs run
@@ -38,12 +37,12 @@ process_results_pop <- function(model_dir, model_name, dat_name,
   }
 
 
-  # read in rep and ctl files
+  # read in report and ctl files
 REP <- readLines(list.files(model_dir, pattern="*.rep", full.names = TRUE)) 
 CTL <- readLines(list.files(model_dir, pattern="*.ctl", full.names = TRUE)) 
-PSV <- file(list.files(model_dir, pattern="*.psv", full.names = TRUE), "rb")
+
 STD <- read.delim(list.files(model_dir, pattern="*.std", full.names = TRUE), sep="", header = TRUE) 
-mceval <- read.delim(list.files(model_dir, pattern="*evalout.prj", full.names = TRUE), sep="", header = FALSE) 
+
 
   # clean rep file
   suppressWarnings(data.frame(year = unlist(base::strsplit(REP[grep("Year", REP)[1]]," "))) %>%
@@ -61,18 +60,21 @@ mceval <- read.delim(list.files(model_dir, pattern="*evalout.prj", full.names = 
   suppressWarnings(as.data.frame(cbind(yrs = yrs, ages = ages, styr_rec = styr_rec)) %>%
                      tidytable::mutate.(ages = replace(ages, duplicated(ages), NA),
                                         styr_rec = replace(styr_rec, duplicated(styr_rec), NA))) %>%
-    write.csv(here::here(year, folder, "processed", "ages_yrs.csv"), row.names = FALSE)
+    write.csv(paste0(model_dir, "/processed/ages_yrs.csv"), row.names = FALSE)
 
   # MCMC parameters ----
+if(MCMC){
+mceval <- read.delim(list.files(model_dir, pattern="*evalout.prj", full.names = TRUE), sep="", header = FALSE) 
+PSV <- file(list.files(model_dir, pattern="*.psv", full.names = TRUE), "rb")
 
-  npar = readBin(PSV, what = integer(), n=1)
+ npar = readBin(PSV, what = integer(), n=1)
   mcmcs = readBin(PSV, what = numeric(), n = (npar * mcmc / mcsave))
   close(PSV)
   mcmc_params = matrix(mcmcs, byrow=TRUE, ncol=npar)
   # thin the string
   mcmc_params = mcmc_params[501:nrow(mcmc_params),]
   colnames(mcmc_params) = STD$name[1:ncol(mcmc_params)]
-  write.csv(mcmc_params, here::here(year, folder, "processed", "mcmc.csv"), row.names = FALSE)
+  write.csv(mcmc_params,paste0(model_dir, "/processed/mcmc.csv"), row.names = FALSE)
 
   # mceval phase output ----
 
@@ -96,6 +98,8 @@ mceval <- read.delim(list.files(model_dir, pattern="*evalout.prj", full.names = 
                        paste0("tot_biom_proj_", max(yrs)))
   write.csv(mceval, here::here(year, folder, "processed", "mceval.csv"), row.names = FALSE)
 
+}
+ 
   # catch data ----
 
   pred = base::strsplit(REP[grep("Pred_Catch", REP)], " ")
