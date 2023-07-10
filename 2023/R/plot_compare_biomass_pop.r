@@ -1,40 +1,13 @@
 ## update this so it is passed a vector of DIRS
 ## establish model names from basename
 ## enable comparison across discrepant file locations
-plot_compare_biomass_pop <- function(year, model_dirss = NULL, savedir = NULL)) {
-
+plot_compare_biomass_pop <- function(year, model_dirs = NULL, savedir = NULL) {
 
   dat = data.frame()
   m = list(rep(NA, length(models)))
-  for(i in 1:length(model_dirs)) {
-  id = basename(model_dirs[i])
 
-
-
-    # m[[i]] = scan(text = models[i], sep = ",", what = "")
-    # m[[i]][2] = gsub(" ", "", m[[i]][2])
-    # # m[[i]][3] = gsub(" ", "", m[[i]][3])
-
-    # year = m[[i]][1]
-    # # folder = m[[i]][2]
-    # model = m[[i]][2]
-    # id = model
-    # if(model=="db"){
-    #   id = "design-based"
-    # } else if(model=="m15.5a"){
-    #   id = "A"
-    # } else if(model=="pois_gamma_750"){
-    #   id = "B"
-    # } else if(model=="log_1000"){
-    #   id = "C"
-    # } else if(model=="log_750"){
-    #   id = "D"
-    # } else if(model=="pois_log_500"){
-    #   id = "E"
-    # } else {
-    #   id = "F"
-    # }
-
+  for(i in 1:length(model_dirs)){
+    id = basename(model_dirs[i])
     yrs = read.csv(paste0(model_dirs[i],"/processed/ages_yrs.csv"))$yrs
     bio = read.csv(paste0(model_dirs[i],"/processed/bio_rec_f.csv"))
 
@@ -87,11 +60,12 @@ plot_compare_biomass_pop <- function(year, model_dirss = NULL, savedir = NULL)) 
     scico::scale_fill_scico_d(palette = 'batlow', begin = 0.2, end = 0.8) +
     funcr::theme_report() +
     ggplot2::theme(legend.position = c(0.2, .8))
+
 if(!is.null(savedir)){
   ggplot2::ggsave( paste0(savedir,"/", Sys.Date(),"-biomass_compare.png"),
   width = 6.5, height = 6.5, units = "in", dpi = 200)
-} else{
-  ggplot2::ggsave( here(paste0( Sys.Date(),"-biomass_compare.png"),
+  }else{
+  ggplot2::ggsave( here(paste0( Sys.Date(),"-biomass_compare.png")),
   width = 6.5, height = 6.5, units = "in", dpi = 200)
   }
 
