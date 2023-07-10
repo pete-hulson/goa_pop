@@ -40,6 +40,7 @@ process_results_pop <- function(year, model_dir,
 dats <- list.files(model_dir, full.names = TRUE)
 DAT <- readLines(dats[grepl("*.dat",dats) & !grepl('proj',dats)])
 REP <- readLines(list.files(model_dir, pattern="*.rep", full.names = TRUE)) 
+modname <- gsub(".rep","",basename(list.files(model_dir, pattern="*.rep", full.names = TRUE))) ## strip model name from rep file
 CTL <- readLines(list.files(model_dir, pattern="*.ctl", full.names = TRUE)) 
 
 STD <- read.delim(list.files(model_dir, pattern="*.std", full.names = TRUE), sep="", header = TRUE) 
@@ -66,10 +67,10 @@ STD <- read.delim(list.files(model_dir, pattern="*.std", full.names = TRUE), sep
   # MCMC parameters ----
 if(MCMC){
     mceval <- read.delim(list.files(model_dir, pattern="*evalout.prj", full.names = TRUE), sep="", header = FALSE) 
-    PSV <- file(list.files(model_dir, pattern="*.psv", full.names = TRUE), "rb")
+    PSV <- file(paste0(model_dir,"/",modname,".psv"), "rb")
 
  npar = readBin(PSV, what = integer(), n=1)
-  mcmcs = readBin(PSV, what = numeric(), n = (npar * mcmc / mcsave))
+  mcmcs = readBin(PSV, what = numeric(), n = (npar * no_mcmc / mcsave))
   close(PSV)
   mcmc_params = matrix(mcmcs, byrow=TRUE, ncol=npar)
   # thin the string
