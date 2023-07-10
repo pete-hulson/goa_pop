@@ -1,0 +1,9 @@
+"0","remotes::install_git(url = 'https://github.com/James-Thorson-NOAA/FishLife')
+"
+"2","Downloading git repo https://github.com/James-Thorson-NOAA/FishLife
+"
+"2","""C:\PROGRA~1\Git\cmd\git.exe"" clone --depth 1 --no-hardlinks https://github.com/James-Thorson-NOAA/FishLife C:\Users\MAIA~1.KAP\AppData\Local\Temp\Rtmpm6hkqp\file1cc4493a1337
+"
+"2","Warning: running command '""C:\PROGRA~1\Git\cmd\git.exe"" clone --depth 1 --no-hardlinks https://github.com/James-Thorson-NOAA/FishLife C:\Users\MAIA~1.KAP\AppData\Local\Temp\Rtmpm6hkqp\file1cc4493a1337' had status 128"
+"2","Error : Command failed (128)
+"

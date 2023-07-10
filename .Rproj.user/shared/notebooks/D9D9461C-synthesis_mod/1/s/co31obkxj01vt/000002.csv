@@ -1,0 +1,5 @@
+"0","```r
+## load in derived quants from previous model for comparisons
+mod21 <- read.csv(here('2023','data','output','2021_derived_quants.csv'))
+mod21$value <- as.numeric(gsub(',','',mod21$value))
+```"

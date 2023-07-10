@@ -1,0 +1,24 @@
+{
+    "id": "46E16828",
+    "path": "~/assessments/2023/GOA_POP/goa_pop/2023/dev/synthesis/ss_dataprep.R",
+    "project_path": "2023/dev/synthesis/ss_dataprep.R",
+    "type": "r_source",
+    "hash": "4148148645",
+    "contents": "",
+    "dirty": false,
+    "created": 1686851767165.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1686850746,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1686850746,
+    "read_only": false,
+    "read_only_alternatives": []
+}
