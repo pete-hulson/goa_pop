@@ -38,6 +38,8 @@ process_results_pop <- function(model_dir, model_name, dat_name,
 
 
   # read in report and ctl files
+dats <- list.files(model_dir, full.names = TRUE)
+DAT <- readLines(dats[grepl("*.dat",dats) & !grepl('proj',dats)])
 REP <- readLines(list.files(model_dir, pattern="*.rep", full.names = TRUE)) 
 CTL <- readLines(list.files(model_dir, pattern="*.ctl", full.names = TRUE)) 
 
@@ -176,6 +178,7 @@ if(MCMC){
     write.csv(paste0(model_dir, "/processed/b35_b40_yld.csv"), row.names = FALSE)
 
   # size comps ----
+  size_bins 
 
   #! this will need a switch for multiple surveys
 
