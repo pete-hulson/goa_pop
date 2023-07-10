@@ -64,8 +64,8 @@ STD <- read.delim(list.files(model_dir, pattern="*.std", full.names = TRUE), sep
 
   # MCMC parameters ----
 if(MCMC){
-mceval <- read.delim(list.files(model_dir, pattern="*evalout.prj", full.names = TRUE), sep="", header = FALSE) 
-PSV <- file(list.files(model_dir, pattern="*.psv", full.names = TRUE), "rb")
+    mceval <- read.delim(list.files(model_dir, pattern="*evalout.prj", full.names = TRUE), sep="", header = FALSE) 
+    PSV <- file(list.files(model_dir, pattern="*.psv", full.names = TRUE), "rb")
 
  npar = readBin(PSV, what = integer(), n=1)
   mcmcs = readBin(PSV, what = numeric(), n = (npar * mcmc / mcsave))
@@ -96,9 +96,9 @@ PSV <- file(list.files(model_dir, pattern="*.psv", full.names = TRUE), "rb")
                        paste0("pred_catch_proj_", max(yrs) + 1:15),
                        paste0("rec_proj_", max(yrs) + 1:10),
                        paste0("tot_biom_proj_", max(yrs)))
-  write.csv(mceval, here::here(year, folder, "processed", "mceval.csv"), row.names = FALSE)
+  write.csv(mceval, paste0(model_dir, "/processed/mceval.csv"), row.names = FALSE)
 
-}
+} ## end if MCMC == T
  
   # catch data ----
 
@@ -115,7 +115,7 @@ PSV <- file(list.files(model_dir, pattern="*.psv", full.names = TRUE), "rb")
   obs = as.numeric(obs[[1]][-c(r1, r2, r3)])
 
   data.frame(year = yrs, obs = obs, pred = pred) %>%
-    write.csv(here::here(year, model, "processed", "catch.csv"))
+    write.csv(paste0(model_dir, "/processed/catch.csv"), row.names = FALSE)
 
 
 
@@ -144,7 +144,7 @@ PSV <- file(list.files(model_dir, pattern="*.psv", full.names = TRUE), "rb")
   data.frame(year = syr, biomass = obs, pred = pred, se = se) %>%
     tidytable::mutate.(lci = biomass - 1.96 * se,
                        uci = biomass + 1.96 * se) %>%
-    write.csv(here::here(year, folder, "processed", "survey.csv"), row.names = FALSE)
+    write.csv(paste0(model_dir, "/processed/survey.csv"), row.names = FALSE)
 
 
   # recruitment ----
@@ -163,7 +163,7 @@ PSV <- file(list.files(model_dir, pattern="*.psv", full.names = TRUE), "rb")
              sp_biom = afscassess::rep_item("SpBiom"),
              F = afscassess::rep_item("Fully_selected_F"),
              recruits = pred_rec) %>%
-    write.csv(here::here(year, folder, "processed", "bio_rec_f.csv"), row.names = FALSE)
+    write.csv(paste0(model_dir, "/processed/bio_rec_f.csv"), row.names = FALSE)
 
 
   # selectivity ----
@@ -171,14 +171,14 @@ PSV <- file(list.files(model_dir, pattern="*.psv", full.names = TRUE), "rb")
              fish = afscassess::rep_item("Fishery_Selectivity"),
              srv1 = afscassess::rep_item("TWL Survey_Selectivity"),
              maturity = afscassess::rep_item("Maturity")) %>%
-    write.csv(here::here(year, folder, "processed", "selex.csv"), row.names = FALSE)
+    write.csv(paste0(model_dir, "/processed/selex.csv"), row.names = FALSE)
 
   # yield ratio B40 & B35----
 
   data.frame(B40 = STD$value[which(STD$name=="B40")],
              B35 = as.numeric(REP[(grep("B_35",REP)+1):(grep("F_40",REP)[1]-1)]),
              yld_rat = as.numeric(unlist(base::strsplit(CTL[grep("yieldratio", CTL)], "\t"))[1])) %>%
-    write.csv(here::here(year, folder, "processed", "b35_b40_yld.csv"), row.names = FALSE)
+    write.csv(paste0(model_dir, "/processed/b35_b40_yld.csv"), row.names = FALSE)
 
   # size comps ----
 
@@ -196,15 +196,15 @@ PSV <- file(list.files(model_dir, pattern="*.psv", full.names = TRUE), "rb")
   s_obs_l = REP[grep("Obs_P_srv1_size",REP):(grep("Pred_P_srv1_size",REP)-2)]
 
   afscassess::purrit(obs, pred, rec_age, plus_age, comp = "age", lenbins = lenbins) %>%
-    write.csv(here::here(year, folder, "processed", "fac.csv"))
+    write.csv(paste0(model_dir, "/processed/fac.csv"))
 
   afscassess::purrit(obs_l, pred_l, rec_age, plus_age, comp = "length", lenbins = lenbins) %>%
-    write.csv(here::here(year, folder, "processed", "fsc.csv"))
+    write.csv(paste0(model_dir, "/processed/fsc.csv"))
 
   afscassess::purrit(s_obs, s_pred, rec_age, plus_age, comp = "age", lenbins = lenbins) %>%
-    write.csv(here::here(year, folder, "processed", "sac.csv"))
+    write.csv(paste0(model_dir, "/processed/sac.csv"))
 
   afscassess::purrit(s_obs_l, pred = NULL, rec_age, plus_age, comp = "length", lenbins = lenbins) %>%
-    write.csv(here::here(year, folder, "processed", "ssc.csv"))
+    write.csv(paste0(model_dir, "/processed/ssc.csv"))
 
 }
