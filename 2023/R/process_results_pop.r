@@ -1,4 +1,15 @@
-process_results_pop <- function(year, model, model_name, dat_name,
+#' @param year  assessment year
+#' @param model_dir  full path of model being evaluated
+#' @param model_name   basename of the model files (e.g. REP)
+#' @param dat_name name of dat and ctl file e.g., goa_nr_2020
+#' @param rec_age recruitment age
+#' @param plus_age plus age group
+#' @param mcmc number of mcmcs run
+#' @param mcsave the number of mcmcs saved
+#' @param len_bins file name (stored in the "user_input" folder) that has length bins
+#' @param ... future functions
+
+process_results_pop <- function(model_dir, model_name, dat_name,
                             rec_age, plus_age, mcmc, mcsave, len_bins, ...){
 
   # setup
@@ -28,11 +39,11 @@ process_results_pop <- function(year, model, model_name, dat_name,
 
 
   # read in rep and ctl files
-  REP <- readLines(here::here(year, folder, paste0(model_name, ".rep")))
-  CTL <- readLines(here::here(year, folder, paste0(dat_name, ".ctl")))
-  PSV <- file(here::here(year, folder, paste0(model_name, ".psv")), "rb")
-  STD <- read.delim(here::here(year, model, paste0(model_name, ".std")), sep="", header = TRUE)
-  mceval <- read.delim(here::here(year, folder, "evalout.prj"), sep="", header=FALSE)
+REP <- readLines(list.files(model_dir, pattern="*.rep", full.names = TRUE)) 
+CTL <- readLines(list.files(model_dir, pattern="*.ctl", full.names = TRUE)) 
+PSV <- file(list.files(model_dir, pattern="*.psv", full.names = TRUE), "rb")
+STD <- read.delim(list.files(model_dir, pattern="*.std", full.names = TRUE), sep="", header = TRUE) 
+mceval <- read.delim(list.files(model_dir, pattern="*evalout.prj", full.names = TRUE), sep="", header = FALSE) 
 
   # clean rep file
   suppressWarnings(data.frame(year = unlist(base::strsplit(REP[grep("Year", REP)[1]]," "))) %>%
