@@ -1,23 +1,27 @@
 ## update this so it is passed a vector of DIRS
 ## establish model names from basename
 ## enable comparison across discrepant file locations
-plot_compare_biomass_pop <- function(year, models = c('2022, lognormal')) {
+plot_compare_biomass_pop <- function(year, model_dirs = NULL)) {
 
-  if (!dir.exists(here::here("goa_pop",year, "compare_models"))){
-    dir.create(here::here( "goa_pop",year,"compare_models"))
+  if (!dir.exists(here::here("compare_models"))){
+    dir.create(here::here( "compare_models"))
   }
 
   dat = data.frame()
   m = list(rep(NA, length(models)))
-  for(i in 1:length(models)) {
-    m[[i]] = scan(text = models[i], sep = ",", what = "")
-    m[[i]][2] = gsub(" ", "", m[[i]][2])
-    # m[[i]][3] = gsub(" ", "", m[[i]][3])
+  for(i in 1:length(model_dirs)) {
+  mod_name = basename(model_dirs[i])
 
-    year = m[[i]][1]
-    # folder = m[[i]][2]
-    model = m[[i]][2]
-    id = model
+
+
+    # m[[i]] = scan(text = models[i], sep = ",", what = "")
+    # m[[i]][2] = gsub(" ", "", m[[i]][2])
+    # # m[[i]][3] = gsub(" ", "", m[[i]][3])
+
+    # year = m[[i]][1]
+    # # folder = m[[i]][2]
+    # model = m[[i]][2]
+    # id = model
     # if(model=="db"){
     #   id = "design-based"
     # } else if(model=="m15.5a"){
@@ -34,8 +38,8 @@ plot_compare_biomass_pop <- function(year, models = c('2022, lognormal')) {
     #   id = "F"
     # }
 
-    yrs = read.csv(here::here(year, model, "processed", "ages_yrs.csv"))$yrs
-    bio = read.csv(here::here(year, model, "processed", "bio_rec_f.csv"))
+    yrs = read.csv(paste0(model_dir[i],"/processed/ages_yrs.csv"))$yrs
+    bio = read.csv(paste0(model_dir[i],"/processed/bio_rec_f.csv"))
 
     dat %>%
       dplyr::bind_rows(
