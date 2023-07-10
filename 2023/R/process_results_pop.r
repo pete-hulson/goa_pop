@@ -2,17 +2,18 @@ process_results_pop <- function(year, model, model_name, dat_name,
                             rec_age, plus_age, mcmc, mcsave, len_bins, ...){
 
   # setup
-  if (!dir.exists(here::here(year, folder, "processed"))){
-    dir.create(here::here(year, folder, "processed"), recursive=TRUE)
+
+  if (!dir.exists(paste0(model_dir, "/processed"))){
+    dir.create(paste0(model_dir, "/processed"), recursive=TRUE)
   }
 
-  if (!dir.exists(here::here(year, folder, "figs"))){
-    dir.create(here::here(year, folder, "figs"), recursive=TRUE)
+  if (!dir.exists(paste0(model_dir, "/figs"))){
+    dir.create(paste0(model_dir, "/figs"), recursive=TRUE)
+  }
+  if (!dir.exists(paste0(model_dir, "/tables"))){
+    dir.create(paste0(model_dir, "/tables"), recursive=TRUE)
   }
 
-  if (!dir.exists(here::here(year, folder, "tables"))){
-    dir.create(here::here(year, folder, "tables"), recursive=TRUE)
-  }
 
   # helper functions
   rep_item <- function(name){
