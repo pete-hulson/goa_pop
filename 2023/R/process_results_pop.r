@@ -1,15 +1,13 @@
 #' @param year  assessment year
 #' @param model_dir  full path of model being evaluated  
-#' @param MCMC  logical, does this run include MCMC evaluations to be processed?
+#' @param MCMC= logical, does this run include MCMC evaluations to be processed?
 #' @param rec_age recruitment age
-#' @param plus_age plus age group
-#' @param mcmc number of mcmcs run
-#' @param mcsave the number of mcmcs saved
-#' @param len_bins file name (stored in the "user_input" folder) that has length bins
+#' @param plus_age plus age group 
+#' @param mcsave the number of mcmcs saved 
 #' @param ... future functions
 
-process_results_pop <- function(model_dir, model_name, dat_name,
-                            rec_age, plus_age, mcmc, mcsave, len_bins, ...){
+process_results_pop <- function(year, model_dir, 
+                            rec_age, plus_age, MCMC=FALSE, mcsave=NULL, ...){
 
   # setup
 
@@ -178,7 +176,7 @@ if(MCMC){
     write.csv(paste0(model_dir, "/processed/b35_b40_yld.csv"), row.names = FALSE)
 
   # size comps ----
-  size_bins 
+  size_bins <- as.numeric(strsplit(DAT[grep('len_bin_labels', DAT)+1]," ")[[1]])
 
   #! this will need a switch for multiple surveys
 
@@ -193,16 +191,16 @@ if(MCMC){
 
   s_obs_l = REP[grep("Obs_P_srv1_size",REP):(grep("Pred_P_srv1_size",REP)-2)]
 
-  afscassess::purrit(obs, pred, rec_age, plus_age, comp = "age", lenbins = lenbins) %>%
+  afscassess::purrit(obs, pred, rec_age, plus_age, comp = "age", lenbins = size_bins) %>%
     write.csv(paste0(model_dir, "/processed/fac.csv"))
 
-  afscassess::purrit(obs_l, pred_l, rec_age, plus_age, comp = "length", lenbins = lenbins) %>%
+  afscassess::purrit(obs_l, pred_l, rec_age, plus_age, comp = "length", lenbins = size_bins) %>%
     write.csv(paste0(model_dir, "/processed/fsc.csv"))
 
-  afscassess::purrit(s_obs, s_pred, rec_age, plus_age, comp = "age", lenbins = lenbins) %>%
+  afscassess::purrit(s_obs, s_pred, rec_age, plus_age, comp = "age", lenbins = size_bins) %>%
     write.csv(paste0(model_dir, "/processed/sac.csv"))
 
-  afscassess::purrit(s_obs_l, pred = NULL, rec_age, plus_age, comp = "length", lenbins = lenbins) %>%
+  afscassess::purrit(s_obs_l, pred = NULL, rec_age, plus_age, comp = "length", lenbins = size_bins) %>%
     write.csv(paste0(model_dir, "/processed/ssc.csv"))
 
 }
