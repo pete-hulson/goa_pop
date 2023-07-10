@@ -1,13 +1,14 @@
 #' @param year  assessment year
 #' @param model_dir  full path of model being evaluated  
-#' @param MCMC= logical, does this run include MCMC evaluations to be processed?
+#' @param MCMC = logical, does this run include MCMC evaluations to be processed?
+#' @param no_mcmc = number of mcmc runs
 #' @param rec_age recruitment age
 #' @param plus_age plus age group 
 #' @param mcsave the number of mcmcs saved 
 #' @param ... future functions
 
 process_results_pop <- function(year, model_dir, 
-                            rec_age, plus_age, MCMC=FALSE, mcsave=NULL, ...){
+                            rec_age, plus_age, MCMC=FALSE, no_mcmc = 100000, mcsave=100, ...){
 
   # setup
 
