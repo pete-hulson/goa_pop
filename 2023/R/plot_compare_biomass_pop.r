@@ -1,8 +1,10 @@
-
+## update this so it is passed a vector of DIRS
+## establish model names from basename
+## enable comparison across discrepant file locations
 plot_compare_biomass_pop <- function(year, models = c('2022, lognormal')) {
 
-  if (!dir.exists(here::here(year, "compare_models"))){
-    dir.create(here::here(year, "compare_models"))
+  if (!dir.exists(here::here("goa_pop",year, "compare_models"))){
+    dir.create(here::here( "goa_pop",year,"compare_models"))
   }
 
   dat = data.frame()
