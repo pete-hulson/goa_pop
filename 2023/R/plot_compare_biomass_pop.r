@@ -43,13 +43,13 @@ plot_compare_biomass_pop <- function(year, model_dirs = NULL)) {
 
     dat %>%
       dplyr::bind_rows(
-        read.csv(here::here(year, model, "processed", "mceval.csv"))  %>%
+        read.csv(paste0(model_dir[i],"/processed/mceval.csv"))  %>%
           dplyr::select(paste0("tot_biom_", yrs)) %>%
           dplyr::mutate(group = 1:dplyr::n()) %>%
           tidyr::pivot_longer(-group) %>%
           dplyr::mutate(year = as.numeric(gsub("tot_biom_", "", name)),
                         name = "Total biomass") %>%
-          dplyr::bind_rows( read.csv(here::here(year,model, "processed", "mceval.csv")) %>%
+          dplyr::bind_rows( read.csv(paste0(model_dir[i],"/processed/mceval.csv")) %>%
                               dplyr::select(paste0("spawn_biom_", yrs)) %>%
                               dplyr::mutate(group = 1) %>%
                               tidyr::pivot_longer(-group) %>%
