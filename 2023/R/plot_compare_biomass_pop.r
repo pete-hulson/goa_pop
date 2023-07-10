@@ -1,11 +1,8 @@
 ## update this so it is passed a vector of DIRS
 ## establish model names from basename
 ## enable comparison across discrepant file locations
-plot_compare_biomass_pop <- function(year, model_dirs = NULL)) {
+plot_compare_biomass_pop <- function(year, model_dirss = NULL, savedir = NULL)) {
 
-  if (!dir.exists(here::here("compare_models"))){
-    dir.create(here::here( "compare_models"))
-  }
 
   dat = data.frame()
   m = list(rep(NA, length(models)))
@@ -38,18 +35,18 @@ plot_compare_biomass_pop <- function(year, model_dirs = NULL)) {
     #   id = "F"
     # }
 
-    yrs = read.csv(paste0(model_dir[i],"/processed/ages_yrs.csv"))$yrs
-    bio = read.csv(paste0(model_dir[i],"/processed/bio_rec_f.csv"))
+    yrs = read.csv(paste0(model_dirs[i],"/processed/ages_yrs.csv"))$yrs
+    bio = read.csv(paste0(model_dirs[i],"/processed/bio_rec_f.csv"))
 
     dat %>%
       dplyr::bind_rows(
-        read.csv(paste0(model_dir[i],"/processed/mceval.csv"))  %>%
+        read.csv(paste0(model_dirs[i],"/processed/mceval.csv"))  %>%
           dplyr::select(paste0("tot_biom_", yrs)) %>%
           dplyr::mutate(group = 1:dplyr::n()) %>%
           tidyr::pivot_longer(-group) %>%
           dplyr::mutate(year = as.numeric(gsub("tot_biom_", "", name)),
                         name = "Total biomass") %>%
-          dplyr::bind_rows( read.csv(paste0(model_dir[i],"/processed/mceval.csv")) %>%
+          dplyr::bind_rows( read.csv(paste0(model_dirs[i],"/processed/mceval.csv")) %>%
                               dplyr::select(paste0("spawn_biom_", yrs)) %>%
                               dplyr::mutate(group = 1) %>%
                               tidyr::pivot_longer(-group) %>%
@@ -90,7 +87,12 @@ plot_compare_biomass_pop <- function(year, model_dirs = NULL)) {
     scico::scale_fill_scico_d(palette = 'batlow', begin = 0.2, end = 0.8) +
     funcr::theme_report() +
     ggplot2::theme(legend.position = c(0.2, .8))
-
-  ggplot2::ggsave( here(paste0(Sys.Date(),"-biomass_compare.png")),
+if(!is.null(savedir)){
+  ggplot2::ggsave( paste0(savedir,"/", Sys.Date(),"-biomass_compare.png"),
   width = 6.5, height = 6.5, units = "in", dpi = 200)
+} else{
+  ggplot2::ggsave( here(paste0( Sys.Date(),"-biomass_compare.png"),
+  width = 6.5, height = 6.5, units = "in", dpi = 200)
+  }
+
 }
