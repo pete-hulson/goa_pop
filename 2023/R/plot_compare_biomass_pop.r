@@ -10,7 +10,7 @@ plot_compare_biomass_pop <- function(year, model_dirs = NULL)) {
   dat = data.frame()
   m = list(rep(NA, length(models)))
   for(i in 1:length(model_dirs)) {
-  mod_name = basename(model_dirs[i])
+  id = basename(model_dirs[i])
 
 
 
@@ -91,6 +91,6 @@ plot_compare_biomass_pop <- function(year, model_dirs = NULL)) {
     funcr::theme_report() +
     ggplot2::theme(legend.position = c(0.2, .8))
 
-  # ggplot2::ggsave(here::here(year, "compare_models", "figs", "compare_est_biomass.png"),
-  # width = 6.5, height = 6.5, units = "in", dpi = 200)
+  ggplot2::ggsave( here(paste0(Sys.Date(),"-biomass_compare.png")),
+  width = 6.5, height = 6.5, units = "in", dpi = 200)
 }
