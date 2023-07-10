@@ -145,7 +145,6 @@ if(MCMC){
 
 
   # recruitment ----
-
   N = REP[grep("Numbers", REP):(grep("Obs_P_fish_age", REP)-2)]
   t = NA
   for(i in 1:length(yrs)){
@@ -162,11 +161,10 @@ if(MCMC){
              recruits = pred_rec) %>%
     write.csv(paste0(model_dir, "/processed/bio_rec_f.csv"), row.names = FALSE)
 
-
   # selectivity ----
   data.frame(age = ages,
              fish = afscassess::rep_item("Fishery_Selectivity"),
-             srv1 = afscassess::rep_item("TWL Survey_Selectivity"),
+             srv1 = afscassess::rep_item("Trawl_Survey_Selectivity"),
              maturity = afscassess::rep_item("Maturity")) %>%
     write.csv(paste0(model_dir, "/processed/selex.csv"), row.names = FALSE)
 
