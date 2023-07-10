@@ -180,27 +180,27 @@ if(MCMC){
 
   #! this will need a switch for multiple surveys
 
-  obs = REP[grep("Obs_P_fish_age",REP):(grep("Pred_P_fish_age",REP)-2)]
-  pred = REP[grep("Pred_P_fish_age",REP):(grep("Obs_P_fish_size",REP)-2)]
+#   obs = REP[grep("Obs_P_fish_age",REP):(grep("Pred_P_fish_age",REP)-2)]
+#   pred = REP[grep("Pred_P_fish_age",REP):(grep("Obs_P_fish_size",REP)-2)]
 
-  obs_l = REP[grep("Obs_P_fish_size",REP):(grep("Pred_P_fish_size",REP)-2)]
-  pred_l = REP[grep("Pred_P_fish_size",REP):(grep("Obs_P_srv1_age",REP)-2)]
+#   obs_l = REP[grep("Obs_P_fish_size",REP):(grep("Pred_P_fish_size",REP)-2)]
+#   pred_l = REP[grep("Pred_P_fish_size",REP):(grep("Obs_P_srv1_age",REP)-2)]
 
-  s_obs = REP[grep("Obs_P_srv1_age",REP):(grep("Pred_P_srv1_age",REP)-2)]
-  s_pred = REP[grep("Pred_P_srv1_age",REP):(grep("Obs_P_srv1_size",REP)-2)]
+#   s_obs = REP[grep("Obs_P_srv1_age",REP):(grep("Pred_P_srv1_age",REP)-2)]
+#   s_pred = REP[grep("Pred_P_srv1_age",REP):(grep("Obs_P_srv1_size",REP)-2)]
 
-  s_obs_l = REP[grep("Obs_P_srv1_size",REP):(grep("Pred_P_srv1_size",REP)-2)]
+#   s_obs_l = REP[grep("Obs_P_srv1_size",REP):(grep("Pred_P_srv1_size",REP)-2)]
 
-  afscassess::purrit(obs, pred, rec_age, plus_age, comp = "age", lenbins = size_bins) %>%
-    write.csv(paste0(model_dir, "/processed/fac.csv"))
+#   afscassess::purrit(obs, pred, rec_age, plus_age, comp = "age", lenbins = size_bins) %>%
+#     write.csv(paste0(model_dir, "/processed/fac.csv"))
 
-  afscassess::purrit(obs_l, pred_l, rec_age, plus_age, comp = "length", lenbins = size_bins) %>%
-    write.csv(paste0(model_dir, "/processed/fsc.csv"))
+#   afscassess::purrit(obs_l, pred_l, rec_age, plus_age, comp = "length", lenbins = size_bins) %>%
+#     write.csv(paste0(model_dir, "/processed/fsc.csv"))
 
-  afscassess::purrit(s_obs, s_pred, rec_age, plus_age, comp = "age", lenbins = size_bins) %>%
-    write.csv(paste0(model_dir, "/processed/sac.csv"))
+#   afscassess::purrit(s_obs, s_pred, rec_age, plus_age, comp = "age", lenbins = size_bins) %>%
+#     write.csv(paste0(model_dir, "/processed/sac.csv"))
 
-  afscassess::purrit(s_obs_l, pred = NULL, rec_age, plus_age, comp = "length", lenbins = size_bins) %>%
-    write.csv(paste0(model_dir, "/processed/ssc.csv"))
+#   afscassess::purrit(s_obs_l, pred = NULL, rec_age, plus_age, comp = "length", lenbins = size_bins) %>%
+#     write.csv(paste0(model_dir, "/processed/ssc.csv"))
 
 }
