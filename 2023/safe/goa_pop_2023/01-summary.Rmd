@@ -1,0 +1,34 @@
+# Executive Summary
+
+Pacific ocean perch in the Gulf of Alaska are assessed on a biennial stock assessment schedule to coincide with the availability of new survey data. Consequently, we present a full stock assessment using a statistical age-structured model. Survey and fishery data are used to estimate population trends and projected future population estimates are used to recommend catch limits. 
+
+## Summary of Changes in Assessment Inputs
+
+*Changes in the input data*: We updated the catch for 2020 and used preliminary catch estimates for 2021-2023 (see Specified catch estimation section), along with 2021 bottom trawl survey biomass, and 2020 fishery age composition. 
+
+*Changes in the assessment methodology*: The assessment methodology is the same as the 2020 assessment.
+
+
+## Summary of Results
+
+For the 2022 fishery, we recommend the maximum allowable ABC of 38,268 t. This ABC is a 6% increase from the 2021 ABC of 36,177 t. The increase is attributed to the model continuing to react to five consecutive survey biomass estimates larger than 1 million tons as well as an increase in survey biomass in 2021 compared to 2019. This also resulted in an 11% higher ABC than the 2022 ABC projected last year. The corresponding reference values for Pacific ocean perch are summarized in the following table, with the recommended ABC and OFL values in bold. The stock is not being subject to overfishing, is not currently overfished, nor is it approaching a condition of being overfished. 
+
+```{r, child= "01a-main_table.Rmd", eval = T}
+
+```
+
+
+Text table of area apportionments (if any) for the recommended one- and two-year ahead ABCs and OFLs, with a brief description of the apportionment methodology.
+
+```{r, child= "01b-apportionment.Rmd", eval = T}
+
+```
+
+
+If so are so kind as to provide tables for the plan team, place them here
+
+```{r, child= "01c-plan_team.Rmd", eval = T}
+
+```
+
+

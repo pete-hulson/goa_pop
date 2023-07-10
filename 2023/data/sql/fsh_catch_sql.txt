@@ -1,0 +1,34 @@
+<SQL>
+SELECT
+  "YEAR" AS "year",
+  "AGENCY_SPECIES_CODE" AS "agency_species_code",
+  "SPECIES_GROUP_NAME" AS "species_group_name",
+  "SPECIES_NAME" AS "species_name",
+  "SPECIES_GROUP_CODE" AS "species_group_code",
+  "RETAINED_OR_DISCARDED" AS "retained_or_discarded",
+  "TRIP_TARGET_CODE" AS "trip_target_code",
+  "TRIP_TARGET_NAME" AS "trip_target_name",
+  "CDQ_FLAG" AS "cdq_flag",
+  "FMP_GEAR" AS "fmp_gear",
+  "AGENCY_GEAR_CODE" AS "agency_gear_code",
+  "FMP_AREA" AS "fmp_area",
+  "FMP_SUBAREA" AS "fmp_subarea",
+  "REPORTING_AREA_CODE" AS "reporting_area_code",
+  "WEEK_END_DATE" AS "week_end_date",
+  "WEIGHT_POSTED" AS "weight_posted",
+  "VESSEL_ID" AS "vessel_id",
+  "VES_AKR_LENGTH" AS "ves_akr_length",
+  "SAMPLING_STRATA" AS "sampling_strata",
+  "SAMPLING_STRATA_NAME" AS "sampling_strata_name",
+  "SAMPLING_STRATA_DEPLOYMENT_CATEGORY" AS "sampling_strata_deployment_category",
+  "SAMPLING_STRATA_SELECTION_RATE" AS "sampling_strata_selection_rate",
+  "DEPLOYMENT_TRIP_PK" AS "deployment_trip_pk",
+  "DEPLOYMENT_TRIP_START_DATE" AS "deployment_trip_start_date",
+  "DEPLOYMENT_TRIP_END_DATE" AS "deployment_trip_end_date",
+  "ADFG_STAT_AREA_CODE" AS "adfg_stat_area_code",
+  "AKR_STATE_FEDERAL_WATERS_CODE" AS "akr_state_federal_waters_code"
+FROM (council.comprehensive_blend_ca) "q01"
+WHERE
+  ("YEAR" <= 2023.0) AND
+  ("FMP_SUBAREA" IN ('WG', 'CG', 'WY', 'EY', 'SE')) AND
+  ("SPECIES_GROUP_CODE" IN ('POPA'))

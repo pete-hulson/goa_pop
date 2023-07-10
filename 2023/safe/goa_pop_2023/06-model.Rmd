@@ -1,0 +1,82 @@
+# Analytical approach
+
+## General Model Structure
+Prior to 2001, the stock assessment was based on an age-structured model using an early FORTRAN version of the stock synthesis framework (Methot 1990). Since then it was modified and written in to AD Model Builder software (see Fournier et al. 2012 for recent reference) as described in Courtney et al. (2007). The population dynamics, with parameter descriptions and notation are shown in Table 9-11. The formulae to estimate the observed data by the POP assessment are shown in Table 9-12. Finally, the likelihood and penalty functions used to optimize the POP assessment are shown in Table 9-13.
+Since its initial adaptation in 2001, the models’ attributes have been explored and changes have been made to the template to adapt to POP and other species. The following changes have been adopted within the POP assessment since the initial model in 2001:
+
+-	2003: Size to age matrix added for the 1960s and 1970s to adjust for density-dependent growth, natural mortality and bottom trawl survey catchability estimated within model
+- 2009: Fishery selectivity estimated for three time periods describing the transition from a foreign to domestic fishery, MCMC projections used with a pre-specified proportion of ABC for annual catch
+- 2014: Maturity at age estimated conditionally with addition of new maturity data
+- 2015: Extended ageing error matrix adopted to improve fit to plus age group and adjacent age classes
+- 2017: Length bins for fishery length composition data set at 1cm, removed 1984 and 1987 trawl survey data, time block added to fishery selectivity starting in 2007 to coincide with the Central GOA rockfish program
+- 2020: Fishery age composition data constructed with age-length key, prior for bottom trawl catchability set at 1.15 (Jones et al. 2021), and prior for natural mortality set at 0.0614 (Hamel 2015)
+
+## Description of Alternative Models
+
+Given recent developments and the results of the CIE review, we only present one model configuration which matches the one accepted in 2020 (but with updated data).
+
+## Parameters Estimated Outside the Assessment Model
+
+Growth of POP is estimated using length-stratified methods to estimate mean length and weight at age from the bottom trawl survey that are then modeled with the von Bertlanffy growth curve (Hulson et al. 2015). Two size to age transition models are employed in the POP assessment, the first for data from the 1960s and 1970s, the second for data after the 1980s. The additional size to age transition matrix is used to represent a lower density-dependent growth rate in the 1960s and 1970s (Hanselman et al. 2003a). 
+
+The von Bertlanffy parameters used for the 1960s and 1970s size to age transition matrix are:
+
+$L_\infty$ = 41.6 cm, $\kappa$ = 0.15	$t_0$ = -1.08
+
+The von Bertlanffy parameters used for the post 1980s size to age transition matrix are:
+
+$L_\infty$ = 41.1 cm	$\kappa$ = 0.18	$t_0$ = -0.49
+
+The size to age conversion matrices are constructed by adding normal error with a standard deviation equal to the bottom trawl survey data for the probability of different ages for each size class. This is estimated with a linear relationship between the standard deviation in length with age. The linear parameters used for the 1960s and 1970s size to age transition matrix are (a-intercept, b-slope):
+
+a = 0.42	b = 1.38
+The linear parameters used for the post 1980s size to age transition matrix are (a-intercept, b-slope):
+
+a = -0.02	b = 2.18
+
+Weight-at-age was estimated with weight at age data from the same data set as the length at age. The estimated growth parameters are shown below. A correction of ($w_\infty$-$w_{25}$)/2 was used for the weight of the pooled ages (Schnute et al. 2001).
+
+$w_\infty$ = 901 g	$\kappa$ = 0.20	$t_0$ = -0.37	$\beta$ = 3.04
+The above growth parameters are updated for each assessment with the addition of new age, length, and weight data from the trawl survey. The average percent change in spawning biomass estimated from the current assessment with previous growth parameters compared to using the updated growth information above was less than 0.5%.
+
+Aging error matrices were constructed by assuming that the break-and-burn ages were unbiased but had a given amount of normal error around each age based on percent agreement tests conducted at the AFSC Age and Growth lab. In 2015 an extended ageing error matrix was implemented into the POP assessment in order to improve the fit to the plus age group and adjacent age classes (Hulson et al. 2015). For a data plus age group of 25, the resulting model plus age group was 29 so that 99.9% of the fish greater than age 29 were within the 25 plus age group of the data.
+
+## Parameters Estimated Inside the Assessment Model
+
+Natural mortality ($M$), catchability ($q$) and recruitment deviations ($\sigma_r$) are estimated with the use of prior distributions as penalties. The prior mean for $M$ is based on maximum age from Hamel (2015). Natural mortality is a notoriously difficult parameter to estimate within the model so we assign a relatively precise prior CV of 10%. Catchability is a parameter that is somewhat unknown for rockfish, so while we assign it a prior mean of 1 (assuming all fish in the area swept are captured and there is no herding of fish from outside the area swept, and that there is no effect of untrawlable grounds), we assign it a less precise CV of 45%. This allows the parameter more freedom than that allowed to natural mortality. Recruitment deviation is the amount of variability that the model allows for recruitment estimates. Rockfish are thought to have highly variable recruitment, so we assign a high prior mean to this parameter of 1.7 with a CV of 20%. 
+
+Fishery selectivity is estimated within four time periods that coincide with the transition from a foreign to domestic fishery. These time periods are:
+- 1961-1976: This period represented the massive catches and overexploitation by the foreign fisheries which slowed considerably by 1976. We do not have age data from this period to examine, but we can assume the near pristine age-structure was much older than now, and that at the high rate of exploitation, all vulnerable age-classes were being harvested. For these reasons we chose to only consider asymptotic (logistic) selectivity.
+- 1977-1995: This period represents the change-over from the foreign fleet to a domestic fleet, but was still dominated by large factory trawlers, which generally would tow deeper and further from port.
+-	1996-2006: During this period we have noted the emergence of smaller catcher-boats, semi-pelagic trawling and fishing cooperatives. The length of the fishing season has also been recently greatly expanded. 
+-	2007-Present: This period coincides with the start of the Rockfish Program in the Central Gulf, a fishing cooperative that has influenced the behavior and composition (catcher versus factory trawlers) of the fishery.
+
+Fishery selectivity across these time periods transitions from an asymptotic selectivity from 1961-1976 into dome-shaped fishery selectivity after 1977. We fitted a logistic curve for the first block, an averaged logistic-gamma in the 2nd block, and a gamma function for the 3rd  and 4th blocks. Bottom trawl survey selectivity is estimated to be asymptotic with the logistic curve.
+
+Maturity-at-age is modeled with the logistic function conditionally within the assessment following the method presented in Hulson et al. (2011). Parameter estimates for maturity-at-age are obtained by fitting two datasets collected on female POP maturity from Lunsford (1999) and Conrath and Knoth (2013). Parameters for the logistic function describing maturity-at-age are estimated conditionally in the model so that uncertainty in model results (e.g., ABC) can be linked to uncertainty in maturity parameter estimates. 
+
+Other parameters estimated conditionally include, but are not limited to: mean recruitment, fishing mortality, and spawners per recruit levels. The numbers of estimated parameters for the recommended model are shown below. Other derived parameters are described in Box 1. 
+
+Parameter   Symbol     Number    
+------- ------ ---------- 
+Natural mortality M        1         
+    Catchability 123        123        
+      Log-mean-recruitment 1            1         
+      
+ 
+	q	1
+	μ_r	1
+Recruitment variability	σ_r	1
+Spawners-per-recruit levels	F_(35%),F_(40%),F_(100%)  	3
+Recruitment deviations	ε_y^r	87
+Average fishing mortality	μ_f	1
+Fishing mortality deviations	ε_y^f	61
+Fishery selectivity coefficients	s_a^f	6
+Survey selectivity coefficients	s_a^t	2
+Maturity-at-age coefficients	m ̂_a	2
+Total	 	166
+
+
+## Model Uncertainty
+Evaluation of model uncertainty is obtained through a Markov Chain Monte Carlo (MCMC) algorithm (Gelman et al. 1995). The chain length of the MCMC was 10,000,000 and was thinned to one iteration out of every 2,000. We omit the first 1,000,000 iterations to allow for a burn-in period. We use these MCMC methods to provide further evaluation of uncertainty in the results below including 95% credible intervals for some parameters (computed as the 5th and 95th percentiles of the MCMC samples).
+
