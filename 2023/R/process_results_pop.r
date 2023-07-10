@@ -101,7 +101,6 @@ if(MCMC){
 } ## end if MCMC == T
  
   # catch data ----
-
   pred = base::strsplit(REP[grep("Pred_Catch", REP)], " ")
   r1 = which(pred[[1]] == "Pred_Catch")
   r2 = which(pred[[1]] == "Pred_catch_later")
@@ -117,8 +116,6 @@ if(MCMC){
   data.frame(year = yrs, obs = obs, pred = pred) %>%
     write.csv(paste0(model_dir, "/processed/catch.csv"), row.names = FALSE)
 
-
-
   # survey data ----
   syr = REP[grep("Survey Biomass",REP)[1]:(grep("Survey Biomass",REP)[2]-2)][2]
   syr = base::strsplit(syr," ")
@@ -130,7 +127,7 @@ if(MCMC){
   obs = subset(obs[[1]], obs[[1]]!="")
   obs = as.numeric(obs[2:length(obs)])
 
-  se = REP[grep("Survey Biomass",REP)[1]:(grep("Survey Biomass",REP)[2]-2)][6]
+  se = REP[grep("Survey Biomass",REP)[1]:(grep("Survey Biomass",REP)[2]-2)][5]
   se = base::strsplit(se," ")
   se = subset(se[[1]], se[[1]]!="")
   se = as.numeric(se[2:length(se)])
