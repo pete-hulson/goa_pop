@@ -163,7 +163,7 @@ if(MCMC){
 
   # selectivity ----
   data.frame(age = ages,
-             fish = afscassess::rep_item("Fishery_Selectivity"),
+             fish = afscassess::rep_item("Fishery_Selectivity_2007-2021"),
              srv1 = afscassess::rep_item("Trawl_Survey_Selectivity"),
              maturity = afscassess::rep_item("Maturity")) %>%
     write.csv(paste0(model_dir, "/processed/selex.csv"), row.names = FALSE)
