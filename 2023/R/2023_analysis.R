@@ -10,7 +10,7 @@
 devtools::unload("afscassess")
 
 # devtools::install_github("afsc-assessments/afscdata", force = TRUE)
-devtools::install_github("BenWilliams-NOAA/afscassess@devph", force = TRUE)
+# devtools::install_github("BenWilliams-NOAA/afscassess@devph", force = TRUE)
 # devtools::install_github("BenWilliams-NOAA/afscassess", force = TRUE)
 
 # library(afscdata)
