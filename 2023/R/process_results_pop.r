@@ -192,6 +192,8 @@ if(MCMC){
   # size comps ----
   size_bins <- as.numeric(strsplit(DAT[grep('len_bin_labels', DAT)+1]," ")[[1]])
 
+  cat('processed results for', basename(model_dir),'\n')
+
   #! this will need a switch for multiple surveys
 
 #   obs = REP[grep("Obs_P_fish_age",REP):(grep("Pred_P_fish_age",REP)-2)]
