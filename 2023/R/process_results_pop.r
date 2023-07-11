@@ -42,7 +42,6 @@ DAT <- readLines(dats[grepl("*.dat",dats) & !grepl('proj',dats)])
 REP <- readLines(list.files(model_dir, pattern="*.rep", full.names = TRUE)) 
 modname <- gsub(".rep","",basename(list.files(model_dir, pattern="*.rep", full.names = TRUE))) ## strip model name from rep file
 CTL <- readLines(list.files(model_dir, pattern="*.ctl", full.names = TRUE)) 
-
 STD <- read.delim(list.files(model_dir, pattern="*.std", full.names = TRUE), sep="", header = TRUE) 
 
 
@@ -63,6 +62,19 @@ STD <- read.delim(list.files(model_dir, pattern="*.std", full.names = TRUE), sep
                      tidytable::mutate.(ages = replace(ages, duplicated(ages), NA),
                                         styr_rec = replace(styr_rec, duplicated(styr_rec), NA))) %>%
     write.csv(paste0(model_dir, "/processed/ages_yrs.csv"), row.names = FALSE)
+
+## pull out likelihoods ----
+
+LIKE <- do.call(rbind, lapply(unlist(base::strsplit(REP[grep('Likelihood|Priors|Penalty', REP)][2:18],"\n")), FUN = function(x){
+  tmpl <- unlist(strsplit(x," "))
+  tempr <- matrix(c(tmpl[1], tmpl[2], paste0(tmpl[3:length(tmpl)], collapse = ' ')), ncol = 3)
+  return(tempr)
+  })) %>% 
+  data.frame() %>%
+  select(weight = X1, value = X2, variable = X3) %>% 
+  mutate(model = basename(model_dir))
+write.csv(LIKE, paste0(model_dir, "/processed/likelihoods.csv"), row.names = FALSE)
+
 
   # MCMC parameters ----
 if(MCMC){
