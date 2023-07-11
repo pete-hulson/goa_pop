@@ -65,7 +65,7 @@ STD <- read.delim(list.files(model_dir, pattern="*.std", full.names = TRUE), sep
 
 ## pull out likelihoods ----
 ## this function extracts & binds them rowwise
-LIKE <- do.call(rbind, 
+do.call(rbind, 
 lapply(unlist(base::strsplit(REP[grep('Likelihood|Priors|Penalty|Objective', REP)][2:19],"\n")), 
 FUN = function(x){
   tmpl <- unlist(strsplit(x," "))
@@ -75,7 +75,8 @@ FUN = function(x){
   data.frame() %>%
   mutate(value = as.numeric(X2)) %>%
   select(weight = X1, value , variable = X3) %>% 
-  mutate(model = basename(model_dir)) %>%
+  mutate(model = basename(model_dir),
+    weight = ifelse(weight == '', 1, weight)) %>%
   write.csv(., paste0(model_dir, "/processed/likelihoods.csv"), row.names = FALSE)
 
 
