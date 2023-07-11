@@ -75,12 +75,8 @@ FUN = function(x){
   data.frame() %>%
   mutate(value = as.numeric(X2)) %>%
   select(weight = X1, value , variable = X3) %>% 
-  mutate(model = basename(model_dir))
-## scale the used likelihoods such that the minimum value is zero
-min_like <- min(LIKE$value[LIKE$value>0])
-LIKE %>% 
-mutate(value_adj = ifelse(value == 0, value, value-min_like)) %>%
-write.csv(., paste0(model_dir, "/processed/likelihoods.csv"), row.names = FALSE)
+  mutate(model = basename(model_dir)) %>%
+  write.csv(., paste0(model_dir, "/processed/likelihoods.csv"), row.names = FALSE)
 
 
   # MCMC parameters ----
