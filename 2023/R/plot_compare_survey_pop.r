@@ -38,7 +38,7 @@ savedir = NULL) {
     ggplot2::expand_limits(y = 0) +
     funcr::theme_report() +
     ggplot2::theme(legend.justification=c(1,0),
-                   legend.position=c(0.2,0.75))
+                   legend.position=c(0.4,0.75))
 
 
 if(!is.null(savedir)){
