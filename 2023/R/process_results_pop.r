@@ -65,7 +65,9 @@ STD <- read.delim(list.files(model_dir, pattern="*.std", full.names = TRUE), sep
 
 ## pull out likelihoods ----
 
-LIKE <- do.call(rbind, lapply(unlist(base::strsplit(REP[grep('Likelihood|Priors|Penalty', REP)][2:18],"\n")), FUN = function(x){
+LIKE <- do.call(rbind, 
+lapply(unlist(base::strsplit(REP[grep('Likelihood|Priors|Penalty|Objective', REP)][2:19],"\n")), 
+FUN = function(x){
   tmpl <- unlist(strsplit(x," "))
   tempr <- matrix(c(tmpl[1], tmpl[2], paste0(tmpl[3:length(tmpl)], collapse = ' ')), ncol = 3)
   return(tempr)
