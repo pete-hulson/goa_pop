@@ -64,7 +64,7 @@ STD <- read.delim(list.files(model_dir, pattern="*.std", full.names = TRUE), sep
     write.csv(paste0(model_dir, "/processed/ages_yrs.csv"), row.names = FALSE)
 
 ## pull out likelihoods ----
-
+## this function extracts & binds them rowwise
 LIKE <- do.call(rbind, 
 lapply(unlist(base::strsplit(REP[grep('Likelihood|Priors|Penalty|Objective', REP)][2:19],"\n")), 
 FUN = function(x){
@@ -73,9 +73,14 @@ FUN = function(x){
   return(tempr)
   })) %>% 
   data.frame() %>%
-  select(weight = X1, value = X2, variable = X3) %>% 
+  mutate(value = as.numeric(X2)) %>%
+  select(weight = X1, value , variable = X3) %>% 
   mutate(model = basename(model_dir))
-write.csv(LIKE, paste0(model_dir, "/processed/likelihoods.csv"), row.names = FALSE)
+## scale the used likelihoods such that the minimum value is zero
+min_like <- min(LIKE$value[LIKE$value>0])
+LIKE %>% 
+mutate(value_adj = ifelse(value == 0, value, value-min_like)) %>%
+write.csv(., paste0(model_dir, "/processed/likelihoods.csv"), row.names = FALSE)
 
 
   # MCMC parameters ----
