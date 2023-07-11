@@ -1,10 +1,7 @@
-plot_compare_survey_pop <- function(year, models = c('2022, default', '2022, lognormal')) {
+plot_compare_survey_pop <- function(year, model_dirs = c('2022, default', '2022, lognormal'),
+savedir = NULL) {
 
-  if (!dir.exists(here::here(year, "compare_models"))){
-    dir.create(here::here(year, "compare_models"))
-  }
-
-    dat = data.frame()
+  dat = data.frame()
   m = list(rep(NA, length(model_dirs)))
 
   for(i in 1:length(model_dirs)){
@@ -41,8 +38,14 @@ plot_compare_survey_pop <- function(year, models = c('2022, default', '2022, log
     ggplot2::expand_limits(y = 0) +
     funcr::theme_report() +
     ggplot2::theme(legend.justification=c(1,0),
-                   legend.position=c(0.8,0.70))
+                   legend.position=c(0.2,0.75))
 
-  # ggplot2::ggsave(here::here(year, "compare_models", "figs", "compare_est_survey.png"),
-  # width = 6.5, height = 6.5, units = "in", dpi = 200)
+
+if(!is.null(savedir)){
+  ggplot2::ggsave( paste0(savedir,"/", Sys.Date(),"-survey_compare.png"),
+  width = 6.5, height = 6.5, units = "in", dpi = 200)
+  }else{
+  ggplot2::ggsave( here(paste0( Sys.Date(),"-survey_compare.png")),
+  width = 6.5, height = 6.5, units = "in", dpi = 200)
+  }
 }
