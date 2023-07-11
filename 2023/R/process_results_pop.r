@@ -7,8 +7,8 @@
 #' @param mcsave the number of mcmcs saved 
 #' @param ... future functions
 
-process_results_pop <- function(year, model_dir, 
-                            rec_age, plus_age, MCMC=FALSE, no_mcmc = 100000, mcsave=100, ...){
+process_results_pop <- function(year=2023, model_dir, 
+                            rec_age=2, plus_age=25, MCMC=FALSE, no_mcmc = 100000, mcsave=100, ...){
 
   # setup
 
