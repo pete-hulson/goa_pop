@@ -4,7 +4,7 @@
 plot_compare_biomass_pop <- function(year, model_dirs = NULL, savedir = NULL) {
 
   dat = data.frame()
-  m = list(rep(NA, length(models)))
+  m = list(rep(NA, length(model_dirs)))
 
   for(i in 1:length(model_dirs)){
     id = basename(model_dirs[i])
@@ -43,12 +43,12 @@ plot_compare_biomass_pop <- function(year, model_dirs = NULL, savedir = NULL) {
                      name = rep(c("Total biomass", "Spawning biomass"), each = 2 * length(unique(dat$year))),
                      biomass = c(rep(0, length(unique(dat$year))), rep(160, length(unique(dat$year))),
                                  rep(0, length(unique(dat$year))), rep(60, length(unique(dat$year)))),
-                     model = NA)
-
-  dat %>%
-    ggplot2::ggplot(ggplot2::aes(year, biomass, color = model, fill = model)) +
+                     model = NA) 
+ 
+    ggplot2::ggplot(data = subset(dat, year <2021), ggplot2::aes(year, biomass, color = model, 
+    fill = model)) +
     ggplot2::geom_blank(data = dummy) +
-    ggplot2::geom_line() +
+    ggplot2::geom_line(aes(y = median)) +
     ggplot2::geom_ribbon(ggplot2::aes(ymin = lci, ymax = uci), alpha = 0.1, color = NA) +
     ggplot2::facet_wrap(~name, dir = "v", scales = "free_y") +
     ggplot2::scale_y_continuous(name = "Biomass (kt)", labels = scales::comma) +
