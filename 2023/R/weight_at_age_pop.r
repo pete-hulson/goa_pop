@@ -1,4 +1,5 @@
-weight_at_age_pop <- function(year, admb_home = NULL, rec_age, area = "goa", alt=NULL, save = TRUE){
+weight_at_age_pop <- function(year, admb_home = NULL, rec_age, 
+area = "goa", alt=NULL, save = TRUE, fleet = 'survey'){
 
   area = tolower(area)
   if(is.null(admb_home)){
@@ -17,6 +18,7 @@ weight_at_age_pop <- function(year, admb_home = NULL, rec_age, area = "goa", alt
 
 
   # data ----
+  if(fleet == 'survey'){
   vroom::vroom(here::here(year, "data", "raw", "bts_length_data.csv")) %>%
     dplyr::rename_with(tolower) %>%
     dplyr::filter(year >= 1990, !is.na(length)) -> length_data_raw
@@ -34,7 +36,7 @@ weight_at_age_pop <- function(year, admb_home = NULL, rec_age, area = "goa", alt
     dplyr::select(year, age, length, weight) %>%
     dplyr::filter(year >= 1990, !is.na(age))  %>%
     dplyr::select(-year) -> age_data_raw
-
+}
 
   # Get parameters
   ages = sort(unique(age_data_raw$age))
