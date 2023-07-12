@@ -1,4 +1,4 @@
-weight_at_age_pop <- function(year, admb_home = NULL, rec_age, 
+weight_at_age_pop <- function(year, admb_home = NULL, rec_age=2, 
 area = "goa", alt=NULL, save = TRUE, fleet = 'survey'){
 
   area = tolower(area)
@@ -34,6 +34,7 @@ area = "goa", alt=NULL, save = TRUE, fleet = 'survey'){
     dplyr::select(year, age, length, weight) %>%
     dplyr::filter(year >= 1990, !is.na(age))  %>%
     dplyr::select(-year) -> age_data_raw
+
 } else{
 vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_length_data.txt")) %>%
     dplyr::rename_with(tolower) %>%
@@ -46,11 +47,12 @@ vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_length_data.txt")) %
       dplyr::group_by(age, length) %>%
       dplyr::summarise(frequency = dplyr::n()) -> length_data_raw
   }
-  
+
   vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_specimen_data.txt")) %>%
     dplyr::rename_with(tolower) %>%
     dplyr::select(year, age, length, weight) %>%
-    dplyr::filter( !is.na(age))  %>%
+    dplyr::filter(!is.na(age))  %>%
+    dplyr::mutate(length = length*10)    %>%
     dplyr::select(-year) -> age_data_raw
 }
 
@@ -74,10 +76,11 @@ vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_length_data.txt")) %
     age_data_1 = rbind(age_data_1,t)
   }
   # Get Age-length key together
-  n_al = table(age_data_1$age, age_data_1$length)
-  n_l = colSums(n_al)
-  r = which(n_l<2)
+  n_al = table(age_data_1$age, age_data_1$length) ## sample size at age, length
+  n_l = colSums(n_al) ## sample size at length
+  r = which(n_l<2) ## index lengths with 0 or 1 sample
 
+## drop the age records for which there are 0 or 1 sample
   if(length(r)>0){
     n_l = n_l[-r]
     n_al = n_al[,-r]
@@ -88,8 +91,10 @@ vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_length_data.txt")) %
   N_l = matrix(nrow=nlengths)
   rownames(N_l) = lengths
 
+## tabulate freq counts for each specific l
   for(l in 1:nlengths){
-    N_l[l,1] = sum(subset(length_data_raw$frequency, length_data_raw$length==lengths[l]))
+    N_l[l,1] = sum(subset(length_data_raw$frequency, 
+    length_data_raw$length==lengths[l]))
   }
 
   N_al = matrix(0, nrow=nages, ncol=nlengths)
@@ -122,7 +127,7 @@ vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_length_data.txt")) %
         }
       }
 
-      alpha_l[l] = N_l[l] / sum(N_l)
+      alpha_l[l] = N_l[l] / sum(N_l) 
       theta_la[a,l] = n_al[a,l] / sum(n_al[,l])
       r_la[a,l] = alpha_l[l] * theta_la[a,l]
     }
