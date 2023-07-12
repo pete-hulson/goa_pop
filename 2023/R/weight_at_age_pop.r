@@ -8,10 +8,10 @@ area = "goa", alt=NULL, save = TRUE, fleet = 'survey'){
     R2admb::setup_admb(admb_home)
   }
 
-  if (!file.exists(here::here(year,"data", "output", "ae_model.csv"))){
+  if (!file.exists(here::here('goa_pop',year,"data", "output", "ae_model.csv"))){
     stop("You must first run the age-error function 'ageage()")
   } else {
-    nages_m = nrow(vroom::vroom(here::here(year, "data", "output", "ae_model.csv")))
+    nages_m = nrow(vroom::vroom(here::here('goa_pop',year, "data", "output", "ae_model.csv")))
   }
   ages_m = rec_age:(rec_age + nages_m - 1)
 
@@ -166,12 +166,12 @@ vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_length_data.txt")) %
 
   if(!is.null(alt)) {
     vroom::vroom_write(WaA_stats,
-                       here::here(year, alt, "data", 
+                       here::here('goa_pop',year, alt, "data", 
                        paste0(fleet,"_waa_stats.csv")), ",")
   } else {
     vroom::vroom_write(WaA_stats,
-                       here::here(year, "data", "output", 
-                       paste0(fleet,"_waa_stats.csv"))), ",")
+                       here::here('goa_pop',year, "data", "output", 
+                       paste0(fleet,"_waa_stats.csv")), ",")
   }
 
 
@@ -189,10 +189,13 @@ vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_length_data.txt")) %
 
   # Write data
   if(!is.null(alt)) {
-    vroom::vroom_write(lw_mdl_data, here::here(year, alt, "data", "wal_stats.csv"), ",")
+    vroom::vroom_write(lw_mdl_data, here::here('goa_pop',
+    year, alt, "data",    paste0(fleet,"_wal_stats.csv"))), ",")
   } else {
     vroom::vroom_write(lw_mdl_data,
-                       here::here(year, "data", "output", "wal_stats.csv"), ",")
+                       here::here('goa_pop',
+                       year, "data", "output",  
+                        paste0(fleet,"_wal_stats.csv")), ",")
   }
 
 
@@ -207,7 +210,7 @@ vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_length_data.txt")) %
           "# SD in Observed mean weight (SD_Wbar)",
           paste(lw_mdl_data$SD_Wbar, collapse=" "))
 
-  setwd(here::here(year, "data", "models", "allometric"))
+  setwd(here::here('goa_pop',year, "data", "models", "allometric"))
   write.table(DAT, "allometric.dat", quote=FALSE,
               row.names=FALSE, col.names=FALSE)
 
@@ -224,12 +227,13 @@ vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_length_data.txt")) %
   allo = data.frame(alpha_lw = alpha_lw, beta_lw = beta_lw)
 
   if(!is.null(alt)) {
-    vroom::vroom_write(allo, here::here(year, alt, "data", "alpha_beta_lw.csv"), ",")
+    vroom::vroom_write(allo, here::here('goa_pop',year, alt, "data", paste0(fleet,"_alpha_beta_lw.csv")), ",")
   } else {
-    vroom::vroom_write(allo, here::here(year, "data", "output", "alpha_beta_lw.csv"), ",")
+    vroom::vroom_write(allo, here::here('goa_pop',year, "data", "output", 
+    paste0(fleet,"_alpha_beta_lw.csv")), ",")
   }
 
-  setwd(here::here(year, "data", "models", "wvonb"))
+  setwd(here::here('goa_pop',year, "data", "models", "wvonb"))
 
   # Run LVBmodel and estimate mean weight
   PIN <- c("# Parameter starting values for LVB model of mean weight",
@@ -260,7 +264,7 @@ vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_length_data.txt")) %
 
   REP <- readLines("wvbl.rep", warn=FALSE)
 
-  setwd(here::here())
+  setwd(here::here('goa_pop'))
 
   Winf = as.numeric(strsplit(REP[grep("Winf", REP)[1]], " ")[[1]][2])
   k = as.numeric(strsplit(REP[grep("k", REP)[1]], " ")[[1]][2])
@@ -272,11 +276,11 @@ vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_length_data.txt")) %
   Wbar_params = cbind(Winf, k, t0, beta_lw)
 
   if(!is.null(alt)) {
-    write.csv(Wbar_params, here::here(year, alt, "data", "Wbar_params.csv"))
-    write.csv(Wbar, here::here(year, alt, "data", "waa.csv"))
+    write.csv(Wbar_params, here::here('goa_pop',year, alt, "data", paste0(fleet,"_wbar_params.csv")))
+    write.csv(Wbar, here::here('goa_pop',year, alt, "data", paste0(fleet,"waa.csv")))
   } else {
-    write.csv(Wbar_params, here::here(year, "data", "output", "Wbar_params.csv"))
-    write.csv(Wbar, here::here(year, "data", "output", "waa.csv"))
+    write.csv(Wbar_params, here::here('goa_pop',year, "data", "output", paste0(fleet,"_wbar_params.csv")))
+    write.csv(Wbar, here::here('goa_pop',year, "data", "output", paste0(fleet,"waa.csv")))
   }
 
   Wbar
