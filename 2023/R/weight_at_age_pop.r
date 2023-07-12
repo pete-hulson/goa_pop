@@ -39,7 +39,8 @@ area = "goa", alt=NULL, save = TRUE, fleet = 'survey'){
 } else{
 vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_length_data.txt")) %>%
     dplyr::rename_with(tolower) %>%
-    dplyr::filter(!is.na(length)) -> length_data_raw
+    dplyr::filter(!is.na(length)) %>%
+    dplyr::mutate(length = length*10) -> length_data_raw
 
   if(!("frequency" %in% colnames(length_data_raw))){
     length_data_raw %>%
