@@ -49,7 +49,7 @@ vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_length_data.txt")) %
   }
 
 
-  vroom::vroom(here::here(year, "data", "raw", "fsh_specimen_data.txt")) %>%
+  vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_specimen_data.txt")) %>%
     dplyr::rename_with(tolower) %>%
     dplyr::select(year, age, length, weight) %>%
     dplyr::filter(year >= 1990, !is.na(age))  %>%
@@ -166,10 +166,12 @@ vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_length_data.txt")) %
 
   if(!is.null(alt)) {
     vroom::vroom_write(WaA_stats,
-                       here::here(year, alt, "data", "waa_stats.csv"), ",")
+                       here::here(year, alt, "data", 
+                       paste0(fleet,"_waa_stats.csv")), ",")
   } else {
     vroom::vroom_write(WaA_stats,
-                       here::here(year, "data", "output", "waa_stats.csv"), ",")
+                       here::here(year, "data", "output", 
+                       paste0(fleet,"_waa_stats.csv"))), ",")
   }
 
 
