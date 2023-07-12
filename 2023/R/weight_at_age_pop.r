@@ -19,7 +19,7 @@ area = "goa", alt=NULL, save = TRUE, fleet = 'survey'){
 
   # data ----
   if(fleet == 'survey'){
-  vroom::vroom(here::here(year, "data", "raw", "bts_length_data.csv")) %>%
+  vroom::vroom(here::here('goa_pop',year, "data", "raw", "bts_length_data.csv")) %>%
     dplyr::rename_with(tolower) %>%
     dplyr::filter(year >= 1990, !is.na(length)) -> length_data_raw
 
@@ -31,13 +31,13 @@ area = "goa", alt=NULL, save = TRUE, fleet = 'survey'){
   }
 
 
-  vroom::vroom(here::here(year, "data", "raw", "bts_specimen_data.csv")) %>%
+  vroom::vroom(here::here('goa_pop',year, "data", "raw", "bts_specimen_data.csv")) %>%
     dplyr::rename_with(tolower) %>%
     dplyr::select(year, age, length, weight) %>%
     dplyr::filter(year >= 1990, !is.na(age))  %>%
     dplyr::select(-year) -> age_data_raw
 } else{
-vroom::vroom(here::here(year, "data", "raw", "fsh_length_data.csv")) %>%
+vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_length_data.txt")) %>%
     dplyr::rename_with(tolower) %>%
     dplyr::filter(!is.na(length)) -> length_data_raw
 
@@ -49,7 +49,7 @@ vroom::vroom(here::here(year, "data", "raw", "fsh_length_data.csv")) %>%
   }
 
 
-  vroom::vroom(here::here(year, "data", "raw", "fsh_specimen_data.csv")) %>%
+  vroom::vroom(here::here(year, "data", "raw", "fsh_specimen_data.txt")) %>%
     dplyr::rename_with(tolower) %>%
     dplyr::select(year, age, length, weight) %>%
     dplyr::filter(year >= 1990, !is.na(age))  %>%
