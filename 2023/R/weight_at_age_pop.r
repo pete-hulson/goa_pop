@@ -38,7 +38,7 @@ area = "goa", alt=NULL, save = TRUE, fleet = 'survey'){
 } else{
 vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_length_data.txt")) %>%
     dplyr::rename_with(tolower) %>%
-    dplyr::filter(!is.na(length)) %>%
+    dplyr::filter(year >= 1990,  !is.na(length)) %>%
     dplyr::mutate(length = length*10) -> length_data_raw
 
   if(!("frequency" %in% colnames(length_data_raw))){
@@ -51,7 +51,7 @@ vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_length_data.txt")) %
   vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_specimen_data.txt")) %>%
     dplyr::rename_with(tolower) %>%
     dplyr::select(year, age, length, weight) %>%
-    dplyr::filter(!is.na(age))  %>%
+    dplyr::filter(year >= 1990, !is.na(age))  %>%
     dplyr::mutate(length = length*10, weight = weight*1000)    %>%
     dplyr::select(-year) -> age_data_raw
 } ## end ifelse for fleet
@@ -193,7 +193,7 @@ vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_length_data.txt")) %
   # Write data
   if(!is.null(alt)) {
     vroom::vroom_write(lw_mdl_data, here::here('goa_pop',
-    year, alt, "data",    paste0(fleet,"_wal_stats.csv"))), ",")
+    year, alt, "data",    paste0(fleet,"_wal_stats.csv")), ",")
   } else {
     vroom::vroom_write(lw_mdl_data,
                        here::here('goa_pop',
@@ -218,14 +218,13 @@ vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_length_data.txt")) %
               row.names=FALSE, col.names=FALSE)
 
   # run model
-
   R2admb::compile_admb("allometric", verbose = TRUE)
   R2admb::run_admb("allometric", verbose = TRUE)
   par = readLines("allometric.par", warn = FALSE)
   alpha_lw = as.numeric(strsplit(par[grep("alpha", par) + 1]," ")[[1]])
   beta_lw = as.numeric(strsplit(par[grep("beta", par) + 1]," ")[[1]])
 
-  setwd(here::here())
+  setwd(here::here('goa_pop'))
 
   allo = data.frame(alpha_lw = alpha_lw, beta_lw = beta_lw)
 

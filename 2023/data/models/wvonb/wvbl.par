@@ -1,9 +1,9 @@
-# Number of parameters = 3 Objective function value = 184.485723756443  Maximum gradient component = 8.48000753089944e-05
+# Number of parameters = 3 Objective function value = 156.411995409399  Maximum gradient component = 4.35421882157138e-05
 # Winf:
-897.422361091
+775.339967591
 # k:
-0.195215656912
+0.277985130328
 # t0:
--0.379568185145
+0.952979679146
 # beta:
-3.03943918768
+2.48293299956
