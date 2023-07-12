@@ -36,6 +36,24 @@ area = "goa", alt=NULL, save = TRUE, fleet = 'survey'){
     dplyr::select(year, age, length, weight) %>%
     dplyr::filter(year >= 1990, !is.na(age))  %>%
     dplyr::select(-year) -> age_data_raw
+} else{
+vroom::vroom(here::here(year, "data", "raw", "fsh_length_data.csv")) %>%
+    dplyr::rename_with(tolower) %>%
+    dplyr::filter(!is.na(length)) -> length_data_raw
+
+  if(!("frequency" %in% colnames(length_data_raw))){
+    length_data_raw %>%
+      dplyr::select(age, length) %>%
+      dplyr::group_by(age, length) %>%
+      dplyr::summarise(frequency = dplyr::n()) -> length_data_raw
+  }
+
+
+  vroom::vroom(here::here(year, "data", "raw", "fsh_specimen_data.csv")) %>%
+    dplyr::rename_with(tolower) %>%
+    dplyr::select(year, age, length, weight) %>%
+    dplyr::filter(year >= 1990, !is.na(age))  %>%
+    dplyr::select(-year) -> age_data_raw
 }
 
   # Get parameters
