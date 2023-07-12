@@ -52,9 +52,9 @@ vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_length_data.txt")) %
     dplyr::rename_with(tolower) %>%
     dplyr::select(year, age, length, weight) %>%
     dplyr::filter(!is.na(age))  %>%
-    dplyr::mutate(length = length*10)    %>%
+    dplyr::mutate(length = length*10, weight = weight*1000)    %>%
     dplyr::select(-year) -> age_data_raw
-}
+} ## end ifelse for fleet
 
   # Get parameters
   ages = sort(unique(age_data_raw$age))
