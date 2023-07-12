@@ -15,8 +15,6 @@ area = "goa", alt=NULL, save = TRUE, fleet = 'survey'){
   }
   ages_m = rec_age:(rec_age + nages_m - 1)
 
-
-
   # data ----
   if(fleet == 'survey'){
   vroom::vroom(here::here('goa_pop',year, "data", "raw", "bts_length_data.csv")) %>%
@@ -48,12 +46,11 @@ vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_length_data.txt")) %
       dplyr::group_by(age, length) %>%
       dplyr::summarise(frequency = dplyr::n()) -> length_data_raw
   }
-
-
+  
   vroom::vroom(here::here('goa_pop',year, "data", "raw", "fsh_specimen_data.txt")) %>%
     dplyr::rename_with(tolower) %>%
     dplyr::select(year, age, length, weight) %>%
-    dplyr::filter(year >= 1990, !is.na(age))  %>%
+    dplyr::filter( !is.na(age))  %>%
     dplyr::select(-year) -> age_data_raw
 }
 
