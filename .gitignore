@@ -26,8 +26,6 @@
 *.exe
 *.bat
 \.Rhistory
-*\.Rproj
-.Rproj.user
 .Rhistory
 .RData
 .Ruserdata
