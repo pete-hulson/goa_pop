@@ -1,4 +1,4 @@
-Starting optimization of 'vbl' in phase 1 of 3 at Fri Jun 30 08:08:31 2023
+Starting optimization of 'vbl' in phase 1 of 3 at Thu Jul 13 07:54:20 2023
 phase= 1 | nvar=  1 | iter=  0 | nll=8.31e+02 | mag=1.27e+02 | par[  1]=Linf
 phase= 1 | nvar=  1 | iter=  6 | nll=3.46e+02 | mag=1.29e-06 | par[  1]=Linf
 phase= 2 | nvar=  2 | iter=  0 | nll=3.46e+02 | mag=6.90e+03 | par[  2]=k
@@ -9,7 +9,7 @@ Optimization completed after 0.004 s with final statistics:
   nll=128.672424 | mag=1.09175e-05 | par[  2]=k
 
 Calculating Hessian: 1, 2, 3 done (0 s) 
-Inverting Hessian: 1, 2, 3 done (0.007 s) 
-Starting standard error calculations...  done (0.02 s) 
+Inverting Hessian: 1, 2, 3 done (0.004 s) 
+Starting standard error calculations...  done (0.015 s) 
 
-Finished running model 'vbl' after 0.034 s.
+Finished running model 'vbl' after 0.026 s.

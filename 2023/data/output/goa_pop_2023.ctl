@@ -36,4 +36,4 @@ goa_pop_2023.dat # data_file
 0.1 # wt_fmort_reg
 1 # wt_avg_sel
 3 # initial_LMR
-0.791912813192656 # yieldratio
+0.791912451706993 # yieldratio
