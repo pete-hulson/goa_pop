@@ -10,9 +10,8 @@ goa_pop_2021.dat	# data_file
 3	# ph_srv1_sel
 -3	# ph_srv2_sel
 0.0614	# mprior
-0.25	# cvmprior
+0.1	# cvmprior
 2	# ph_m
-0.25 # cvmdevs
 1.7	# sigrprior
 0.2	# cvsigrprior
 2	# ph_sigr
