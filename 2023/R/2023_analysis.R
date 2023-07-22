@@ -31,6 +31,7 @@ admb_home = "C:/ADMB-13.0" # I use this because I have multiple admb versions
 curr_mdl_fldr = "2020.1-2023"
 prev_mdl_fldr = "2020.1-2021"
 mdl_name = "model_20_1"
+dat_name = "goa_pop"
 
 afscassess::sp_switch(species)
 # setup folder structure - only run this once
@@ -93,6 +94,7 @@ afscassess::fish_length_comp_pop(year = year,
 # bottom trawl survey size comp
 afscassess::bts_length_comp(year = year,
                             area = "goa",
+                            sa_index = 2,
                             lenbins = lengths)
 
 # 60s size-age matrix
@@ -119,7 +121,7 @@ afscassess::concat_dat_pop(year = year,
                            species = species,
                            area = "goa",
                            folder = "data/output",
-                           dat_name = "goa_pop",
+                           dat_name = dat_name,
                            rec_age = rec_age,
                            plus_age = plus_age,
                            spawn_mo = 5)
@@ -128,8 +130,8 @@ afscassess::concat_dat_pop(year = year,
 afscassess::write_ctl_pop(year = year,
                           base_mdl_fldr = '2020.1-2021',
                           mdl_name = "Model_1",
-                          ctl_name = "goa_pop",
-                          dat_name = "goa_pop",
+                          ctl_name = dat_name,
+                          dat_name = dat_name,
                           folder = "data/output")
 
 
@@ -140,7 +142,7 @@ afscassess::concat_dat_pop(year = year,
                            species = species,
                            area = "goa",
                            folder = "mgmt/2020.1-2023",
-                           dat_name = "goa_pop",
+                           dat_name = dat_name,
                            rec_age = rec_age,
                            plus_age = plus_age,
                            spawn_mo = 5)
@@ -148,8 +150,8 @@ afscassess::concat_dat_pop(year = year,
 afscassess::write_ctl_pop(year = year,
                           base_mdl_fldr = '2020.1-2021',
                           mdl_name = "Model_1",
-                          ctl_name = "goa_pop",
-                          dat_name = "goa_pop",
+                          ctl_name = dat_name,
+                          dat_name = dat_name,
                           folder = "mgmt/2020.1-2023")
 
 # run base model
@@ -160,15 +162,19 @@ R2admb::run_admb(mdl_name, verbose = TRUE)
 
 # run mcmc within it's own sub-folder ----
 
-# create folder and copy over model files
-dir.create(here::here(year, "mgmt", curr_mdl_fldr, "mcmc"), recursive=TRUE)
+# create mcmc folder and copy over model files
+
+if (!dir.exists(here::here(year, "mgmt", curr_mdl_fldr, "mcmc"))){
+  dir.create(here::here(year, "mgmt", curr_mdl_fldr, "mcmc"), recursive=TRUE)
+}
 
 file.copy(c(paste0(mdl_name, ".tpl"),
             paste0(mdl_name, ".exe"),
-            paste0("goa_pop_", year, ".dat"),
-            paste0("goa_pop_", year, ".ctl"),
+            paste0(dat_name, "_", year, ".dat"),
+            paste0(dat_name, "_", year, ".ctl"),
             "mat.dat"),
-          here::here(year, "mgmt", model_name, "mcmc"))
+          here::here(year, "mgmt", curr_mdl_fldr, "mcmc"),
+          overwrite = TRUE)
 
 # set sigr to mle in ctl file (Maia - you will want to look into this at some point)
 
@@ -176,12 +182,13 @@ afscassess::write_ctl_pop(year = year,
                           base_mdl_fldr = prev_mdl_fldr,
                           curr_mdl_fldr = curr_mdl_fldr,
                           mdl_name = "Model_1",
-                          ctl_name = "goa_pop",
-                          dat_name = "goa_pop",
+                          ctl_name = dat_name,
+                          dat_name = dat_name,
                           folder = paste0("mgmt/", curr_mdl_fldr),
                           mcmc = TRUE)
 
 # run mcmc
+
 setwd(here::here(year, "mgmt", curr_mdl_fldr, "mcmc"))
 
 # for testing
@@ -197,7 +204,30 @@ R2admb::run_admb(mdl_name, verbose = TRUE, mcmc = TRUE,
                                                   mcsave = mcmcsave, 
                                                   mcmcpars = 'log_mean_rec'))
 
-shell(paste(mdl_name,'.exe',' -mceval'))
+system(paste0(mdl_name,'.exe',' -mceval'))
+
+
+# run retrospective ----
+
+# for testing
+mcmcruns <- 10000
+mcmcsave <- mcmcruns / 5
+
+# for full run
+# mcmcruns <- 10000000
+# mcmcsave <- mcmcruns / 5000
+
+afscassess::run_retro_pop(year = year, 
+                          model = curr_mdl_fldr, 
+                          model_name = mdl_name, 
+                          dat_name = dat_name, 
+                          n_retro = 10, 
+                          mcmcon = TRUE, 
+                          mcmc =  mcmcruns, 
+                          mcsave = mcmcsave)
+  
+
+
 
 
 

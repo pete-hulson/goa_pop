@@ -12,9 +12,9 @@ goa_pop_2023.dat # data_file
 0.0614 # mprior
 0.1 # cvmprior
 2 # ph_m
-0.75652 # sigrprior
+1.7 # sigrprior
 0.2 # cvsigrprior
--1 # ph_sigr
+2 # ph_sigr
 1.15 # q_srv1prior
 0.447213595 # cvq_srv1prior
 2 # ph_q_srv1

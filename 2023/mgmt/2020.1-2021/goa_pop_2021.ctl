@@ -5,7 +5,7 @@ goa_pop_2021.dat	# data_file
 2	# ph_Fdev
 1	# ph_avg_F
 2	# ph_recdev
-4	# ph_mat
+2	# ph_mat
 3	# ph_fish_sel
 3	# ph_srv1_sel
 -3	# ph_srv2_sel
