@@ -155,7 +155,7 @@ afscassess::write_ctl_pop(year = year,
                           folder = "mgmt/2020.1-2023")
 
 # run base model
-setwd(here::here(year, "mgmt", "2020.1-2023"))
+setwd(here::here(year, "mgmt", curr_mdl_fldr))
 
 R2admb::run_admb(mdl_name, verbose = TRUE)
 
@@ -207,7 +207,7 @@ R2admb::run_admb(mdl_name, verbose = TRUE, mcmc = TRUE,
 system(paste0(mdl_name,'.exe',' -mceval'))
 
 
-# run retrospective ----
+# run retrospective, returns run time for testing ----
 
 # for testing
 mcmcruns <- 10000
@@ -226,9 +226,14 @@ afscassess::run_retro_pop(year = year,
                           mcmc =  mcmcruns, 
                           mcsave = mcmcsave)
   
+# run projections ----
 
+# projection parameters
 
-
+afscassess::run_proj(st_year = year,
+                     spec = dat_name,
+                     model = curr_mdl_fldr,
+                     on_year = TRUE)
 
 
 
