@@ -462,7 +462,7 @@ PROCEDURE_SECTION
   Evaluate_Objective_Function();                               // Minimize objective function value
   if (mceval_phase())                                          // For outputting MCMC simulations in text format
   {
-     evalout<<sigr<<" "<<q_srv1<<" "<<q_srv2<<" "<<F40<<" "<<natmort<<" "<<" "<<ABC<<" "<<obj_fun<<" "<<tot_biom<<" "<<log_rec_dev<<" "<<spawn_biom<<" "<<log_mean_rec<<" "<<spawn_biom_proj<<" "<<pred_catch_proj<<" "<<N_proj(endyr+1,1)<<" "<<N_proj(endyr+2,1)<<" "<<N_proj(endyr+3,1)<<" "<<N_proj(endyr+4,1)<<" "<<N_proj(endyr+5,1)<<" "<<N_proj(endyr+6,1)<<" "<<N_proj(endyr+7,1)<<" "<<N_proj(endyr+8,1)<<" "<<N_proj(endyr+9,1)<<" "<<N_proj(endyr+10,1)<<" "<<tot_biom_proj(endyr+1)<<" "<<tot_biom_proj(endyr+2)<<" "<<pred_srv1<<" "<<endl;
+     evalout<<sigr<<" "<<q_srv1<<" "<<q_srv2<<" "<<F40<<" "<<natmort<<" "<<ABC<<" "<<obj_fun<<" "<<tot_biom<<" "<<log_rec_dev<<" "<<spawn_biom<<" "<<log_mean_rec<<" "<<spawn_biom_proj<<" "<<pred_catch_proj<<" "<<N_proj(endyr+1,1)<<" "<<N_proj(endyr+2,1)<<" "<<N_proj(endyr+3,1)<<" "<<N_proj(endyr+4,1)<<" "<<N_proj(endyr+5,1)<<" "<<N_proj(endyr+6,1)<<" "<<N_proj(endyr+7,1)<<" "<<N_proj(endyr+8,1)<<" "<<N_proj(endyr+9,1)<<" "<<N_proj(endyr+10,1)<<" "<<tot_biom_proj(endyr+1)<<" "<<tot_biom_proj(endyr+2)<<" "<<pred_srv1<<" "<<endl;
   }
 
 //==============================================================================================================================

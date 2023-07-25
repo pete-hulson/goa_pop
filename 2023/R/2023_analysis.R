@@ -12,9 +12,11 @@ devtools::unload("afscassess")
 # devtools::install_github("afsc-assessments/afscdata", force = TRUE)
 devtools::install_github("BenWilliams-NOAA/afscassess@devph", force = TRUE)
 # devtools::install_github("BenWilliams-NOAA/afscassess", force = TRUE)
+# devtools::install_github("afsc-assessments/rema", dependencies = TRUE, build_vignettes = TRUE, force = TRUE)
 
 # library(afscdata)
 library(afscassess)
+# library(rema)
 
 # previous accepted model
 # this is more for an example since the previous assessment was not in the afscdata framework
@@ -210,40 +212,78 @@ system(paste0(mdl_name,'.exe',' -mceval'))
 # run retrospective, returns run time for testing ----
 
 # for testing
-mcmcruns <- 10000
-mcmcsave <- mcmcruns / 5
+mcmcruns_ret <- 10000
+mcmcsave_ret <- mcmcruns / 5
 
 # for full run
-# mcmcruns <- 10000000
-# mcmcsave <- mcmcruns / 5000
+# mcmcruns_ret = 500000  # Could change these, but 500,000 is a manageable number to deal with
+# mcmcsave_ret = mcmcruns / 250
 
-afscassess::run_retro_pop(year = year, 
-                          model = curr_mdl_fldr, 
-                          model_name = mdl_name, 
-                          dat_name = dat_name, 
-                          n_retro = 10, 
-                          mcmcon = TRUE, 
-                          mcmc =  mcmcruns, 
-                          mcsave = mcmcsave)
-  
+# run retro (note: there's warnings that pop up for closing unused connection, can disregard)
+suppressWarnings(afscassess::run_retro_pop(year = year, 
+                                           model = curr_mdl_fldr, 
+                                           model_name = mdl_name, 
+                                           dat_name = dat_name, 
+                                           n_retro = 10, 
+                                           mcmcon = TRUE, 
+                                           mcmc =  mcmcruns_ret, 
+                                           mcsave = mcmcsave_ret))
+ 
+ 
 # run projections ----
 
-# projection parameters
+# note that there's a warning that pops up with this version of the proj model, so suppressed it
+suppressWarnings(afscassess::run_proj(st_year = year,
+                                      spec = dat_name,
+                                      model = curr_mdl_fldr,
+                                      on_year = TRUE))
 
-afscassess::run_proj(st_year = year,
-                     spec = dat_name,
-                     model = curr_mdl_fldr,
-                     on_year = TRUE)
+
+# run apportionment ----
+
+
+
+
+
+
 
 
 
 # process results ----
 
-# get model results
+# example to get model results without running mcmc
 mdl_res <- afscassess::process_results_pop(year = year,
-                                           model_dir = here::here(year, "mgmt", "2020.1-2023"), 
+                                           model_dir = here::here(year, "mgmt", curr_mdl_fldr), 
+                                           modname = mdl_name,
                                            rec_age = rec_age,
                                            plus_age = plus_age, 
                                            size_bins = lengths,
-                                           MCMC = FALSE)
+                                           mcmc = FALSE,
+                                           proj = FALSE,
+                                           on_year = TRUE)
 
+# example to get model results with mcmc, retrospective, and projection model runs
+mdl_res <- afscassess::process_results_pop(year = year,
+                                           model_dir = here::here(year, "mgmt", curr_mdl_fldr), 
+                                           modname = mdl_name,
+                                           dat_name = dat_name,
+                                           rec_age = rec_age,
+                                           plus_age = plus_age, 
+                                           size_bins = lengths,
+                                           mcmc = TRUE,
+                                           no_mcmc = mcmcruns,
+                                           mcsave = mcmcsave,
+                                           proj = TRUE,
+                                           on_year = TRUE,
+                                           retro = TRUE,
+                                           retro_mcmc = TRUE,
+                                           no_mcmc_ret = mcmcruns_ret,
+                                           mcsave_ret = mcmcsave_ret)
+
+
+# create figures ----
+
+
+
+
+# create tables ----
