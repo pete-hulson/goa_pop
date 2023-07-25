@@ -18,8 +18,8 @@ Model_1_goa_pop_2023.dat 1 2025 CMedian 27.726
 Model_1_goa_pop_2023.dat 1 2025 CMean 27.726
 Model_1_goa_pop_2023.dat 1 2026 Cabc 24.5073
 Model_1_goa_pop_2023.dat 1 2026 Cofl 26.2307
-Model_1_goa_pop_2023.dat 1 2026 CLCI 34.3931
-Model_1_goa_pop_2023.dat 1 2026 CUCI 34.4965
+Model_1_goa_pop_2023.dat 1 2026 CLCI 34.3932
+Model_1_goa_pop_2023.dat 1 2026 CUCI 34.4966
 Model_1_goa_pop_2023.dat 1 2026 CMedian 34.4265
 Model_1_goa_pop_2023.dat 1 2026 CMean 34.4326
 Model_1_goa_pop_2023.dat 1 2027 Cabc 24.5073
@@ -33,7 +33,7 @@ Model_1_goa_pop_2023.dat 1 2028 Cofl 26.2307
 Model_1_goa_pop_2023.dat 1 2028 CLCI 30.9079
 Model_1_goa_pop_2023.dat 1 2028 CUCI 31.6911
 Model_1_goa_pop_2023.dat 1 2028 CMedian 31.1727
-Model_1_goa_pop_2023.dat 1 2028 CMean 31.2128
+Model_1_goa_pop_2023.dat 1 2028 CMean 31.2129
 Model_1_goa_pop_2023.dat 1 2029 Cabc 24.5073
 Model_1_goa_pop_2023.dat 1 2029 Cofl 26.2307
 Model_1_goa_pop_2023.dat 1 2029 CLCI 29.2277
@@ -190,7 +190,7 @@ Model_1_goa_pop_2023.dat 1 2023  F_Mean 0.0750682
 Model_1_goa_pop_2023.dat 1 2024 F0 0 
 Model_1_goa_pop_2023.dat 1 2024 Fabc 0.0996381
 Model_1_goa_pop_2023.dat 1 2024 Fofl 0.119494
-Model_1_goa_pop_2023.dat 1 2024  F_LCI 0.0782672
+Model_1_goa_pop_2023.dat 1 2024  F_LCI 0.0782671
 Model_1_goa_pop_2023.dat 1 2024  F_UCI 0.0782688
 Model_1_goa_pop_2023.dat 1 2024  F_Median 0.0782683
 Model_1_goa_pop_2023.dat 1 2024  F_Mean 0.0782682
@@ -298,8 +298,8 @@ Model_1_goa_pop_2023.dat 2 2025 CMedian 27.726
 Model_1_goa_pop_2023.dat 2 2025 CMean 27.726
 Model_1_goa_pop_2023.dat 2 2026 Cabc 24.5073
 Model_1_goa_pop_2023.dat 2 2026 Cofl 26.2307
-Model_1_goa_pop_2023.dat 2 2026 CLCI 34.3931
-Model_1_goa_pop_2023.dat 2 2026 CUCI 34.4965
+Model_1_goa_pop_2023.dat 2 2026 CLCI 34.3932
+Model_1_goa_pop_2023.dat 2 2026 CUCI 34.4966
 Model_1_goa_pop_2023.dat 2 2026 CMedian 34.4265
 Model_1_goa_pop_2023.dat 2 2026 CMean 34.4326
 Model_1_goa_pop_2023.dat 2 2027 Cabc 24.5073
@@ -313,7 +313,7 @@ Model_1_goa_pop_2023.dat 2 2028 Cofl 26.2307
 Model_1_goa_pop_2023.dat 2 2028 CLCI 30.9079
 Model_1_goa_pop_2023.dat 2 2028 CUCI 31.6911
 Model_1_goa_pop_2023.dat 2 2028 CMedian 31.1727
-Model_1_goa_pop_2023.dat 2 2028 CMean 31.2128
+Model_1_goa_pop_2023.dat 2 2028 CMean 31.2129
 Model_1_goa_pop_2023.dat 2 2029 Cabc 24.5073
 Model_1_goa_pop_2023.dat 2 2029 Cofl 26.2307
 Model_1_goa_pop_2023.dat 2 2029 CLCI 29.2277
@@ -470,7 +470,7 @@ Model_1_goa_pop_2023.dat 2 2023  F_Mean 0.0750682
 Model_1_goa_pop_2023.dat 2 2024 F0 0 
 Model_1_goa_pop_2023.dat 2 2024 Fabc 0.0996381
 Model_1_goa_pop_2023.dat 2 2024 Fofl 0.119494
-Model_1_goa_pop_2023.dat 2 2024  F_LCI 0.0782672
+Model_1_goa_pop_2023.dat 2 2024  F_LCI 0.0782671
 Model_1_goa_pop_2023.dat 2 2024  F_UCI 0.0782688
 Model_1_goa_pop_2023.dat 2 2024  F_Median 0.0782683
 Model_1_goa_pop_2023.dat 2 2024  F_Mean 0.0782682
@@ -584,7 +584,7 @@ Model_1_goa_pop_2023.dat 3 2026 CMedian 17.5407
 Model_1_goa_pop_2023.dat 3 2026 CMean 17.5438
 Model_1_goa_pop_2023.dat 3 2027 Cabc 24.5073
 Model_1_goa_pop_2023.dat 3 2027 Cofl 26.2307
-Model_1_goa_pop_2023.dat 3 2027 CLCI 17.2519
+Model_1_goa_pop_2023.dat 3 2027 CLCI 17.252
 Model_1_goa_pop_2023.dat 3 2027 CUCI 17.4229
 Model_1_goa_pop_2023.dat 3 2027 CMedian 17.3081
 Model_1_goa_pop_2023.dat 3 2027 CMean 17.3179
@@ -680,7 +680,7 @@ Model_1_goa_pop_2023.dat 3 2027 SSBMean 201.693
 Model_1_goa_pop_2023.dat 3 2028 SSBF100 330.118
 Model_1_goa_pop_2023.dat 3 2028 SSBFabc 132.047
 Model_1_goa_pop_2023.dat 3 2028 SSBFofl 115.541
-Model_1_goa_pop_2023.dat 3 2028 SSBLCI 198.92
+Model_1_goa_pop_2023.dat 3 2028 SSBLCI 198.921
 Model_1_goa_pop_2023.dat 3 2028 SSBUCI 201.057
 Model_1_goa_pop_2023.dat 3 2028 SSBMedian 199.645
 Model_1_goa_pop_2023.dat 3 2028 SSBMean 199.761
@@ -750,7 +750,7 @@ Model_1_goa_pop_2023.dat 3 2023  F_Mean 0.0750682
 Model_1_goa_pop_2023.dat 3 2024 F0 0 
 Model_1_goa_pop_2023.dat 3 2024 Fabc 0.0996381
 Model_1_goa_pop_2023.dat 3 2024 Fofl 0.119494
-Model_1_goa_pop_2023.dat 3 2024  F_LCI 0.0782672
+Model_1_goa_pop_2023.dat 3 2024  F_LCI 0.0782671
 Model_1_goa_pop_2023.dat 3 2024  F_UCI 0.0782688
 Model_1_goa_pop_2023.dat 3 2024  F_Median 0.0782683
 Model_1_goa_pop_2023.dat 3 2024  F_Mean 0.0782682
@@ -888,7 +888,7 @@ Model_1_goa_pop_2023.dat 4 2030 CMedian 21.4579
 Model_1_goa_pop_2023.dat 4 2030 CMean 21.5495
 Model_1_goa_pop_2023.dat 4 2031 Cabc 24.5073
 Model_1_goa_pop_2023.dat 4 2031 Cofl 26.2307
-Model_1_goa_pop_2023.dat 4 2031 CLCI 20.1609
+Model_1_goa_pop_2023.dat 4 2031 CLCI 20.161
 Model_1_goa_pop_2023.dat 4 2031 CUCI 22.5394
 Model_1_goa_pop_2023.dat 4 2031 CMedian 21.0102
 Model_1_goa_pop_2023.dat 4 2031 CMean 21.1458
@@ -961,7 +961,7 @@ Model_1_goa_pop_2023.dat 4 2028 SSBF100 330.118
 Model_1_goa_pop_2023.dat 4 2028 SSBFabc 132.047
 Model_1_goa_pop_2023.dat 4 2028 SSBFofl 115.541
 Model_1_goa_pop_2023.dat 4 2028 SSBLCI 192.839
-Model_1_goa_pop_2023.dat 4 2028 SSBUCI 194.969
+Model_1_goa_pop_2023.dat 4 2028 SSBUCI 194.97
 Model_1_goa_pop_2023.dat 4 2028 SSBMedian 193.561
 Model_1_goa_pop_2023.dat 4 2028 SSBMean 193.677
 Model_1_goa_pop_2023.dat 4 2029 SSBF100 330.118
@@ -1030,7 +1030,7 @@ Model_1_goa_pop_2023.dat 4 2023  F_Mean 0.0750682
 Model_1_goa_pop_2023.dat 4 2024 F0 0 
 Model_1_goa_pop_2023.dat 4 2024 Fabc 0.0996381
 Model_1_goa_pop_2023.dat 4 2024 Fofl 0.119494
-Model_1_goa_pop_2023.dat 4 2024  F_LCI 0.0782672
+Model_1_goa_pop_2023.dat 4 2024  F_LCI 0.0782671
 Model_1_goa_pop_2023.dat 4 2024  F_UCI 0.0782688
 Model_1_goa_pop_2023.dat 4 2024  F_Median 0.0782683
 Model_1_goa_pop_2023.dat 4 2024  F_Mean 0.0782682
@@ -1310,7 +1310,7 @@ Model_1_goa_pop_2023.dat 5 2023  F_Mean 0.0750682
 Model_1_goa_pop_2023.dat 5 2024 F0 0 
 Model_1_goa_pop_2023.dat 5 2024 Fabc 0.0996381
 Model_1_goa_pop_2023.dat 5 2024 Fofl 0.119494
-Model_1_goa_pop_2023.dat 5 2024  F_LCI 0.0782672
+Model_1_goa_pop_2023.dat 5 2024  F_LCI 0.0782671
 Model_1_goa_pop_2023.dat 5 2024  F_UCI 0.0782688
 Model_1_goa_pop_2023.dat 5 2024  F_Median 0.0782683
 Model_1_goa_pop_2023.dat 5 2024  F_Mean 0.0782682
@@ -1406,7 +1406,7 @@ Model_1_goa_pop_2023.dat 6 2023 CMedian 28.8122
 Model_1_goa_pop_2023.dat 6 2023 CMean 28.8122
 Model_1_goa_pop_2023.dat 6 2024 Cabc 24.5073
 Model_1_goa_pop_2023.dat 6 2024 Cofl 26.2307
-Model_1_goa_pop_2023.dat 6 2024 CLCI 43.7479
+Model_1_goa_pop_2023.dat 6 2024 CLCI 43.748
 Model_1_goa_pop_2023.dat 6 2024 CUCI 43.7488
 Model_1_goa_pop_2023.dat 6 2024 CMedian 43.7482
 Model_1_goa_pop_2023.dat 6 2024 CMean 43.7483
@@ -1686,7 +1686,7 @@ Model_1_goa_pop_2023.dat 7 2023 CMedian 28.8122
 Model_1_goa_pop_2023.dat 7 2023 CMean 28.8122
 Model_1_goa_pop_2023.dat 7 2024 Cabc 24.5073
 Model_1_goa_pop_2023.dat 7 2024 Cofl 26.2307
-Model_1_goa_pop_2023.dat 7 2024 CLCI 36.7533
+Model_1_goa_pop_2023.dat 7 2024 CLCI 36.7534
 Model_1_goa_pop_2023.dat 7 2024 CUCI 36.7541
 Model_1_goa_pop_2023.dat 7 2024 CMedian 36.7536
 Model_1_goa_pop_2023.dat 7 2024 CMean 36.7536
@@ -1699,9 +1699,9 @@ Model_1_goa_pop_2023.dat 7 2025 CMean 35.0114
 Model_1_goa_pop_2023.dat 7 2026 Cabc 24.5073
 Model_1_goa_pop_2023.dat 7 2026 Cofl 26.2307
 Model_1_goa_pop_2023.dat 7 2026 CLCI 39.6599
-Model_1_goa_pop_2023.dat 7 2026 CUCI 39.7825
+Model_1_goa_pop_2023.dat 7 2026 CUCI 39.7826
 Model_1_goa_pop_2023.dat 7 2026 CMedian 39.6995
-Model_1_goa_pop_2023.dat 7 2026 CMean 39.7067
+Model_1_goa_pop_2023.dat 7 2026 CMean 39.7068
 Model_1_goa_pop_2023.dat 7 2027 Cabc 24.5073
 Model_1_goa_pop_2023.dat 7 2027 Cofl 26.2307
 Model_1_goa_pop_2023.dat 7 2027 CLCI 37.1401
@@ -1779,7 +1779,7 @@ Model_1_goa_pop_2023.dat 7 2024 SSBMean 210.749
 Model_1_goa_pop_2023.dat 7 2025 SSBF100 330.118
 Model_1_goa_pop_2023.dat 7 2025 SSBFabc 132.047
 Model_1_goa_pop_2023.dat 7 2025 SSBFofl 115.541
-Model_1_goa_pop_2023.dat 7 2025 SSBLCI 201.913
+Model_1_goa_pop_2023.dat 7 2025 SSBLCI 201.914
 Model_1_goa_pop_2023.dat 7 2025 SSBUCI 202.027
 Model_1_goa_pop_2023.dat 7 2025 SSBMedian 201.951
 Model_1_goa_pop_2023.dat 7 2025 SSBMean 201.957

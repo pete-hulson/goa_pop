@@ -1,60 +1,60 @@
  8000 8300 10800 10500 5400 2821 2752 800 2200 4500 8540 11780 13090 6548.13 6537.64 2059.76 1841.23 5740.72 8378.43 9518.82 8907.93 10473.1 10145.5 10817.1 11733.8 10846.3 11639.9 11247.5 13595.3 12954.8 12461.2 12986.4 15615.7 14223.6 14916 13181.4 17712.1 18732.8 23034.5 23860.2 24737 25470.3 25191.2 28899.9 29484 28812.2
-The data has been read correctly!Starting optimization of 'model_20_1' in phase 1 of 4 at Fri Jul 21 13:29:46 2023
+The data has been read correctly!Starting optimization of 'model_20_1' in phase 1 of 4 at Tue Jul 25 14:18:52 2023
 phase= 1 | nvar=  2 | iter=  0 | nll=1.53e+04 | mag=7.56e+03 | par[  1]=log_mean_rec
 phase= 1 | nvar=  2 | iter= 12 | nll=5.12e+03 | mag=4.79e-09 | par[  1]=log_mean_rec
 -------------Finished: 1 4216.47  73.0398 163.915 415.636 0 0 0
-phase= 2 | nvar=157 | iter=  0 | nll=5.12e+03 | mag=5.87e+03 | par[ 28]=log_F_devs[25]
-phase= 2 | nvar=157 | iter= 20 | nll=2.00e+03 | mag=5.30e+03 | par[ 19]=log_F_devs[16]
-phase= 2 | nvar=157 | iter= 40 | nll=1.92e+03 | mag=4.72e+03 | par[ 19]=log_F_devs[16]
-phase= 2 | nvar=157 | iter= 60 | nll=1.85e+03 | mag=3.97e+03 | par[ 19]=log_F_devs[16]
-phase= 2 | nvar=157 | iter= 80 | nll=1.76e+03 | mag=3.97e+03 | par[ 19]=log_F_devs[16]
-phase= 2 | nvar=157 | iter=100 | nll=1.66e+03 | mag=3.37e+03 | par[ 19]=log_F_devs[16]
-phase= 2 | nvar=157 | iter=120 | nll=1.54e+03 | mag=2.66e+03 | par[ 19]=log_F_devs[16]
-phase= 2 | nvar=157 | iter=140 | nll=1.41e+03 | mag=2.63e+03 | par[ 19]=log_F_devs[16]
-phase= 2 | nvar=157 | iter=160 | nll=1.23e+03 | mag=1.04e+03 | par[ 19]=log_F_devs[16]
-phase= 2 | nvar=157 | iter=180 | nll=1.15e+03 | mag=3.55e+02 | par[ 19]=log_F_devs[16]
-phase= 2 | nvar=157 | iter=200 | nll=1.13e+03 | mag=7.38e+01 | par[ 19]=log_F_devs[16]
-phase= 2 | nvar=157 | iter=220 | nll=1.13e+03 | mag=4.30e+01 | par[ 19]=log_F_devs[16]
-phase= 2 | nvar=157 | iter=240 | nll=1.13e+03 | mag=1.69e+00 | par[ 19]=log_F_devs[16]
-phase= 2 | nvar=157 | iter=260 | nll=1.13e+03 | mag=4.47e-02 | par[ 19]=log_F_devs[16]
-phase= 2 | nvar=157 | iter=277 | nll=1.13e+03 | mag=6.27e-05 | par[142]=log_rec_dev[76]
--------------Finished: 2 226.92  64.1324 74.4534 68.4386 0 0 0
-phase= 3 | nvar=165 | iter=  0 | nll=1.11e+03 | mag=2.18e+02 | par[ 16]=log_F_devs[5]
-phase= 3 | nvar=165 | iter= 20 | nll=1.08e+03 | mag=4.32e+02 | par[ 15]=log_F_devs[4]
-phase= 3 | nvar=165 | iter= 40 | nll=1.07e+03 | mag=2.75e+02 | par[ 15]=log_F_devs[4]
-phase= 3 | nvar=165 | iter= 60 | nll=1.06e+03 | mag=2.57e+02 | par[ 26]=log_F_devs[15]
-phase= 3 | nvar=165 | iter= 80 | nll=1.05e+03 | mag=2.67e+02 | par[ 62]=log_F_devs[51]
-phase= 3 | nvar=165 | iter=100 | nll=1.04e+03 | mag=1.69e+02 | par[ 62]=log_F_devs[51]
-phase= 3 | nvar=165 | iter=120 | nll=1.02e+03 | mag=1.36e+02 | par[ 69]=log_F_devs[58]
-phase= 3 | nvar=165 | iter=140 | nll=1.02e+03 | mag=1.33e+02 | par[165]=logm
-phase= 3 | nvar=165 | iter=160 | nll=1.01e+03 | mag=3.07e+01 | par[165]=logm
-phase= 3 | nvar=165 | iter=180 | nll=1.01e+03 | mag=1.05e+01 | par[107]=log_rec_dev[33]
-phase= 3 | nvar=165 | iter=200 | nll=1.01e+03 | mag=3.75e-01 | par[100]=log_rec_dev[26]
-phase= 3 | nvar=165 | iter=218 | nll=1.01e+03 | mag=4.72e-05 | par[ 62]=log_F_devs[51]
+phase= 2 | nvar=159 | iter=  0 | nll=5.12e+03 | mag=5.87e+03 | par[ 28]=log_F_devs[25]
+phase= 2 | nvar=159 | iter= 20 | nll=1.98e+03 | mag=5.15e+03 | par[ 19]=log_F_devs[16]
+phase= 2 | nvar=159 | iter= 40 | nll=1.89e+03 | mag=5.30e+03 | par[ 19]=log_F_devs[16]
+phase= 2 | nvar=159 | iter= 60 | nll=1.77e+03 | mag=4.64e+03 | par[ 19]=log_F_devs[16]
+phase= 2 | nvar=159 | iter= 80 | nll=1.39e+03 | mag=2.93e+03 | par[ 19]=log_F_devs[16]
+phase= 2 | nvar=159 | iter=100 | nll=1.32e+03 | mag=2.71e+03 | par[ 19]=log_F_devs[16]
+phase= 2 | nvar=159 | iter=120 | nll=1.18e+03 | mag=2.44e+03 | par[ 19]=log_F_devs[16]
+phase= 2 | nvar=159 | iter=140 | nll=1.04e+03 | mag=2.06e+03 | par[ 19]=log_F_devs[16]
+phase= 2 | nvar=159 | iter=160 | nll=8.08e+02 | mag=8.59e+02 | par[ 19]=log_F_devs[16]
+phase= 2 | nvar=159 | iter=180 | nll=4.99e+02 | mag=2.07e+02 | par[ 65]=log_F_devs[62]
+phase= 2 | nvar=159 | iter=200 | nll=4.38e+02 | mag=2.48e+02 | par[ 19]=log_F_devs[16]
+phase= 2 | nvar=159 | iter=220 | nll=4.00e+02 | mag=8.94e+01 | par[ 19]=log_F_devs[16]
+phase= 2 | nvar=159 | iter=240 | nll=3.83e+02 | mag=4.71e+01 | par[ 19]=log_F_devs[16]
+phase= 2 | nvar=159 | iter=260 | nll=3.81e+02 | mag=2.08e+01 | par[ 19]=log_F_devs[16]
+phase= 2 | nvar=159 | iter=280 | nll=3.81e+02 | mag=5.68e+00 | par[  4]=log_F_devs[1]
+phase= 2 | nvar=159 | iter=300 | nll=3.81e+02 | mag=4.15e-01 | par[ 28]=log_F_devs[25]
+phase= 2 | nvar=159 | iter=320 | nll=3.81e+02 | mag=5.99e-02 | par[ 19]=log_F_devs[16]
+phase= 2 | nvar=159 | iter=340 | nll=3.81e+02 | mag=8.39e-05 | par[124]=log_rec_dev[56]
+-------------Finished: 2 228.786  64.3039 74.7789 69.4063 0 0 0
+phase= 3 | nvar=167 | iter=  0 | nll=3.66e+02 | mag=2.08e+02 | par[ 16]=log_F_devs[5]
+phase= 3 | nvar=167 | iter= 20 | nll=3.34e+02 | mag=3.60e+02 | par[ 21]=log_F_devs[10]
+phase= 3 | nvar=167 | iter= 40 | nll=3.24e+02 | mag=3.28e+02 | par[ 13]=log_F_devs[2]
+phase= 3 | nvar=167 | iter= 60 | nll=3.16e+02 | mag=2.78e+02 | par[ 13]=log_F_devs[2]
+phase= 3 | nvar=167 | iter= 80 | nll=3.04e+02 | mag=2.55e+02 | par[ 58]=log_F_devs[47]
+phase= 3 | nvar=167 | iter=100 | nll=2.92e+02 | mag=1.96e+02 | par[ 70]=log_F_devs[59]
+phase= 3 | nvar=167 | iter=120 | nll=2.81e+02 | mag=1.67e+02 | par[ 71]=log_F_devs[60]
+phase= 3 | nvar=167 | iter=140 | nll=2.71e+02 | mag=9.35e+01 | par[ 73]=log_F_devs[62]
+phase= 3 | nvar=167 | iter=160 | nll=2.66e+02 | mag=4.74e+01 | par[109]=log_rec_dev[33]
+phase= 3 | nvar=167 | iter=180 | nll=2.64e+02 | mag=2.16e+01 | par[167]=logm
+phase= 3 | nvar=167 | iter=200 | nll=2.62e+02 | mag=4.07e+00 | par[ 27]=log_F_devs[16]
+phase= 3 | nvar=167 | iter=220 | nll=2.62e+02 | mag=1.27e-01 | par[102]=log_rec_dev[26]
+phase= 3 | nvar=167 | iter=230 | nll=2.62e+02 | mag=8.50e-05 | par[102]=log_rec_dev[26]
 -------------Finished: 3 132.165  21.4531 28.7701 65.8988 0 0 0
-phase= 4 | nvar=170 | iter=  0 | nll=1.02e+03 | mag=2.34e+03 | par[ 76]=mat_delta
-phase= 4 | nvar=170 | iter= 20 | nll=9.95e+02 | mag=1.86e+03 | par[ 76]=mat_delta
-phase= 4 | nvar=170 | iter= 40 | nll=9.81e+02 | mag=1.87e+03 | par[ 76]=mat_delta
-phase= 4 | nvar=170 | iter= 60 | nll=7.79e+02 | mag=2.32e+03 | par[ 76]=mat_delta
-phase= 4 | nvar=170 | iter= 80 | nll=7.59e+02 | mag=2.07e+03 | par[ 76]=mat_delta
-phase= 4 | nvar=170 | iter=100 | nll=6.51e+02 | mag=1.44e+03 | par[ 76]=mat_delta
-phase= 4 | nvar=170 | iter=120 | nll=6.03e+02 | mag=1.30e+03 | par[ 76]=mat_delta
-phase= 4 | nvar=170 | iter=140 | nll=5.04e+02 | mag=1.20e+03 | par[ 76]=mat_delta
-phase= 4 | nvar=170 | iter=160 | nll=3.95e+02 | mag=6.33e+02 | par[ 24]=log_F_devs[13]
-phase= 4 | nvar=170 | iter=180 | nll=3.19e+02 | mag=1.98e+02 | par[ 76]=mat_delta
-phase= 4 | nvar=170 | iter=200 | nll=2.79e+02 | mag=9.15e+01 | par[ 37]=log_F_devs[26]
-phase= 4 | nvar=170 | iter=220 | nll=2.64e+02 | mag=2.87e+01 | par[131]=log_rec_dev[55]
-phase= 4 | nvar=170 | iter=240 | nll=2.62e+02 | mag=6.50e+00 | par[109]=log_rec_dev[33]
-phase= 4 | nvar=170 | iter=260 | nll=2.62e+02 | mag=1.07e-01 | par[ 17]=log_F_devs[6]
-phase= 4 | nvar=170 | iter=280 | nll=2.62e+02 | mag=2.57e-04 | par[ 99]=log_rec_dev[23]
-phase= 4 | nvar=170 | iter=283 | nll=2.62e+02 | mag=8.27e-05 | par[ 27]=log_F_devs[16]
-Optimization completed after 3 s with final statistics:
-  nll=261.993652 | mag=8.26742e-05 | par[ 27]=log_F_devs[16]
+phase= 4 | nvar=170 | iter=  0 | nll=2.96e+02 | mag=6.16e+01 | par[  7]=a503
+phase= 4 | nvar=170 | iter= 20 | nll=2.86e+02 | mag=1.42e+02 | par[167]=logm
+phase= 4 | nvar=170 | iter= 40 | nll=2.80e+02 | mag=2.63e+02 | par[ 28]=log_F_devs[17]
+phase= 4 | nvar=170 | iter= 60 | nll=2.78e+02 | mag=2.36e+02 | par[ 28]=log_F_devs[17]
+phase= 4 | nvar=170 | iter= 80 | nll=2.73e+02 | mag=1.61e+02 | par[167]=logm
+phase= 4 | nvar=170 | iter=100 | nll=2.70e+02 | mag=1.37e+02 | par[167]=logm
+phase= 4 | nvar=170 | iter=120 | nll=2.67e+02 | mag=1.49e+02 | par[ 71]=log_F_devs[60]
+phase= 4 | nvar=170 | iter=140 | nll=2.64e+02 | mag=5.81e+01 | par[ 28]=log_F_devs[17]
+phase= 4 | nvar=170 | iter=160 | nll=2.62e+02 | mag=1.43e+01 | par[102]=log_rec_dev[26]
+phase= 4 | nvar=170 | iter=180 | nll=2.62e+02 | mag=2.71e+00 | par[109]=log_rec_dev[33]
+phase= 4 | nvar=170 | iter=200 | nll=2.62e+02 | mag=1.04e-04 | par[ 22]=log_F_devs[11]
+phase= 4 | nvar=170 | iter=201 | nll=2.62e+02 | mag=8.97e-05 | par[130]=log_rec_dev[54]
+Optimization completed after 1.9 s with final statistics:
+  nll=261.993652 | mag=8.97302e-05 | par[130]=log_rec_dev[54]
 
 -------------Finished: 4 132.165  21.4531 28.7701 65.8988 0 0 0
-Calculating Hessian (170 variables): 20%, 40%, 60%, 80%, 100% done (2.2 s) 
-Differentiating 17 derived quantities: 20%, 40%, 60%, 80%, 100% done (0.38 s) 
-Inverting Hessian (170 variables): 20%, 40%, 60%, 80%, 100% done (0.086 s) 
-Starting standard error calculations...  done (0.97 s) 
+Calculating Hessian (170 variables): 20%, 40%, 60%, 80%, 100% done (1.3 s) 
+Differentiating 17 derived quantities: 20%, 40%, 60%, 80%, 100% done (0.24 s) 
+Inverting Hessian (170 variables): 20%, 40%, 60%, 80%, 100% done (0.052 s) 
+Starting standard error calculations...  done (0.44 s) 
 
-Finished running model 'model_20_1' after 6.6 s.
+Finished running model 'model_20_1' after 4 s.

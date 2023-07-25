@@ -7,15 +7,16 @@
 # load ----
 
 # devtools::unload("afscdata")
-devtools::unload("afscassess")
+# devtools::unload("afscassess")
 
-# devtools::install_github("afsc-assessments/afscdata", force = TRUE)
+devtools::install_github("afsc-assessments/afscdata", force = TRUE)
 devtools::install_github("BenWilliams-NOAA/afscassess@devph", force = TRUE)
 # devtools::install_github("BenWilliams-NOAA/afscassess", force = TRUE)
-# devtools::install_github("afsc-assessments/rema", dependencies = TRUE, build_vignettes = TRUE, force = TRUE)
-
-# library(afscdata)
+library(afscdata)
 library(afscassess)
+
+# working on getting rema installed, but not working on my machine at the moment, don't have time to figure out
+# pak::pkg_install("afsc-assessments/rema")
 # library(rema)
 
 # previous accepted model
@@ -55,9 +56,9 @@ afscassess::weight_at_age(year = year,
                           area = "goa")
 
 # fishery catch
-afscassess::clean_catch(year = year, 
-                        species = species, 
-                        TAC = TAC)
+suppressWarnings(afscassess::clean_catch(year = year, 
+                                        species = species, 
+                                        TAC = TAC))
 
 # bottom trawl survey biomass
 afscassess::bts_biomass(year = year, 
@@ -241,11 +242,7 @@ suppressWarnings(afscassess::run_proj(st_year = year,
 
 # run apportionment ----
 
-
-
-
-
-
+# rema stuff to be put in here
 
 
 
@@ -283,7 +280,10 @@ mdl_res <- afscassess::process_results_pop(year = year,
 
 # create figures ----
 
-
+# spot for figure fcns
 
 
 # create tables ----
+
+#spot for table fcns
+
