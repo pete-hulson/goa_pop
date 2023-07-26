@@ -242,6 +242,10 @@ suppressWarnings(afscassess::run_proj(st_year = year,
 
 # run apportionment ----
 
+if (!dir.exists(here::here(year, "mgmt", curr_mdl_fldr, "apport"))){
+  dir.create(here::here(year, "mgmt", curr_mdl_fldr, "apport"), recursive=TRUE)
+}
+
 # rema stuff to be put in here
 
 
