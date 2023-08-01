@@ -127,18 +127,18 @@ srv_ages<- srv_age3 %>% mutate(month = 7, fleet = 2, sex = 1, part = 0, ageerr =
 fish_len_years<- c(1963, 1964, 1965, 1966, 1967, 1968 ,1969 ,1970, 1971,
                    1972, 1973 ,1974, 1975, 1976, 1977 ,1991, 1992, 1995, 1996 ,1997)
 
-fsh_len2 <- scan(here('2023','base','goa_pop_2021.dat'), 
+fsh_len2 <- scan(here('goa_pop','2023','base','goa_pop_2021.dat'), 
                  skip = 164, nlines = 1) %>%
   data.frame(nsamples_fsh_len=.) %>%
   mutate(year =fish_len_years) %>%
   select(year, nsamples_fsh_len)
 
-fsh_len0 <- scan(here('2023','base','goa_pop_2021.dat'), 
+fsh_len0 <- scan(here('goa_pop','2023','base','goa_pop_2021.dat'), 
      skip = 170, nlines = 20) %>% 
   matrix(ncol = length(16:45), byrow = TRUE) %>%
   data.frame()%>%
   mutate(yr = fish_len_years) %>%
-  mutate(month = 7, fleet = 2, sex = 1, part = 0, 
+  mutate(month = 7, fleet = 1, sex = 1, part = 0, 
          Nsamp = fsh_len2$nsamples_fsh_len) %>%
   select(yr, month, fleet, sex, part, Nsamp, 
          everything())
@@ -148,13 +148,12 @@ fsh_len_plot <- melt(fsh_len0, id = 'yr')
 
 ggplot(fsh_len_plot, aes(x = variable, y = value )) +
   geom_bar(stat = 'identity')+
-  facet_wrap(~year, ncol = 2)
+  facet_wrap(~yr, ncol = 2)
 
 
 rbind(fsh_len0,
       c(-9999, rep(0, ncol(fsh_len0)-1))) %>%
-
-  write.csv(.,here('2023','data','for_ss',paste0(Sys.Date(),'-fishery_lengths.csv')), row.names = FALSE)
+  write.csv(.,here('goa_pop','2023','data','for_ss',paste0(Sys.Date(),'-fishery_lengths.csv')), row.names = FALSE)
 
 
 # fsh_len0 <- read.csv(here('2023','data','raw','fsh_length_data.csv'))
@@ -241,3 +240,10 @@ cat(length(2:25),'\t#_N_age_bins' ,  '\n', 2:25)
 # this is a placeholder
 cat(rep(-1, length(0:28))) ## must match the poplenbins
 cat(rep(0.001, length(0:28)))
+nages = length(1:29)
+ae_raw <- t(read.csv(here('2023','data','output','ae_sd.csv')))[1:nages] ## assume no bias but SDs
+ae_ss <- rbind(rbind(rep(-1, length(1:nages)), round(ae_raw,4)),
+ rbind(rep(-1, length(1:nages)), rep(0.001, length(1:nages))))
+
+
+write.csv(ae_ss, here('2023','data','for_ss',paste0(Sys.Date(),'-age_err_vector.csv')),row.names=FALSE)
