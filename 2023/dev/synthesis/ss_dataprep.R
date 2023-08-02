@@ -233,7 +233,7 @@ cat(2 ,'\t#_Nsubseasons')
 ## because LMIN is less than 16, make this go from 1 to 45
 cat(length(1:45),'\t#_N_LengthBins' ,  '\n', 1:45)
 cat(length(16:45),'\t#_N_LengthBins' ,  '\n', 16:45)
-cat(length(2:25),'\t#_N_age_bins' ,  '\n', 2:25)
+cat(length(2:25),'\t#_N_age_bins' ,  '\n', 2:25) ## note this is not the same as the data
 
 #* ageing error matrix ----
 # the bespoke model has this hard coded. we instead need the mean bias and imprecision
@@ -241,9 +241,7 @@ cat(length(2:25),'\t#_N_age_bins' ,  '\n', 2:25)
 cat(rep(-1, length(0:28))) ## must match the poplenbins
 cat(rep(0.001, length(0:28)))
 nages = length(1:29)
-ae_raw <- t(read.csv(here('2023','data','output','ae_sd.csv')))[1:nages] ## assume no bias but SDs
+ae_raw <- t(read.csv(here('2023','data','output','ae_sd.csv')))[2,1:nages] ## assume no bias but SDs
 ae_ss <- rbind(rbind(rep(-1, length(1:nages)), round(ae_raw,4)),
  rbind(rep(-1, length(1:nages)), rep(0.001, length(1:nages))))
-
-
 write.csv(ae_ss, here('2023','data','for_ss',paste0(Sys.Date(),'-age_err_vector.csv')),row.names=FALSE)
