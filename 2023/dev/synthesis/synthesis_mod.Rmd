@@ -5,9 +5,11 @@ output: html_notebook
 
 ```{r}
 # remotes::install_github("r4ss/r4ss")
+require(ggplot2)
 require(r4ss)
 require(dplyr)
 require(here)
+require(reshape2)
 theme_set(theme_minimal())
 ```
 
@@ -17,9 +19,11 @@ mod21 <- read.csv(here('2023','data','output','2021_derived_quants.csv'))
 mod21$value <- as.numeric(gsub(',','',mod21$value))
 ```
 
-# Evaluating life history inputs
+# Initial builds
+Models 100.01 to .04 include all the data and the ageing error matrix.
+M and h are both fixed in the model but there is no prior.
 ```{r}
-mod100_01 <- SS_output(here('2023','ss','v-100.02'))
+mod100_01 <- SS_output(here('2023','ss','v-100.04'))
 
 SSplotData(mod100_01)
 SSplotBiology(mod100_01, subplots = c(1,5,9))
@@ -30,6 +34,8 @@ SSplotRecdevs(mod100_01, subplots = 1)
 SSplotComps(mod100_01,kind = 'LEN')
 SSplotComps(mod100_01,kind = 'AGE')
 SSplotSelex(mod100_01)
+
+SSplotAgeMatrix(mod100_01, option =2 )
 
 SSplotTimeseries(mod100_01,subplot = 7)
 compdf<- mod100_01$timeseries%>% filter(Era == 'TIME')  %>% select(Yr, SpawnBio) %>%
@@ -45,3 +51,99 @@ ggplot(compdf, aes(x = Yr, y = value, color = source)) +
 
 ```
  
+ Before tackling the prior & steepness issues I also want to get into selex.
+ Realized there were some data wts on v100.04 so removed those.
+ General philosophy is I am not trying to do a perfect bridge here; rather I am going to create something that seeems
+ plausible, then can piecewise test major model differences (estimating q vs analyitcal, nat M, rec-dev treatment).
+
+Selex at age. Length selex off.
+
+Fish selex has four time blocks with varying functional forms.
+Survey selex is asymptotic and non time varying. 
+I used a double normal and simply locked up the terminal values.
+Per the base par file, survey pars associated with "srv 1"
+are # a50_srv1: 5.39748301693
+# delta_srv1: 5.72319662062
+I used the SS selex excel sheet to eyeball this, then pasted the resultant par values and free only p1, p3.
+I updated the phases as well. The start-logit was bounded between 2 and 29 but this could theoretically get estimated.
+
+```{r}
+mod100_05 <- SS_output(here('2023','ss','v-100.05'))
+SSplotSelex(mod100_05)
+SS_plots(mod100_05)
+```
+
+Then I updated the WAA parameters and maturity parameters based on the last assessment. 
+The age at 50% maturity is 9.5
+None of these are estimated in the model.
+But all growth pars are; I also constrained the VB pars somewhat since the curve was discontinuous.
+I think the settlement age should be 2.
+The log_mean_rec in the original is 4.43, somehwat akin to R0, so updated that INIT
+
+
+ 
+```{r}
+mod100_06 <- SS_output(here('2023','ss','v-100.06'))
+SSplotBiology(mod100_06, subplots = c(1))
+SSplotBiology(mod100_06, subplots = c(5))
+SSplotBiology(mod100_06, subplots = c(9))
+SSplotSelex(mod100_06, subplots =4)
+SS_plots(mod100_06)
+```
+
+For 100.07 I introduced time blocking for the fishery selex.
+This is done by introducing a line for each of four timeblocks x 3 estiamted pars per time block.
+For these guys I'm estimating ps 1,4,6 since we have true domes; none of these curves line up perfectly 
+KIM the SS syntax is that we are assigning it block DESIGN 2 with block function 2 (replace with pars).
+
+The selex doesn't actually vary a ton across these blocks, and interestingly none want to actually do the dome.
+
+```{r}
+mod100_08 <- SS_output(here('2023','ss','v-100.08'))
+SS_plots(mod100_08)
+```
+
+For mod_09 I switch q to be analytical and re-constrain R0 to be no more than 12.
+I also updated the prior information for M to icnlude the fishlife prior as a normal input.
+Then I turn on estimation of M, fixing steepness at 0.95.
+To deal with some warnings I had to update some par bounds
+and update the age post settlement to 1.
+This is the first time the scale is in line between the models.
+
+I also realized that the maturity p2 was supposed to be logged, so instead of 0.66 used -0.4 for the slope.
+```{r}
+mod100_09 <- SS_output(here('2023','ss','v-100.09'))
+SS_plots(mod100_09)
+
+mod09sb <- mod100_09$derived_quants[grep('SSB_',mod100_09$derived_quants$Label),] %>%  
+mutate(variable = 'SpawnBio',
+source = 'SS mod',Yr = as.numeric(substr(Label,5,9)),
+lwr = Value-1.96*StdDev, upr = Value+1.96*StdDev) %>% 
+filter(!is.na(Yr)) %>%
+select(Yr, variable, value =Value, lwr, upr, source)
+
+
+compdf<- 
+  bind_rows(mod09sb %>% select(-lwr,-upr), mod21 %>% 
+              filter(VARIABLE == 'SPAWNBIO') %>%
+              select(Yr = YEAR,variable=VARIABLE, value ) %>% 
+              mutate(source = '2021 Assessment'))
+
+ggplot(subset(compdf, Yr > 1978), aes(x = Yr, y = value, color = source, fill = source)) +
+  geom_line(lwd = 1.1) +
+  scale_fill_manual(values = c('grey','seagreen')) +
+  scale_color_manual(values = c('grey','seagreen')) +
+  geom_ribbon(data=subset(mod09sb, Yr > 1978),aes(ymin = lwr, ymax = upr), alpha = 0.2)
+
+
+  ggsave(last_plot(), 
+  file = here('2023','ss','v-100.09','compare_ssb.png'),
+  height = 4, width = 6, unit = 'in')
+
+
+mod100_09$derived_quants[grep('SSB_unfished',mod100_09$derived_quants$Label),] 
+
+mod100_09$timeseries %>% select(Yr, Bio_all, SpawnBio)
+
+mod100_09$der
+```
