@@ -104,7 +104,7 @@ SS_plots(mod100_08)
 ```
 
 For mod_09 I switch q to be analytical and re-constrain R0 to be no more than 12.
-I also updated the prior information for M to icnlude the fishlife prior as a normal input.
+I also updated the prior information for M to icnlude the fishlife prior as a normal.
 Then I turn on estimation of M, fixing steepness at 0.95.
 To deal with some warnings I had to update some par bounds
 and update the age post settlement to 1.
@@ -145,5 +145,15 @@ mod100_09$derived_quants[grep('SSB_unfished',mod100_09$derived_quants$Label),]
 
 mod100_09$timeseries %>% select(Yr, Bio_all, SpawnBio)
 
-mod100_09$der
+```
+Need to ask Pete whether that whacky spike in the beginning is true for the 2021 model as well.
+
+I want to investigate some behavior using this model. These include some CIE questions but I think the behavior is close enough we can compare.
+Separately, I set fleet to -1 for the early fishery length comps. This fits the survey slightly better but changes the mgmt status.
+Separately, I allow h to be estimated. This doesn't change much.
+Separately, I start the model in 1975. This changes the scale drastically
+```{r}
+moddirs <- dir(here('2023','ss'), pattern =  '100.09', full.names = TRUE) 
+biglist <- lapply(moddirs, SS_output) %>% SSsummarize()
+SSplotComparisons(biglist, print = T, plotdir = here('2023','ss','v-100.09'), legendlabels =basename(moddirs))
 ```
