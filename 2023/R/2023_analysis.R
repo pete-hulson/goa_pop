@@ -16,6 +16,9 @@ library(afscdata)
 library(afscassess)
 
 # working on getting rema installed, but not working on my machine at the moment, don't have time to figure out
+## This worked for MK in VSCode:
+# options(buildtools.check = function(action) TRUE )
+# devtools::install_github("afsc-assessments/rema") ## did not update other pckgs
 # pak::pkg_install("afsc-assessments/rema")
 # library(rema)
 
@@ -247,8 +250,10 @@ if (!dir.exists(here::here(year, "mgmt", curr_mdl_fldr, "apport"))){
 }
 
 # rema stuff to be put in here
+## Biomass data with dimensions strata, year, biomass, CVs (not logged)
 
-
+input2 <- prepare_rema_input(model_name = paste0("TMB: BSAI FHS MULTIVAR"),
+                            biomass_dat  = bind_rows(biomass_dat))
 
 # process results ----
 
