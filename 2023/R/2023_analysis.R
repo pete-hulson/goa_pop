@@ -249,11 +249,32 @@ if (!dir.exists(here::here(year, "mgmt", curr_mdl_fldr, "apport"))){
   dir.create(here::here(year, "mgmt", curr_mdl_fldr, "apport"), recursive=TRUE)
 }
 
-# rema stuff to be put in here
+# REMA
+install.packages('TMB')
 ## Biomass data with dimensions strata, year, biomass, CVs (not logged)
+## use area-specific dataframe
+biomass_dat <- read.csv(here(year,'data','raw','goa_area_bts_biomass_data.csv')) %>% 
+mutate(sd = sqrt(biomass_var), 
+cv = sd/area_biomass) %>%
+select(strata = regulatory_area_name, year, 
+biomass = area_biomass,cv)
 
-input2 <- prepare_rema_input(model_name = paste0("TMB: BSAI FHS MULTIVAR"),
+input2 <- rema::prepare_rema_input(model_name = paste0("TMB: GOA POP MULTIVAR"),
                             biomass_dat  = bind_rows(biomass_dat))
+m2 <- rema::fit_rema(input2) 
+output <- tidy_rema(rema_model = m2)
+# save(output, file = here('re',paste0(Sys.Date(),'-rema_output.rdata')))
+# kableExtra::kable(output$parameter_estimates) 
+# plots <- plot_rema(tidy_rema = output, biomass_ylab = 'Biomass (t)') # optional y-axis label
+# plots$biomass_by_strata
+# ggsave(plots$biomass_by_strata, file = here::here('re','rema_outs.png'), width = 12, height = 10, unit = 'in', dpi = 520)
+
+# compare <- compare_rema_models(rema_models = list(m),
+#                                admb_re = admb_re,
+#                                biomass_ylab = 'Biomass (t)')
+# compare$plots$biomass_by_strata
+## final apportionment qtties; still need to include Eastern downscaling and ABCs
+# kableExtra::kable(tail(output$proportion_biomass_by_strata, 3)) 
 
 # process results ----
 
