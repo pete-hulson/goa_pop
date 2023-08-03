@@ -14,6 +14,7 @@ devtools::install_github("BenWilliams-NOAA/afscassess@devph", force = TRUE)
 # devtools::install_github("BenWilliams-NOAA/afscassess", force = TRUE)
 library(afscdata)
 library(afscassess)
+library(dplyr)
 
 # working on getting rema installed, but not working on my machine at the moment, don't have time to figure out
 ## This worked for MK in VSCode:
@@ -250,7 +251,7 @@ if (!dir.exists(here::here(year, "mgmt", curr_mdl_fldr, "apport"))){
 }
 
 # REMA
-install.packages('TMB')
+# install.packages('TMB', type = 'source')
 ## Biomass data with dimensions strata, year, biomass, CVs (not logged)
 ## use area-specific dataframe
 biomass_dat <- read.csv(here(year,'data','raw','goa_area_bts_biomass_data.csv')) %>% 
@@ -262,18 +263,34 @@ biomass = area_biomass,cv)
 input2 <- rema::prepare_rema_input(model_name = paste0("TMB: GOA POP MULTIVAR"),
                             biomass_dat  = bind_rows(biomass_dat))
 m2 <- rema::fit_rema(input2) 
-output <- tidy_rema(rema_model = m2)
-# save(output, file = here('re',paste0(Sys.Date(),'-rema_output.rdata')))
-# kableExtra::kable(output$parameter_estimates) 
-# plots <- plot_rema(tidy_rema = output, biomass_ylab = 'Biomass (t)') # optional y-axis label
-# plots$biomass_by_strata
-# ggsave(plots$biomass_by_strata, file = here::here('re','rema_outs.png'), width = 12, height = 10, unit = 'in', dpi = 520)
+output <- rema::tidy_rema(rema_model = m2)
+save(output, file = here(year,'data','models','rema',paste0(Sys.Date(),'-rema_output.rdata')))
+kableExtra::kable(output$parameter_estimates) 
+plots <- rema::plot_rema(tidy_rema = output, biomass_ylab = 'Biomass (t)') # optional y-axis label
+plots$biomass_by_strata
+
+## final apportionment qtties; still need to include Eastern downscaling and ABCs
+# egfrac <- read.csv(here::here('data','survey','2021-10-01_Biomass Fractions in Eastern GOA.csv'))
+props <- output$proportion_biomass_by_strata %>% 
+  filter(year == 2021) %>% 
+  mutate(WestYakutat = Eastern*egfrac$Western.Fraction,
+         Southeast = Eastern*egfrac$Eastern.Fraction) %>%
+  select(Western, Central, WestYakutat,Southeast)
+
+sum(props)==1
+
+
+plots$proportion_biomass_by_strata
+
+ggplot2::ggsave(plots$biomass_by_strata,
+ file = here:: here(year,'data','models','rema','rema_outs.png'), 
+ width = 12, height = 10, unit = 'in', dpi = 520)
 
 # compare <- compare_rema_models(rema_models = list(m),
 #                                admb_re = admb_re,
 #                                biomass_ylab = 'Biomass (t)')
 # compare$plots$biomass_by_strata
-## final apportionment qtties; still need to include Eastern downscaling and ABCs
+
 # kableExtra::kable(tail(output$proportion_biomass_by_strata, 3)) 
 
 # process results ----
