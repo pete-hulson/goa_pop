@@ -269,13 +269,15 @@ kableExtra::kable(output$parameter_estimates)
 plots <- rema::plot_rema(tidy_rema = output, biomass_ylab = 'Biomass (t)') # optional y-axis label
 plots$biomass_by_strata
 
-## final apportionment qtties; still need to include Eastern downscaling and ABCs
-# egfrac <- read.csv(here::here('data','survey','2021-10-01_Biomass Fractions in Eastern GOA.csv'))
+## final apportionment qtties; Eastern downscaling. 
+## AKFIN homepage > GOA - Fractional Biomass in Eastern GOA
+##  Copied & pasted 2021 values for POP
+egfrac <- read.csv(here::here(year,'data','raw','goa_biomass_fractions_egoa.csv'))
 props <- output$proportion_biomass_by_strata %>% 
   filter(year == 2021) %>% 
-  mutate(WestYakutat = Eastern*egfrac$Western.Fraction,
-         Southeast = Eastern*egfrac$Eastern.Fraction) %>%
-  select(Western, Central, WestYakutat,Southeast)
+  mutate(WestYakutat = `EASTERN GOA`*egfrac$Western.Fraction,
+         Southeast = `EASTERN GOA`*egfrac$Eastern.Fraction) %>%
+  select(`WESTERN GOA`, `CENTRAL GOA`, WestYakutat,Southeast)
 
 sum(props)==1
 
@@ -285,6 +287,33 @@ plots$proportion_biomass_by_strata
 ggplot2::ggsave(plots$biomass_by_strata,
  file = here:: here(year,'data','models','rema','rema_outs.png'), 
  width = 12, height = 10, unit = 'in', dpi = 520)
+
+## still need to read in ABCs
+# rec_table <- read.csv(here::here('projection','rec_table.csv'))
+# abc23 <- as.numeric( rec_table[10,2]) 
+# abc24 <- as.numeric( rec_table[10,3]) 
+# apportionment2 <- apply(props, 2, FUN = function(x) round(x*c(abc23,abc24) )) %>%
+#   rbind( round(props*100,2) ,.) %>%
+#   data.frame() %>%
+#   mutate(Total = c("",abc23,abc24),
+#          Year = noquote(c("",year(Sys.Date())+1,year(Sys.Date())+2)),
+#          Quantity = c("Area Apportionment %", 
+#                       "ABC (t)",
+#                       "ABC (t)")) %>% select(Quantity, Year, everything())
+
+# ## because the rounded totals don't perfectly sum to the ABC, locate the discrepancy and add to the highest area (per Chris)
+
+# diff23 <- abc23 - sum(apportionment2[2,3:6])
+# diff24 <- abc24 - sum(apportionment2[3,3:6])
+# apportionment2[2,4] <- apportionment2[2,4]+diff23
+# apportionment2[3,4] <- apportionment2[3,4]+diff24
+
+
+# abc23 - sum(apportionment2[2,3:6])==0
+# abc24 - sum(apportionment2[3,3:6]) ==0
+
+# write.csv(apportionment2,file = here::here('re',paste0(Sys.Date(),"-AreaAppportionment.csv")))
+
 
 # compare <- compare_rema_models(rema_models = list(m),
 #                                admb_re = admb_re,
@@ -329,6 +358,72 @@ mdl_res <- afscassess::process_results_pop(year = year,
 
 # spot for figure fcns
 
+
+
+## Custom survey plots
+
+library(akgfmaps)
+## devtools::install_github("afsc-gap-products/akgfmaps", build_vignettes = FALSE)
+
+SEBS <- akgfmaps::get_base_layers(select.region = "goa", set.crs = "auto")
+
+## format this based on  https://github.com/afsc-gap-products/akgfmaps/blob/master/R/make_idw_map.R
+## from 2021 production modsquad google drive folder
+raw_surv <- readRDS(here(year,'data', 'raw','Data_Geostat_Sebastes_alutus.rds')) 
+
+s2021 <- raw_surv %>% 
+  mutate( COMMON_NAME = 'Pacific Ocean Perch') %>%
+  dplyr::select(Year,COMMON_NAME, CPUE_KGHA  = Catch_KG, LATITUDE = Lat, LONGITUDE = Lon) %>%
+  dplyr::filter(Year == 2021) %>%
+  make_idw_map(region = "goa",
+                set.breaks = "jenks", ## auto
+              #set.breaks = c(0, 100000, 250000, 500000, 750000), ## standardized breaks
+               in.crs = "+proj=longlat",
+              
+               out.crs = "EPSG:3338", # Set output coordinate reference system
+               use.survey.bathymetry = FALSE, ## for GOA
+               grid.cell = c(20000, 20000)) %>% # 20x20km grid
+  add_map_labels() %>% 
+  change_fill_color(new.scheme = "green2", show.plot = TRUE) #%>%
+  # create_map_file(file.prefix = NA, 
+  #                           file.path = NA, 
+  #                           try.change_text_size = TRUE, # 12x9 is a pre-defined size
+  #                           width = 12, 
+  #                           height = 9, 
+  #                           units = "in", 
+  #                           res = 300, 
+  #                           bg = "transparent")
+
+s2019 <- raw_surv%>% 
+  mutate( COMMON_NAME = 'Pacific Ocean Perch') %>%
+  dplyr::select(Year,COMMON_NAME, CPUE_KGHA  = Catch_KG, LATITUDE = Lat, LONGITUDE = Lon) %>%
+  dplyr::filter(Year == 2019) %>%
+  make_idw_map(region = "goa",
+              set.breaks = "jenks", ## auto
+              #set.breaks = c(0,100000, 250000, 500000, 750000), ## standardized breaks
+               in.crs = "+proj=longlat",
+               out.crs = "EPSG:3338", # Set output coordinate reference system
+               use.survey.bathymetry = FALSE, ## for GOA
+               grid.cell = c(20000, 20000)) %>% # 20x20km grid
+  add_map_labels() %>% 
+  change_fill_color(new.scheme = "green2", show.plot = TRUE) #%>%
+  # create_map_file(file.prefix = NA,
+  #                           file.path = NA,
+  #                           try.change_text_size = TRUE, # 12x9 is a pre-defined size
+  #                           width = 12,
+  #                           height = 9,
+  #                           units = "in",
+  #                           res = 300,
+  #                           bg = "transparent")
+
+
+p1 <- s2019$plot+theme(legend.position = 'right') 
+p2 <- s2021$plot+theme(legend.position = 'right') 
+
+png(file = here(year,'base','figs','2_cpue_maps.png'),
+width = 8, height = 10, unit = 'in', res = 520)
+Rmisc::multiplot(plotlist = list(p1,p2), cols = 1)
+dev.off()
 
 # create tables ----
 
