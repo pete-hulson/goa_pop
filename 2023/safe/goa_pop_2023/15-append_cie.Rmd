@@ -59,19 +59,19 @@ knitr::include_graphics(here::here('2021_cie','cie_1_waa','waa_compare_flt_allfi
 To address this comment, we undertook two investigations. First, we ran a model using the original survey-based weight at age vector, but included a new size-at-age matrix for the fishery data only from 1980 onwards. This matrix was defined using the fishery data only, and is more certain as it includes more data from the entire age spectrum. This means that fish of all ages, but particularly adults, are more likely to be assigned a length of below 42 cm than the survey-derived matrix would suggest.
 
 ```{r, fig.cap = "Estimated weight-age relationship for two fleets", out.width="50%",out.height="50%"}
-knitr::include_graphics(here('goa_pop','2021_cie','cie_1_waa','saa_matrices_compare.png'))
+knitr::include_graphics(here::here('goa_pop','2021_cie','cie_1_waa','saa_matrices_compare.png'))
 ```
 Use of this matrix results in slightly lower biomass trajectories, consistent with the notion that the fishery-derived size-at-age matrix assumes a lower probability of larger lengths-at-age.
 
-```{r, fig.cap = "Estimated weight-age relationship for two fleets", out.width="50%",out.height="50%"}
-knitr::include_graphics(here('2021_cie','cie_1_waa','2023-07-12-separateSAA',
+```{r, fig.cap = "Biomass trajectory comparison between the base model, and a model using a separate size-at-age matrix for the fishery data from 1980 onwards.", out.width="50%",out.height="50%"}
+knitr::include_graphics(here::here('2021_cie','cie_1_waa','2023-07-12-separateSAA',
                              '2023-08-15-biomass_compare.png'))
 ```
 
 Separately, we investigated the application of the fishery-derived *weight*-at-age vector (shown in pink above). For this sensitivity, the weight-at-age vector was simply replaced with the new values. The biomass trajectory, particularly for spawning biomass, was nearly identical to the base case, much moreso than the sensitivity using the separate size-at-age matrices. 
 
-```{r, fig.cap = "Estimated weight-age relationship for two fleets", out.width="50%",out.height="50%"}
-knitr::include_graphics(here('2021_cie','cie_1_waa','2023-08-15-newWAA',
+```{r, fig.cap = "Biomass trajectory comparison between the base model, and a model using the fishery-derived weight-at-age vector for all population dynamics.", out.width="50%",out.height="50%"}
+knitr::include_graphics(here::here('2021_cie','cie_1_waa','2023-08-15-newWAA',
                              '2023-08-15-biomass_compare.png'))
 ```
 
@@ -81,6 +81,28 @@ This suggests that derived quantities in this model are less sensitive to the we
 Tingley TOR 1: *"Exploration of additional information to better define the realistic range of M for Pacific ocean perch is recommended. This should consider data available for Pacific ocean perch and for other long-lived rockfish species."*
 
 Tingley TOR 3: *"In the absence of better information about the likely magnitude of M, sensitivities using values of fixed M that bracket the estimated value M should be run in future stock assessments to inform on the level of risk inherent in the current assumptions about M."*
+
+There has been a fair amount of investigation on this topic; the following response is meant to succintly describe our findings and is organized into the principal lenses through which $M$ was explored in the POP model: through the priors, through likelihood profiles, and through the application of a new modeling framework.
+
+## Priors on M
+
+The Hamel (2015) prior was used for $M$ in 2020. The base case model uses a restrictive prior defined via $M~N(0.0614,0.00614)$ (a 10% coefficient of variation). 
+The FishLife R package (Thorson et al., 2023) was recently updated to incorporate morphometric, spawning, behavioral, reproductive and trophic traits from a global database of fish life-history ("FishBase"). This tool enables us to develop a prior for $M$ informed by species like POP, and to better account for uncertainty. The prior suggested by the FishLife R package (version `FishLife_3.0.0`) is broader and centered at a higher value (0.0939) than the original; note that the base model estimates M to be higher than the prior mean. A sensitivity run using the FishLife prior resulted in an even higher estimate of $M$ at `0.149622`. 
+
+```{r, fig.cap = "Comparison of M priors (thick distributions) and posterior means (vertical lines) between the base model, and the base model using a prior from the FishLife package", out.width="50%",out.height="50%"}
+knitr::include_graphics(here::here('2021_cie','cie_0_newm','prior_posterior_compare.png'))
+```
+This value seems near the upper limit of our ecological understanding of this species. The biomass trajectories from the associated model (with the broader prior) are much higher than the base model, and the overall NLL from this sensitivity is 10 units lower than the base model (250.473 vs 260.057). The fits to the survey are not visually improved, though the time series of expected survey values is smoother.
+
+```{r, fig.cap = "Comparison of M priors (thick lines) and posterior means (vertical lines) between the base model, and the base model using a prior from the FishLife package", out.width="50%",out.height="50%"}
+knitr::include_graphics(here::here('2021_cie','cie_0_newm','prior_posterior_compare.png'))
+```
+
+```{r, fig.cap = " Comparison of biomass trajectories (left) and survey fits (right) betwen the base model and a model using the FishLife prior for Natural Mortality.", out.width="50%",out.height="50%"}
+knitr::include_graphics(here::here('2021_cie','cie_0_newm','2023-07-05-newM','2023-07-11-biomass_compare.png'))
+knitr::include_graphics(here::here('2021_cie','cie_0_newm','2023-07-05-newM','2023-07-11-survey_compare.png'))
+
+```
 
 ## Priors & Penalties on *F*, $\sigma_R$
 Cadigan: *"Consider removing priors for F Regularity and $\sigma_R$."*
