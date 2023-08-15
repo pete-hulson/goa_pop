@@ -159,7 +159,15 @@ string ='NatM', show_in_console = TRUE)
 profilemodels <- r4ss::SSgetoutput(dirvec = dir_prof, keyvec = 1:Nprofile)
 profilesummary <-  r4ss::SSsummarize(profilemodels)
 
-results <-  r4ss::SSplotProfile(profilesummary, # summary object
+png(paste0(dir_prof,'/piner_plot_age.png'))
+r4ss::PinerPlot(profilesummary, 
+                legendloc = 'topleft',
+                component = 'Age_like',
+                 main = "Changes in age-composition likelihoods by fleet",
+                profile.string = "NatM",profile.label = "Natural Mortality (M)")
+dev.off()
+
+ r4ss::SSplotProfile(profilesummary, # summary object
  profile.string = "NatM", # substring of profile parameter
 profile.label = "Natural Mortality (M)",
 plotdir = dir_prof, print = TRUE)
