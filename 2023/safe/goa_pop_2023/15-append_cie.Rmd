@@ -56,15 +56,26 @@ The weight-at-age relationship developed using fishery data alone suggests adult
 knitr::include_graphics(here::here('2021_cie','cie_1_waa','waa_compare_flt_allfishery.png'))
 ```
 
-To address this comment, we undertook two investigations. First, we ran a model using the original survey-based weight at age vector, but included a new size-at-age matrix for the fishery data only from 1980 onwards. This matrix was defined using the fishery data only, and is more certain as it includes more data from the entire age spectrum:
+To address this comment, we undertook two investigations. First, we ran a model using the original survey-based weight at age vector, but included a new size-at-age matrix for the fishery data only from 1980 onwards. This matrix was defined using the fishery data only, and is more certain as it includes more data from the entire age spectrum. This means that fish of all ages, but particularly adults, are more likely to be assigned a length of below 42 cm than the survey-derived matrix would suggest.
 
 ```{r, fig.cap = "Estimated weight-age relationship for two fleets", out.width="50%",out.height="50%"}
-knitr::include_graphics(here::here('2021_cie','cie_1_waa','waa_compare_flt_allfishery.png'))
+knitr::include_graphics(here('goa_pop','2021_cie','cie_1_waa','saa_matrices_compare.png'))
+```
+Use of this matrix results in slightly lower biomass trajectories, consistent with the notion that the fishery-derived size-at-age matrix assumes a lower probability of larger lengths-at-age.
+
+```{r, fig.cap = "Estimated weight-age relationship for two fleets", out.width="50%",out.height="50%"}
+knitr::include_graphics(here('2021_cie','cie_1_waa','2023-07-12-separateSAA',
+                             '2023-08-15-biomass_compare.png'))
 ```
 
-decided to first investigate whether the use of a new weight-at-age vector (the value )
+Separately, we investigated the application of the fishery-derived *weight*-at-age vector (shown in pink above). For this sensitivity, the weight-at-age vector was simply replaced with the new values. The biomass trajectory, particularly for spawning biomass, was nearly identical to the base case, much moreso than the sensitivity using the separate size-at-age matrices. 
 
+```{r, fig.cap = "Estimated weight-age relationship for two fleets", out.width="50%",out.height="50%"}
+knitr::include_graphics(here('2021_cie','cie_1_waa','2023-08-15-newWAA',
+                             '2023-08-15-biomass_compare.png'))
+```
 
+This suggests that derived quantities in this model are less sensitive to the weight-at-age parameters than they are to relationship between length and age, and the uncertainty thereof. In this model, this relationship is governed by the size-at-age matrices discussed above, but would be reasonably addressed in a new framework that allows for estimation of von Bertalannfy growth parameters within the model (and the associated variation across ages, or through time).
 
 ## Natural Mortality
 Tingley TOR 1: *"Exploration of additional information to better define the realistic range of M for Pacific ocean perch is recommended. This should consider data available for Pacific ocean perch and for other long-lived rockfish species."*
