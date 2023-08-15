@@ -27,13 +27,15 @@ Tingley: *"Sensitivities to plausible alternative catch histories, particularly 
 
 To address this comment, we leveraged the fact that the base model already separates the data weights assigned to the early (pre-1977) and late (1977-2021) catch time series. In the base model, these series are weighted identically. We explored alternative weights for the early time series of 20%, 50%, and 150% of the value used in the base model, effectively investigating the impacts of reducing or increasing the certainty of this data source. The terminal spawning and total biomass estimates from these models ranged by less than 10%. As expected, the early series and uncertainty thereof affects the model's estimate of initial and unfished biomass, with less certain (down-weighted) trajectories resulting in slightly higher estimates of these values.
 
+There were two additional sensitivities run (results not shown) that provide further insight into this topic. Firstly, a sensitivity where the model begins during the "late" period (1975) -- ignoring all data (catches & lengths) from the early catch period -- resulted in a population trajectory nearly five times as high as the base model (in terms of total and summary biomass). A separate model run where the early length composition data were dropped, but the historical catches and model start year were the same as the base model, resulted in a perception of unfished biomass that was ~50% higher than the base model, though the population trajectory from ~1975 to present was nearly the same as the base model. 
+
+These findings suggest that there is indeed information contained within the early catch series regarding model scale, particularly when contextualized by the early length composition data. Reducing the weight of these data results in qualitatively similar population trajectories, with slightly higher notions of unfished biomass; ignoring these data completely result in a much higher perception of stock size. Given these findings, revisiting the historical catch reconstruction is unlikely to be an influential exercise at this time.
+
+
 ```{r, fig.cap = "Comparison of biomass trajectories between the base model and three sensitivity runs where the early catch time series was weighted at 20, 50 or 150 percent of the weight used in the base model.", out.width="50%",out.height="50%"}
 knitr::include_graphics(here::here('2021_cie','earlycatch_weight=0.2','figs','2023-08-15-biomass_compare.png'))
 ```
 
-There were two additional sensitivities run (results not shown) that provide further insight into this topic. Firstly, a sensitivity where the model begins during the "late" period (1975) -- ignoring all data (catches & lengths) from the early catch period -- resulted in a population trajectory nearly five times as high as the base model (in terms of total and summary biomass). A separate model run where the early length composition data were dropped, but the historical catches and model start year were the same as the base model, resulted in a perception of unfished biomass that was ~50% higher than the base model, though the population trajectory from ~1975 to present was nearly the same as the base model. 
-
-These findings suggest that there is indeed information contained within the early catch series regarding model scale, particularly when contextualized by the early length composition data. Reducing the weight of these data results in qualitatively similar population trajectories, with slightly higher notions of unfished biomass; ignoring these data completely result in a much higher perception of stock size. Given these findings, revisiting the historical catch reconstruction is unlikely to be an influential exercise at this time.
 
 ## Plus Group
 Tingley: *"Prior to or as part of the next assessment, explore whether the plus group should continue to start at age 25 or whether an older plus group starting age is more appropriate."*
@@ -47,39 +49,45 @@ The base model currently uses two size-at-age matrices that represent the probab
 
 We have previously evaluated time-dependence in size-at-age, and have also previously compared sizes-at-age between the survey and fishery. This analysis is limited by the fact that age records are more sparsely sampled both through time and in terms of overall numbers than the survey (Figure \@ref(fig:compobs)), which impacts the amount of data available to inform the construction of a separate size-at-age key for the fishery. 
 
-```{r compobs, fig.cap = "Number of raw observations of length and age for the survey and fishery. Note this figure does not represent total data included in the base model, rather the data available for the construction of size-at-age matrices.", out.width="50%",out.height="50%"}
-knitr::include_graphics(here::here('2021_cie','cie_1_waa','raw_comp_obs.png'))
-```
+
 To address this comment, we undertook two investigations. First, we ran a model using the original survey-based weight at age vector, but included a new size-at-age matrix for the fishery data only from 1980 onwards. This matrix was defined using the fishery data only, and is more certain as it includes more data from the entire age spectrum. This means that fish of all ages, but particularly adults, are more likely to be assigned a length of below 42 cm than the survey-derived matrix would suggest.
 
 The weight-at-age relationship developed using fishery data alone suggests adult fish (ages 20+) to be at a smaller weight in the fishery than in the survey (averaging 742 grams in the fishery vs 891 grams in the survey). This would be consistent with discrepancies in selectivity, targeted harvesting, or un-modeled aspects of fisher behavior, *or* could be an artifact of sampling differences between fleets.
+
+
+Use of this matrix results in slightly lower biomass trajectories, consistent with the notion that the fishery-derived size-at-age matrix assumes a lower probability of larger lengths-at-age.
+
+Separately, we investigated the application of the fishery-derived *weight*-at-age vector (shown in pink in Figure \@ref(fig:waacompare))). For this sensitivity, the weight-at-age vector was simply replaced with the new values. The biomass trajectory, particularly for spawning biomass, was nearly identical to the base case, much moreso than the sensitivity using the separate size-at-age matrices. 
+
+This suggests that derived quantities in this model are less sensitive to the weight-at-age parameters than they are to relationship between length and age, and the uncertainty thereof. We believe the survey to be a well-sampled representation of the pouplation, and the associated size-at-age matrix to better represent uncertainty in the growth process for this stock. In this model, this relationship is governed by the size-at-age matrices discussed above, but would be reasonably addressed in a new framework that allows for estimation of von Bertalanffy growth parameters within the model (and the associated variation across ages, or through time). 
+
+```{r compobs, fig.cap = "Number of raw observations of length and age for the survey and fishery. Note this figure does not represent total data included in the base model, rather the data available for the construction of size-at-age matrices.", out.width="50%",out.height="50%"}
+knitr::include_graphics(here::here('2021_cie','cie_1_waa','raw_comp_obs.png'))
+```
+
+
+
 
 ```{r waacompare, fig.cap = "Estimated weight-age relationship for two fleets", out.width="50%",out.height="50%"}
 knitr::include_graphics(here::here('2021_cie','cie_1_waa','waa_compare_flt_allfishery.png'))
 ```
 
 
-```{r, fig.cap = "Estimated weight-age relationship for two fleets", out.width="50%",out.height="50%"}
+```{r, fig.cap = "Size-at-age probability matrices for each fleet. The matrix on the right is used for all data in the base model.", out.width="50%",out.height="50%"}
 knitr::include_graphics(here::here('goa_pop','2021_cie','cie_1_waa','saa_matrices_compare.png'))
 ```
 
-Use of this matrix results in slightly lower biomass trajectories, consistent with the notion that the fishery-derived size-at-age matrix assumes a lower probability of larger lengths-at-age.
 
-```{r, fig.cap = "Biomass trajectory comparison between the base model, and a model using a separate size-at-age matrix for the fishery data from 1980 onwards.", out.width="50%",out.height="50%"}
+```{r, fig.cap = "Biomass trajectory comparison between the base model, a model using a separate size-at-age matrix for the fishery data from 1980 onwards ('separateSAA'), and a model using the fishery-derived weight-at-age vector for all population dynamics ('newWAA').", out.width="50%",out.height="50%"}
 knitr::include_graphics(here::here('2021_cie','cie_1_waa','2023-07-12-separateSAA',
                              '2023-08-15-biomass_compare.png'))
 ```
 
-Separately, we investigated the application of the fishery-derived *weight*-at-age vector (shown in pink in Figure \@ref(fig:waacompare))). For this sensitivity, the weight-at-age vector was simply replaced with the new values. The biomass trajectory, particularly for spawning biomass, was nearly identical to the base case, much moreso than the sensitivity using the separate size-at-age matrices. 
 
-```{r, fig.cap = "Biomass trajectory comparison between the base model, and a model using the fishery-derived weight-at-age vector for all population dynamics.", out.width="50%",out.height="50%"}
-knitr::include_graphics(here::here('2021_cie','cie_1_waa','2023-08-15-newWAA',
-                             '2023-08-15-biomass_compare.png'))
-```
-
-This suggests that derived quantities in this model are less sensitive to the weight-at-age parameters than they are to relationship between length and age, and the uncertainty thereof. We believe the survey to be a well-sampled representation of the pouplation, and the associated size-at-age matrix to better represent uncertainty in the growth process for this stock. In this model, this relationship is governed by the size-at-age matrices discussed above, but would be reasonably addressed in a new framework that allows for estimation of von Bertalannfy growth parameters within the model (and the associated variation across ages, or through time). 
+\newpage
 
 ## Natural Mortality
+
 Tingley TOR 1: *"Exploration of additional information to better define the realistic range of M for Pacific ocean perch is recommended. This should consider data available for Pacific ocean perch and for other long-lived rockfish species."*
 
 Tingley TOR 3: *"In the absence of better information about the likely magnitude of M, sensitivities using values of fixed M that bracket the estimated value M should be run in future stock assessments to inform on the level of risk inherent in the current assumptions about M."*
@@ -91,16 +99,8 @@ There has been a fair amount of investigation on this topic; the following respo
 The Hamel (2015) prior was used for $M$ in 2020. The base case model uses a restrictive prior defined via $M~N(0.0614,0.00614)$ (a 10% coefficient of variation). 
 The FishLife R package (Thorson et al., 2023) was recently updated to incorporate morphometric, spawning, behavioral, reproductive and trophic traits from a global database of fish life-history ("FishBase"). This tool enables us to develop a prior for $M$ informed by species like POP, and to better account for uncertainty. The prior suggested by the FishLife R package (version `FishLife_3.0.0`) is broader and centered at a higher value (0.0939) than the original; note that the base model estimates M to be higher than the prior mean. A sensitivity run using the FishLife prior resulted in an even higher estimate of $M$ at `0.149622`. 
 
-```{r, fig.cap = "Comparison of M priors (thick lines) and posterior means (thin vertical lines) between the base model, and the base model using a prior from the FishLife package", out.width="50%",out.height="50%"}
-knitr::include_graphics(here::here('2021_cie','cie_0_newm','prior_posterior_compare.png'))
-```
 This value seems near the upper limit of our ecological understanding of this species. The biomass trajectories from the associated model (with the broader prior) are much higher than the base model, and the overall NLL from this sensitivity is 10 units lower than the base model (250.473 vs 260.057). The fits to the survey are not visually improved, though the time series of expected survey values is smoother.
 
-```{r, fig.cap = "Comparison of biomass trajectories (left) and survey fits (right) between the base model and a model using the FishLife prior for Natural Mortality.", out.width="50%",out.height="50%"}
-knitr::include_graphics(here::here('2021_cie','cie_0_newm','2023-07-05-newM','2023-07-11-biomass_compare.png'))
-knitr::include_graphics(here::here('2021_cie','cie_0_newm','2023-07-05-newM','2023-07-11-survey_compare.png'))
-
-```
 
 ### Likelihood Profiles on M
 
@@ -122,11 +122,6 @@ Several useful findings emerged from this effort. Firstly, in the absence of the
 
 We ran likelihood profiles on $M$ using the SS model to investigate whether similar patterns in data conflict persist across the two models. The conflict between age and length (fishery) data persists here; there is little information in the broad FishLife prior, as expected, and the recruitment trend would suggest a higher value of $M$. Inspecting the age-composition profiles by fleet reveals that most of the information is coming from the survey lengths.
 
-```{r, fig.cap = "Likelihood profile on M using the SS Model", out.width="30%",out.height="30%"}
-knitr::include_graphics(here::here('2023','ss','v-100.09-natMprofile','profile_plot_likelihood.png')) 
-
-knitr::include_graphics(here::here('2023','ss','v-100.09-natMprofile','piner_plot_age.png')) 
-```
 ### Conclusions regarding M
 
 Overall, given the framework of the base model, it is apparent that the current prior on $M$ is reinforcing the perception based upon most of the data that $M$ is between 0.03 and 0.07, and that in the absence of this prior (or in the presence of a more generous prior) the best estimate for $M$ would be much higher. This is not the case in an alternative modeling framework, where selectivity is allowed to be asymptotic for all fleets, even in the presence of a generous prior. 
@@ -135,6 +130,25 @@ There is considerable conflict across regarding the best estimate for $M$. A vis
 
 The decision to implement the FishLife prior is likely advisable given the life history information and representation of uncertainty therein, though this decision should not be made without concurrently revisiting the treatment of selectivity, and potential re-weighting of fishery length composition data.
 
+
+
+```{r, fig.cap = "Comparison of M priors (thick lines) and posterior means (thin vertical lines) between the base model, and the base model using a prior from the FishLife package", out.width="50%",out.height="50%"}
+knitr::include_graphics(here::here('2021_cie','cie_0_newm','prior_posterior_compare.png'))
+```
+
+
+```{r, fig.cap = "Comparison of biomass trajectories (left) and survey fits (right) between the base model and a model using the FishLife prior for Natural Mortality.", out.width="50%",out.height="50%"}
+knitr::include_graphics(here::here('2021_cie','cie_0_newm','2023-07-05-newM','2023-07-11-biomass_compare.png'))
+knitr::include_graphics(here::here('2021_cie','cie_0_newm','2023-07-05-newM','2023-07-11-survey_compare.png'))
+
+```
+
+```{r, fig.cap = "Likelihood profile on M using the SS Model", out.width="30%",out.height="30%"}
+knitr::include_graphics(here::here('2023','ss','v-100.09-natMprofile','profile_plot_likelihood.png')) 
+
+knitr::include_graphics(here::here('2023','ss','v-100.09-natMprofile','piner_plot_age.png')) 
+```
+
 ## Priors & Penalties on *F*, $\sigma_R$
 Cadigan: *"Consider removing priors for $F$ Regularity and $\sigma_R$."*
 
@@ -142,13 +156,13 @@ The "prior for $F$ Regularity" a term that penalizes the vector of $F$ deviation
 
 Disabling the penalty on  $\sigma_R$ did not result in changes to biomass trajectories.
 
-
+Removing the penalty on $F$ did result in changes to the biomass trajectories, such that the sensitivity run estimated $F$ to be lower and the overall biomass to be higher in the absence of a penalty. The SS model, by comparison, estimates $F$ to be higher than both ADMB models yet the trajectory is similar.
 
 ```{r, fig.cap = "Comparison of biomass trajectories between the base model and a model with the prior on sigma-R disabled.", out.width="30%",out.height="30%"}
 knitr::include_graphics(here::here('2021_cie','cie_2_sigr-noprior','2023-08-04-biomass_compare.png'))  
 ```
 
-Removing the penalty on $F$ did result in changes to the biomass trajectories, such that the sensitivity run estimated $F$ to be lower and the overall biomass to be higher in the absence of a penalty. The SS model, by comparison, estimates $F$ to be higher than both ADMB models yet the trajectory is similar.
+
 
 ```{r, fig.cap = "Comparison of biomass trajectories between the base model and a model with the regularization penalty on F disabled.", out.width="30%",out.height="30%"}
 knitr::include_graphics(here::here('2021_cie','cie_2_F-nopenalty','2023-08-04-biomass_compare.png'))  
