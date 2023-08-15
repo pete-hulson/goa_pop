@@ -1,9 +1,75 @@
 # Appendix 9B.—Summary of the 2021 CIE review of Gulf of Alaska Pacific Ocean perch
 
 The Center for Independent Expert (CIE) review for Gulf of Alaska Pacific ocean perch was conducted virtually from March 30 to April 1, 2021. The panel of experts consisted of Drs Noel Cadigan, Saang-Yoon Hyun, and Geoff Tingley. Overall, the review was productive, resulting in a number of recommendations for future development and research into the assessment for GOA POP. By the conclusion of the review the experts found the assessment to be of high quality, and the reviews contained statements like, “The overall outcome of this assessment, as reviewed, is that it meets the description of best available science and exceeds the acceptability quality threshold to be used to inform management.” (Tingley).
+
 Each of the reviewers provided research recommendations that should serve to improve the assessment model for GOA POP. A number of the recommendations focused on a variety of sensitivity analyses, while others involved more in-depth model development. Distilling these comments, the more in-depth recommendations included:
-•	Investigate data weighting of compositional data
-•	Develop a state-space model to be run in parallel to the current assessment
-•	Continue to investigate use of VAST estimates of survey biomass, in particular investigate reasons behind the divergence between design-based and model-based estimates of abundance
+
++ Investigate data weighting of compositional data
++ Develop a state-space model to be run in parallel to the current assessment
++ Continue to investigate use of VAST estimates of survey biomass, in particular investigate reasons behind the divergence between design-based and model-based estimates of abundance
+
 As it pertains to the use of VAST estimates of survey biomass, the consensus among the reviewers was that it is still premature to use this index in the assessment until it can be more thoroughly investigated. This was also the consensus with the use of acoustic survey biomass estimates as an additional index to the model. Due to the recommendations that further work be conducted before implementation into the assessment, and in conjunction with the work that the AFSC internal review team performed through 2020 and 2021 (which additionally identified different methods to estimate fishery selectivity as a topic to be considered in the assessment model development), the GOA POP assessment will not incorporate any substantial model changes for the 2021 assessment cycle, but will investigate and continue to develop these various recommendations to be potentially implemented in the next full assessment that will be conducted in 2023.
-The following tables compile the main recommendations suggested by the reviewers and are organized by the terms of reference (TOR) of the review.
+
+The following tables compile the main recommendations suggested by the reviewers and are organized by the terms of reference (TOR) of the review. A subset of these recommendataions were addressed for this Update, and responses to those requests or comments follow the tables.
+
+[TABLE]
+
+## Responses to Selected CIE Comments from Spring 2021
+
+## Alternative Catch Histories
+Tingley: *"Sensitivities to plausible alternative catch histories, particularly for the early years of the fishery, should be run, but only when there are substantive changes to the assessment model structure or major assumptions."*
+
+Resposnse: Revisiting the historical catch reconstruction would be onerous given that no new historical data sources have emerged since this review, and there is little complementary data (aside from the length compositions) for the early period of the model to corroborate any alternative trajectories. 
+
+To address this comment, we leveraged the fact that the base model already separates the data weight assigned to the early (pre-1977) and late (1977-2021) time series. In the base model, these series are weighted identically. We explored alternative weights for the early time series of 20%, 50%, and 150% of the base weight, effectively investigating the impacts of reducing or increasing the certainty of the scale of this data sources. The terminal spawning and total biomass estimates from these models ranged by less than 10%. As expected, the early series and uncertainty thereof affects the model's estimate of initial and unfished biomass, with more uncertain (down-weighted) trajectories resulting in slightly higher estimates of these values.
+
+
+```{r, fig.cap = "Spawning biomass (top) and total biomass (bottom) comparing the base model to three sensitivity runs where the early catch time series was weighted at 20, 50 or 150 percent of the weight used in the base model.", out.width="50%",out.height="50%"}
+knitr::include_graphics(here::here('2021_cie','earlycatch_weight=0.2','figs','2023-08-15-biomass_compare.png'))
+```
+
+There were two additional sensitivities run (results not shown) that provide further insight into this topic. Firstly, a sensitivity where the model begins during the "late" period (1975) -- ignoring all data (catches & lengths) from the early period, resulted in a population trajectory nearly five times as high as the base model (in terms of total and summary biomass). A separate model run where the early length composition data were dropped, but the historical catches and model start year are the same as the base model, resulted in a perception of unfished biomass that was ~50% higher than the base model, though the population trajectory from ~1975 to present was nearly the same as the base model. 
+
+These findings suggest that there is indeed information contained within the early catch series regarding model scale, though
+We also note that sensitivities performed where the model starts during the "late" period (1977) -- ignoring the early catch serie
+
+## Plus Group
+Tingley: *"Prior to or as part of the next assessment, explore whether the plus group should continue to start at age 25 or whether an older plus group starting age is more appropriate."*
+
+This sensitivity has been explored in previous assessments, and was revisited in a run of the Stock Synthesis version of this model where the plus group was started at age 29. Model impacts were trival.
+
+## Stock Weights-at-Age in Survey vs Fishery
+Cadigan: *"Investigate if stock weights-at-age from the survey are significantly (i.e., in the statistical sense) different than fishery weights-at-age. Also, investigate if there is significant temporal variation in both stock and fishery weights-at-age. Provide figures of how mean weight-at-age changes over time, with different panels for groups of ages (i.e., 1-5, 6-10, 10+). Consider using more efficient and less bias methods for analyzing size-at-age from length-stratified age samples (e.g., Perreault et al., 2019). Investigate spatiotemporal variation in weight as a function of length."*
+
+The base model currently uses two size-at-age matrices that represent the probability of a fish of size $l$ being age $a$ for either an early (pre 1980's) or late (1980-present) period. Both matrices were derived using survey data. Similarly, a single weight-at-age vector developed using survey data is applied to the entire population.
+
+We have previously evaluated time-dependence in size-at-age, and have previously compared sizes-at-age between the survey and fishery. This analysis is limited by the fact that age records are more sparsely sampled both through time and in terms of overall numbers than the survey, which impacts the amount of data available to inform the construction of a separate size-at-age key for the fishery. 
+
+```{r, fig.cap = "Number of raw observations of length and age for the survey and fishery. Note this figure does not represent total data included in the base model, rather the data available for the construction of size-at-age matrices.", out.width="50%",out.height="50%"}
+knitr::include_graphics(here::here('2021_cie','cie_1_waa','raw_comp_obs.png'))
+```
+
+This cycle, we investigated how weight-at-age differs between the fishery and survey, whether this relationship changes dramatically with the inclusion of data from the 1990s, and the impacts of using a separate size-at-age matrix developed for the fishery for those data within the assessment.
+The weight-at-age relationship developed using fishery data alone suggests adult fish (ages 20+) to be at a smaller weight in the fishery than in the survey (averaging 742 grams in the fishery vs 891 grams in the survey). This would be consistent with discrepancies in selectivity, targeted harvesting, or unmodeled aspects of fishery behavior.
+
+```{r, fig.cap = "Estimated weight-age relationship for two fleets", out.width="50%",out.height="50%"}
+knitr::include_graphics(here::here('2021_cie','cie_1_waa','waa_compare_flt_allfishery.png'))
+```
+
+To address this comment, we undertook two investigations. First, we ran a model using the original survey-based weight at age vector, but included a new size-at-age matrix for the fishery data only from 1980 onwards. This matrix was defined using the fishery data only, and is more certain as it includes more data from the entire age spectrum:
+
+```{r, fig.cap = "Estimated weight-age relationship for two fleets", out.width="50%",out.height="50%"}
+knitr::include_graphics(here::here('2021_cie','cie_1_waa','waa_compare_flt_allfishery.png'))
+```
+
+decided to first investigate whether the use of a new weight-at-age vector (the value )
+
+
+
+## Natural Mortality
+Tingley TOR 1: *"Exploration of additional information to better define the realistic range of M for Pacific ocean perch is recommended. This should consider data available for Pacific ocean perch and for other long-lived rockfish species."*
+
+Tingley TOR 3: *"In the absence of better information about the likely magnitude of M, sensitivities using values of fixed M that bracket the estimated value M should be run in future stock assessments to inform on the level of risk inherent in the current assumptions about M."*
+
+## Priors & Penalties on *F*, $\sigma_R$
+Cadigan: *"Consider removing priors for F Regularity and $\sigma_R$."*
