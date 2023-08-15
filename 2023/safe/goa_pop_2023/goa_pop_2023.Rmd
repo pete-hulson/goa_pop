@@ -118,3 +118,6 @@ c3 = 2884 # proj catch year + 2
 
 ```{r, child="14-append_vast.Rmd", eval = T}
 ```
+
+```{r, child="15-append_cie.Rmd", eval = T}
+```
