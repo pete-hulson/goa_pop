@@ -112,7 +112,7 @@ This is the first time the scale is in line between the models.
 
 I also realized that the maturity p2 was supposed to be logged, so instead of 0.66 used -0.4 for the slope.
 ```{r}
-mod100_09 <- SS_output(here('2023','ss','v-100.09'))
+mod100_09 <- r4ss::SS_output(here('2023','ss','v-100.09'))
 SS_plots(mod100_09)
 
 mod09sb <- mod100_09$derived_quants[grep('SSB_',mod100_09$derived_quants$Label),] %>%  
@@ -145,6 +145,26 @@ mod100_09$derived_quants[grep('SSB_unfished',mod100_09$derived_quants$Label),]
 
 mod100_09$timeseries %>% select(Yr, Bio_all, SpawnBio)
 
+## run the M profiles on this model
+## copy stuff to new folder, change control to control_modified, update starter
+## to point theere and include prior likes
+m.vec = seq(0.02,0.15,0.01); Nprofile = length(m.vec)
+dir_prof = here('2023','ss','v-100.09-natMprofile')
+
+r4ss::profile(dir_prof,
+profilevec =m.vec , 
+string ='NatM', show_in_console = TRUE)
+
+
+profilemodels <- r4ss::SSgetoutput(dirvec = dir_prof, keyvec = 1:Nprofile)
+profilesummary <-  r4ss::SSsummarize(profilemodels)
+
+results <-  r4ss::SSplotProfile(profilesummary, # summary object
+ profile.string = "NatM", # substring of profile parameter
+profile.label = "Natural Mortality (M)",
+plotdir = dir_prof, print = TRUE)
+
+
 ```
 Need to ask Pete whether that whacky spike in the beginning is true for the 2021 model as well.
 
@@ -153,7 +173,7 @@ Separately, I set fleet to -1 for the early fishery length comps. This fits the 
 Separately, I allow h to be estimated. This doesn't change much.
 Separately, I start the model in 1975. This changes the scale drastically
 ```{r}
-moddirs <- dir(here('2023','ss'), pattern =  '100.09', full.names = TRUE) 
-biglist <- lapply(moddirs, SS_output) %>% SSsummarize()
+moddirs <- dir(here('2023','ss'), pattern =  '100.09', full.names = TRUE)[c(1,2,4)] 
+biglist <- lapply(moddirs, SS_output) %>% r4ss::SSsummarize()
 SSplotComparisons(biglist, print = T, plotdir = here('2023','ss','v-100.09'), legendlabels =basename(moddirs))
 ```
