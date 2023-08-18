@@ -47,7 +47,7 @@ Cadigan: *"Investigate if stock weights-at-age from the survey are significantly
 
 The base model currently uses two size-at-age matrices that represent the probability of a fish of size $l$ being age $a$ for either an early (pre 1980's) or late (1980-present) period; both matrices were derived using survey data. Similarly, a single weight-at-age vector developed using survey data is applied to the entire population.
 
-We have previously evaluated time-dependence in size-at-age, and have also previously compared sizes-at-age between the survey and fishery. This analysis is limited by the fact that age records are more sparsely sampled both through time and in terms of overall numbers than the survey (Figure \@ref(fig:compobs)), which impacts the amount of data available to inform the construction of a separate size-at-age key for the fishery. 
+We have previously evaluated time-dependence in size-at-age, and have also previously compared sizes-at-age between the survey and fishery. This analysis is limited by the fact that age records are more sparsely sampled both through time and in terms of overall numbers than the survey (Figure 10.\@ref(fig:compobs)), which impacts the amount of data available to inform the construction of a separate size-at-age key for the fishery. 
 
 
 To address this comment, we undertook two investigations. First, we ran a model using the original survey-based weight at age vector, but included a new size-at-age matrix for the fishery data only from 1980 onwards. This matrix was defined using the fishery data only, and is more certain as it includes more data from the entire age spectrum. This means that fish of all ages, but particularly adults, are more likely to be assigned a length of below 42 cm than the survey-derived matrix would suggest.
@@ -57,7 +57,7 @@ The weight-at-age relationship developed using fishery data alone suggests adult
 
 Use of this matrix results in slightly lower biomass trajectories, consistent with the notion that the fishery-derived size-at-age matrix assumes a lower probability of larger lengths-at-age.
 
-Separately, we investigated the application of the fishery-derived *weight*-at-age vector (shown in pink in Figure \@ref(fig:waacompare))). For this sensitivity, the weight-at-age vector was simply replaced with the new values. The biomass trajectory, particularly for spawning biomass, was nearly identical to the base case, much moreso than the sensitivity using the separate size-at-age matrices. 
+Separately, we investigated the application of the fishery-derived *weight*-at-age vector (shown in pink in Figure 10.\@ref(fig:waacompare))). For this sensitivity, the weight-at-age vector was simply replaced with the new values. The biomass trajectory, particularly for spawning biomass, was nearly identical to the base case, much moreso than the sensitivity using the separate size-at-age matrices. 
 
 This suggests that derived quantities in this model are less sensitive to the weight-at-age parameters than they are to relationship between length and age, and the uncertainty thereof. We believe the survey to be a well-sampled representation of the pouplation, and the associated size-at-age matrix to better represent uncertainty in the growth process for this stock. In this model, this relationship is governed by the size-at-age matrices discussed above, but would be reasonably addressed in a new framework that allows for estimation of von Bertalanffy growth parameters within the model (and the associated variation across ages, or through time). 
 
@@ -68,7 +68,7 @@ knitr::include_graphics(here::here('2021_cie','cie_1_waa','raw_comp_obs.png'))
 
 
 
-```{r waacompare, fig.cap = "Estimated weight-age relationship for two fleets", out.width="50%",out.height="50%"}
+```{r waacompare, fig.cap = "Estimated weight-age relationship for two fleets.", out.width="50%",out.height="50%"}
 knitr::include_graphics(here::here('2021_cie','cie_1_waa','waa_compare_flt_allfishery.png'))
 ```
 
@@ -96,41 +96,40 @@ There has been a fair amount of investigation on this topic; the following respo
 
 ## Priors on M
 
-The Hamel (2015) prior was used for $M$ in 2020. The base case model uses a restrictive prior defined via $M~N(0.0614,0.00614)$ (a 10% coefficient of variation). 
-The FishLife R package (Thorson et al., 2023) was recently updated to incorporate morphometric, spawning, behavioral, reproductive and trophic traits from a global database of fish life-history ("FishBase"). This tool enables us to develop a prior for $M$ informed by species like POP, and to better account for uncertainty. The prior suggested by the FishLife R package (version `FishLife_3.0.0`) is broader and centered at a higher value (0.0939) than the original; note that the base model estimates M to be higher than the prior mean. A sensitivity run using the FishLife prior resulted in an even higher estimate of $M$ at `0.149622`. 
+The Hamel (2015) prior was used for $M$ in 2020. The base case model uses a restrictive prior defined via $M \sim N(0.0614,0.00614)$ (a 10% coefficient of variation). 
+The FishLife R package (Thorson et al., 2023) was recently updated to incorporate morphometric, spawning, behavioral, reproductive and trophic traits from a global database of fish life-history ("FishBase"). This tool enables us to develop a prior for $M$ for POP informed by similar species, and to better account for uncertainty. The prior suggested by the FishLife R package (version `3.0.0`) is broader and centered at a higher value (0.0939) than the the prior mean and posterior estimate of $M$ from the base model. A sensitivity run using the FishLife prior resulted in an even higher estimate of $M$ at `0.149622`, near the upper limit of our ecological understanding of this species. 
 
-This value seems near the upper limit of our ecological understanding of this species. The biomass trajectories from the associated model (with the broader prior) are much higher than the base model, and the overall NLL from this sensitivity is 10 units lower than the base model (250.473 vs 260.057). The fits to the survey are not visually improved, though the time series of expected survey values is smoother.
+The biomass trajectories from the associated model (with the broader prior) are much higher than the base model, and the overall NLL from this sensitivity is 10 units lower than the base model (250.473 vs 260.057). The fits to the survey are not visually improved, though the time series of expected survey values is smoother.
 
 
 ### Likelihood Profiles on M
 
-We profiled over values of $M$ from 0.01 to 0.30 in increments of 0.02.  (Profiles on $M$ were also presented and discussed during the CIE and subsequent reviews of this model). This method involves fixing $M$ to a value in that vector and removing the prior on $M$ from the total NLL calculation.There are a few chief takeaways from this exercise. 
+We profiled over values of $M$ from 0.01 to 0.30 in increments of 0.02.  (Profiles on $M$ have also been presented and discussed during the CIE and subsequent reviews of this model). This method involves fixing $M$ and removing the prior on $M$ from the total NLL calculation.There are a few chief takeaways from this exercise. 
 
-In the absence of the prior, the total likelihood ("objective function", black line below) would suggest  the MLE for $M$ to be much higher than it is in the base model, around 0.15, roughly consistent with the MLE found when the FishLife prior was used. The data likelihood component (red line below) is otherwise the most well-defined and suggests that the MLE for $M$ is ineed closer to 0.06, in agreement with the current prior mean. 
+In the absence of the prior, the total likelihood ("objective function", black line below) indicates that the MLE for $M$ is much higher than it is in the base model, around 0.15, roughly consistent with the MLE found when the FishLife prior was used. The data likelihood component (red line below) is otherwise the most well-defined and suggests that the MLE for $M$ is ineed closer to 0.06, in agreement with the current prior mean. There was no statistical difference in the data likelihood component for models with $M$ values between 0.04 to 0.08.
 
-Secondly, the fishery size composition data appears to be in conflict with the fishery age composition and survey age and abundance data, whereby the former suggests $M$ values much higher than the latter, though both appear to minimize at values outside the tested realm. This suggests that the MLE indicated by the data likelihood and the curvature of that profile is probably a compromise between the data sources (survey abundance and ages, fishery ages, and maturity data) that suggest low values for $M$ and the one data source (fishery lengths) that suggest high values for $M$. 
+The fishery size composition data appears to be in conflict with the fishery age composition and survey age and abundance data, whereby the former suggests $M$ values much higher than the latter, though both appear to minimize at values outside the tested realm. 
+
+These observations suggest that the MLE indicated by the data likelihood and the curvature of that profile is probably a compromise between the data sources (survey abundance and ages, fishery ages, and maturity data) that suggest low values for $M$ and the one data source (fishery lengths) that suggests high values for $M$. The relevance of information content of these data sources, and conflicts among them is reduced in the base model because of the restrictive nature of the prior.
+
+### Looking at M in a New Modeling Framework
+
+The POP model was transitioned to the Stock Synthesis modeling framework (Methot and Wetzel [2013], `v3.30.17`). This was *not* undertaken as a full bridging exercise, rather as a learning tool to investigate whether certain issues in the POP model could be resolved by changing or simplifying assumptions inherent to the bespoke model framework. This SS model was designed to 1) incorporate all the data that is currently used in the POP base model, 2) better account for uncertainty in key population dynamics processes, with the goal of 3) roughly matching the scale and trend in derived quantities as the base model. *At present, we do not propose the SS model for management use*.
 
 
-### Looking at M in New Modeling Framework
+$M$ was estimated in the SS model, using the broad FishLife prior described above. The other key differences between the base and SS model are that survey catchability is analytical, no size-at-age matrix is used (von Bertalanffy parameters are instead estimated, with attendant uncertainty), and there are no data weights applied (all data sources' contributions to the overall objective function are equally weighted, whereas the base model currently weights all data sources to "1" and the catch data to "50".)
 
-The POP model was transitioned to the Stock Synthesis modeling framework (v3.30.17). This was *not* undertaken as a full bridging exercise, rather as a learning tool to investigate whether certain issues in the POP model could be resolved by changing or simplifying assumptions inherent to the bespoke model framework. This SS model was designed to 1) incorporate all the data that is currently used in the POP base model, 2) better account for uncertainty in key population dynamics processes, with the goal of 3) roughly matching the scale and trend in derived quantities as the base model. *At present, we do not propose the SS model for management use*.
+Several useful findings emerged from this effort. Firstly, in the absence of the narrow prior used in the base model, the SS model estimated $M$ to be just above 0.04. Recall that the profiling exercise performed on the base model indicated that the base model would estimate $M$ to be nearly three times as high in the absence of the prior. We suspect this difference is due to how selectivity is modeled, whereby the SS model estimates fishery selectivity to be nearly logistic (when allowed to estimate the descending limb of a double-normal curve), whereas the base model is controlled by the gamma function to be more traditionally dome-shaped. This would explain the need to constrain $M$ in the base model when the transition to gamma-shaped selectivity was made; the SS model assumes that older fish are indeed selected by the fishery, and there is information in the fishery and survey ages to suggest that $M$ is low.
 
-
-Germane to the present topic, $M$ was allowed to be estimated in this SS model, using the broad FishLife prior described above. The other key differences between the base and SS model are that survey catchability is analytical, no size-at-age matrix is used (von Bertalanffy parameters are instead estimated, with attendant uncertainty), and there are no data weights applied (all data sources are equally weighted, whereas the base model currently weights all data sources to "1" and the catch data to "50".)
-
-Several useful findings emerged from this effort. Firstly, in the absence of the narrow prior used in the base model, the SS model estimated $M$ to be just above 0.04.  Recall that the profiling exercise performed on the base model indicated that the base model would estimate $M$ to be nearly twice as high, in the absence of the prior. We suspect this difference is due to selectivity changes, whereby the SS model estimates fishery selectivity to be nearly logistic (when allowed to estimate the descending limb of a double-normal curve), whereas the base model is constrained by the gamma function to be more traditionally dome-shaped. This would explain the need to fix $M$ in the base model when the transition to gamma-shaped selectivity was made; the SS model is accounting for the information in the data via greater selection of adults.
-
-We ran likelihood profiles on $M$ using the SS model to investigate whether similar patterns in data conflict persist across the two models. The conflict between age and length (fishery) data persists here; there is little information in the broad FishLife prior, as expected, and the recruitment trend would suggest a higher value of $M$. Inspecting the age-composition profiles by fleet reveals that most of the information is coming from the survey lengths.
+We ran likelihood profiles on $M$ using the SS model to investigate whether similar patterns in data conflict persist across the two models. The conflict between age and length (fishery) data persists; there is little information in the broad FishLife prior, as expected, and the recruitment trend would suggest a higher value of $M$. Inspecting the age-composition profiles by fleet reveals that most of the information is coming from the survey lengths. Another important observation is that while the length data suggests a higher value for $M$ than the MLE, it is still within reasonable bounds (~0.06) whereas the length data in the base model suggest an MLE for $M$ outside the tested bounds. 
 
 ### Conclusions regarding M
 
-Overall, given the framework of the base model, it is apparent that the current prior on $M$ is reinforcing the perception based upon most of the data that $M$ is between 0.03 and 0.07, and that in the absence of this prior (or in the presence of a more generous prior) the best estimate for $M$ would be much higher. This is not the case in an alternative modeling framework, where selectivity is allowed to be asymptotic for all fleets, even in the presence of a generous prior. 
+Overall, given the framework of the base model, it is apparent that the current prior on $M$ is reinforcing the perception given by most of the data that $M$ is between 0.04 and 0.07, and that in the absence of this prior (or in the presence of a more generous prior) the best estimate for $M$ would be much higher in the base model. Investigations using an alternative model framework revealed that allow fishery selectivity to be asymptotic results in $M$ values similar to the base case MLE, even in the presence of a broad prior. 
 
-There is considerable conflict across regarding the best estimate for $M$. A visual inspection of the data reveals that the fishery length compositions appear nearly stable through time, while the age compositions from both sources appear to track cohorts to a greater degree.  
+There is considerable conflict between likelihood components regarding the best estimate for $M$. A visual inspection of the data reveals that the fishery length compositions appear nearly stable through time, while the age compositions from both sources appear to track cohorts to a greater degree.  
 
 The decision to implement the FishLife prior is likely advisable given the life history information and representation of uncertainty therein, though this decision should not be made without concurrently revisiting the treatment of selectivity, and potential re-weighting of fishery length composition data.
-
-
 
 ```{r, fig.cap = "Comparison of M priors (thick lines) and posterior means (thin vertical lines) between the base model, and the base model using a prior from the FishLife package", out.width="50%",out.height="50%"}
 knitr::include_graphics(here::here('2021_cie','cie_0_newm','prior_posterior_compare.png'))
@@ -152,7 +151,7 @@ knitr::include_graphics(here::here('2023','ss','v-100.09-natMprofile','piner_plo
 ## Priors & Penalties on *F*, $\sigma_R$
 Cadigan: *"Consider removing priors for $F$ Regularity and $\sigma_R$."*
 
-The "prior for $F$ Regularity" a term that penalizes the vector of $F$ deviations using the sum-of-squares (in practice, assuming a mean of 0 and a variance of 1).  $\sigma_R$ is indeed estimated using a lognormally-distributed prior( $\sigma_R~lN(1.7,0.2)$). We addressed this comment by separately disabling either one of these functions; additionally, the SS model mentioned above does not involve a prior on  $\sigma_R$ nor a penalty for $F$, so comparisons can be made among model frameworks for further information.
+The "prior for $F$ Regularity" a term that penalizes the vector of $F$ deviations using the sum-of-squares (in practice, assuming a mean of 0 and a variance of 1).  $\sigma_R$ is indeed estimated using a lognormally-distributed prior( $\sigma_R \sim lN(1.7,0.2)$). We addressed this comment by separately disabling each of these functions; additionally, the SS model mentioned above does not involve a prior on  $\sigma_R$ nor a penalty for $F$, so comparisons can be made among model frameworks for further information.
 
 Disabling the penalty on  $\sigma_R$ did not result in changes to biomass trajectories.
 
@@ -165,6 +164,10 @@ knitr::include_graphics(here::here('2021_cie','cie_2_sigr-noprior','2023-08-04-b
 
 
 ```{r, fig.cap = "Comparison of biomass trajectories between the base model and a model with the regularization penalty on F disabled.", out.width="30%",out.height="30%"}
-knitr::include_graphics(here::here('2021_cie','cie_2_F-nopenalty','2023-08-04-biomass_compare.png'))  
-knitr::include_graphics(here::here('2021_cie','cie_2_F-nopenalty','2023-08-04-Fs_compare.png'))  
+knitr::include_graphics(here::here('2021_cie','cie_3_F-nopenalty','2023-08-04-biomass_compare.png'))  
+knitr::include_graphics(here::here('2021_cie','cie_3_F-nopenalty','2023-08-04-F_compare.png'))  
 ```
+
+## References
+
+Thorson, J.T., Maureaud, A.A., Frelat, R., Mérigot, B., Bigman, J.S., Friedman, S.T., Palomares, M.L.D., Pinsky, M.L., Price, S.A., Wainwright, P., 2023. Identifying direct and indirect associations among traits by merging phylogenetic comparative methods and structural equation models. Methods Ecol. Evol. n/a. https://doi.org/10.1111/2041-210X.14076
