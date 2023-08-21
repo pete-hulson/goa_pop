@@ -1,0 +1,35 @@
+---
+bibliography: ["VAST_safe.bib"]   
+csl: "fishfish.csl"
+---
+
+# Appendix 10d Model Equations
+
+| Equation | Description | Notation |
+|----------|-------------|----------|
+| $\sigma$      | sss         | ddd      |
+|          |             |          |
+|          |             |          |
+|          |             |          |
+|          |             |          |
+|          |             |          |
+|          |             |          |
+|          |             |          |
+|          |             |          |
+|          |             |          |
+|          |             |          |
+|          |             |          |
+|          |             |          |
+|          |             |          |
+|          |             |          |
+|          |             |          |
+|          |             |          |
+|          |             |          |
+|          |             |          |
+|          |             |          |
+
+## Population Dynamics
+
+## Observation Model
+
+## Likelihood Components
