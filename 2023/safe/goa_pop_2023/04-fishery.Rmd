@@ -33,10 +33,12 @@ The 2014 fishery in this area didn't occur until October but nearly all of the T
 Detailed catch information for POP in the years since 1977 is listed in Table 9-1.
 The reader is cautioned that actual catches of POP in the commercial fishery are only shown for 1988-2019; for previous years, the catches listed are for the POP complex (a former management grouping consisting of POP and four other rockfish species), POP alone, or all Sebastes rock¬fish, depending upon the year (see Table 9-1).
 POP make up the majority of catches from this complex.
+
 The acceptable biological catches and quotas in Table 9-1 are Gulf-wide values, but in actual practice the NPFMC has divided these into separate, annual apportionments for each of the three regulatory areas of the GOA.
 Historically, bottom trawls have accounted for nearly all the commercial harvest of POP.
 In recent years, however, the portion of the POP catch taken by pelagic trawls has increased.
 The percentage of the POP Gulf-wide catch taken in pelagic trawls increased from an average of 7% during 1990-2005 to an average of 24% and up to 31% after 2006.
+
 Before 1996, most of the POP trawl catch (\>90%) was taken by large factory-trawlers that processed the fish at sea.
 A significant change occurred in 1996, however, when smaller shore-based trawlers began taking a sizeable portion of the catch in the Central area for delivery to processing plants in Kodiak.
 These vessels averaged about 50% of the catch in the Central Gulf area since 1998.
@@ -82,19 +84,26 @@ Gulf-wide discard rates (% discarded, current as of October 24, 2021) for POP in
 Total FMP groundfish catch estimates in the GOA rockfish targeted fisheries are shown in Table 9-3.
 For the GOA rockfish fishery, the largest non-rockfish bycatch groups are arrowtooth flounder, Atka mackerel, walleye pollock, Pacific cod, and sablefish.
 Catch of POP in other GOA fisheries is mainly in arrowtooth flounder, walleye pollock-midwater, and rex sole targeted fishing (Table 9-4).
+
 Non-FMP species catch in the rockfish target fisheries is dominated by giant grenadier and miscellaneous fish (Table 9-5).
+
 The increase in POP discards in 2017 can likely be attributed to an extremely high bycatch of POP in the arrowtooth flounder directed fishery (Table 9-4).
+
 Hulson et al. (2014) compared bycatch for the combined rockfish fisheries in the Central GOA from before and during the Rockfish Program to determine the impacts of the Rockfish Program and found the bycatch of the majority of FMP groundfish species in the Central GOA was reduced following implementation of the Rockfish Program.
+
 Prohibited species catch in the GOA rockfish fishery is generally low (Table 9-6).
 Catch of prohibited and non-target species generally decreased with implementation of the Central GOA Rockfish Program (Hulson et al. 2014).
 
 ## Management Measures
 
 In 1991, the NPFMC divided the slope assemblage in the GOA into three management subgroups: POP, shortraker/rougheye rockfish, and all other species of slope rockfish.
+
 In 1993, a fourth management subgroup, northern rockfish, was also created.
 In 2004, shortraker rockfish and rougheye rockfish were divided into separate subgroups.
 These subgroups were established to protect POP, shortraker rockfish, rougheye rockfish, and northern rockfish (the four most sought-after commercial species in the assemblage) from possible overfishing.
+
 Each subgroup is now assigned an individual ABC (acceptable biological catch) and TAC (total allowable catch), whereas prior to 1991, an ABC and TAC was assigned to the entire assemblage.
+
 Each subgroup ABC and TAC is apportioned to the three management areas of the GOA (Western, Central, and Eastern) based on distribution of survey biomass.
 Amendment 32, which took effect in 1994, established a rebuilding plan for POP.
 The amendment stated that "stocks will be considered to be rebuilt when the total biomass of mature females is equal to or greater than BMSY" (Federal Register: April 15, 1994).
