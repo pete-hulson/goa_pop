@@ -1,8 +1,7 @@
 ## Area Allocation of Harvest
 
 The following table shows the recommended ABC apportionment for `r year` and `r year +1`. 
-The apportionment percentages are the same as in the last full assessment. 
-Please refer to the 2020 full stock assessment report [@Fenske2020] for information regarding the apportionment rationale for GOA dusky rockfish.
+The apportionment percentages are the same as in the last full assessment.  
 
 ```{r}
 # apportionment table example
