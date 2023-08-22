@@ -5,7 +5,7 @@ params:
   species_complex: "no"
   area: "Gulf of Alaska"
   tier: 3
-author: "Peter-John F. Hulson, Maia S. Kapur"
+author: "Maia S. Kapur, Peter-John F. Hulson, Ben Williams"
 date: "November 2023"
 
 # don't do anything below this line unless you are cool with the consequences
@@ -59,13 +59,15 @@ title: `r title`
 library(safe)
 # globals
 species = params$species
-year = 2022
+year = 2023
 date = 'October 22, 2023'
-model = "base"
+model = '2020.1-2023'
 end_proj = year + 15
 best_f = 0.0641 # from the best_f function in groundfishr package
 ofl = 8000 # placeholder while i figure things out
-
+abc_22 <- 38268; abc_22p <- prettyNum(abc_22,big.mark=',')
+abc_23 <- 1.06*abc_22 
+abc<-prettyNum(round(abc_23,1),big.mark=',')
 # todo: read from proj output
 c1 = 2842 # estimated catch in current year
 c2 = 3489 # proj catch year + 1
@@ -120,4 +122,7 @@ c3 = 2884 # proj catch year + 2
 ```
 
 ```{r, child="15-append_cie.Rmd", eval = T}
+```
+
+```{r, child="16-append_eqs.Rmd", eval = T}
 ```
