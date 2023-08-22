@@ -1,3 +1,5 @@
+\newpage 
+
 # Figures
 
 ```{r catch, fig.cap="Estimated and observed long-term (top figure) and short-term (bottom figure) catch history for GOA POP.", eval = TRUE}
