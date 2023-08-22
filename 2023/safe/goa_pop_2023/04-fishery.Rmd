@@ -79,7 +79,7 @@ Gulf-wide discard rates (% discarded, current as of October 24, 2021) for POP in
 | 2021 | 2.2        |
 | 2022 | xx         |
 
-: Gulf-wide discard rates (% discarded, current as of October 24, 2023) for POP in the commercial fishery.
+ 
 
 Total FMP groundfish catch estimates in the GOA rockfish targeted fisheries are shown in Table 9-3.
 For the GOA rockfish fishery, the largest non-rockfish bycatch groups are arrowtooth flounder, Atka mackerel, walleye pollock, Pacific cod, and sablefish.
