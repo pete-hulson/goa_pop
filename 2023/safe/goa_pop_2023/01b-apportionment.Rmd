@@ -1,6 +1,5 @@
 ## Area Allocation of Harvest
-
-The following table shows the recommended ABC apportionment for `r year` and `r year +1`. 
+The following table shows the recommended apportionment for `r year` and `r year+1` from the REMA model. 
 The apportionment percentages are the same as in the last full assessment.  
 
 ```{r}
@@ -39,6 +38,8 @@ The ratio of biomass still obtainable in the W. Yakutat area (between 147° W an
 This results in the following apportionment to the W. Yakutat area:
 
 ```{r}
+
+
 apportion2 <- safe::apportion2
 flextable::flextable(apportion2) %>% 
   flextable::border_remove() %>% 
