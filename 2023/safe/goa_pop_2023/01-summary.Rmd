@@ -16,19 +16,10 @@ For the `r year` fishery, we recommend the maximum allowable ABC of `r abc` t. T
 ```{r, child= "01a-main_table.Rmd", eval = T}
 
 ```
-
-
-The following table shows the recommended apportionment for `r year` and `r year+1` from the REMA model. 
+ 
 
 ```{r, child= "01b-apportionment.Rmd", eval = T}
 
 ```
 
-
-If so are so kind as to provide tables for the plan team, place them here
-
-```{r, child= "01c-plan_team.Rmd", eval = T}
-
-```
-
-
+ 
