@@ -1,0 +1,9 @@
+---
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+# Fishery
+
+> Operational Update: The Fishery description for POP is unchanged. The reader is referred to the last full assessment (Hulson et al., 2021) for the entirety of this section.

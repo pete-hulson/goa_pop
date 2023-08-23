@@ -57,6 +57,7 @@ title: `r title`
 ```{r load, warning=F, message=F}
 # load
 library(safe)
+library(here)
 # globals
 species = params$species
 year = 2023
@@ -81,16 +82,16 @@ c3 = 2884 # proj catch year + 2
 ```{r, child="02-responses.Rmd", eval = T}
 ```
 
-```{r, child="03-intro.Rmd", eval = T}
+```{r, child="03-intro-update.Rmd", eval = T}
 ```
 
-```{r, child="04-fishery.Rmd", eval = T}
+```{r, child="04-fishery-update.Rmd", eval = T}
 ```
 
-```{r, child="05-data.Rmd", eval = T}
+```{r, child="05-data-update.Rmd", eval = T}
 ```
 
-```{r, child="06-model.Rmd", eval = T}
+```{r, child="06-model-update.Rmd", eval = T}
 ```
 
 ```{r, child="07-results.Rmd", eval = T}
