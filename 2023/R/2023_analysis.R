@@ -15,7 +15,7 @@ devtools::install_github("BenWilliams-NOAA/afscassess@devph", force = TRUE)
 library(afscdata)
 library(afscassess)
 library(dplyr)
-
+library(here)
 # working on getting rema installed, but not working on my machine at the moment, don't have time to figure out
 ## This worked for MK in VSCode:
 # options(buildtools.check = function(action) TRUE )
@@ -355,13 +355,42 @@ mdl_res <- afscassess::process_results_pop(year = year,
 
 
 # create figures ----
-
+library(ggplot2)
+theme_set(afscassess::theme_report())
 # spot for figure fcns
 
 
 
 ## Custom survey plots
 
+### comparison of VAST and DB estimator
+biomass_dat <- read.csv(here(year,'data','raw','goa_total_bts_biomass_data.csv')) %>% 
+mutate(sd = sqrt(biomass_var) ) %>%
+select(year, 
+biomass = total_biomass,sd) %>% mutate(src = 'Design-based')
+vast <- read.csv(here(year,'dev','mb_vs_db','table_for_ss3.csv')) %>% 
+select(year = Year, biomass = Estimate_metric_tons, sd = SD_mt) %>%
+mutate(src = 'VAST (model-based)') %>%
+filter(biomass >0)
+
+rbind(biomass_dat,vast) %>%
+mutate(lci = biomass-1.96*sd, uci = biomass+1.96*sd) %>%
+ggplot(.,
+ aes(x = year, y = biomass, fill = src, color = src)) +
+geom_point(size = 3) +
+#geom_ribbon(aes(ymin =lci,ymax = uci), alpha = 0.2) +
+geom_errorbar(aes(ymin =lci,ymax = uci), width = 0) +
+theme(legend.position = c(0.15,0.8)) +
+scale_color_manual(values = c('blue','grey45')) +
+scale_fill_manual(values = c('blue','grey45')) +
+#scale_y_continuous(limits = c(0,2500), expand = c(0,0)) +
+labs(x = 'Year', y = 'Biomass (1000 t)', fill = '', color = '')
+
+ggsave(last_plot(),
+height = 4, width = 6, unit = 'in',
+file = here(here(year,'dev','mb_vs_db','mb_db_comparison.png')))
+
+### survey CPUE
 library(akgfmaps)
 ## devtools::install_github("afsc-gap-products/akgfmaps", build_vignettes = FALSE)
 
