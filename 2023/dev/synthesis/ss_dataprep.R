@@ -208,7 +208,30 @@ rbind(fsh_len0,
 
 
 #* unused: trawl survey (bts) length comps -----
-## these are NOT USED IN MODEL; ghosted here
+## year month fleet sex = 1 part =0, nsamp, datavector
+surv_l_bins <- read.csv(here(year,'data','raw','goa_total_bts_sizecomp_data.csv'))  %>%
+mutate(length_cm = length_mm/10,
+length_cm_use = ifelse(length_cm < min(lengths), min(lengths), 
+ifelse(length_cm > max(lengths), max(lengths), length_cm )))
+
+surv_l_nsamp <- surv_l_bins %>%
+  group_by(year) %>%
+  summarise(nsamp = n())
+
+surv_lcomps <- surv_l_bins %>%
+  group_by(year, length_cm_use) %>%
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n)) %>%
+  ungroup()%>%
+  mutate(month = 7, fleet = 2, sex = 1, part = 0) %>% 
+  select(-n) %>%
+  merge(., surv_l_nsamp, by = 'year') %>%
+  tidyr::pivot_wider(., id_cols = c(year, month, fleet, sex, part, nsamp), 
+  names_from = length_cm_use, values_from = freq, values_fill = 0) 
+
+all(rowSums(surv_lcomps[,7:36]) ==1) 
+
+write.csv(surv_lcomps,here(year,'data','for_ss',paste0(Sys.Date(),"-goa_bts_lengths.csv")), row.names = FALSE)
 
 #* unused: ll survey length comps -----
 ## these are NOT USED IN MODEL; ghosted here
