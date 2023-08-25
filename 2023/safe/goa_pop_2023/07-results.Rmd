@@ -1,9 +1,7 @@
 # Results
 
 ## Model Evaluation
-The model used in this assessment is the same as the model accepted in 2021 with updated data and parameter priors. When we present alternative model configurations, our usual criteria for choosing a superior model are: (1) the best overall fit to the data (in terms of negative log-likelihood), (2) biologically reasonable patterns of estimated recruitment, catchabilities, and selectivities, (3) a good visual fit to length and age compositions, and (4) parsimony. Because the current assessment model is the same as 2020 we will evaluate the 2021 assessment based on differences in results compared to the 2020 assessment.
-
-Model 20.1 with data updated through 2023 generally results in reasonable fits to the data, estimates biologically plausible parameters, and produces consistent patterns in abundance compared to previous assessments. The assessment model continues to underestimate the trawl biomass since the 2013 survey, although, the retrospective pattern indicates that the model fit is continuing to improve to the trawl survey with additional assessments. 
+The model used in this assessment is the same as the model accepted in 2021 with updated data and parameter priors. Model 20.1 with data updated through 2023 generally results in reasonable fits to the data, estimates biologically plausible parameters, and produces consistent patterns in abundance compared to previous assessments. The assessment model continues to underestimate the trawl biomass since the 2013 survey, although, the retrospective pattern indicates that the model fit is continuing to improve to the trawl survey with additional assessments. 
 
 
 ## Time Series Results
