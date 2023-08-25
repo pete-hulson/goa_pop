@@ -185,3 +185,76 @@ moddirs <- dir(here('2023','ss'), pattern =  '100.09', full.names = TRUE)[c(1,2,
 biglist <- lapply(moddirs, SS_output) %>% r4ss::SSsummarize()
 SSplotComparisons(biglist, print = T, plotdir = here('2023','ss','v-100.09'), legendlabels =basename(moddirs))
 ```
+
+For model 100_10 I ghosted in the survey length comps,
+updated the settlement age 1 1 (line 18 of control): reading the ss manual there isn't a way for recruits to be age 2.
+they are always age 1. now the syntax ensures that spawning happens in may and those count as age-1 recruits next year.
+just keep this in mind when interpreting the devs plot. this did away with the settle warning.
+updated the settle age to 2 (line 52 of ctl, to deal with warning)
+
+The model wants a realistic r0 of around 9.9.
+
+```{r}
+mod100_10 <- r4ss::SS_output(here('2023','ss','v-100.10'))
+SS_plots(mod100_10)
+```
+
+I now want to see if we can get convergence to improve by simpifying
+the selectivity. Though there is a good historical justificaiton to investigate the time blocks,
+the derived curves are really not so distinct:
+```{r}
+knitr::include_graphics("C:/Users/maia.kapur/Work/assessments/2023/GOA_POP/goa_pop/2023/ss/v-100.10/plots/sel11_timevary_surf_flt1sex1.png")
+```
+So for mod100_11 I am doing away with the time blocks on fishery selex (but still estimating 3 pars of the double N for the entire TS).
+I didn't want to drastically revert everything so just changed the blk_fxn on the original double normal pars and commented out the timevary chunk.
+This actually made the convergence worse and fit the survey data worse. So sticking with the timevarying selex as in v10.
+```{r}
+mod100_11 <- r4ss::SS_output(here('2023','ss','v-100.11'))
+SS_plots(mod100_11)
+```
+What would aid convergence in this model? Let's explore some data weighting.
+Doing 3 rounds of francis weights starting at mod100_10
+The francis weights suggested downweight everything, particularly the ages (by a factor of >10!)
+and the comps by a factor of three.
+This enables the model to converge; survey fits are still meh and it basically just reduced the comp fits.
+It also broadens the uncertainty in the timeseries.
+```{r}
+## do this for two
+r4ss::tune_comps(replist = mod100_10, fleets = 'all', 
+niters_tuning = 2,
+                                   dir = here('2023','ss','v-100.10-francis'),
+                                   verbose = TRUE)
+                               
+mod100_10f <- r4ss::SS_output(here('2023','ss','v-100.10-Francis'))
+SS_plots(mod100_10f)
+mod100_10f$maximum_gradient_component
+```
+
+There are still some boundary issues so I will clear up the parameter spex then return to the data weighting as a final step.
+The initial F is probably higher than the init at 0.008, and the range of Fs for init can also go to 4.
+Looking at some bound warnings i reduced the p1 lwr for the survey selex to 1 (as it is for the fishery)
+WRT growth it is silly to expect to model growth < 16cms when we have no obs at that time. so Lmin should be above 16.
+
+It doesn't make sense to me that the total biomass is 1.3million t and the sb is ~1 million t. Something is amiss with the sex ratio.
+Try sex setup = -1 ; things brings things inline but obviously depletion is still lower,
+```{r}
+mod100_12 <- r4ss::SS_output(here('2023','ss','v-100.12'))
+SS_plots(mod100_12)
+mod100_12$maximum_gradient_component<=1e-4 ## might not be fixed yet cause no weighting here
+```
+As before, tuning deals with the convergence issue.
+By looking at the F plot, the main difference here is that the SS model thinks the population was pretty trashed
+by the 1960s catches, such that the F values peak in the 1970s (whereas in the ADMB model they bump but don't exceed 1960s levels).
+This to me suggests the protective assumption implied by the dome shaped selex. So some exploration of locking up the terminal parameter 
+for the fishery selex in a dome will be informative about what's going on here. My suspicion is that this will throw the M estimate out of whack.
+```{r}
+r4ss::tune_comps(replist = mod100_12, fleets = 'all', 
+niters_tuning = 3,
+                                   dir = here('2023','ss','v-100.12-francis'),
+                                   verbose = TRUE)
+                               
+
+mod100_12f <- r4ss::SS_output(here('2023','ss','v-100.12-francis'))
+SS_plots(mod100_12f)
+mod100_12f$maximum_gradient_component<=1e-4  
+```
