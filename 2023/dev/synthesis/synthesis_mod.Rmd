@@ -258,3 +258,81 @@ mod100_12f <- r4ss::SS_output(here('2023','ss','v-100.12-francis'))
 SS_plots(mod100_12f)
 mod100_12f$maximum_gradient_component<=1e-4  
 ```
+
+08 25 realized I made an algebra mistake on calculating the SD for the fishlife prior.
+It is actually narrower than we think. I updated the sensitivity for the admb model 
+but need to re-run on model 9 the base and sens.
+
+```{r}
+mod09_dir <- here('2023','ss','v-100.09m0825')
+setwd(mod09_dir)
+#shell('ss')
+mod100_09 <- r4ss::SS_output(mod09_dir)
+SS_plots(mod100_09)
+
+mod09sb <- mod100_09$derived_quants[grep('SSB_',mod100_09$derived_quants$Label),] %>%  
+mutate(variable = 'SpawnBio',
+source = 'SS mod',Yr = as.numeric(substr(Label,5,9)),
+lwr = Value-1.96*StdDev, upr = Value+1.96*StdDev) %>% 
+filter(!is.na(Yr)) %>%
+select(Yr, variable, value =Value, lwr, upr, source)
+
+compdf<- 
+  bind_rows(mod09sb %>% select(-lwr,-upr), mod21 %>% 
+              filter(VARIABLE == 'SPAWNBIO') %>%
+              select(Yr = YEAR,variable=VARIABLE, value ) %>% 
+              mutate(source = '2021 Assessment'))
+
+ggplot(subset(compdf, Yr > 1978), aes(x = Yr, y = value, color = source, fill = source)) +
+  geom_line(lwd = 1.1) +
+  scale_fill_manual(values = c('grey','seagreen')) +
+  scale_color_manual(values = c('grey','seagreen')) +
+  geom_ribbon(data=subset(mod09sb, Yr > 1978),aes(ymin = lwr, ymax = upr), alpha = 0.2)
+
+
+  ggsave(last_plot(), 
+  file = paste0(mod09_dir,'/compare_ssb.png'),
+  height = 4, width = 6, unit = 'in')
+
+
+mod09_dir$derived_quants[grep('SSB_unfished',mod09_dir$derived_quants$Label),] 
+
+mod09_dir$timeseries %>% select(Yr, Bio_all, SpawnBio)
+
+## run the M profiles on this model
+## copy stuff to new folder, change control to control_modified, update starter
+## to point theere and include prior likes
+m.vec = seq(0.02,0.15,0.01); Nprofile = length(m.vec)
+dir_prof = here('2023','ss','v-100.09m0825-natMprofile')
+
+r4ss::profile(dir_prof,
+profilevec =m.vec , 
+string ='NatM', show_in_console = TRUE)
+
+
+profilemodels <- r4ss::SSgetoutput(dirvec = dir_prof, keyvec = 1:Nprofile)
+profilesummary <-  r4ss::SSsummarize(profilemodels)
+
+png(paste0(dir_prof,'/piner_plot_age.png'))
+r4ss::PinerPlot(profilesummary, 
+                legendloc = 'topleft',
+                add_cutoff = TRUE,
+                ymax = 30,
+                component = 'Age_like',
+                 main = "Changes in age-composition likelihoods by fleet",
+                profile.string = "NatM",profile.label = "Natural Mortality (M)")
+dev.off()
+
+ r4ss::SSplotProfile(profilesummary, # summary object
+ profile.string = "NatM", # substring of profile parameter
+profile.label = "Natural Mortality (M)", add_cutoff = TRUE,
+ymax = 30,
+plotdir = dir_prof, print = TRUE)
+
+```
+
+For thorougness, run an SS model starting with v100.09 that uses the tight prior.
+```{r}
+mod100_09ogm <- r4ss::SS_output(here(year,'ss','v-100.09-originalMprior'))
+SS_plots(mod100_09ogm)
+```
