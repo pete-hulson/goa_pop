@@ -3,7 +3,7 @@ bibliography: ["VAST_safe.bib"]
 csl: "fishfish.csl"
 ---
 
-# Appendix 10d Model Equations
+# Appendix 10d Model Equations {#appxeqs}
 
 ## Population Dynamics
 
