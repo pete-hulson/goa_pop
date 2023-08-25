@@ -6,6 +6,8 @@ editor_options:
 
 # Fishery
 
+> Operational Update: This is a truncated version of the Fishery description for POP. The reader is referred to the last full assessment (Hulson et al., 2021) for the entirety of this section.
+
 ## Description of the Directed Fishery
 
 A POP trawl fishery by the U.S.S.R. and Japan began in the GOA in the early 1960s.
