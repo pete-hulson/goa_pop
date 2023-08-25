@@ -221,11 +221,12 @@ surv_l_nsamp <- surv_l_bins %>%
 surv_lcomps <- surv_l_bins %>%
   group_by(year, length_cm_use) %>%
   summarise(n = n()) %>%
-  mutate(freq = n / sum(n)) %>%
+    merge(., surv_l_nsamp, by = 'year') %>%
+  mutate(freq = n / nsamp) %>%
   ungroup()%>%
   mutate(month = 7, fleet = -2, sex = 1, part = 0) %>% 
   select(-n) %>%
-  merge(., surv_l_nsamp, by = 'year') %>%
+
   tidyr::pivot_wider(., id_cols = c(year, month, fleet, sex, part, nsamp), 
   names_from = length_cm_use, values_from = freq, values_fill = 0) 
 
