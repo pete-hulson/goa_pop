@@ -326,7 +326,7 @@ ggplot2::ggsave(plots$biomass_by_strata,
 
 # example to get model results without running mcmc
 mdl_res <- afscassess::process_results_pop(year = year,
-                                           model_dir = here::here(year, "mgmt", curr_mdl_fldr), 
+                                           model_dir = here::here(year, "mgmt",curr_mdl_fldr), 
                                            modname = mdl_name,
                                            rec_age = rec_age,
                                            plus_age = plus_age, 
