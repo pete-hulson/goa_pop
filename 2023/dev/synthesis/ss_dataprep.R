@@ -223,7 +223,7 @@ surv_lcomps <- surv_l_bins %>%
   summarise(n = n()) %>%
   mutate(freq = n / sum(n)) %>%
   ungroup()%>%
-  mutate(month = 7, fleet = 2, sex = 1, part = 0) %>% 
+  mutate(month = 7, fleet = -2, sex = 1, part = 0) %>% 
   select(-n) %>%
   merge(., surv_l_nsamp, by = 'year') %>%
   tidyr::pivot_wider(., id_cols = c(year, month, fleet, sex, part, nsamp), 
