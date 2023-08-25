@@ -3,7 +3,9 @@ bibliography: ["VAST_safe.bib"]
 csl: "fishfish.csl"
 ---
 
-# Appendix 10b: VAST model-based abundance 
+\newpage
+
+# Appendix 10b: VAST model-based abundance {#appxvast}
 
 ## Background
 
