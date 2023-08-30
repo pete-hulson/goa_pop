@@ -38,7 +38,7 @@ A manuscript is currently in preparation by P. Hulson to inform priors for catch
 
 >* *7. Evaluate the impacts of using a VAST model for POP abundance and/or apportionment. (SSC, December 2018; Plan Team, November 2019; SSC, December 2019)*	
 
-Previous investigations have shown the model to be sensitive to the biomass index used (VAST vs. design-based). While the trajectory of both indices is similar (Figure 10\@ref(fig:vastcompare)), the differences between them are are not yet well-understood. Following the CIE panel's recommendation, the base model used for POP assessment will continue fitting to the design-based estimates. The AFSC’s Groundfish Assessment Program (GAP) has formed a technical working group to resolve model based estimates of trawl surveys. The assessment authors will consider their advice in developing future versions of this model.
+Previous investigations have shown the model to be sensitive to the biomass index used (VAST vs. design-based). While the trajectory of both indices is similar (Figure 10.\@ref(fig:vastcompare)), the differences between them are are not yet well-understood. Following the CIE panel's recommendation, the base model used for POP assessment will continue fitting to the design-based estimates. The AFSC’s Groundfish Assessment Program (GAP) has formed a technical working group to resolve model based estimates of trawl surveys. The assessment authors will consider their advice in developing future versions of this model.
 
 ```{r vastcompare, fig.cap="Comparison of model-based (VAST) and design-based indices of relative abundance through 2021.", eval = TRUE}
 ## code to make this in 2023_analysis.R, towards the bottom
