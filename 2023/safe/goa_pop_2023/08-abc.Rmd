@@ -15,7 +15,7 @@ POP in the GOA are managed under Tier 3 of Amendment 56.
 In this assessment, it is assumed that the equilibrium level of recruitment is equal to the average of age-2 recruitments between 1979 and 2019 (i.e., the 1977 -- 2017 year classes).
 Because of uncertainty in very recent recruitment estimates, we lag 2 years behind model estimates in our projection.
 
-### Specification of OFL and Maximum Permissible ABC
+### Specification of OFL and Maximum Permissible ABC {#oflabc}
 
 Estimation of the $B_{40}$% reference point requires an assumption regarding the equilibrium level of recruitment.
 Other useful biomass reference points which can be calculated using this assumption are $B_{100}$% and $B_{35}$%, defined analogously to $B_{40}$%.
@@ -59,7 +59,7 @@ This projection propagates uncertainty throughout the entire assessment procedur
 The projection shows wide credibility intervals on future spawning biomass (Figure 10.\@ref(fig:ssbproj)).
 The $B_{35\%}$ and $B_{40\%}$ reference points and future recruitment is based on the 1979-2019 age-2 recruitment, and this projection predicts that the median spawning biomass will eventually tend toward these reference points while at harvesting at $F_{40\%}$.
 
-## Risk Table and ABC recommendation
+## Risk Table and ABC recommendation {#risktable}
 
 The SSC in its December 2018 minutes recommended that all assessment authors use the risk table when determining whether to recommend an ABC lower than the maximum permissible.
 The risk table template and examples of concerns for each level are provided in the most recent full assessment; the risk table scoring for POP has not changed since 2021:
@@ -174,23 +174,13 @@ Apportionment of ABC and OFL among regulatory areas uses the random effects mode
 #### Amendment 41 Downscaling
 
 The Eastern gulf is comprised of two sub-areas for apportionment purposes: the area west of $140^{\circ}W$ longitude ("West Yakutat") and the area east and southeast of $140^{\circ}W$ longitude ("East Yakutat and Southeast Outside"). Amendment 41 prohibited trawling in the latter area, so we re-calculate apportionment rates for the Eastern Gulf to consider the ratio of biomass both within and outside of the closed area. This re-calculation is obtained by:
-  1. Taking the ratio of estimated biomass between the  open and closed area (W. Yakutat versus E. Yakutat/SEO). 
+  1. Taking the ratio of estimated biomass between the  open and closed area (W. Yakutat versus E. Yakutat/SEO). The ratio for `r year` using biomass from `paste0(seq(year-4,year,2),collapse = ', ')` is XX, up/down from the ratio of 0.29 used in `r year-2`. 
+  2.  Pete to help clarify: This calculation was based on the team's previous recommendation that we use the weighted average of the upper 95% confidence interval for the W.
+Yakutat. We computed this interval this year using the weighted average of the ratio for 2019, 2021 and 2023. We calculated the approximate upper 95% confidence interval using the variance of a weighted mean for the 2017-2021 weighed mean ratio. This resulted in a ratio of 0.29, up from 0.24 in 2019. This results in an ABC apportionment of 
 
-Amendment 41 prohibited trawling in the Eastern area east of $140^{\circ}W$ longitude. As in the past, we rev 
-In the past, the Plan Team has calculated an apportionment for the West Yakutat area that is still open to trawling (between $147^{\circ}W$ and $140^{\circ}W$).
 
-We calculated this apportionment using the ratio of estimated biomass in the closed area and open area.
-This calculation was based on the team's previous recommendation that we use the weighted average of the upper 95% confidence interval for the W.
-Yakutat.
-We computed this interval this year using the weighted average of the ratio for 2019, 2021 and 2023. We calculated the approximate upper 95% confidence interval using the variance of a weighted mean for the 2017-2021 weighed mean ratio. This resulted in a ratio of 0.29, up from 0.24 in 2019. This results in an ABC apportionment of 1,409 t to the W.
-Yakutat area which would leave 3,451 t unharvested in the Southeast/Outside area.
-Based on the definitions for overfishing in Amendment 44 in tier 3a (i.e., FOFL = F35%=0.12), overfishing is set equal to 45,580 t for POP.
+Applying the biomass ratio to the [ABC](#oflabc) for the Eastern Gulf results in an ABC apportionment of 1,409 t to the W. Yakutat area, with 3,451 t unharvested in the E. Yakutat/SEO. The OFL for POP, where $F_{OFL}$ = $F_{35}$%=0.12), is 45,580. Using the same approach as for ABCs, the OFL for the Western Gulf, Central Gulf, and W. Yakutat^[In 2012, the Plan Team and SSC recommended combined OFLs for the Western, Central, and West Yakutat areas (W/C/WYK) because the original rationale of an overfished stock no longer applied. However, because of concerns over stock structure, the OFL for SEO remained separate to ensure this unharvested OFL was not utilized in another area. The Council adopted these recommendations.] is 41,470 t and 4,110 t in the SEO area. 
 
-The overfishing level is apportioned by area for POP and historically used the apportionment described above for setting area specific OFLs.
-
-However, in 2012, area OFLs were combined for the Western, Central, and West Yakutat (W/C/WYK) areas, while East Yakutat/Southeast (SEO) was separated to allow for concerns over stock structure.
-
-This results in overfishing levels for W/C/WYK area of 41,470 t and 4,110 t in the SEO area.
 
 ### Status Determination
 
