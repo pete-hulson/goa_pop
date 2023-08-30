@@ -68,8 +68,7 @@ l1 = "Level 1: No increased concerns"
 l2 = "Level 2: Substantially increased concerns"
 l3 = "Level 3: Major concern"
 l4 = "Level 4: Extreme concern"
-
-
+require(flextable)
 data.frame(assess = l2,
            pop = l2,
            enviro = l1,
@@ -79,14 +78,14 @@ data.frame(assess = l2,
     width(j = ~ pop, width = 1.5) %>% 
     width(j = ~ enviro, width = 1.5) %>% 
     width(j = ~ fish, width = 1.5) %>% 
-    set_header_labels(level = "",
+    flextable::set_header_labels(level = "",
                     assess = "Assessment-related considerations",
                     pop = "Population dynamics considerations",
                     enviro = "Environmental/ecosystem considerations",
                     fish = "Fishery Performance") %>% 
-  fontsize(size = 10) %>% 
-  font(fontname = "Times", part = "all") %>% 
-  italic(part = "header") 
+  flextable::fontsize(size = 10) %>% 
+  font(fontname = "Times", part = "all") %>%
+    italic(part ='header')
 ```
 
 
