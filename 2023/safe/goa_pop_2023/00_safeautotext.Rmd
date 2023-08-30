@@ -1,0 +1,5 @@
+## This document contains pre-loaded text as commands for use in your SAFE.
+## You may invoke a text block by calling the name in brackets after "\newcommand";
+## for example, typing \textamendment41 will paste the relevant text regarding Amendment 41.
+
+\newcommand{\textABC} testtesttest
