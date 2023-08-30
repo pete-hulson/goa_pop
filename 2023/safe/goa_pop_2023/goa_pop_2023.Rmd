@@ -74,6 +74,12 @@ c1 = 2842 # estimated catch in current year
 c2 = 3489 # proj catch year + 1
 c3 = 2884 # proj catch year + 2
 # todo: build a function/switch to auto run the tier(a/b) - also for overfishing/overfished
+
+## load in derived quants & model results
+mdlres <- list.files(here(year,'mgmt','2020.1-2023','processed'), pattern = '.csv', full.names = TRUE)
+for(i in 1:length(mdlres)){
+  assign(x = gsub('.csv','',basename(mdlres[i])), value = read.csv(mdlres[i]))
+}
 ```
 
 ```{r, child="01-summary.Rmd", eval = T}

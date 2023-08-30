@@ -359,7 +359,9 @@ library(ggplot2)
 theme_set(afscassess::theme_report())
 # spot for figure fcns
 
-
+plot_compare_biomass_pop(year, 
+model_dirs = c(here(year,'mgmt',paste0('2020.1-',c(2021,2023)))),
+ savedir = here::here(year, "mgmt", curr_mdl_fldr))
 
 ## Custom survey plots
 
