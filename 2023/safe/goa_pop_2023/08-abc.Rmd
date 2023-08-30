@@ -6,7 +6,7 @@ editor_options:
 
 ## Harvest recommendations
 
-> Operational Update: The data description for POP has been truncated to highlight relevant updates or changes made for this cycle.
+> Operational Update: The description of Amendment 56 specifications for POP and details regarding the development of the Risk Table have been truncated to highlight relevant updates or changes made for this cycle.
 > The reader is referred to the last full assessment (Hulson et al., 2021) for the entirety of this section.
 
 ### Amendment 56 Reference Points
@@ -14,13 +14,16 @@ editor_options:
 POP in the GOA are managed under Tier 3 of Amendment 56.
 In this assessment, it is assumed that the equilibrium level of recruitment is equal to the average of age-2 recruitments between 1979 and 2019 (i.e., the 1977 -- 2017 year classes).
 Because of uncertainty in very recent recruitment estimates, we lag 2 years behind model estimates in our projection.
-The relevant refernce points, and their description, are as follows:
 
-Tier 3 uses the following reference points: $B_{40}$%, equal to $F_{35}$%,,; and $F_{40}$%, equal to .
+### Specification of OFL and Maximum Permissible ABC
 
 Estimation of the $B_{40}$% reference point requires an assumption regarding the equilibrium level of recruitment.
 Other useful biomass reference points which can be calculated using this assumption are $B_{100}$% and $B_{35}$%, defined analogously to $B_{40}$%.
-The 2022 estimates of these reference points are:
+Female spawning biomass for `r year+1` is estimated at 216,635 t.
+This is above the $B_{40}$% value of 132,767 t.
+Under Amendment 56, Tier 3, the maximum permissible fishing mortality for ABC is $F_{40}$% and fishing mortality for OFL is $F_{35}$%.
+
+The `r year+1` estimates of these reference points, and the resultant ABC and OFL based on the fishing mortality rates are:
 
 | Reference Point | Description                                                                                                                                                | Value   |
 |------------------------|------------------------|------------------------|
@@ -28,34 +31,32 @@ The 2022 estimates of these reference points are:
 | $B_{40}$%       | 40% of the equilibrium spawning biomass that would be obtained in the absence of fishing                                                                   | 132,767 |
 | $B_{35}$%       | 35% of the equilibrium spawning biomass that would be obtained in the absence of fishing                                                                   | 116,171 |
 | $F_{40}$%       | The fishing mortality rate that reduces the equilibrium level of spawning per recruit to 40% of the level that would be obtained in the absence of fishing | 0.10    |
+| ABC             | Yield at $F_{40}$% in 2024                                                                                                                                       | 38,268  |
 | $F_{35}$%       | The fishing mortality rate that reduces the equilibrium level of spawning per recruit to 35% of the level that would be obtained in the absence of fishing | 0.12    |
+| OFL             | Yield at $F_{35}$%  in 2024                                                                                                                                       | 45,580  |
 
-### Specification of OFL and Maximum Permissible ABC
-
-Female spawning biomass for 2022 is estimated at 216,635 t.
-This is above the B40% value of 132,767 t.
-Under Amendment 56, Tier 3, the maximum permissible fishing mortality for ABC is F40% and fishing mortality for OFL is F35%.
-Applying these fishing mortality rates for 2022, yields the following ABC and OFL:
-
-**TABLE HERE**
-
+ 
 ## Harvest Projections
 
-The standard set of Tier-3 harvest projections was applied here. A description of the future catch/$F$ scenarios and implementation can be found in the most recent full assessment. 
+The standard set of Tier-3 harvest projections was applied here.
+A description of the future catch/$F$ scenarios and implementation can be found in the most recent full assessment.
 
-Spawning biomass, fishing mortality, and yield are tabulated for the seven standard projection scenarios (Table 9-19). 
+Spawning biomass, fishing mortality, and yield are tabulated for the seven standard projection scenarios (Table 10\@ref(tab:projections)).
 
 The difference for this assessment for projections is in Scenario 2 (Author's *F*); we use pre-specified catches to increase accuracy of short-term projections in fisheries where the catch is usually less than the ABC.
+
 This was suggested to help management with setting preliminary ABCs and OFLs for two-year ahead specifications.
 
 In addition to the seven standard harvest scenarios, Amendments 48/48 to the BSAI and GOA Groundfish Fishery Management Plans require projections of the likely OFL two years into the future.
+
 While Scenario 6 gives the best estimate of OFL for `r year`, it does not provide the best estimate of OFL for `r year + 1`, because the mean `r year` catch under Scenario 6 is predicated on the `r year` catch being equal to the `r year` OFL, whereas the actual `r year` catch will likely be less than the `r year` OFL.
 The executive summary contains the appropriate one- and two-year ahead projections for both ABC and OFL.
 
 During the 2006 CIE review, it was suggested that projections should account for uncertainty in the entire assessment, not just recruitment from the endpoint of the assessment.
+
 We continue to present an alternative projection scenario using the uncertainty of the full assessment model, harvesting at the same estimated yield ratio as Scenario 2, except for all years instead of the next two.
 This projection propagates uncertainty throughout the entire assessment procedure based on MCMC.
-The projection shows wide credibility intervals on future spawning biomass (Figure 9-17).
+The projection shows wide credibility intervals on future spawning biomass (Figure 10.\@ref(fig:ssbproj)).
 The $B_{35\%}$ and $B_{40\%}$ reference points and future recruitment is based on the 1979-2019 age-2 recruitment, and this projection predicts that the median spawning biomass will eventually tend toward these reference points while at harvesting at $F_{40\%}$.
 
 ## Risk Table and ABC recommendation
@@ -88,51 +89,70 @@ data.frame(assess = l2,
     italic(part ='header')
 ```
 
-
 An abridged summary of the considerations that led to this determination for each category follows.
 
-### Assessment considerations
+### Assessment considerations {#assessmentconsiderations}
 
-The GOA POP assessment model exhibits a negative retrospective pattern (spawning biomass continues to increase with new data). This is driven by increases in the trawl survey biomass, which has been consistently under-estimated since 2013, and may be suggestive of model-misspecification. This results in a an "assessment considerations" score of level 2, a substantially increased concern. 
+The GOA POP assessment model exhibits a negative retrospective pattern (spawning biomass continues to increase with new data).
+
+This is driven by increases in the trawl survey biomass, which has been consistently under-estimated since 2013, and may be suggestive of model-misspecification.
+This results in a an "assessment considerations" score of level 2, a substantially increased concern.
 
 ### Population dynamics considerations
 
 The model continues to estimate above-average recruitment events in the last three decades to account for large bottom trawl survey biomass estimates.
 
-As discussed in the **Assessment considerations** section above, the recent increase in POP biomass since 2011 is an unusual increase that has not been seen in the time series of biomass prior.
-In order to fit these large bottom trawl survey biomass estimates the assessment model has indicated several above average recruitment events in recent years (Figures 9-13 and 9-14), most notably in the mid-1980s, mid- and late-1990s, and since 2000.
-However, even with these above average recruitments the model is still not able to fit the increase bottom trawl survey biomass satisfactorily.
+As discussed in [Assessment Considerations](#assessmentconsiderations), the recent increase in POP biomass since 2011 is an unusual increase that has not been seen in the time series of biomass prior.
+
+In order to fit these large bottom trawl survey biomass estimates the assessment model has indicated several above average recruitment events in recent years (Figures 10.\@ref(fig:recruitment) and 10.\@ref(fig:recdevs)), most notably in the mid-1980s, mid- and late-1990s, and since 2000.
+
+However, even with these above-average recruitments the model is still not able to fit the increase bottom trawl survey biomass satisfactorily.
+
 In comparison to many stocks in the North Pacific, this increase in biomass coinciding with warmer temperatures is atypical (with the exception of sablefish).
+
 This stock trend is unusual because both the stock trend and recruitment estimates have been increasing faster than seen recently, and as such, we continue to rate the population-dynamics concern as level 2, a substantially increased concern.
 
 ### Environmental/Ecosystem considerations
 
 We scored this category as level 1 (normal concern) for Pacific ocean perch (POP) given moderate thermal conditions for adults and moderate to below average thermal conditions for larvae, mixed trends for zooplankton abundance, and potential but unknown levels of competition with juvenile sablefish and pink salmon.
+
 POP are benthic, continental slope (150-300 m depths) dwellers as adults, with a pelagic then inshore benthic juvenile stage (age 1 to 3) in the Gulf of Alaska (GOA) (Carlson and Haight 1976, Love et al. 2002, Rooper and Bolt 2005, Rooper et al. 2007, NPFMC 2010).
 Spawning occurs during winter and early spring , larvae settle to the benthos within 3-6 months (Love et al. 2002).
+
 It is reasonable to expect that the 2021 and predicted 2022 average deeper ocean temperatures will provide good spawning habitat.
+
 Average to cooler surface temperatures will contribute to average to below average pelagic conditions for larval rockfish, as warm spring surface waters are conducive to larval survival and positive rockfish recruitment (Moss 2016, Morgan 2019).
 Ocean temperatures at the surface and at depth on the shelf were around the long-term average in 2021 (AFSC Bottom Trawl Survey, Laman 2021; AFSC EcoFOCI survey, Rogers et al 2021; Seward Line Survey, Danielson 2021), although western GOA started the year with warmer surface waters (satellite data; Watson 2021) and there was slightly above average warmth (5.2 °C) at 200m depth along the outer edge of the shelf during the summer (AFSC Longline Survey; Siwicke 2021).
+
 This is within the range of preferred ocean temperatures for adults (4.0-6.5 °C, Major and Shippen 1970).
 Numerous temperature time series showed signs of cooling from previous surveys (returning to average from recent marine heatwave years 2014-2016, 2019) at the surface and at depth, and 2022 surface temperatures are predicted to continue cooling, in alignment with La Niña conditions and a negative Pacific Decadal Oscillation.
+
 Planktivorous foraging conditions were moderate and regionally variable across the GOA in 2021.
+
 The primary prey of the adult Pacific Ocean Perch include calanoid copepods, euphausiids, myctophids, and miscellaneous prey in the GOA (Byerly 2001, Yang and Nelson 2000, Yang 2003).
+
 While zooplankton trends were variable, an important observation shows continued decline in POP body condition (i.e. lower weights at length) since 2015 (Bottom Trawl Survey, O'Leary, 2021).
+
 Declines are especially pronounced in SEAK and Yakutat regions since the previous survey in 2019.
 The timing of this declining trend matches the time frame of increasing POP population since the 2014-2016 marine heatwave.
+
 Regionally, zooplankton trends varied from the western to eastern GOA.
 The western GOA had lower spring biomass of large copepods and approximately average biomass of smaller copepods was around Kodiak, characteristics of previous warm, less productive years (e.g., 2019).
+
 Planktivorous seabird reproductive success, an indicator of zooplankton availability and nutritional quality, was below average just north of Kodiak (E. Amatuli Island; Drummond and Renner 2021).
+
 Around the eastern edge of WGOA (Seward Line, Middleton Island) the biomass of large copepods was average to above-average (Seward Line Survey, Hopcroft 2021) and planktivorous seabirds had better reproductive success (Middleton Island, Hatch et al. 2021), indicating improved forage conditions.
+
 The eastern GOA inside waters of Icy Strait, northern southeast Alaska, had higher than average large copepods and euphausiids (AFSC SECM Survey, Icy Strait, Fergusson 2021), however planktivorous seabirds had mixed reproductive success.
+
 Potential competitors are large year classes of juvenile sablefish (2016, 2018) and a pink salmon which are returning in very high numbers this year (Murphy et al. 2021, Shaul et al. 2021).
-Predators of juvenile POP include Pacific halibut, arrowtooth flounder, seabirds, rockfish, salmon, and lingcod (Moss 2016, Hulson et al. 2020).
-Predators of adults include Pacific halibut, sablefish, and sperm whales (Moss 2016, Hulson et al. 2020).
-Halibut and arrowtooth flounder populations remain low relative to previous levels, and, in general, there is no cause to suspect increased predation pressure on larval or adult demersal shelf rockfish.
+
+Predators of juvenile POP include Pacific halibut, arrowtooth flounder, seabirds, rockfish, salmon, and lingcod (Moss 2016, Hulson et al. 2020).  Predators of adults include Pacific halibut, sablefish, and sperm whales (Moss 2016, Hulson et al. 2020). Halibut and arrowtooth flounder populations remain low relative to previous levels, and, in general, there is no cause to suspect increased predation pressure on larval or adult demersal shelf rockfish.
 
 ### Fishery performance
 
 In general, fishery CPUE shows consistent patterns in abundance similar to the bottom trawl survey and there have been no recent changes to spatial distribution of catch, percent of TAC taken, or fishing duration.
+
 Overall, there are no indications of adverse signals or concerns about the fishery in terms of resource-use, performance, or behavior and thus we scored the fishery-performance concern as level 1, no apparent concern.
 We will continue to monitor the fishery performance as it pertains to the COVID-19 pandemic.
 
@@ -140,32 +160,36 @@ We will continue to monitor the fishery performance as it pertains to the COVID-
 
 The following is a summary of the risk table:
 
-
 Bottom trawl survey estimates of POP biomass in the GOA indicate an unprecedented increase in abundance, which has not been properly explained by the population dynamics defined in the current assessment model.
+
 Even though we rate the assessment-related and population dynamics considerations at a level 2, we do not, however, recommend a reduction in ABC as the retrospective pattern in this assessment continues to indicate increasing population abundance.
 
 ### Area Allocation of Harvests {#apportionment}
 
-Apportionment of ABC and OFL among regulatory areas has been based on the random effects model developed by the survey averaging working group.
-The random effects model was fit to the survey biomass estimates (with associated variance) for the Western, Central, and Eastern GOA. The random effects model estimates a process error parameter (constraining the variability of the modeled estimates among years) and random effects parameters in each year modeled.
-The fit of the random effects model to survey biomass in each area is shown in Figure 9-18.
-In general the random effects model fits the area-specific survey biomass reasonably well.
-The random effects model estimates increases in biomass in the Western and Central Gulf in 2021 compared to 2019, and decrease in the Eastern Gulf.
-Using the random effects model estimates of survey biomass for the apportionment results in 6.8% for the Western area (up from 4.6% in 2019), 80.5% for the Central area (up from 75.8% in 2019), and 12.7% for the Eastern area (down from 19.6% in 2019).
-Using the results of the random effects model results in recommended ABC's of 2,602 t for the Western area, 30,806 t for the Central area, and 4,860 t for the Eastern area.
-Amendment 41 prohibited trawling in the Eastern area east of 140° W longitude.
-In the past, the Plan Team has calculated an apportionment for the West Yakutat area that is still open to trawling (between 147oW and 140oW).
+#### Overview
+
+Apportionment of ABC and OFL among regulatory areas uses the random effects model ("REMA" version `0.1.0`) developed by the survey averaging working group. This model estimates random effects parameters that control the variation of estimated biomass across years and areas, and is fit to the trawl survey biomass estimates (with associated variance) for the Western, Central, and Eastern GOA. The REMA model fits the survey data in each area well (Figure 10.\@ref(fig:rema)). Both the observations and predictions indicate that most biomass is in the Central Gulf; biomass has increased in the Central and Western Gulf, and decreased in the Eastern Gulf. The estimated apportionment among areas are as follows: 6.8% for the Western area (up from 4.6% in 2019), 80.5% for the Central area (up from 75.8% in 2019), and 12.7% for the Eastern area (down from 19.6% in 2019). This corresponds to recommended ABC's of 2,602 t for the Western area, 30,806 t for the Central area, and 4,860 t for the Eastern area.
+
+
+#### Amendment 41 Downscaling
+
+The Eastern gulf is comprised of two sub-areas for apportionment purposes: the area west of $140^{\circ}W$ longitude ("West Yakutat") and the area east and southeast of $140^{\circ}W$ longitude ("East Yakutat and Southeast Outside"). Amendment 41 prohibited trawling in the latter area, so we re-calculate apportionment rates for the Eastern Gulf to consider the ratio of biomass both within and outside of the closed area. This re-calculation is obtained by:
+  1. Taking the ratio of estimated biomass between the  open and closed area (W. Yakutat versus E. Yakutat/SEO). 
+
+Amendment 41 prohibited trawling in the Eastern area east of $140^{\circ}W$ longitude. As in the past, we rev 
+In the past, the Plan Team has calculated an apportionment for the West Yakutat area that is still open to trawling (between $147^{\circ}W$ and $140^{\circ}W$).
+
 We calculated this apportionment using the ratio of estimated biomass in the closed area and open area.
 This calculation was based on the team's previous recommendation that we use the weighted average of the upper 95% confidence interval for the W.
 Yakutat.
-We computed this interval this year using the weighted average of the ratio for 2017, 2019, and 2021.
-We calculated the approximate upper 95% confidence interval using the variance of a weighted mean for the 2017-2021 weighed mean ratio.
-This resulted in a ratio of 0.29, up from 0.24 in 2019.
-This results in an ABC apportionment of 1,409 t to the W.
+We computed this interval this year using the weighted average of the ratio for 2019, 2021 and 2023. We calculated the approximate upper 95% confidence interval using the variance of a weighted mean for the 2017-2021 weighed mean ratio. This resulted in a ratio of 0.29, up from 0.24 in 2019. This results in an ABC apportionment of 1,409 t to the W.
 Yakutat area which would leave 3,451 t unharvested in the Southeast/Outside area.
 Based on the definitions for overfishing in Amendment 44 in tier 3a (i.e., FOFL = F35%=0.12), overfishing is set equal to 45,580 t for POP.
+
 The overfishing level is apportioned by area for POP and historically used the apportionment described above for setting area specific OFLs.
+
 However, in 2012, area OFLs were combined for the Western, Central, and West Yakutat (W/C/WYK) areas, while East Yakutat/Southeast (SEO) was separated to allow for concerns over stock structure.
+
 This results in overfishing levels for W/C/WYK area of 41,470 t and 4,110 t in the SEO area.
 
 ### Status Determination
