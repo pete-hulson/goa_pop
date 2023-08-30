@@ -439,11 +439,12 @@ Note there is no data weights here. These models have invertible hessians
 300.06:fish selex truly freed to be domed (shows that this is the thing that changes scale) and M using the 2021 prior
 
 ```{r}
-mod_alts <- list.files(here(year,'ss'), pattern = 'v-300', recursive = FALSE, full.names = TRUE)[c(2,6:10)]
+mod_alts <- list.files(here(year,'ss'), pattern = 'v-300', recursive = FALSE, full.names = TRUE)[-c(1,4,5,10)]
 ## order them more sensibly
 mod_alts <- mod_alts[c(1,4,2,5,3,6)]
-colvec <- c("#FFB703","red","grey33",'blue',
-"#FB8500","grey44","black")
+colvec <- c('red','#023E8A','grey33','#0096C7','grey44','#48CAE4','grey55')
+#colvec <- c("#FFB703","red","grey33",'blue',
+#"#FB8500","grey44","black")
 llabs = c('Logistic Fishery Selex + New M prior', ## 300.01
 "Dome Fishery Selex + New M prior",  #300.04
 #'Logistic Fishery Selex + New M prior + Data Weights',
@@ -453,13 +454,28 @@ llabs = c('Logistic Fishery Selex + New M prior', ## 300.01
 "Dome Fishery Selex +  M prior from 2021" #300.06
 )
 
-biglist <- lapply(mod_alts, SS_output) %>% r4ss::SSsummarize()
-lapply(mod_alts[c(4,6)], FUN = function(x) SS_plots(SS_output(x)))
 
+
+biglist <- lapply(mod_alts, SS_output) %>% r4ss::SSsummarize()
+#lapply(mod_alts[c(6)], FUN = function(x) SS_plots(SS_output(x)))
+
+likes<-biglist$likelihoods
+names(likes) <- basename(mod_alts);names(likes)[length(mod_alts)+1] <- 'component'
+melt(likes, id = 'component') %>%
+filter(component == 'TOTAL') %>%
+#group_by(component) %>%
+mutate(rank = dense_rank(desc(value))) %>% arrange(rank)
+
+qvals <- biglist$pars[grep('LnQ',biglist$pars$Label),]
+names(qvals) <- basename(mod_alts);qvals
+mvals <- biglist$pars[grep('NatM',biglist$pars$Label),]
+names(mvals) <- basename(mod_alts);mvals
 SSplotComparisons(biglist, 
 print = T, 
 plotdir = here('2023','ss','v-300.00'), 
-legendlabels = llabs)
+legendlabels = basename(mod_alts)
+#legendlabels = llabs
+)
 
 ```
 ## Plan Team SEP 23 stuff
@@ -502,8 +518,8 @@ aes(y = Obs/1000), color = 'black') +
 geom_errorbar(data = subset(modsi, model == '2021 Assessment'), 
 aes(ymin = lwr/1000, ymax = upr/1000), width =0, color = 'black') +
 geom_line(data = modsi, aes(y = Exp/1000), lwd = 1.1) +
-#scale_color_manual(values = colvec,
-#labels = c('2021 Assessment',llabs)) +
+scale_color_manual(values = colvec,
+labels = c('2021 Assessment',llabs)) +
 labs(x = 'Year', y = 'Survey Index (1000 t)', color = '') +
 theme(legend.position = c(0.5,0.85),
 legend.text = element_text(size = 16))
@@ -518,12 +534,11 @@ ptsb <- bind_rows(ssmodsb, biom21 %>%
 select(Yr = year, sp_biom, source) %>%
 melt(id = c('Yr','source')) %>%
 select(Yr, variable, value, source)) %>%
-ggplot(., aes(x = Yr, y = value/1000, color =variable, 
-linetype =source )) +
+ggplot(., aes(x = Yr, y = value/1000, color =variable)) +
 geom_line(lwd = 1) +
-scale_color_manual(values = colvec,
+## note the order of the models changes here
+scale_color_manual(values = colvec[c(2:7,1)],
 labels = c(llabs,'2021 Assessment')) +
-scale_linetype_manual(values = c('dotted','solid')) +
 labs(x = 'Year', y = 'SSB (1000 t)', linetype = '', color = '') +
 theme(legend.position = c(0.5,0.85),
 legend.text = element_text(size = 16))
@@ -536,12 +551,28 @@ file = here(year,'ss','v-300.00','ssb_surv_compare_pt.png'))
 ggsave(last_plot(),
 file = here(year,'ss','v-300.00','ssb_surv_compare_pt.png'))
 
+r4ss::tune_comps(replist = mod300_04, fleets = 'all', 
+niters_tuning = 3,
+                                   dir = here('2023','ss','v-300.04-francis'),
+                                   verbose = TRUE)
+mod300_04f <- r4ss::SS_output(here('2023','ss','v-300.04-francis'))
+SS_plots(mod300_04f)
+mod300_04f$maximum_gradient_component
+
 ## update data weights on mod 300.01
 r4ss::tune_comps(replist = mod300_01, fleets = 'all', 
 niters_tuning = 3,
                                    dir = here('2023','ss','v-300.01-francis'),
                                    verbose = TRUE)
                                
+mod300_04q <- r4ss::SS_output(here('2023','ss','v-300.04-qEst'))
+SS_plots(mod300_04q)
+
+mod300_04q$parameters[grep('LnQ_base_Survey',mod300_04q$parameters$Label),]
+
+mod300_01f$maximum_gradient_component
+
+
 mod300_01f <- r4ss::SS_output(here('2023','ss','v-300.01-francis'))
 SS_plots(mod300_01f)
 mod300_01f$maximum_gradient_component
@@ -550,8 +581,8 @@ mod300_01f$maximum_gradient_component
 m.vec = seq(0.02,0.15,0.01); Nprofile = length(m.vec)
 ## do this for mod 300.01 both with and without data weights
 #dir_prof = here('2023','ss','v-300.01f-natMprofile')
-dir_prof = here('2023','ss','v-300.01-natMprofile')
-
+#dir_prof = here('2023','ss','v-300.01-natMprofile')
+dir_prof = here('2023','ss','v-300.04-natMprofile')
 r4ss::profile(dir_prof,
 profilevec =m.vec , 
 string ='NatM', show_in_console = TRUE)
