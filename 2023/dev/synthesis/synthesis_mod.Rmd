@@ -10,7 +10,8 @@ require(r4ss)
 require(dplyr)
 require(here)
 require(reshape2)
-theme_set(theme_minimal())
+year = 2023
+theme_set(afscassess::theme_report())
 ```
 
 ```{r}
@@ -335,4 +336,245 @@ For thorougness, run an SS model starting with v100.09 that uses the tight prior
 ```{r}
 mod100_09ogm <- r4ss::SS_output(here(year,'ss','v-100.09-originalMprior'))
 SS_plots(mod100_09ogm)
+```
+
+Realized that I wasn't giving the selex the ability to be domed.
+This model has the corrected fishlife M prior, the adjustments made thru v100.09, and frees the peak parameter.
+
+```{r}
+mod200_00 <- r4ss::SS_output(here(year,'ss','v-200.00'))
+SS_plots(mod200_00)
+```
+
+still having a scaling issue. now update the growth pars as in 100.10, and make it a sex-ratio single-sex model (ngender == -1)
+I realize there are too many moving parts here and the scale is very sensitive.
+I'm going to start with 100.09 again, which we know is in scale, and make systematic changes. Each of the models labelled 100.09[letter]
+have a single change.
+The new M prior has no impact. The ngender change has a minimal impact. Freeing the selectivity to be truly domed is totally throwing off the seelx.
+
+```{r}
+
+mod09_alts <- list.files(here(year,'ss'), pattern = 'v-100.09', recursive = FALSE, full.names = TRUE)
+biglist <- lapply(mod09_alts, SS_output) %>% r4ss::SSsummarize()
+SSplotComparisons(biglist, 
+print = T, 
+plotdir = here('2023','ss','v-100.09'), 
+legendlabels =basename(mod09_alts))
+
+ 
+## implement both the newM and ngender ==1 
+## this has a low (reasonable) M value, highish R0
+
+## subsequent changes:
+#reduce lamax min to 30
+# reduce survey peak min to 1 
+# increase age at L1 to 4
+mod300_00 <- r4ss::SS_output(here(year,'ss','v-300.00'))
+SS_plots(mod300_00)
+
+
+mod09sb <- mod300_00$derived_quants[grep('SSB_',mod300_00$derived_quants$Label),] %>%  
+mutate(variable = 'SpawnBio',
+source = 'SS mod',Yr = as.numeric(substr(Label,5,9)),
+lwr = Value-1.96*StdDev, upr = Value+1.96*StdDev) %>% 
+filter(!is.na(Yr)) %>%
+select(Yr, variable, value =Value, lwr, upr, source)
+
+compdf<- 
+  bind_rows(mod09sb %>% select(-lwr,-upr), mod21 %>% 
+              filter(VARIABLE == 'SPAWNBIO') %>%
+              select(Yr = YEAR,variable=VARIABLE, value ) %>% 
+              mutate(source = '2021 Assessment'))
+
+ggplot(subset(compdf, Yr > 1978), aes(x = Yr, y = value, color = source, fill = source)) +
+  geom_line(lwd = 1.1) +
+  scale_fill_manual(values = c('grey','seagreen')) +
+  scale_color_manual(values = c('grey','seagreen')) +
+  geom_ribbon(data=subset(mod09sb, Yr > 1978),aes(ymin = lwr, ymax = upr), alpha = 0.2)
+
+
+```
+
+Fix the terminal p6 for fishery selex to be truly logistic.
+This fits the survey much better than the previous version.
+M is alarmingly low though this is consistent with what we had seen in the profiles. 
+```{r}
+mod300_01 <- r4ss::SS_output(here(year,'ss','v-300.01'))
+SS_plots(mod300_01)
+
+
+
+mod09sb <- mod300_01$derived_quants[grep('SSB_',mod300_01$derived_quants$Label),] %>%  
+mutate(variable = 'SpawnBio',
+source = 'SS mod',Yr = as.numeric(substr(Label,5,9)),
+lwr = Value-1.96*StdDev, upr = Value+1.96*StdDev) %>% 
+filter(!is.na(Yr)) %>%
+select(Yr, variable, value =Value, lwr, upr, source)
+
+compdf<- 
+  bind_rows(mod09sb %>% select(-lwr,-upr), mod21 %>% 
+              filter(VARIABLE == 'SPAWNBIO') %>%
+              select(Yr = YEAR,variable=VARIABLE, value ) %>% 
+              mutate(source = '2021 Assessment'))
+
+ggplot(subset(compdf, Yr > 1978), aes(x = Yr, y = value, color = source, fill = source)) +
+  geom_line(lwd = 1.1) +
+  scale_fill_manual(values = c('grey','seagreen')) +
+  scale_color_manual(values = c('grey','seagreen')) +
+  geom_ribbon(data=subset(mod09sb, Yr > 1978),aes(ymin = lwr, ymax = upr), alpha = 0.2)
+
+
+```
+
+experimentally fix M at the 2021 base value - this gets us in line with the original!
+Make a set of 300 alts showing the impact of these key changes.
+Note there is no data weights here. These models have invertible hessians
+300.00: a baseline run, selex is a little funny at the end so don't show this
+300.01: the baseline ss alternative with a new M prior and fish selex truly logistic
+300.01f: 300.01 with three rounds of francis tuning
+300.02: selex as in 300.01 but M fixed at the 2021 base value (0.075); this is in scale with the original
+300.03:  selex as in 300.01 but using the old M prior from 2021
+300.04: as in 300.01 except fish selex truly freed to be domed (shows that this is the thing that changes scale)
+300.05:fish selex truly freed to be domed (shows that this is the thing that changes scale) and M fixed at the 2021 base value (0.075);
+300.06:fish selex truly freed to be domed (shows that this is the thing that changes scale) and M using the 2021 prior
+
+```{r}
+mod_alts <- list.files(here(year,'ss'), pattern = 'v-300', recursive = FALSE, full.names = TRUE)[c(2,6:10)]
+## order them more sensibly
+mod_alts <- mod_alts[c(1,4,2,5,3,6)]
+colvec <- c("#FFB703","red","grey33",'blue',
+"#FB8500","grey44","black")
+llabs = c('Logistic Fishery Selex + New M prior', ## 300.01
+"Dome Fishery Selex + New M prior",  #300.04
+#'Logistic Fishery Selex + New M prior + Data Weights',
+"Logistic Fishery Selex + M fixed at 0.075", ## 300.02
+"Dome Fishery Selex + M fixed at 0.075", ## 300.05  
+"Logistic Fishery Selex + M prior from 2021", #300.03
+"Dome Fishery Selex +  M prior from 2021" #300.06
+)
+
+biglist <- lapply(mod_alts, SS_output) %>% r4ss::SSsummarize()
+lapply(mod_alts[c(4,6)], FUN = function(x) SS_plots(SS_output(x)))
+
+SSplotComparisons(biglist, 
+print = T, 
+plotdir = here('2023','ss','v-300.00'), 
+legendlabels = llabs)
+
+```
+## Plan Team SEP 23 stuff
+1) show 300-level results and include the 2021 model
+2) do data weighing on 300.01 and re-do profiling exercies
+
+```{r}
+## comparison plots
+surv21 <- read.csv(here(year,'base','processed','survey.csv')) %>% mutate(source = '2021 Assessment')
+biom21 <- read.csv(here(year,'base','processed','bio_rec_f.csv'))  %>% mutate(source = '2021 Assessment')
+
+
+SSplotComparisons(biglist, 
+#print = F, 
+subplots = 1,
+#plotdir = here('2023','ss','v-300.00'), 
+legendlabels = llabs)
+
+
+
+ssmodsb <- biglist$quants[grep('SSB_',biglist$quants$Label),] %>%  
+mutate(variable = 'SpawnBio',
+source = 'SS mod',Yr = as.numeric(substr(Label,5,9))) %>% 
+select(-Label,-variable) %>%
+melt(id = c('Yr','source')) %>%
+#mutate(lwr = Value-1.96*StdDev, upr = Value+1.96*StdDev) %>% 
+#filter(!is.na(Yr)) %>%
+select(Yr, variable, value, source)
+
+
+modsi<- bind_rows(biglist$indices %>% select(Yr, Obs, Exp, SE, model = name) %>% 
+mutate(lwr = Obs - Obs*SE, upr = Obs + Obs*SE), surv21 %>% 
+mutate(model = '2021 Assessment') %>%
+select(Yr = year, Obs = biomass, Exp = pred, SE = se, model, 
+lwr = lci, upr = uci) ) 
+
+ptsurv <- ggplot(data = NULL, aes(x = Yr,  color = model)) +
+geom_point(data = subset(modsi, model == 'model1'), 
+aes(y = Obs/1000), color = 'black') +
+geom_errorbar(data = subset(modsi, model == '2021 Assessment'), 
+aes(ymin = lwr/1000, ymax = upr/1000), width =0, color = 'black') +
+geom_line(data = modsi, aes(y = Exp/1000), lwd = 1.1) +
+#scale_color_manual(values = colvec,
+#labels = c('2021 Assessment',llabs)) +
+labs(x = 'Year', y = 'Survey Index (1000 t)', color = '') +
+theme(legend.position = c(0.5,0.85),
+legend.text = element_text(size = 16))
+
+ 
+ggsave(ptsurv,file = here(year,'ss','v-300.00','surv_compare_pt.png'))
+
+
+
+
+ptsb <- bind_rows(ssmodsb, biom21 %>% 
+select(Yr = year, sp_biom, source) %>%
+melt(id = c('Yr','source')) %>%
+select(Yr, variable, value, source)) %>%
+ggplot(., aes(x = Yr, y = value/1000, color =variable, 
+linetype =source )) +
+geom_line(lwd = 1) +
+scale_color_manual(values = colvec,
+labels = c(llabs,'2021 Assessment')) +
+scale_linetype_manual(values = c('dotted','solid')) +
+labs(x = 'Year', y = 'SSB (1000 t)', linetype = '', color = '') +
+theme(legend.position = c(0.5,0.85),
+legend.text = element_text(size = 16))
+
+ggsave(ptsb,file = here(year,'ss','v-300.00','ssb_compare_pt.png'))
+
+ggsave(Rmisc::multiplot(plotlist = list(ptsurv,ptsb)),
+file = here(year,'ss','v-300.00','ssb_surv_compare_pt.png'))
+
+ggsave(last_plot(),
+file = here(year,'ss','v-300.00','ssb_surv_compare_pt.png'))
+
+## update data weights on mod 300.01
+r4ss::tune_comps(replist = mod300_01, fleets = 'all', 
+niters_tuning = 3,
+                                   dir = here('2023','ss','v-300.01-francis'),
+                                   verbose = TRUE)
+                               
+mod300_01f <- r4ss::SS_output(here('2023','ss','v-300.01-francis'))
+SS_plots(mod300_01f)
+mod300_01f$maximum_gradient_component
+
+
+m.vec = seq(0.02,0.15,0.01); Nprofile = length(m.vec)
+## do this for mod 300.01 both with and without data weights
+#dir_prof = here('2023','ss','v-300.01f-natMprofile')
+dir_prof = here('2023','ss','v-300.01-natMprofile')
+
+r4ss::profile(dir_prof,
+profilevec =m.vec , 
+string ='NatM', show_in_console = TRUE)
+
+
+profilemodels <- r4ss::SSgetoutput(dirvec = dir_prof, keyvec = 1:Nprofile)
+profilesummary <-  r4ss::SSsummarize(profilemodels)
+
+
+png(paste0(dir_prof,'/piner_plot_age.png'))
+r4ss::PinerPlot(profilesummary, 
+                legendloc = 'topleft',
+                add_cutoff = TRUE,
+                ymax = 10,
+                component = 'Age_like',
+                 main = "Changes in age-composition likelihoods by fleet",
+                profile.string = "NatM",profile.label = "Natural Mortality (M)")
+dev.off()
+
+ r4ss::SSplotProfile(profilesummary, # summary object
+ profile.string = "NatM", # substring of profile parameter
+profile.label = "Natural Mortality (M)", add_cutoff = TRUE,
+ymax = 5,
+plotdir = dir_prof, print = TRUE)
+
 ```
