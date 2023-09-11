@@ -15,31 +15,28 @@ editor_options:
 
 The model used for this Operational Update is unchanged from 2021. The
 POP assessment is a single-sex, age-structured statistical catch-at-age
-model written in AD Model Builder software (see Fournier et al. 2012 for
+model written in AD Model Builder (see Fournier et al. 2012 for
 recent reference) as described in Courtney et al. (2007). Formulae for
 the population dynamics, observation, and likelihood components of the
 assessment model are presented in [Appendix 10d](#appxeqs).
 
-## Description of Alternative Models
+## Description of Base Model
 
 Given the change in lead authorship and results of the CIE review, this
-model is an Update: the configuration matches the accepted model from
+model is an Operational Update. The configuration matches the accepted model from
 2021, with updated data. A full revision to the modeling framework is
-anticipated in the next cycle. Therefore, there are no alternative
+anticipated in the next cycle. There are no alternative
 models presented here.
 
-## Parameters Estimated Outside the Assessment Model
+## Parameters Estimated Outside the Assessment Model {#parest}
 
-Values estimated outside the assessment include the parameters of the
-values of the von Bertalanffy growth curve ($L_\infty$, $\kappa$, and
+Values estimated outside the assessment and independently include the parametersof the von Bertalanffy growth curve ($L_\infty$, $\kappa$, and
 $t_0$), intercept and slope parameters for a regression of length
 uncertainty versus age, and weight-at-age parameters ($w_\infty$, used
 to specify size-to-age transition matrices for the 1960s-1970s are
 unchanged. The values used to specify size-to-age transition matrices
 for the 1980s onwards are updated using new age and length data from the
 trawl survey.
-
-Similarly, weight-at-age
 
 A comparison of these values is as follows:
 
@@ -51,32 +48,13 @@ A comparison of these values is as follows:
 | $w_\infty$, asymptotic weight                                                                     | 901 g             |               |
 | $k$, weight-at-age growth rate                                                                    | 0.2 $kg yr^{-1}$  |               |
 | $t_0$, age at weight zero                                                                         | -0.37             |               |
-| $a$,$b$, slope and intercept of linear relationship between sd(length at age) and age, post 1980s | -0.02, 2.18       |               |
+| $a$, $b$, slope and intercept of linear relationship between sd(length at age) and age, post 1980s | -0.02, 2.18       |               |
 
 ## Parameters Estimated Inside the Assessment Model
 
-There is no change to the parameters estimated inside the assessment
-model (see table below).
+The parameters estimated conditionally inside the assessment
+model are listed in the table below.]
 
-Three parameters are estimated with priors: Natural Mortality
-($M \sim N(0.0661,0.00661)$), catchability ($q \sim N(1, 0.45)$), and
-the uncertainty in recruitment deviations ($\sigma_r \sim N(1.7,0.11)$).
-
-As before, fishery selectivity across four time periods transitions from
-an asymptotic selectivity from 1961-1976 into dome-shaped fishery
-selectivity after 1977. We fitted a logistic curve for the first block,
-an averaged logistic-gamma in the 2nd block, and a gamma function for
-the 3rd and 4th blocks. Bottom trawl survey selectivity is estimated to
-be asymptotic with the logistic curve.
-
-Maturity-at-age is modeled with the logistic function conditionally
-within the assessment following the method presented in Hulson et al.
-(2011). Parameter estimates for maturity-at-age are obtained by fitting
-two datasets collected on female POP maturity from Lunsford (1999) and
-Conrath and Knoth (2013). Parameters for the logistic function
-describing maturity-at-age are estimated conditionally in the model so
-that uncertainty in model results (e.g., ABC) can be linked to
-uncertainty in maturity parameter estimates.
 
 | Parameter                            | Symbol                            | Number |
 |----------------------------|--------------------------|------------------|
@@ -94,6 +72,21 @@ uncertainty in maturity parameter estimates.
 | Total                                |                                   | 166    |
 
 : Parameters estimated within the assessment model.
+
+Three parameters are estimated with priors: natural mortality
+($M \sim N(0.0661,0.00661)$), catchability ($q \sim N(1, 0.45)$), and
+the uncertainty in recruitment deviations ($\sigma_r \sim N(1.7,0.11)$).
+
+Fishery and survey selectivity is age-based. Fishery selectivity is time-blocked into four periods. The period from 1961-1976 is asymptotic (via a logistic curve), and the three periods from 1977 onwards are dome-shaped (via an averaged logistic gamma for the second block, and a gamma function for the third and fourth blocks). Bottom trawl survey selectivity is estimated to be asymptotic with the logistic curve.
+
+Maturity-at-age is conditionally estimated within the assessmentfollowing the method presented in Hulson et al.
+(2011). Parameter estimates for maturity-at-age are obtained by fitting
+two datasets collected on female POP maturity from Lunsford (1999) and
+Conrath and Knoth (2013). Parameters for the logistic function
+describing maturity-at-age are estimated conditionally in the model so
+that uncertainty in model results (e.g., ABC) can be linked to
+uncertainty in maturity parameter estimates.
+
 
 # Model Uncertainty
 

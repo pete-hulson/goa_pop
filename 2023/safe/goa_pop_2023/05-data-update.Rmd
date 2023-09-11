@@ -36,14 +36,19 @@ data.frame(Source = c(rep("NMFS Groundfish survey", 2),
 
 ```
 
-## Summer Acoustic-Trawl Survey
 
-Acoustic-trawl (AT) surveys designed to evaluate walleye pollock abundance in the Gulf of Alaska have been conducted by the Alaska Fisheries Science Center (AFSC) in summer months (June -- August) on odd years from 2013 to 2021 aboard the NOAA ship Oscar Dyson (Jones et al. 2014, Jones et al. 2017, Jones et al. 2019). POP are routinely encountered during these surveys and abundance estimates for POP are available for the surveyed area.
- 
-The following table includes the biomass estimates provided by the AT survey; these are *not* used in the assessment model.
+## Fishery
 
-| Year         | 2013      | 2015     | 2017     | 2019     | 2021    |
-|--------------|-----------|----------|----------|----------|---------|
-| Biomass (mt) |  262,889  | 438,545  | 172,388  | 144,045  | 277,941 |
- 
+Catches as used in the model are shown in Table \@ref(tab:commcatch); discards are not used in the model. Fishery-dependent compositional data (catch at age and catch at length, and associated input sample sizes) are shown in Tables \@ref(tab:fishlengthcompst) and \@ref(tab:fishagecompst).
+
+## Survey
+
+Survey biomass estimates and associated sampling variability (annual CVs) are shown in Table \@ref(tab:survobs). Suvey compositional data (survey catch at age and associated input sample sizes) are shown in Table \@ref(tab:survagecompst).
+
+A VAST index of relative abundnace has been developed for POP but is not currently used in the assessment. Details on the development of this index, and comparisons to the design-based methods, are available in [Appendix B](#appxvast). 
+
+
+## Other time series data used in the assessment
+
+The input size-at-age matrices are time-varying in this assessment, and are updated with the availability of new survey data. The parameters used to inform these matrices, and a comparison between previous and current values, are provided in the [Modeling Section](#parest). 
  
