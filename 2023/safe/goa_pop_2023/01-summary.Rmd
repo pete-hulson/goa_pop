@@ -1,10 +1,8 @@
 # Executive Summary
 
-Pacific ocean perch in the Gulf of Alaska are assessed on a biennial stock assessment schedule to coincide with the availability of new survey data. Consequently, we present a full stock assessment using a statistical age-structured model. Survey and fishery data are used to estimate population trends and projected future population estimates are used to recommend catch limits. 
-
 ## Summary of Changes in Assessment Inputs
 
-*Changes in the input data*: We updated the catch for `r year-1` and used preliminary catch estimates for `r paste0(c(2023,2025),collapse = '-')`(see Specified catch estimation section), along with 2023 bottom trawl survey biomass, and 2020 fishery age composition. 
+*Changes in the input data*: We updated the catch for `r year-1` and used preliminary catch estimates for `r paste0(c(2023,2025),collapse = '-')` (see Specified catch estimation section), along with `r year` bottom trawl survey biomass, and 2020 fishery age composition. 
 
 *Changes in the assessment methodology*: The assessment methodology is the same as the 2022 assessment.
 
