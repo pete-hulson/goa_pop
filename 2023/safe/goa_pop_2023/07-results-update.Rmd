@@ -1,8 +1,48 @@
-# Results
+# Selected Model Results
 
-## Model Evaluation
 The model used in this assessment is the same as the model accepted in 2021 with updated data and parameter priors. Model 20.1 with data updated through 2023 generally results in reasonable fits to the data, estimates biologically plausible parameters, and produces consistent patterns in abundance compared to previous assessments. The assessment model continues to underestimate the trawl biomass since the 2013 survey, although, the retrospective pattern indicates that the model fit is continuing to improve to the trawl survey with additional assessments. 
 
+
+## Model Evaluation
+
+### Evaluation of Model Parameters
+Likelihood profile for the proposed model for management over key parameters (e.g., natural morality, stock-recruit steepness (if applicable), survey catchability). The profile should indicate all likelihood values for individual components (e.g., indices by survey, compositional data for each type and fleet). 
+
+### Residual Analysis and Convergence Criteria
+Residual analysis for the model proposed for management, e.g., residual plots, time series plots of observed and predicted values, etc.
+Description of other criteria used to evaluate the model, including the role (if any) of uncertainty.
+Convergence status and convergence criteria for the proposed model for management. Randomization of starting parameter value run (e.g., jitter) results or other evidence of search for global best estimates.
+
+### Parameter Estimates
+Table listing all explicit parameters in the stock assessment model used for base model, their purpose (e.g., recruitment parameter, selectivity parameter) and whether or not the parameter was fixed or estimated in the stock assessment model. Include the associated asymptotic standard error estimates or other statistical measures of uncertainty. 
+
+### Time Series Results
+Tables and figures of time-series of total biomass, 1+ (if age 1s are in the model), summary biomass, and spawning biomass (and/or spawning output), stock depletion, recruitment and fishing mortality. Time-series quantities should be reported/plotted with confidence bounds or other statistical measure of uncertainty.
+The time series included in this table should end with estimates for the projection year. 
+Include a table(s) and plot(s) that has a set of parallel results for the previously accepted assessment, compared with new results.
+Define biomass measures used (e.g., age range used in the “age+” biomass).
+Define recruitment measures used (e.g., numbers at age 3).
+Table of estimated recruitment time series should include the average of year classes spawned after 1976.
+Table of estimated numbers at age as an electronic file.
+Selectivity estimates (if not included elsewhere).
+Stock-recruitment relationship.
+Clear description of units for all outputs.
+
+Graph of estimated fishing mortality versus estimated spawning stock biomass (phase-plane plot), including applicable OFL and maximum FABC definitions for the stock.  Biomass should be scaled relative to BMSY for Tier 1 stocks and B35% for Tier 3 stocks.  Fishing mortality should be scaled relative to the arithmetic mean of FMSY for Tier 1 stocks and F35% for Tier 3 stocks. Include 2 years of projected F and B in the phase-plane plot.
+
+Parameter uncertainty (variance estimation conditioned on a given model, estimation framework, data set choice, and weighting scheme), including likelihood profiles for important assessment parameters (e.g., natural mortality, steepness, and R0). This element for evaluating uncertainty includes expressing uncertainty in derived outputs of the model and estimating CVs using appropriate methods (e.g., bootstrap, asymptotic methods, Bayesian approaches, such as MCMC). Include the uncertainty around the OFL in the first year for which an OFL has not been specified.
+
+### Retrospective and Historical Analysis
+Retrospective analysis, where the model is fitted to a series of shortened input data sets, with the most recent years of input data being dropped.
+Include retrospective analysis extending back 10 years, plot spawning biomass estimates and error bars, plot relative differences, and report Mohn's “rho” statistic (see Retrospective Working Group report for formula, not Mohn’s 1999 paper).
+Communicate the uncertainty implied by retrospective variability in biomass estimates.
+If a retrospective pattern is present, seek to explain what is driving this pattern (e.g. addition of survey data, model misspecification, etc.).
+
+
+Historical analysis (plot of actual estimates of spawning biomass and stock depletion from current and previous assessments).
+
+
+#### OLD MATERIAL ####
 ## Time Series Results
 
 Key results have been summarized in Tables 9-14 to 9-18. Model predictions generally fit the data well (Figures 10.\@ref(fig:catch) through 10.\@ref(fig:survey))) and most parameter estimates and likelihood functions have remained similar to the last several years using this model (Table 10.\@ref(tab:resultscompare)).
