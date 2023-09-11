@@ -1,31 +1,34 @@
 # Tables
 
 ```{r commcatch}
-knitr::kable(data.frame(year = 1999:2000,
-                 catch = 1:2), 
-             caption = "Commercial catch (t) of POP in the GOA, with Gulf-wide values of acceptable biological catch (ABC) and fishing quotas (t), 1977-2020 (2021 catch as of 9/25/2021). Note:  There were no foreign or joint venture catches after 1988. Catches prior to 1989 are landed catches only. Catches in 1989 and 1990 also include fish reported in weekly production reports as discarded by processors. Catches in 1991-2019 also include discarded fish, as determined through a  blend of weekly production reports and information from the domestic observer program. Definitions of terms:  JV = Joint venture; Tr = Trace catches. Catch defined as follows:  1977, all Sebastes rockfish for Japanese catch, and POP for catches of other nations; 1978, POP only; 1979-87, the 5 species comprising the POP complex; 1988-2019, POP. Quota defined as follows:  1977-86, optimum yield; 1987, target quota; 1988-2019 total allowable catch. Sources: Catch:  1977-84, Carlson et al. (1986); 1985-88, Pacific Fishery Information Network (PacFIN); 1989-2019, National Marine Fisheries Service, Alaska Region. ABC and Quota: 1977-1986 Karinen and Wing (1987); 1987-1990, Heifetz et al. (2000); 1991-2019, NMFS AKRO BLEND/Catch Accounting System via AKFIN database.",
-             booktabs = TRUE)
+catch <- read.csv(here(year,'safe','goa_pop_2023','static_tables','catch_abc_quota.csv'))
+catch[,2:4] <- round(catch[,2:4],0)
+catch$Year<-as.character(catch$Year)
+flextable::regulartable(catch) %>%
+  flextable::set_caption("Commercial catch (t) of POP in the GOA, with Gulf-wide values of acceptable biological catch (ABC) and fishing quotas (t), 1977-2023 (2023 catch as of 9/25/2023). Note:  There were no foreign or joint venture catches after 1988. Catches prior to 1989 are landed catches only. Catches in 1989 and 1990 also include fish reported in weekly production reports as discarded by processors. Catches in 1991-2019 also include discarded fish, as determined through a  blend of weekly production reports and information from the domestic observer program. Definitions of terms: Catch defined as follows:  1977, all Sebastes rockfish for Japanese catch, and POP for catches of other nations; 1978, POP only; 1979-87, the 5 species comprising the POP complex; 1988-2019, POP. Quota defined as follows:  1977-86, optimum yield; 1987, target quota; 1988-2019 total allowable catch. Sources: Catch:  1977-84, Carlson et al. (1986); 1985-88, Pacific Fishery Information Network (PacFIN); 1989-2019, National Marine Fisheries Service, Alaska Region. ABC and Quota: 1977-1986 Karinen and Wing (1987); 1987-1990, Heifetz et al. (2000); 1991-2019, NMFS AKRO BLEND/Catch Accounting System via AKFIN database.")
 ```
 
 \pagebreak
 
 ```{r mgmtmeasures}
-flextable::regulartable(data.frame(year = 1999:2000,
-                 catch = 1:2)) %>%  
-      flextable::set_caption("Management measures since the break out of POP from slope rockfish.")
+flextable::regulartable(read.csv(here(year,'safe','goa_pop_2023','static_tables','mgmt_measures.csv'))) %>%  
+      flextable::set_caption("Management measures since the break out of POP from slope rockfish.") %>%
+  flextable::set_header_labels(Catch..t. = 'Catch (t)', ABC= 'ABC (t)', OFL = 'OFL (t)', TAC = 'TAC (t)', Management.Measures = 'Management Measures')
 ```
 
 \pagebreak
 
 ```{r fmpgroundfish}
-flextable::regulartable(data.frame(year = 1999:2000,
-                 catch = 1:2)) %>%  
+flextable::regulartable(read.csv(here(year,'safe','goa_pop_2023','static_tables','mgmt_measures.csv'))) %>%  
       flextable::set_caption("FMP groundfish species caught in rockfish targeted fisheries in the GOA. Conf. = Confidential because of less than three vessels or processors. Source: NMFS AKRO Blend/Catch Accounting System via AKFIN through 9/25/2021.")
 ```
 
 \pagebreak
 
 ```{r popbycatch}
+
+
+
 flextable::regulartable(data.frame(year = 1999:2000,
                  catch = 1:2)) %>%  
       flextable::set_caption("Catch (t) of GOA POP as bycatch in other fisheries. Source: NMFS AKRO Blend/Catch Accounting System via AKFIN through 9/25/2021.")
@@ -42,6 +45,9 @@ flextable::regulartable(data.frame(year = 1999:2000,
 \pagebreak
 
 ```{r psc}
+
+
+
 flextable::regulartable(data.frame(year = 1999:2000,
                  catch = 1:2)) %>%  
       flextable::set_caption("Prohibited Species Catch (PSC) estimates reported in tons for halibut and herring, and thousands of animals for crab and salmon, by year, for the GOA rockfish fishery. Source: NMFS AKRO Blend/Catch Accounting System PSCNQ via AKFIN through 9/25/2021.")
