@@ -1,5 +1,27 @@
 ```{r}
-# using built in example data 
+## need to read in proj files here
+
+# base_23_files <- list.files(here(year,'mgmt','2020.1-2023','processed'), full.names = TRUE) 
+# base_23 <-base_23_files %>%
+#   lapply(., FUN = read.csv) 
+# names(base_23) <- gsub(".csv","",basename(base_23_files))
+#   
+# base_21_files <- list.files(here(year,'mgmt','2020.1-2021','processed'), full.names = TRUE) 
+# base_21 <-base_21_files %>%
+#   lapply(., FUN = read.csv) 
+# names(base_21) <- gsub(".csv","",basename(base_21_files))
+  
+# using built in example data as demplate
 data <- safe::tier3
+## natM
+# data[1,] <- round(c(rep(base_21$key_param$nat_mort,2),rep(base_23$key_param$nat_mort,2),4))
+## total biomass (proj)
+# data[3,] 
+## spawnbio  (proj)
+# data[3,] 
+
+# base_21$bio_rec_f$tot_biom[base_21$bio_rec_f$year==year,]
+
+# data
 safe::main_table(data, year, tier=3, c1, c2, c3)
 ```
