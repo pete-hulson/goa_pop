@@ -437,14 +437,18 @@ Note there is no data weights here. These models have invertible hessians
 300.04: as in 300.01 except fish selex truly freed to be domed (shows that this is the thing that changes scale)
 300.05:fish selex truly freed to be domed (shows that this is the thing that changes scale) and M fixed at the 2021 base value (0.075);
 300.06:fish selex truly freed to be domed (shows that this is the thing that changes scale) and M using the 2021 prior
-
+300.07: lnq fixed to 0.59, dome selex, old M prior
 ```{r}
-mod_alts <- list.files(here(year,'ss'), pattern = 'v-300', recursive = FALSE, full.names = TRUE)[-c(1,4,5,10)]
+mod_alts <- list.files(here(year,'ss'), pattern = 'v-300', recursive = FALSE, full.names = TRUE)[c(2,8,6,13,7,14)]
+
+#mod_alts <- list.files(here(year,'ss'), pattern = 'v-300', recursive = FALSE, full.names = TRUE)[-c(1,4,5,10)]
 ## order them more sensibly
-mod_alts <- mod_alts[c(1,4,2,5,3,6)]
+#mod_alts <- mod_alts[c(1,4,2,5,3,6)]
+
 colvec <- c('red','#023E8A','grey33','#0096C7','grey44','#48CAE4','grey55')
 #colvec <- c("#FFB703","red","grey33",'blue',
 #"#FB8500","grey44","black")
+llabs = basename(mod_alts)
 llabs = c('Logistic Fishery Selex + New M prior', ## 300.01
 "Dome Fishery Selex + New M prior",  #300.04
 #'Logistic Fishery Selex + New M prior + Data Weights',
@@ -467,9 +471,36 @@ filter(component == 'TOTAL') %>%
 mutate(rank = dense_rank(desc(value))) %>% arrange(rank)
 
 qvals <- biglist$pars[grep('LnQ',biglist$pars$Label),]
-names(qvals) <- basename(mod_alts);qvals
-mvals <- biglist$pars[grep('NatM',biglist$pars$Label),]
+names(qvals) <- basename(mod_alts);exp(qvals[1:length(mod_alts)])
+
+mvals <- rbind(biglist$pars[grep('NatM',biglist$pars$Label),1:6],
+biglist$parsSD[grep('NatM',biglist$pars$Label),1:6])
 names(mvals) <- basename(mod_alts);mvals
+
+
+## plot MLEs of select SS runs
+png(here('2023','ss','v-300.00','M_mle_compare.png'),
+height = 5, width = 5, unit = 'in', res = 420)
+plot(density(rnorm(1e4,mean = mean_m_21, sd = 0.0614*cv_m_21)),
+col = 'red',
+ylim =c(0,150),
+yaxt = 'n',
+xlim = c(0,0.2),
+lwd = 3,
+type = 'l', xlab = 'Natural Mortality', main = 'Estimates for M')
+
+for(i in 1:ncol(mvals)){
+  if(is.na(mvals[2,i])){
+  points(pch = 17, y = 0, x= mvals[1,i], col = colvec[i+1])
+  } else{
+  lines(density(x=rnorm(1e3,mean = mvals[1,i], sd = mvals[2,i])), col = colvec[i+1])
+  }
+}
+dev.off()
+
+
+
+
 SSplotComparisons(biglist, 
 print = T, 
 plotdir = here('2023','ss','v-300.00'), 
@@ -503,29 +534,33 @@ select(-Label,-variable) %>%
 melt(id = c('Yr','source')) %>%
 #mutate(lwr = Value-1.96*StdDev, upr = Value+1.96*StdDev) %>% 
 #filter(!is.na(Yr)) %>%
-select(Yr, variable, value, source)
+select(Yr, variable, value, source)  %>% 
+filter(variable == '2021 Assessment'  | (variable %in% paste0('model',1:6)[c(2,4,6)]))
 
 
 modsi<- bind_rows(biglist$indices %>% select(Yr, Obs, Exp, SE, model = name) %>% 
 mutate(lwr = Obs - Obs*SE, upr = Obs + Obs*SE), surv21 %>% 
 mutate(model = '2021 Assessment') %>%
 select(Yr = year, Obs = biomass, Exp = pred, SE = se, model, 
-lwr = lci, upr = uci) ) 
+lwr = lci, upr = uci) )  %>% 
+filter(model == '2021 Assessment'  | (model %in% paste0('model',1:6)[c(2,4,6)]))
 
+colvec <- c('red','#023E8A','grey33','#0096C7','grey44','#48CAE4','grey55')
+ 
 ptsurv <- ggplot(data = NULL, aes(x = Yr,  color = model)) +
-geom_point(data = subset(modsi, model == 'model1'), 
+geom_point(data = subset(modsi, model == '2021 Assessment'), 
 aes(y = Obs/1000), color = 'black') +
 geom_errorbar(data = subset(modsi, model == '2021 Assessment'), 
 aes(ymin = lwr/1000, ymax = upr/1000), width =0, color = 'black') +
 geom_line(data = modsi, aes(y = Exp/1000), lwd = 1.1) +
-scale_color_manual(values = colvec,
+scale_color_manual(values = colvec[c()],
 labels = c('2021 Assessment',llabs)) +
 labs(x = 'Year', y = 'Survey Index (1000 t)', color = '') +
 theme(legend.position = c(0.5,0.85),
 legend.text = element_text(size = 16))
 
  
-ggsave(ptsurv,file = here(year,'ss','v-300.00','surv_compare_pt.png'))
+ggsave(ptsurv,file = here(year,'ss','v-300.00','surv_compare_pt_1`.png'))
 
 
 
@@ -536,9 +571,13 @@ melt(id = c('Yr','source')) %>%
 select(Yr, variable, value, source)) %>%
 ggplot(., aes(x = Yr, y = value/1000, color =variable)) +
 geom_line(lwd = 1) +
+scale_y_continuous(limits = c(0,1000))+
 ## note the order of the models changes here
-scale_color_manual(values = colvec[c(2:7,1)],
-labels = c(llabs,'2021 Assessment')) +
+
+scale_color_manual(values = colvec[1],
+labels = c(llabs, '2021 Assessment')) +
+
+
 labs(x = 'Year', y = 'SSB (1000 t)', linetype = '', color = '') +
 theme(legend.position = c(0.5,0.85),
 legend.text = element_text(size = 16))
@@ -567,10 +606,18 @@ niters_tuning = 3,
                                
 mod300_04q <- r4ss::SS_output(here('2023','ss','v-300.04-qEst'))
 SS_plots(mod300_04q)
-
 mod300_04q$parameters[grep('LnQ_base_Survey',mod300_04q$parameters$Label),]
-
 mod300_01f$maximum_gradient_component
+
+
+mod300_04qfix <- r4ss::SS_output(here('2023','ss','v-300.04-qfix'))
+SS_plots(mod300_04qfix)
+mod300_04qfix$parameters[grep('LnQ_base_Survey',mod300_04qfix$parameters$Label),]
+
+## 300.07
+mod300_07 <- r4ss::SS_output(here('2023','ss','v-300.07'))
+SS_plots(mod300_07)
+mod300_04qfix$parameters[grep('LnQ_base_Survey',mod300_04qfix$parameters$Label),]
 
 
 mod300_01f <- r4ss::SS_output(here('2023','ss','v-300.01-francis'))
@@ -608,4 +655,41 @@ profile.label = "Natural Mortality (M)", add_cutoff = TRUE,
 ymax = 5,
 plotdir = dir_prof, print = TRUE)
 
+```
+
+Run r0 profiles as well.
+The length data is the only thing informing the scale of the population,
+and it is in conflict with the others in terms of M.
+Logistic sel in early period deals with those comps -> might be biasing M higher than it should be
+-> what does it say about R0?
+
+```{r}
+
+
+r.vec = seq(3,15,0.5); Nprofile = length(r.vec)
+dir_prof = here('2023','ss','v-300.04-r0profile')
+r4ss::profile(dir_prof,
+profilevec =r.vec , 
+string ='R0', show_in_console = TRUE)
+
+
+profilemodels <- r4ss::SSgetoutput(dirvec = dir_prof, keyvec = 1:Nprofile)
+profilesummary <-  r4ss::SSsummarize(profilemodels)
+
+
+png(paste0(dir_prof,'/piner_plot_age.png'))
+r4ss::PinerPlot(profilesummary, 
+                legendloc = 'topleft',
+                add_cutoff = TRUE,
+                ymax = 10,
+                component = 'Age_like',
+                 main = "Changes in age-composition likelihoods by fleet",
+                profile.string = "R0",profile.label = "Unfished Recruitment (R0)")
+dev.off()
+
+ r4ss::SSplotProfile(profilesummary, # summary object
+ profile.string = "R0", # substring of profile parameter
+profile.label = "Unfished Recruitment (R0)", add_cutoff = TRUE,
+ymax = 5,
+plotdir = dir_prof, print = TRUE)
 ```
