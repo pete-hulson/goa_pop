@@ -460,3 +460,8 @@ dev.off()
 
 #spot for table fcns
 
+#* prohibited catch ----
+akfin <- afscdata::connect(db = 'akfin')
+afscdata::q_psc(year, target = 'k', area = 'goa', db = akfin, save = TRUE)
+
+
