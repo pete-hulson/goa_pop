@@ -16,6 +16,8 @@ library(afscdata)
 library(afscassess)
 library(dplyr)
 library(here)
+library(ggplot2)
+theme_set(afscassess::theme_report())
 # working on getting rema installed, but not working on my machine at the moment, don't have time to figure out
 ## This worked for MK in VSCode:
 # options(buildtools.check = function(action) TRUE )
@@ -59,7 +61,8 @@ afscassess::weight_at_age(year = year,
                           rec_age = rec_age,
                           area = "goa")
 
-# fishery catch
+# fishery catch (note: this automates the in-year estimation)
+## expansion factor is saved in yld_ratio.csv
 suppressWarnings(afscassess::clean_catch(year = year, 
                                         species = species, 
                                         TAC = TAC))
@@ -355,9 +358,17 @@ mdl_res <- afscassess::process_results_pop(year = year,
 
 
 # create figures ----
-library(ggplot2)
-theme_set(afscassess::theme_report())
-# spot for figure fcns
+catch <- read.csv(here(year,'data','output','fsh_catch.csv')) %>% mutate(catch = catch/1000)
+ggplot(subset(catch, year < 2023), aes(x = year, y =catch)) +
+  geom_line(lwd = 1.1) +
+  geom_point(data = subset(catch, year == 2023),
+             size = 4, pch = 17)+
+  labs(x = 'Year', y = 'Catch (t)')
+ggsave(here(year,'safe','goa_pop_2023','figs','catch_timeseries.png'))
+
+plot_compare_survey_pop(year, 
+                        model_dirs = c(here(year,'mgmt',paste0('2020.1-',c(2021,2023)))),
+                        savedir = here::here(year, "mgmt", curr_mdl_fldr))
 
 plot_compare_biomass_pop(year, 
 model_dirs = c(here(year,'mgmt',paste0('2020.1-',c(2021,2023)))),
