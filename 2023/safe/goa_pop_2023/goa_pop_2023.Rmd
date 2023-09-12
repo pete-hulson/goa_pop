@@ -32,6 +32,7 @@ csl: "fishfish.csl"
 
 ---
 
+
 ```{r setup, include=FALSE, echo = FALSE}
 # remotes::install_github("crsh/rmdfiltr")
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.pos = "!h", out.extra = "")
@@ -82,6 +83,8 @@ for(i in 1:length(mdlres)){
 }
 ```
 
+
+
 ```{r, child="01-summary.Rmd", eval = T}
 ```
 
@@ -100,7 +103,7 @@ for(i in 1:length(mdlres)){
 ```{r, child="06-model-update.Rmd", eval = T}
 ```
 
-```{r, child="07-results.Rmd", eval = T}
+```{r, child="07-results-update.Rmd", eval = T}
 ```
 
 ```{r, child="08-abc.Rmd", eval = T}
@@ -116,10 +119,13 @@ for(i in 1:length(mdlres)){
 # References
 <div id="refs"></div>
 
-```{r, child="11-tables.Rmd", eval = T}
+```{r, child="11a-auxiliaryfiles.Rmd", eval = T}
 ```
 
-```{r, child="12-figures.Rmd", eval = T}
+```{r, child="11-tables-update.Rmd", eval = T}
+```
+
+```{r, child="12-figures-update.Rmd", eval = T}
 ```
 
 ```{r, child="13-append_a.Rmd", eval = T}
@@ -133,3 +139,5 @@ for(i in 1:length(mdlres)){
 
 ```{r, child="16-append_eqs.Rmd", eval = T}
 ```
+
+
