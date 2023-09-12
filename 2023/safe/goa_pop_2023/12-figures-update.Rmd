@@ -3,7 +3,11 @@
 # Figures
 
 ```{r catch, fig.cap="Estimated and observed long-term (top figure) and short-term (bottom figure) catch history for GOA POP.", eval = TRUE}
-knitr::include_graphics(here::here(year,'mgmt', model, "figs", "placeholder.jpg"))
+knitr::include_graphics(here::here(year,'safe','goa_pop_2023','figs','catch_timeseries.png'))
+```
+
+```{r survey, fig.cap="NMFS Groundfish Survey observed biomass estimates (points) with 95% sampling error confidence intervals for GOA POP (vertical bars). Predicted estimates from the recommended model (orange line) compared with the 2021 model fit (dark blue line).", eval = TRUE}
+knitr::include_graphics(here::here(year,'mgmt', model, "figs", "2023-09-12-survey_compare.png"))
 ```
 
 ```{r fishagecomps, fig.cap="Fishery age compositions for GOA POP. Observed = bars, predicted from author recommended model = line with circles. Colors follow cohorts.", eval = TRUE}
@@ -14,13 +18,6 @@ knitr::include_graphics(here::here(year,'mgmt', model, "figs", "comp_agedat_flt1
 knitr::include_graphics(here::here(year,'mgmt', model, "figs", "comp_lendat_flt1mkt0.png"))
 ```
 
-```{r survey, fig.cap="NMFS Groundfish Survey observed biomass estimates (open circles) with 95% sampling error confidence intervals for GOA POP. Predicted estimates from the recommended model (black line, with 95% confidence intervals shown in grey shaded region) compared with last year’s model fit (green dotted line).", eval = TRUE}
-knitr::include_graphics(here::here(year,'mgmt', model, "figs", "placeholder.jpg"))
-```
-
-```{r cpuemap, fig.cap=" Distribution of GOA POP catch per unit effort (CPUE) in the 2021 (top) and 2023 (bottom) GOA groundfish surveys.", eval = TRUE}
-knitr::include_graphics(here::here(year,'mgmt', model, "figs", "cpue_maps.png"))
-```
 
 ```{r survagecomps, fig.cap="Groundfish survey age compositions for GOA POP. Observed = bars, predicted from author recommended model = line with circles", eval = TRUE}
 knitr::include_graphics(here::here(year,'mgmt', model, "figs", "comp_agedat_flt2mkt0.png"))
@@ -30,9 +27,6 @@ knitr::include_graphics(here::here(year,'mgmt', model, "figs", "comp_agedat_flt2
 knitr::include_graphics(here::here(year,'mgmt', model, "figs", "placeholder.jpg"))
 ```
 
-```{r acousticdens, fig.cap="Density (t/nmi2) of POP observed during the previous three GOA acoustic-trawl surveys.", eval = TRUE}
-knitr::include_graphics(here::here(year,'mgmt', model, "figs", "placeholder.jpg"))
-```
 
 ```{r biomasstraj, fig.cap="Model estimated total biomass (top panel, solid black line) and spawning biomass (bottom panel) with 95% credible intervals determined by MCMC (light grey region) for GOA POP. Last year’s model estimates included for comparison (dashed line).", eval = TRUE}
 knitr::include_graphics(here::here(year,'mgmt', model, "figs", "placeholder.jpg"))
