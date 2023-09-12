@@ -82,9 +82,7 @@ for(i in 1:length(mdlres)){
   assign(x = gsub('.csv','',basename(mdlres[i])), value = read.csv(mdlres[i]))
 }
 ```
-
-
-
+ 
 ```{r, child="01-summary.Rmd", eval = T}
 ```
 
