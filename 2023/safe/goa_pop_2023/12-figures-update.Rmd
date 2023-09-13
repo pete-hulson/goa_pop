@@ -10,53 +10,28 @@ knitr::include_graphics(here::here(year,'safe','goa_pop_2023','figs','catch_time
 knitr::include_graphics(here::here(year,'mgmt', model, "figs", "2023-09-12-survey_compare.png"))
 ```
 
-```{r fishagecomps, fig.cap="Fishery age compositions for GOA POP. Observed = bars, predicted from author recommended model = line with circles. Colors follow cohorts.", eval = TRUE}
-knitr::include_graphics(here::here(year,'mgmt', model, "figs", "comp_agedat_flt1mkt0.png"))
+```{r fishagecomps, fig.cap="Fishery age compositions for GOA POP. Observed = bars, predicted from author recommended model = circles. Colors follow cohorts.", eval = TRUE}
+knitr::include_graphics(here::here(year,'mgmt', model, "figs", "fsh_age_comp.png"))
 ```
 
-```{r fishlengthcomps, fig.cap="Fishery length (cm) compositions for GOA POP. Observed = bars, predicted from author recommended model = line with circles.", eval = TRUE}
-knitr::include_graphics(here::here(year,'mgmt', model, "figs", "comp_lendat_flt1mkt0.png"))
+```{r fishlengthcomps, fig.cap="Fishery length (cm) compositions for GOA POP. Observed = bars, predicted from author recommended model = circles. Colors follow cohorts.", eval = TRUE}
+knitr::include_graphics(here::here(year,'mgmt', model, "figs", "fsh_length_comp.png"))
 ```
 
-
-```{r survagecomps, fig.cap="Groundfish survey age compositions for GOA POP. Observed = bars, predicted from author recommended model = line with circles", eval = TRUE}
-knitr::include_graphics(here::here(year,'mgmt', model, "figs", "comp_agedat_flt2mkt0.png"))
+```{r survagecomps, fig.cap="Groundfish survey age compositions for GOA POP. Observed = bars, predicted from author recommended model = circles. Colors follow cohorts.", eval = TRUE}
+knitr::include_graphics(here::here(year,'mgmt', model, "figs", "srv_age_comp.png"))
 ```
-
-```{r survlengthcomps, fig.cap="Groundfish survey length compositions for GOA POP. Observed = bars. Survey size not used in POP model because survey ages are available for these years.", eval = TRUE}
-knitr::include_graphics(here::here(year,'mgmt', model, "figs", "placeholder.jpg"))
-```
-
 
 ```{r biomasstraj, fig.cap="Model estimated total biomass (top panel, solid black line) and spawning biomass (bottom panel) with 95% credible intervals determined by MCMC (light grey region) for GOA POP. Last year’s model estimates included for comparison (dashed line).", eval = TRUE}
-knitr::include_graphics(here::here(year,'mgmt', model, "figs", "placeholder.jpg"))
+knitr::include_graphics(here::here(year,'mgmt', model, "figs", "bio_f_rec_compare.png"))
 ```
 
-```{r selex, fig.cap="Estimated selectivities for the fishery and groundfish survey with maturity for GOA POP.", eval = TRUE}
-knitr::include_graphics(here::here(year,'mgmt', model, "figs", "placeholder.jpg"))
+```{r selex, fig.cap="Estimated selectivity curves, maturity-at-age and weight-at-age for GOA POP.", eval = TRUE}
+knitr::include_graphics(here::here(year,'mgmt', model, "figs", "selex_mat.png"))
 ```
 
-```{r frate, fig.cap="Estimated fully selected fishing mortality over time with 95% credible intervals determined by MCMC (light grey region) for GOA POP.", eval = TRUE}
-knitr::include_graphics(here::here(year,'mgmt', model, "figs", "placeholder.jpg"))
-```
-
+ 
 ```{r spr, fig.cap="Time series of POP estimated spawning biomass relative to the target level B35% level and fishing mortality relative to F35% for author recommended model. Top shows whole time series. Bottom shows close up on more recent management path.", eval = TRUE}
-knitr::include_graphics(here::here(year,'mgmt', model, "figs", "placeholder.jpg"))
-```
-
-```{r recruitment, fig.cap="Estimated recruitment of GOA POP (age 2) by year class with 95% credible intervals derived from MCMC (top). Estimated recruits per spawning stock biomass (bottom). Red circles in top graph are last year’s estimates for comparison.", eval = TRUE}
-knitr::include_graphics(here::here(year,'mgmt', model, "figs", "placeholder.jpg"))
-```
-
-```{r recdevs, fig.cap="Recruitment deviations from average on the log-scale comparing last cycle’s model (red) to current year recommended model (blue) for GOA POP.", eval = TRUE}
-knitr::include_graphics(here::here(year,'mgmt', model, "figs", "placeholder.jpg"))
-```
-
-```{r parposteriors, fig.cap="Histograms of estimated posterior distributions of key parameters derived from MCMC for GOA POP. The vertical white lines are the recommended model estimates.", eval = TRUE}
-knitr::include_graphics(here::here(year,'mgmt', model, "figs", "placeholder.jpg"))
-```
-
-```{r ssbproj, fig.cap="Bayesian credible intervals for entire spawning stock biomass series including projections through 2030. Red dashed line is B40% and black solid line is B35% based on recruitments from 1979-2015. The white line is the median of MCMC simulations. Each shade is 5% of the posterior distribution.", eval = TRUE}
 knitr::include_graphics(here::here(year,'mgmt', model, "figs", "placeholder.jpg"))
 ```
 
@@ -64,6 +39,7 @@ knitr::include_graphics(here::here(year,'mgmt', model, "figs", "placeholder.jpg"
 knitr::include_graphics(here::here(year,'mgmt', model, "figs", "placeholder.jpg"))
 ```
 
-```{r rema, fig.cap="Random effects (REMA) model fit (black lines) and 95% confidence interval (grey ribbon) to observed survey biomass (black points) and 95% confidence interval (black error bars)", eval = TRUE}
-knitr::include_graphics(here::here(year,'data','models','rema','rema_outs.png'))
+```{r historical, fig.cap="Retrospective peels of estimated female spawning biomass for the past 10 years from the recommended model with 95% credible intervals derived from MCMC (top), and the percent difference in female spawning biomass from the recommended model in the terminal year with 95% credible intervals from MCMC.", eval = TRUE}
+knitr::include_graphics(here::here(year,'mgmt', model, "figs", "placeholder.jpg"))
 ```
+ 

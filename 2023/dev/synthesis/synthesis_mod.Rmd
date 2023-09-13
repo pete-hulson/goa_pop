@@ -439,7 +439,7 @@ Note there is no data weights here. These models have invertible hessians
 300.06:fish selex truly freed to be domed (shows that this is the thing that changes scale) and M using the 2021 prior
 300.07: lnq fixed to 0.59, dome selex, old M prior
 ```{r}
-mod_alts <- list.files(here(year,'ss'), pattern = 'v-300', recursive = FALSE, full.names = TRUE)[c(2,8,6,13,7,14)]
+mod_alts <- list.files(here(year,'ss'), pattern = 'v-300', recursive = FALSE, full.names = TRUE)[c(2,8,6,14,7,15)]
 
 #mod_alts <- list.files(here(year,'ss'), pattern = 'v-300', recursive = FALSE, full.names = TRUE)[-c(1,4,5,10)]
 ## order them more sensibly
@@ -461,7 +461,7 @@ llabs = c('Logistic Fishery Selex + New M prior', ## 300.01
 
 
 biglist <- lapply(mod_alts, SS_output) %>% r4ss::SSsummarize()
-#lapply(mod_alts[c(6)], FUN = function(x) SS_plots(SS_output(x)))
+#lapply(mod_alts[c(5,6)], FUN = function(x) SS_plots(SS_output(x)))
 
 likes<-biglist$likelihoods
 names(likes) <- basename(mod_alts);names(likes)[length(mod_alts)+1] <- 'component'
@@ -481,7 +481,7 @@ names(mvals) <- basename(mod_alts);mvals
 ## plot MLEs of select SS runs
 png(here('2023','ss','v-300.00','M_mle_compare.png'),
 height = 5, width = 5, unit = 'in', res = 420)
-plot(density(rnorm(1e4,mean = mean_m_21, sd = 0.0614*cv_m_21)),
+plot(density(rnorm(1e4,mean = 0.0614, sd = 0.0614*0.1)),
 col = 'red',
 ylim =c(0,150),
 yaxt = 'n',
@@ -491,7 +491,7 @@ type = 'l', xlab = 'Natural Mortality', main = 'Estimates for M')
 
 for(i in 1:ncol(mvals)){
   if(is.na(mvals[2,i])){
-  points(pch = 17, y = 0, x= mvals[1,i], col = colvec[i+1])
+  points(pch = 17, y = 0, x= mvals[1,i], col = 'red')
   } else{
   lines(density(x=rnorm(1e3,mean = mvals[1,i], sd = mvals[2,i])), col = colvec[i+1])
   }
@@ -553,16 +553,14 @@ aes(y = Obs/1000), color = 'black') +
 geom_errorbar(data = subset(modsi, model == '2021 Assessment'), 
 aes(ymin = lwr/1000, ymax = upr/1000), width =0, color = 'black') +
 geom_line(data = modsi, aes(y = Exp/1000), lwd = 1.1) +
-scale_color_manual(values = colvec[c()],
+scale_color_manual(values = colvec,
 labels = c('2021 Assessment',llabs)) +
 labs(x = 'Year', y = 'Survey Index (1000 t)', color = '') +
 theme(legend.position = c(0.5,0.85),
 legend.text = element_text(size = 16))
 
  
-ggsave(ptsurv,file = here(year,'ss','v-300.00','surv_compare_pt_1`.png'))
-
-
+ggsave(ptsurv,file = here(year,'ss','v-300.00','surv_compare_pt_1.png'))
 
 
 ptsb <- bind_rows(ssmodsb, biom21 %>% 
@@ -574,7 +572,7 @@ geom_line(lwd = 1) +
 scale_y_continuous(limits = c(0,1000))+
 ## note the order of the models changes here
 
-scale_color_manual(values = colvec[1],
+scale_color_manual(values = c(colvec[c(2:7)],'red'),
 labels = c(llabs, '2021 Assessment')) +
 
 
@@ -630,7 +628,9 @@ m.vec = seq(0.02,0.15,0.01); Nprofile = length(m.vec)
 #dir_prof = here('2023','ss','v-300.01f-natMprofile')
 #dir_prof = here('2023','ss','v-300.01-natMprofile')
 dir_prof = here('2023','ss','v-300.04-natMprofile')
+
 r4ss::profile(dir_prof,
+exe = 'ss.exe',
 profilevec =m.vec , 
 string ='NatM', show_in_console = TRUE)
 
@@ -650,10 +650,16 @@ r4ss::PinerPlot(profilesummary,
 dev.off()
 
  r4ss::SSplotProfile(profilesummary, # summary object
+ #components = c('Total','Survey','Length_comp','Age_comp','Parm_priors'),
+ #omponent.labels = c('Total','Index','Lengths','Ages','Priors'),
+  #col = c('black','blue','dodgerblue3','goldenrod','limegreen','red','black'),
+
+ col = c('black','blue','dodgerblue3','limegreen','goldenrod','red','black'),
  profile.string = "NatM", # substring of profile parameter
 profile.label = "Natural Mortality (M)", add_cutoff = TRUE,
-ymax = 5,
-plotdir = dir_prof, print = TRUE)
+ymax = 3.5,
+plotdir = dir_prof, 
+print = TRUE)
 
 ```
 
