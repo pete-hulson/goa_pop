@@ -23,7 +23,7 @@ theme_set(afscassess::theme_report())
 # options(buildtools.check = function(action) TRUE )
 # devtools::install_github("afsc-assessments/rema") ## did not update other pckgs
 # pak::pkg_install("afsc-assessments/rema")
-# library(rema)
+library(rema)
 
 # previous accepted model
 # this is more for an example since the previous assessment was not in the afscdata framework
@@ -249,60 +249,10 @@ suppressWarnings(afscassess::run_proj(st_year = year,
 
 # run apportionment ----
 
-if (!dir.exists(here::here(year, "mgmt", curr_mdl_fldr, "apport"))){
-  dir.create(here::here(year, "mgmt", curr_mdl_fldr, "apport"), recursive=TRUE)
-}
-
-# REMA
-# install.packages('TMB', type = 'source')
-## Biomass data with dimensions strata, year, biomass, CVs (not logged)
-## use area-specific dataframe
-biomass_dat <- read.csv(here(year,'data','raw','goa_area_bts_biomass_data.csv')) %>% 
-mutate(sd = sqrt(biomass_var), 
-cv = sd/area_biomass) %>%
-select(strata = regulatory_area_name, year, 
-biomass = area_biomass,cv)
-
-input2 <- rema::prepare_rema_input(model_name = paste0("TMB: GOA POP MULTIVAR"),
-                            biomass_dat  = bind_rows(biomass_dat))
-m2 <- rema::fit_rema(input2) 
-output <- rema::tidy_rema(rema_model = m2)
-save(output, file = here(year,'data','models','rema',paste0(Sys.Date(),'-rema_output.rdata')))
-kableExtra::kable(output$parameter_estimates) 
-plots <- rema::plot_rema(tidy_rema = output, biomass_ylab = 'Biomass (t)') # optional y-axis label
-plots$biomass_by_strata
-
-## final apportionment qtties; Eastern downscaling. 
-## AKFIN homepage > GOA - Fractional Biomass in Eastern GOA
-##  Copied & pasted 2021 values for POP
-egfrac <- read.csv(here::here(year,'data','raw','goa_biomass_fractions_egoa.csv'))
-props <- output$proportion_biomass_by_strata %>% 
-  filter(year == 2021) %>% 
-  mutate(WestYakutat = `EASTERN GOA`*egfrac$Western.Fraction,
-         Southeast = `EASTERN GOA`*egfrac$Eastern.Fraction) %>%
-  select(`WESTERN GOA`, `CENTRAL GOA`, WestYakutat,Southeast)
-
-sum(props)==1
+afscassess::run_apport_pop(year = year,
+                           model = curr_mdl_fldr)
 
 
-plots$proportion_biomass_by_strata
-
-ggplot2::ggsave(plots$biomass_by_strata,
- file = here:: here(year,'data','models','rema','rema_outs.png'), 
- width = 12, height = 10, unit = 'in', dpi = 520)
-
-## still need to read in ABCs
-# rec_table <- read.csv(here::here('projection','rec_table.csv'))
-# abc23 <- as.numeric( rec_table[10,2]) 
-# abc24 <- as.numeric( rec_table[10,3]) 
-# apportionment2 <- apply(props, 2, FUN = function(x) round(x*c(abc23,abc24) )) %>%
-#   rbind( round(props*100,2) ,.) %>%
-#   data.frame() %>%
-#   mutate(Total = c("",abc23,abc24),
-#          Year = noquote(c("",year(Sys.Date())+1,year(Sys.Date())+2)),
-#          Quantity = c("Area Apportionment %", 
-#                       "ABC (t)",
-#                       "ABC (t)")) %>% select(Quantity, Year, everything())
 
 # ## because the rounded totals don't perfectly sum to the ABC, locate the discrepancy and add to the highest area (per Chris)
 
@@ -318,12 +268,6 @@ ggplot2::ggsave(plots$biomass_by_strata,
 # write.csv(apportionment2,file = here::here('re',paste0(Sys.Date(),"-AreaAppportionment.csv")))
 
 
-# compare <- compare_rema_models(rema_models = list(m),
-#                                admb_re = admb_re,
-#                                biomass_ylab = 'Biomass (t)')
-# compare$plots$biomass_by_strata
-
-# kableExtra::kable(tail(output$proportion_biomass_by_strata, 3)) 
 
 # process results ----
 
