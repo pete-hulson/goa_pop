@@ -253,22 +253,6 @@ afscassess::run_apport_pop(year = year,
                            model = curr_mdl_fldr)
 
 
-
-# ## because the rounded totals don't perfectly sum to the ABC, locate the discrepancy and add to the highest area (per Chris)
-
-# diff23 <- abc23 - sum(apportionment2[2,3:6])
-# diff24 <- abc24 - sum(apportionment2[3,3:6])
-# apportionment2[2,4] <- apportionment2[2,4]+diff23
-# apportionment2[3,4] <- apportionment2[3,4]+diff24
-
-
-# abc23 - sum(apportionment2[2,3:6])==0
-# abc24 - sum(apportionment2[3,3:6]) ==0
-
-# write.csv(apportionment2,file = here::here('re',paste0(Sys.Date(),"-AreaAppportionment.csv")))
-
-
-
 # process results ----
 
 # example to get model results without running mcmc
