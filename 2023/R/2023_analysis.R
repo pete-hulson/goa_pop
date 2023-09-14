@@ -331,6 +331,48 @@ ggsave(last_plot(),
 height = 4, width = 6, unit = 'in',
 file = here(here(year,'dev','mb_vs_db','mb_db_comparison.png')))
 
+
+read.csv(here(year,'mgmt',curr_mdl_fldr,'processed','selex.csv')) %>%
+  reshape2::melt(., id = 'age') %>%
+  bind_rows(.,read.csv(here(year,'mgmt',curr_mdl_fldr,'processed','waa_mat.csv')) %>%
+              dplyr::rename(., "waa"="srv1") %>%
+  reshape2::melt(., id = 'age')) %>%
+  filter(variable != 'waa') %>%
+  ggplot(., aes(x = age, y = value, color = variable)) +
+  geom_line(lwd = 1.1) +
+  theme(legend.position = 'top') +
+  scale_color_manual(values = c("#023047","#126782","#219ebc","#8ecae6","#fb8500","#ffb703"),
+                     labels = c(paste0('Fishery ',c("1967-1976","1977-1995","1996-2006","2007-2023")),
+                                'Survey','Maturity'))+
+  labs(x = 'Age', y = 'Proportion', color = '')
+
+ggsave(last_plot(), file =here::here(year,'mgmt', curr_mdl_fldr, "figs", "selex_mat.png"), 
+       width = 6, height = 6, unit = 'in')
+
+
+
+biolabs <- as_labeller(c(
+  'tot_biom'="Total Biomass (kt, ages 2+)",
+  'sp_biom'="Spawning Biomass (kt)",
+  'F'="Fishing Mortality",
+  'recruits'="Age-2 Recruits (thousands)")
+)
+read.csv(here(year,'mgmt',model,'processed','bio_rec_f.csv')) %>%
+  mutate(src = '2023 Model') %>%
+  bind_rows(., read.csv(here(year,'mgmt',"2020.1-2021",'processed','bio_rec_f.csv')) %>%
+  mutate(src = '2021 Model')) %>%
+  reshape2::melt(., id = c('year', 'src')) %>%
+  mutate(value = ifelse(value >1000,value/1000,value)) %>%
+  ggplot(., aes(x = year, y = value, color = src)) +
+  geom_line()+
+  theme(legend.position = 'top') +
+  scale_color_manual(values = c('grey44','blue'))+
+  facet_wrap(~variable,scales = 'free_y',labeller = biolabs) +
+  labs(x = 'Year', y = '',color = '') 
+
+ggsave(last_plot(), file =here::here(year,'mgmt', curr_mdl_fldr, "figs", "bio_f_rec_compare.png"), 
+       width = 7, height =7, unit = 'in')
+
 ### survey CPUE
 library(akgfmaps)
 ## devtools::install_github("afsc-gap-products/akgfmaps", build_vignettes = FALSE)
