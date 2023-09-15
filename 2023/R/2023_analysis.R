@@ -101,7 +101,7 @@ afscassess::fish_length_comp_pop(year = year,
                                  lenbins = lengths,
                                  rmv_yrs = c(1988, 1993, 1994, 2003, 2007, 2009, 2011, 2013, 2015, 2017, 2019, 2021, 2022, 2023))
 
-# bottom trawl survey size comp
+# bottom trawl survey size comp (not fit to in model, used for size-age matrices)
 afscassess::bts_length_comp(year = year,
                             area = "goa",
                             sa_index = 2,
@@ -202,6 +202,7 @@ afscassess::write_ctl_pop(year = year,
 setwd(here::here(year, "mgmt", curr_mdl_fldr, "mcmc"))
 
 # for testing
+# mk note: this take 2 mins on laptop
 mcmcruns <- 100000
 mcmcsave <- mcmcruns / 50
 
