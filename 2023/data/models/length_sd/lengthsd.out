@@ -1,13 +1,13 @@
-Starting optimization of 'lengthsd' in phase 1 of 2 at Wed Sep 13 11:16:40 2023
+Starting optimization of 'lengthsd' in phase 1 of 2 at Fri Sep 15 10:08:02 2023
 phase= 1 | nvar=  1 | iter=  0 | nll=1.50e+03 | mag=1.05e+04 | par[  1]=alpha
-phase= 1 | nvar=  1 | iter= 12 | nll=8.88e+01 | mag=1.06e-09 | par[  1]=alpha
-phase= 2 | nvar=  2 | iter=  0 | nll=8.88e+01 | mag=1.04e+02 | par[  2]=beta
-phase= 2 | nvar=  2 | iter=  9 | nll=2.58e+01 | mag=4.61e-09 | par[  2]=beta
-Optimization completed after 0.003 s with final statistics:
-  nll=25.790913 | mag=4.60760e-09 | par[  2]=beta
+phase= 1 | nvar=  1 | iter= 12 | nll=8.96e+01 | mag=9.59e-10 | par[  1]=alpha
+phase= 2 | nvar=  2 | iter=  0 | nll=8.96e+01 | mag=1.05e+02 | par[  2]=beta
+phase= 2 | nvar=  2 | iter=  9 | nll=2.57e+01 | mag=3.08e-08 | par[  1]=alpha
+Optimization completed after 0.002 s with final statistics:
+  nll=25.706163 | mag=3.07668e-08 | par[  1]=alpha
 
 Calculating Hessian: 1, 2 done (0 s) 
-Inverting Hessian: 1, 2 done (0.007 s) 
-Starting standard error calculations...  done (0.028 s) 
+Inverting Hessian: 1, 2 done (0.005 s) 
+Starting standard error calculations...  done (0.02 s) 
 
-Finished running model 'lengthsd' after 0.041 s.
+Finished running model 'lengthsd' after 0.03 s.

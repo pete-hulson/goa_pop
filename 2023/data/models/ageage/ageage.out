@@ -1,4 +1,4 @@
-Starting optimization of 'ageage' in phase 1 of 2 at Wed Sep 13 11:16:45 2023
+Starting optimization of 'ageage' in phase 1 of 2 at Fri Sep 15 10:08:05 2023
 phase= 1 | nvar=  1 | iter=  0 | nll=2.10e+01 | mag=4.69e+01 | par[  1]=sigma1
 phase= 1 | nvar=  1 | iter=  4 | nll=4.58e+00 | mag=1.21e-11 | par[  1]=sigma1
 phase= 2 | nvar=  2 | iter=  0 | nll=4.58e+00 | mag=1.57e+00 | par[  2]=sigma2
@@ -8,7 +8,7 @@ Optimization completed after 0.003 s with final statistics:
 
 Calculating Hessian: 1, 2 done (0 s) 
 Differentiating 1 derived quantities: 1 done (0.001 s) 
-Inverting Hessian: 1, 2 done (0.007 s) 
-Starting standard error calculations...  done (0.048 s) 
+Inverting Hessian: 1, 2 done (0.006 s) 
+Starting standard error calculations...  done (0.035 s) 
 
-Finished running model 'ageage' after 0.064 s.
+Finished running model 'ageage' after 0.049 s.

@@ -1,15 +1,15 @@
-Starting optimization of 'vbl' in phase 1 of 3 at Wed Sep 13 11:16:39 2023
-phase= 1 | nvar=  1 | iter=  0 | nll=8.31e+02 | mag=1.27e+02 | par[  1]=Linf
-phase= 1 | nvar=  1 | iter=  6 | nll=3.46e+02 | mag=1.29e-06 | par[  1]=Linf
-phase= 2 | nvar=  2 | iter=  0 | nll=3.46e+02 | mag=6.90e+03 | par[  2]=k
-phase= 2 | nvar=  2 | iter= 12 | nll=1.34e+02 | mag=2.34e-05 | par[  2]=k
-phase= 3 | nvar=  3 | iter=  0 | nll=1.34e+02 | mag=2.50e+01 | par[  3]=t0
-phase= 3 | nvar=  3 | iter= 12 | nll=1.29e+02 | mag=1.09e-05 | par[  2]=k
-Optimization completed after 0.011 s with final statistics:
-  nll=128.672424 | mag=1.09175e-05 | par[  2]=k
+Starting optimization of 'vbl' in phase 1 of 3 at Fri Sep 15 10:08:02 2023
+phase= 1 | nvar=  1 | iter=  0 | nll=8.33e+02 | mag=1.27e+02 | par[  1]=Linf
+phase= 1 | nvar=  1 | iter=  6 | nll=3.45e+02 | mag=1.39e-06 | par[  1]=Linf
+phase= 2 | nvar=  2 | iter=  0 | nll=3.45e+02 | mag=6.91e+03 | par[  2]=k
+phase= 2 | nvar=  2 | iter= 12 | nll=1.34e+02 | mag=2.02e-05 | par[  2]=k
+phase= 3 | nvar=  3 | iter=  0 | nll=1.34e+02 | mag=2.48e+01 | par[  3]=t0
+phase= 3 | nvar=  3 | iter= 12 | nll=1.28e+02 | mag=1.10e-05 | par[  2]=k
+Optimization completed after 0.004 s with final statistics:
+  nll=128.288840 | mag=1.09710e-05 | par[  2]=k
 
 Calculating Hessian: 1, 2, 3 done (0 s) 
-Inverting Hessian: 1, 2, 3 done (0.009 s) 
-Starting standard error calculations...  done (0.023 s) 
+Inverting Hessian: 1, 2, 3 done (0.005 s) 
+Starting standard error calculations...  done (0.017 s) 
 
-Finished running model 'vbl' after 0.048 s.
+Finished running model 'vbl' after 0.03 s.
