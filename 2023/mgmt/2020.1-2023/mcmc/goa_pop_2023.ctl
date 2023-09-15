@@ -12,9 +12,9 @@ goa_pop_2023.dat # data_file
 0.0614 # mprior
 0.1 # cvmprior
 2 # ph_m
-0.75652 # sigrprior
+1.7 # sigrprior
 0.2 # cvsigrprior
--1 # ph_sigr
+2 # ph_sigr
 1.15 # q_srv1prior
 0.447213595 # cvq_srv1prior
 2 # ph_q_srv1
@@ -36,4 +36,4 @@ goa_pop_2023.dat # data_file
 0.1 # wt_fmort_reg
 1 # wt_avg_sel
 3 # initial_LMR
-0.791912451706993 # yieldratio
+0.791912462159591 # yieldratio
