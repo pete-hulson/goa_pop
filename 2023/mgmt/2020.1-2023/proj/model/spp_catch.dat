@@ -1,5 +1,5 @@
 #_Number_of_years with specified catch
-3
+1
 # Number of species
 1
 # data files for each species
@@ -13,6 +13,4 @@ data/goa_pop.dat
 # TAC model indices (for aggregating)
 1
 # Catch in each future year
-2023	28812.2433955597 # Estimated from catch thru 2023-07-01 with expansion factor = 1.7723
-2024	29106 # Estimated as Max F scenario catch * yieldratio of 0.792
-2025	27726 # Estimated as Max F scenario catch * yieldratio of 0.792
+2023	29939.4943878121 # Estimated from catch thru 2023-08-12 with expansion factor = 1.1703
