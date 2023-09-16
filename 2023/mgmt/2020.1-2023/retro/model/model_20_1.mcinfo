@@ -1,7 +1,7 @@
 #  mcmc
-10000
+5e+05
 #  mcsave
-20000
+40000
 #  mcnoscale
 FALSE
 #  mcgrope
