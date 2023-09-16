@@ -203,11 +203,12 @@ setwd(here::here(year, "mgmt", curr_mdl_fldr, "mcmc"))
 
 # for testing
 # mk note: this take 2 mins on laptop
-mcmcruns <- 100000
+mcmcruns <- 1e5
 mcmcsave <- mcmcruns / 50
 
 # for full run
-# mcmcruns <- 10000000
+# mk note: 2.75 hours on laptop
+# mcmcruns <- 1e7
 # mcmcsave <- mcmcruns / 5000
 
 R2admb::run_admb(mdl_name, verbose = TRUE, mcmc = TRUE, 
@@ -225,6 +226,7 @@ mcmcruns_ret <- 10000
 mcmcsave_ret <- mcmcruns / 5
 
 # for full run
+# mk note: 1.35 hours on laptop
 # mcmcruns_ret = 500000  # Could change these, but 500,000 is a manageable number to deal with
 # mcmcsave_ret = mcmcruns / 250
 
