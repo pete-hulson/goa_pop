@@ -228,7 +228,7 @@ mcmcsave_ret <- mcmcruns / 5
 # for full run
 # mk note: 1.35 hours on laptop
 # mcmcruns_ret = 500000  # Could change these, but 500,000 is a manageable number to deal with
-# mcmcsave_ret = mcmcruns / 250
+# mcmcsave_ret = mcmcruns_ret / 250
 
 # run retro (note: there's warnings that pop up for closing unused connection, can disregard)
 suppressWarnings(afscassess::run_retro_pop(year = year, 
@@ -286,6 +286,8 @@ mdl_res <- afscassess::process_results_pop(year = year,
                                            no_mcmc_ret = mcmcruns_ret,
                                            mcsave_ret = mcmcsave_ret)
 
+ 
+ afscassess::fac_table(year, model_dir)
 
 # create figures ----
 catch <- read.csv(here(year,'data','output','fsh_catch.csv')) %>% mutate(catch = catch/1000)
@@ -304,7 +306,17 @@ plot_compare_biomass_pop(year,
 model_dirs = c(here(year,'mgmt',paste0('2020.1-',c(2021,2023)))),
  savedir = here::here(year, "mgmt", curr_mdl_fldr))
 
+
+## comp data fits ----
+## to use these functions it will want to look into processed/ for the fac
+### age comps
+#afscassess::correct_comps(year, model_dir = curr_mdl_fldr, modname = mdl_name,
+#dat_name = dat_name,  rec_age = 2, plus_age = 25, len_bins = lengths)
+afscassess::plot_comps(year, folder = paste0('mgmt/',curr_mdl_fldr))
+
 ## Custom survey plots
+
+
 
 ### comparison of VAST and DB estimator
 biomass_dat <- read.csv(here(year,'data','raw','goa_total_bts_biomass_data.csv')) %>% 
