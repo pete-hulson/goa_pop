@@ -298,15 +298,6 @@ ggplot(subset(catch, year < 2023), aes(x = year, y =catch)) +
   labs(x = 'Year', y = 'Catch (t)')
 ggsave(here(year,'safe','goa_pop_2023','figs','catch_timeseries.png'))
 
-plot_compare_survey_pop(year, 
-                        model_dirs = c(here(year,'mgmt',paste0('2020.1-',c(2021,2023)))),
-                        savedir = here::here(year, "mgmt", curr_mdl_fldr))
-
-plot_compare_biomass_pop(year, 
-model_dirs = c(here(year,'mgmt',paste0('2020.1-',c(2021,2023)))),
- savedir = here::here(year, "mgmt", curr_mdl_fldr))
-
-
 ## comp data fits ----
 ## to use these functions it will want to look into processed/ for the fac
 ### age comps
@@ -315,7 +306,7 @@ model_dirs = c(here(year,'mgmt',paste0('2020.1-',c(2021,2023)))),
 afscassess::plot_comps(year, folder = paste0('mgmt/',curr_mdl_fldr))
 
 ## Custom survey plots
-
+afscassess::plot_survey(year, folder = paste0('mgmt/',curr_mdl_fldr))
 
 
 ### comparison of VAST and DB estimator
