@@ -251,7 +251,6 @@ suppressWarnings(afscassess::run_proj(st_year = year,
 
 
 # run apportionment ----
-
 afscassess::run_apport_pop(year = year,
                            model = curr_mdl_fldr)
 
@@ -317,7 +316,7 @@ select(year = Year, biomass = Estimate_metric_tons, sd = SD_mt) %>%
 mutate(src = 'VAST (model-based)') %>%
 filter(biomass >0)
 
-rbind(biomass_dat,vast) %>%
+rbind(biomass_dat) %>%
 mutate(lci = biomass-1.96*sd, uci = biomass+1.96*sd) %>%
 ggplot(.,
  aes(x = year, y = biomass, fill = src, color = src)) +
