@@ -1,5 +1,5 @@
 #_Number_of_years with specified catch
-1
+3
 # Number of species
 1
 # data files for each species
@@ -14,3 +14,5 @@ data/goa_pop.dat
 1
 # Catch in each future year
 2023	29939.4943878121 # Estimated from catch thru 2023-08-12 with expansion factor = 1.1703
+2024	31823 # Estimated as Max F scenario catch * yieldratio of 0.792
+2025	30250 # Estimated as Max F scenario catch * yieldratio of 0.792
