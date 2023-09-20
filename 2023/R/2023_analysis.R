@@ -286,8 +286,6 @@ mdl_res <- afscassess::process_results_pop(year = year,
                                            no_mcmc_ret = mcmcruns_ret,
                                            mcsave_ret = mcmcsave_ret)
 
- 
- afscassess::fac_table(year, model_dir)
 
 # create figures ----
 catch <- read.csv(here(year,'data','output','fsh_catch.csv')) %>% mutate(catch = catch/1000)
@@ -298,16 +296,33 @@ ggplot(subset(catch, year < 2023), aes(x = year, y =catch)) +
   labs(x = 'Year', y = 'Catch (t)')
 ggsave(here(year,'safe','goa_pop_2023','figs','catch_timeseries.png'))
 
+
+
+
 ## comp data fits ----
 ## to use these functions it will want to look into processed/ for the fac
-### age comps
 #afscassess::correct_comps(year, model_dir = curr_mdl_fldr, modname = mdl_name,
 #dat_name = dat_name,  rec_age = 2, plus_age = 25, len_bins = lengths)
 afscassess::plot_comps(year, folder = paste0('mgmt/',curr_mdl_fldr))
 
-## Custom survey plots
-afscassess::plot_survey(year, folder = paste0('mgmt/',curr_mdl_fldr))
+## params 
+afscassess::plot_params(year, folder = paste0('mgmt/',curr_mdl_fldr),
+model_name = mdl_name)
 
+## retros
+afscassess::plot_retro(year,folder = paste0('mgmt/',curr_mdl_fldr),n_retro = 10 )
+afscassess::plot_selex(year, folder = paste0('mgmt/',curr_mdl_fldr))
+afscassess::plot_survey(year, folder = paste0('mgmt/',curr_mdl_fldr))
+afscassess::plot_phase(year, folder = paste0('mgmt/',curr_mdl_fldr), model_name = mdl_name)
+afscassess::plot_rec_ssb(year, folder = paste0('mgmt/',curr_mdl_fldr), rec_age=rec_age)
+
+afscassess::base_plots(year, 
+folder = paste0('mgmt/',curr_mdl_fldr),
+model_name = mdl_name, rec_age = rec_age)
+
+
+afscassess::plot_compare_biomass_pop(year,
+models = c('2020.1-2021','2020.1-2023'))
 
 ### comparison of VAST and DB estimator
 biomass_dat <- read.csv(here(year,'data','raw','goa_total_bts_biomass_data.csv')) %>% 
@@ -443,11 +458,4 @@ Rmisc::multiplot(plotlist = list(p1,p2), cols = 1)
 dev.off()
 
 # create tables ----
-
-#spot for table fcns
-
-#* prohibited catch ----
-akfin <- afscdata::connect(db = 'akfin')
-afscdata::q_psc(year, target = 'k', area = 'goa', db = akfin, save = TRUE)
-
 
