@@ -286,6 +286,70 @@ mdl_res <- afscassess::process_results_pop(year = year,
                                            no_mcmc_ret = mcmcruns_ret,
                                            mcsave_ret = mcmcsave_ret)
 
+## Run Profiles on Base model ----
+
+## Natural Mortality
+mvec = seq(0.01,0.3,0.02)
+
+for(m in seq_along(mvec)){
+new_dir <- here::here(year, "mgmt", curr_mdl_fldr, "profiles",paste0(Sys.Date(),'-Mprofile_M=',mvec[m]))
+dir.create(new_dir)
+file.copy(from = list.files(here::here(year,'mgmt',curr_mdl_fldr), full.names = TRUE), to = new_dir, overwrite = TRUE)
+
+## populate the relevant lines in the CTL
+ctl_file <- list.files(new_dir, pattern = "*.ctl", full.names = TRUE)
+newctl <- read.delim(ctl_file, sep = ' ', header = FALSE)
+newctl$V1[which(newctl$V3 == 'mprior')] <- mvec[m]
+newctl$V1[which(newctl$V3 == 'cvmprior')] <- 0.1
+newctl$V1[which(newctl$V3 == 'ph_m')] <- -1
+newctl$V1 <- newctl$V1
+write.table(newctl, ctl_file, quote = FALSE,row.names = FALSE, col.names = FALSE)
+
+## run the new model
+setwd(new_dir)
+shell('admb Model_20_1.tpl')
+shell('Model_20_1')
+}
+
+## process all the profile runs
+mdirs <- list.files(here::here(year, "mgmt", curr_mdl_fldr, "profiles"), 
+    pattern = 'profile_M=', full.names = T, recursive = FALSE)
+
+lapply(mdirs, FUN = function(x) afscassess::process_results_pop(model_dir=x, year = year,
+modname = mdl_name, rec_age = rec_age, plus_age = plus_age, size_bins = lengths, 
+proj = FALSE, on_year = TRUE, mcmc = FALSE))
+
+m_likes <- do.call(rbind, 
+ lapply(list.files(mdirs, pattern = 'likelihoods.csv', recursive = TRUE, full.names = TRUE), 
+ FUN = read.csv)) %>% 
+ mutate(M_fixed =as.numeric(sub('.*=', '', model))) %>%  ## pull out fixed value of M
+filter(weight !=0)
+
+min_likes_var <- m_likes %>% 
+filter(value != 0 ) %>%
+group_by(variable) %>% 
+summarise(min_value = min(value))
+
+m_likes %>%
+filter(weight != 0 & value != 0) %>%
+merge(., min_likes_var, by = 'variable') %>% 
+mutate(value_adj=ifelse(value == 0,value, value - min_value)) %>%
+select(weight, variable, M_fixed,value,value_adj )-> m_likes
+
+rich_cols <- r4ss::rich.colors.short(length(unique(m_likes$variable)), alpha = 1)
+
+ggplot(m_likes, aes(x =M_fixed, y = value_adj, color = variable )) +
+theme(legend.position = c(0.8,0.5))+
+#scale_color_manual(values = c(rich_cols[2:3],
+#'red',rich_cols[4:7],'black',
+#rich_cols[8:10],'goldenrod')) +
+geom_line() +
+scale_y_continuous(limits = c(0,15)) +
+scale_x_continuous(limits = c(0,0.3), breaks = seq(0,0.3,0.05))+
+labs(x = 'M', y = 'NLL (scaled)', color = 'Like. Component')
+
+ggsave(file = here('goa_pop','2021_cie','cie_0_newM','likelihood_profile_ymax=15.png'),
+width = 6, height =4 , dpi = 500)
 
 # create figures ----
 catch <- read.csv(here(year,'data','output','fsh_catch.csv')) %>% mutate(catch = catch/1000)
@@ -295,8 +359,6 @@ ggplot(subset(catch, year < 2023), aes(x = year, y =catch)) +
              size = 4, pch = 17)+
   labs(x = 'Year', y = 'Catch (t)')
 ggsave(here(year,'safe','goa_pop_2023','figs','catch_timeseries.png'))
-
-
 
 
 ## comp data fits ----
@@ -310,7 +372,7 @@ afscassess::plot_params(year, folder = paste0('mgmt/',curr_mdl_fldr),
 model_name = mdl_name)
 
 ## retros
-afscassess::plot_retro(year,folder = paste0('mgmt/',curr_mdl_fldr),n_retro = 10 )
+afscassess::plot_retro(year, folder = paste0('mgmt/',curr_mdl_fldr), n_retro = 10 )
 afscassess::plot_selex(year, folder = paste0('mgmt/',curr_mdl_fldr))
 afscassess::plot_survey(year, folder = paste0('mgmt/',curr_mdl_fldr))
 afscassess::plot_phase(year, folder = paste0('mgmt/',curr_mdl_fldr), model_name = mdl_name)
