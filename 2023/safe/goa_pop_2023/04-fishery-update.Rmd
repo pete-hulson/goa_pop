@@ -8,4 +8,4 @@ editor_options:
 
 > Operational Update: The reader is referred to the last full operational stock assessment assessment (Hulson et al., 2021) for the full description of the POP fishery history, fishery effort and CPUE, and information regarding discarding.
 
-Table \@ref(tab:commcatch) shows a time series of total catch, total ABC, total OFL and TAC. Relevant management measures are shown in table \@ref(tab:mgmtmeasures).
+Table \@ref(tab:commcatch) shows a time series of total catch, total ABC, total OFL and TAC. Relevant management measures are shown in Table \@ref(tab:mgmtmeasures).
