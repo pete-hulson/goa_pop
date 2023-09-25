@@ -18,7 +18,7 @@ Tables 10.\@ref(tab:cietor1) through 10.\@ref(tab:cietor5) compile the main reco
 
 ```{r cietor1}
 ## load all cie tables
-torcie <- list.files(here::here('2023','safe'), pattern = 'tor', full.names = T)
+torcie <- list.files(here::here('2023','safe','goa_pop_2023','static_tables'), pattern = 'tor', full.names = T)
 idx = 1
 for(i in torcie){
   ii <- read.csv(i)
