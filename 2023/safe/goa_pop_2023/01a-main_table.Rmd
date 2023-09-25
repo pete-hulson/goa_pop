@@ -1,26 +1,47 @@
 ```{r}
 ## need to read in proj files here
 
-# base_23_files <- list.files(here(year,'mgmt','2020.1-2023','processed'), full.names = TRUE) 
-# base_23 <-base_23_files %>%
-#   lapply(., FUN = read.csv) 
-# names(base_23) <- gsub(".csv","",basename(base_23_files))
-#   
-# base_21_files <- list.files(here(year,'mgmt','2020.1-2021','processed'), full.names = TRUE) 
-# base_21 <-base_21_files %>%
-#   lapply(., FUN = read.csv) 
-# names(base_21) <- gsub(".csv","",basename(base_21_files))
-  
-# using built in example data as demplate
-data <- safe::tier3
-## natM
-# data[1,] <- round(c(rep(base_21$key_param$nat_mort,2),rep(base_23$key_param$nat_mort,2),4))
-## total biomass (proj)
-# data[3,] 
-## spawnbio  (proj)
-# data[3,] 
+base_23_files <- list.files(here(year,'mgmt','2020.1-2023','processed'), full.names = TRUE)
+base_23 <- base_23_files %>%
+  lapply(., FUN = read.csv)
+names(base_23) <- gsub(".csv","",basename(base_23_files))
 
-# base_21$bio_rec_f$tot_biom[base_21$bio_rec_f$year==year,]
+base_21_files <- list.files(here(year,'mgmt','2020.1-2021','processed'), full.names = TRUE)
+base_21 <-base_21_files %>%
+  lapply(., FUN = read.csv)
+names(base_21) <- gsub(".csv","",basename(base_21_files))
+  
+
+proj0 <- read.csv(here::here(year,'mgmt','2020.1-2023','processed','mceval.csv'))
+proj <- reshape2::melt(proj0, id = names(proj0[1:7])) %>%
+  mutate(year = as.numeric(stringr::str_sub(variable,start = -4)),
+         variable = stringr::str_sub(variable, end = -6)) %>%
+  select(variable, value, year) %>%
+  group_by(variable, year) %>%
+  summarise(mval = mean(value))
+  
+
+data <- safe::tier3 ## load template
+
+safe0 <- read.csv(here::here(year,'mgmt','2020.1-2023','processed','exec_summ.csv')) %>% 
+  t()  %>% 
+  data.frame()
+# safe0 <- safe0[2:14,]
+# safe0[c(1,3:13),1] <- as.numeric(safe0[c(1,3:13),1] )
+# safe0[c(1,3:13),2] <- as.numeric(safe0[c(1,3:13),2] )
+# 
+# data[1:13,4:5] <- as.numeric(data.frame(safe0))
+
+## natM
+# data[1,2:5] <- t(round(c(rep(base_21$key_param$nat_mort,2),
+#                      rep(base_23$key_param$nat_mort,2)),4))
+## total biomass (proj)
+# data[3,2:5] <- c(636129, 621249,proj %>% filter(year %in% c(2023,2024) & variable%in% c('tot_biom_proj','tot_biom')) %>% ungroup() %>% select(mval) %>% round() %>% t())%>% matrix(nrow = 1)
+
+## spawnbio  (proj)
+# data[4,2:5] <- c(210795, 205713,proj %>% filter(year %in% c(2023,2024) & variable%in% c('spawn_biom_proj','spawn_biom')) %>% ungroup() %>% select(mval) %>% round() %>% t()) %>% matrix(nrow = 1)
+
+## b100
 
 # data
 safe::main_table(data, year, tier=3, c1, c2, c3)
