@@ -340,15 +340,15 @@ rich_cols <- r4ss::rich.colors.short(length(unique(m_likes$variable)), alpha = 1
 
 ggplot(m_likes, aes(x =M_fixed, y = value_adj, color = variable )) +
 theme(legend.position = c(0.8,0.5))+
-#scale_color_manual(values = c(rich_cols[2:3],
-#'red',rich_cols[4:7],'black',
-#rich_cols[8:10],'goldenrod')) +
+scale_color_manual(values = c(rich_cols[2:3],
+'red',rich_cols[4:7],'black',
+rich_cols[8:10],'goldenrod')) +
 geom_line() +
 scale_y_continuous(limits = c(0,15)) +
 scale_x_continuous(limits = c(0,0.3), breaks = seq(0,0.3,0.05))+
 labs(x = 'M', y = 'NLL (scaled)', color = 'Like. Component')
 
-ggsave(file = here('goa_pop','2021_cie','cie_0_newM','likelihood_profile_ymax=15.png'),
+ggsave(file = here::here(year, "mgmt", curr_mdl_fldr, "profiles",paste0(Sys.Date(),"-Mprofile_ymax=15.png")),
 width = 6, height =4 , dpi = 500)
 
 # create figures ----
