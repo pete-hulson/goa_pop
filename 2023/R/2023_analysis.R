@@ -324,6 +324,49 @@ model_name = mdl_name, rec_age = rec_age)
 afscassess::plot_compare_biomass_pop(year,
 models = c('2020.1-2021','2020.1-2023'))
 
+## comparison of survey fits
+vroom::vroom(here::here(year, paste0("mgmt/",curr_mdl_fldr), "processed", "survey.csv")) %>%
+    tidytable::rename_with.(tolower) %>%
+    tidytable::select.(year = starts_with("y"),
+                       Observed = starts_with("bio"),
+                       Predicted = pred,
+                       se, lci, uci) %>%
+    tidytable::pivot_longer.(-c(year, se, uci, lci)) %>%
+    tidytable::mutate.(value = value / 1000,
+                       uci = uci / 1000,
+                       lci = lci / 1000,
+                       src = '2023 Assessment') %>%
+    bind_rows(vroom::vroom(here::here(year, paste0("mgmt/",prev_mdl_fldr), "processed", "survey.csv")) %>%
+    tidytable::rename_with.(tolower) %>%
+    tidytable::select.(year = starts_with("y"),
+                       Observed = starts_with("bio"),
+                       Predicted = pred,
+                       se, lci, uci) %>%
+    tidytable::pivot_longer.(-c(year, se, uci, lci)) %>%
+    tidytable::mutate.(value = value / 1000,
+                       uci = uci / 1000,
+                       lci = lci / 1000,
+                       src = '2021 Assessment'))    -> dat
+
+ggplot(data= NULL, aes(x = year, color = src)) +
+geom_point(data=subset(dat, src == '2023 Assessment' &
+ name == 'Observed'), aes(y = value), color = 'grey44') +
+geom_errorbar(data=subset(dat, src == '2023 Assessment'), width = 0, 
+aes( ymin = lci, ymax = uci), color ='grey44') +
+geom_line(data=subset(dat, src == '2023 Assessment' & 
+name == 'Predicted'),aes(y = value),lwd = 0.75)+
+geom_line(data=subset(dat, src == '2021 Assessment' & 
+name == 'Predicted'),aes(y = value),lwd = 0.75) +
+scale_color_manual(values = c('grey22','blue')) +
+labs(x = 'Year', y = 'Survey Biomass (t)', color = '') +
+theme(legend.position = c(0.2,0.8))
+
+ggsave(last_plot(),
+height = 4, width = 6, unit = 'in',
+file = here(here(year,'mgmt',curr_mdl_fldr,'figs','survey_fit_compare.png')))
+
+
+
 ### comparison of VAST and DB estimator
 biomass_dat <- read.csv(here(year,'data','raw','goa_total_bts_biomass_data.csv')) %>% 
 mutate(sd = sqrt(biomass_var) ) %>%
