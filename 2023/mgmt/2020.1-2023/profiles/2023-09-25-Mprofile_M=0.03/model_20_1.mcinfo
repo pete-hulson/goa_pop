@@ -1,0 +1,12 @@
+#  mcmc
+10000
+#  mcsave
+2000
+#  mcnoscale
+FALSE
+#  mcgrope
+FALSE
+#  mcmult
+1
+#  mcmcpars
+log_mean_rec
