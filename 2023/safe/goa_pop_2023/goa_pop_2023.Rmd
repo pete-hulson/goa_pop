@@ -32,6 +32,10 @@ csl: "fishfish.csl"
 
 ---
 
+This report may be cited as:
+Kapur, M., Hulson, P-J., Williams, B., 2023. Assessment of the Pacific Ocean Perch Stock in the Gulf of Alaska. North Pacific Fishery Management Council, Anchorage, AK. Available from https://www.npfmc.org/library/safe-reports/
+  
+
 
 ```{r setup, include=FALSE, echo = FALSE}
 # remotes::install_github("crsh/rmdfiltr")
@@ -68,8 +72,8 @@ model = '2020.1-2023'
 end_proj = year + 15
 best_f = 0.0641 # from the best_f function in groundfishr package
 ofl = 8000 # placeholder while i figure things out
-abc_22 <- 38268; abc_22p <- prettyNum(abc_22,big.mark=',')
-abc_23 <- 1.06*abc_22 
+abc_22 <- 36196; abc_22p <- prettyNum(abc_22,big.mark=',') ## 2022 model's ABC for 2024
+abc_23 <- 40185 ## this year's ABC for 2024
 abc<-prettyNum(round(abc_23,1),big.mark=',')
 
 pcatch <- readLines(here::here(year,'mgmt','2020.1-2023','proj','model','data','goa_pop_spcat.dat'))[16:18] %>%
