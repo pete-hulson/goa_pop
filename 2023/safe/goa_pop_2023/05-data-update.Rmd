@@ -45,7 +45,7 @@ Catches as used in the model are shown in Table \@ref(tab:commcatch); discards a
 
 Survey biomass estimates and associated sampling variability (annual CVs) are shown in Table \@ref(tab:survobs). Suvey compositional data (survey catch at age and associated input sample sizes) are shown in Table \@ref(tab:survagecompst).
 
-A VAST index of relative abundnace has been developed for POP but is not currently used in the assessment. Details on the development of this index, and comparisons to the design-based methods, are available in [Appendix B](#appxvast). 
+A VAST index of relative abundance has been developed for POP but is not currently used in the assessment. Details on the development of this index, and comparisons to the design-based methods, are available in [Appendix B](#appxvast). 
 
 
 ## Other time series data used in the assessment
