@@ -6,8 +6,8 @@
 knitr::include_graphics(here::here(year,'safe','goa_pop_2023','figs','catch_timeseries.png'))
 ```
 
-```{r survey, fig.cap="NMFS Groundfish Survey observed biomass estimates (points) with 95% sampling error confidence intervals for GOA POP (vertical bars). Predicted estimates from the recommended model (orange line) compared with the 2021 model fit (dark blue line).", eval = TRUE}
-knitr::include_graphics(here::here(year,'mgmt', model, "figs", "2023-09-12-survey_compare.png"))
+```{r survey, fig.cap="NMFS Groundfish Survey observed biomass estimates (points) with 95% sampling error confidence intervals for GOA POP (vertical bars). ", eval = TRUE}
+knitr::include_graphics(here::here(year,'mgmt', model, "figs", "srv1_biomass.png"))
 ```
 
 ```{r fishagecomps, fig.cap="Fishery age compositions for GOA POP. Observed = bars, predicted from author recommended model = circles. Colors follow cohorts.", eval = TRUE}
@@ -31,15 +31,11 @@ knitr::include_graphics(here::here(year,'mgmt', model, "figs", "selex_mat.png"))
 ```
 
  
-```{r spr, fig.cap="Time series of POP estimated spawning biomass relative to the target level B35% level and fishing mortality relative to F35% for author recommended model. Top shows whole time series. Bottom shows close up on more recent management path.", eval = TRUE}
-knitr::include_graphics(here::here(year,'mgmt', model, "figs", "placeholder.jpg"))
+```{r spr, fig.cap="Time series of POP estimated spawning biomass relative to the target level B35% level and fishing mortality relative to F35% for author recommended model.", eval = TRUE}
+knitr::include_graphics(here::here(year,'mgmt', model, "figs", "phase_plane.png"))
 ```
 
 ```{r retrospective, fig.cap="Retrospective peels of estimated female spawning biomass for the past 10 years from the recommended model with 95% credible intervals derived from MCMC (top), and the percent difference in female spawning biomass from the recommended model in the terminal year with 95% credible intervals from MCMC.", eval = TRUE}
 knitr::include_graphics(here::here(year,'mgmt', model, "figs", "placeholder.jpg"))
 ```
 
-```{r historical, fig.cap="Retrospective peels of estimated female spawning biomass for the past 10 years from the recommended model with 95% credible intervals derived from MCMC (top), and the percent difference in female spawning biomass from the recommended model in the terminal year with 95% credible intervals from MCMC.", eval = TRUE}
-knitr::include_graphics(here::here(year,'mgmt', model, "figs", "placeholder.jpg"))
-```
- 
