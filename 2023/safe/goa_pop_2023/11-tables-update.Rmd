@@ -92,10 +92,35 @@ flextable::regulartable(data.frame(year = 1999:2000,
 
 \pagebreak
 
-```{r projections}
-flextable::regulartable(data.frame(year = 1999:2000,
-                 catch = 1:2)) %>%  
-      flextable::set_caption("Set of projections of spawning biomass and yield for POP in the GOA. This set of projections encompasses six harvest scenarios designed to satisfy the requirements of Amendment 56, the National Environmental Protection Act, and the Magnuson-Stevens Fishery Conservation and Management Act (MSFCMA). For a description of scenarios see Projections and Harvest Alternatives. All units in t. B40% = 132,767 t, B35% = 116,171 t, F40% =0.10, and F35% =0.12. ")
+```{r projections_catches}
+proj_temp <- read.csv(here::here(year,'mgmt','2020.1-2023','processed','mscen_yld.csv'))
+proj_temp$year <- as.character(proj_temp$year)
+proj_temp[,2:8] <- sapply(proj_temp[,2:8], FUN = function(x) prettyNum(round(x),big.mark = ','))
+names(proj_temp) <- c("Year",	"Maximum permissible F",	"Author’s F* (pre-specified catch)",	"Half maximum F",	"5-year average F",	"No fishing",	"Overfished",	"Approaching overfished")
+flextable::regulartable(proj_temp) %>%  
+      flextable::set_caption("Table of 13-year projected catches corresponding to the alternative harvest scenarios, using stochastic methods if possible (mean values or other statistics may be shown in the case of stochastic recruitment scenarios). This set of projections encompasses six harvest scenarios designed to satisfy the requirements of Amendment 56, the National Environmental Protection Act, and the Magnuson-Stevens Fishery Conservation and Management Act (MSFCMA). For a description of scenarios see Projections and Harvest Alternatives. All units in t.")
+```
+
+\pagebreak
+
+```{r projections_ssb}
+proj_temp <- read.csv(here::here(year,'mgmt','2020.1-2023','processed','mscen_ssb.csv'))
+proj_temp$year <- as.character(proj_temp$year)
+proj_temp[,2:8] <- sapply(proj_temp[,2:8], FUN = function(x) prettyNum(round(x),big.mark = ','))
+names(proj_temp) <- c("Year",	"Maximum permissible F",	"Author’s F* (pre-specified catch)",	"Half maximum F",	"5-year average F",	"No fishing",	"Overfished",	"Approaching overfished")
+flextable::regulartable(proj_temp) %>%  
+      flextable::set_caption("Table of 13-year projected spawning biomass corresponding to the alternative harvest scenarios, using stochastic methods if possible (mean values or other statistics may be shown in the case of stochastic recruitment scenarios). This set of projections encompasses six harvest scenarios designed to satisfy the requirements of Amendment 56, the National Environmental Protection Act, and the Magnuson-Stevens Fishery Conservation and Management Act (MSFCMA). For a description of scenarios see Projections and Harvest Alternatives. All units in t.")
+```
+
+\pagebreak
+
+```{r projections_f}
+proj_temp <- read.csv(here::here(year,'mgmt','2020.1-2023','processed','mscen_f.csv'))
+proj_temp$year <- as.character(proj_temp$year)
+proj_temp[,2:8] <- sapply(proj_temp[,2:8], FUN = function(x)  format(round(as.numeric(x), 2), nsmall = 3))
+names(proj_temp) <- c("Year",	"Maximum permissible F",	"Author’s F* (pre-specified catch)",	"Half maximum F",	"5-year average F",	"No fishing",	"Overfished",	"Approaching overfished")
+flextable::regulartable(proj_temp) %>%  
+      flextable::set_caption("Table of 13-year projected fishing mortality rates corresponding to the alternative harvest scenarios, using stochastic methods if possible (mean values or other statistics may be shown in the case of stochastic recruitment scenarios). This set of projections encompasses six harvest scenarios designed to satisfy the requirements of Amendment 56, the National Environmental Protection Act, and the Magnuson-Stevens Fishery Conservation and Management Act (MSFCMA). For a description of scenarios see Projections and Harvest Alternatives. All units in t.")
 ```
 
 \pagebreak
