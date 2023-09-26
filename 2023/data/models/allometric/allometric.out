@@ -1,4 +1,4 @@
-Starting optimization of 'allometric' in phase 1 of 1 at Fri Sep 15 10:05:24 2023
+Starting optimization of 'allometric' in phase 1 of 1 at Tue Sep 26 12:17:46 2023
 phase= 1 | nvar=  2 | iter=  0 | nll=7.97e+04 | mag=1.24e+07 | par[  1]=alpha
 phase= 1 | nvar=  2 | iter= 20 | nll=1.76e+02 | mag=5.37e+00 | par[  1]=alpha
 phase= 1 | nvar=  2 | iter= 23 | nll=1.76e+02 | mag=2.77e-05 | par[  1]=alpha
@@ -10,6 +10,6 @@ Warning: the following parameters had issues
 
 Calculating Hessian: 1, 2 done (0 s) 
 Inverting Hessian: 1, 2 done (0.006 s) 
-Starting standard error calculations...  done (0.018 s) 
+Starting standard error calculations...  done (0.019 s) 
 
-Finished running model 'allometric' after 0.029 s.
+Finished running model 'allometric' after 0.03 s.

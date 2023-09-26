@@ -1,4 +1,4 @@
-Starting optimization of 'wvbl' in phase 1 of 2 at Fri Sep 15 10:05:24 2023
+Starting optimization of 'wvbl' in phase 1 of 2 at Tue Sep 26 12:17:47 2023
 phase= 1 | nvar=  2 | iter=  0 | nll=5.97e+02 | mag=5.16e+03 | par[  2]=k
 phase= 1 | nvar=  2 | iter= 20 | nll=1.87e+02 | mag=2.85e-01 | par[  2]=k
 phase= 1 | nvar=  2 | iter= 23 | nll=1.87e+02 | mag=1.15e-08 | par[  2]=k
@@ -9,7 +9,7 @@ Optimization completed after 0.003 s with final statistics:
   nll=184.422876 | mag=3.57492e-05 | par[  2]=k
 
 Calculating Hessian: 1, 2, 3 done (0 s) 
-Inverting Hessian: 1, 2, 3 done (0.005 s) 
-Starting standard error calculations...  done (0.018 s) 
+Inverting Hessian: 1, 2, 3 done (0.006 s) 
+Starting standard error calculations...  done (0.021 s) 
 
-Finished running model 'wvbl' after 0.03 s.
+Finished running model 'wvbl' after 0.034 s.
