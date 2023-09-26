@@ -62,7 +62,8 @@ afscassess::weight_at_age(year = year,
                           area = "goa")
 
 # fishery catch (note: this automates the in-year estimation)
-## expansion factor is saved in yld_ratio.csv
+## output/yld_ratio.csv has the expansion factor ($ratio) and the 3-year catch/TAC ratio ($yld)
+## which are used for in-year and next-two-year catches, respectively
 suppressWarnings(afscassess::clean_catch(year = year, 
                                         species = species, 
                                         TAC = TAC))
@@ -239,7 +240,6 @@ suppressWarnings(afscassess::run_retro_pop(year = year,
                                            mcmcon = TRUE, 
                                            mcmc =  mcmcruns_ret, 
                                            mcsave = mcmcsave_ret))
- 
  
 # run projections ----
 
