@@ -16,45 +16,6 @@ flextable::regulartable(read.csv(here(year,'safe','goa_pop_2023','static_tables'
   flextable::set_header_labels(Catch..t. = 'Catch (t)', ABC= 'ABC (t)', OFL = 'OFL (t)', TAC = 'TAC (t)', Management.Measures = 'Management Measures')
 ```
 
-\pagebreak
-
-```{r fmpgroundfish}
-flextable::regulartable(read.csv(here(year,'safe','goa_pop_2023','static_tables','mgmt_measures.csv'))) %>%  
-      flextable::set_caption("FMP groundfish species caught in rockfish targeted fisheries in the GOA. Conf. = Confidential because of less than three vessels or processors. Source: NMFS AKRO Blend/Catch Accounting System via AKFIN through 9/25/2021.")
-```
-
-\pagebreak
-
-```{r popbycatch}
-
-
-
-flextable::regulartable(data.frame(year = 1999:2000,
-                 catch = 1:2)) %>%  
-      flextable::set_caption("Catch (t) of GOA POP as bycatch in other fisheries. Source: NMFS AKRO Blend/Catch Accounting System via AKFIN through 9/25/2021.")
-```
-
-\pagebreak
-
-```{r fmpbycatch}
-flextable::regulartable(data.frame(year = 1999:2000,
-                 catch = 1:2)) %>%  
-      flextable::set_caption("Non-FMP species bycatch estimates in tons for GOA rockfish targeted fisheries. Conf. = Confidential because of less than three vessels. Source: NMFS AKRO Blend/Catch Accounting System via AKFIN through 9/25/2021.")
-```
-
-\pagebreak
-
-```{r psc}
-
-psc <- read.csv(here(year,'data','output','psc_catch.csv')) %>% select(species, X2019,X2020,X2021,X2022,X2023)
-
-psc[1:nrow(psc),2:6] <- round(psc[1:nrow(psc),2:6]/1000,2)
-
-flextable::regulartable(psc ) %>%  
-      flextable::set_caption("Prohibited Species Catch (PSC) estimates reported in tons for halibut and herring, and thousands of animals for crab and salmon, by year, for the GOA rockfish fishery. Source: NMFS AKRO Blend/Catch Accounting System PSCNQ via AKFIN through 9/11/2023.") %>%
-
-  flextable::set_header_labels(species = 'Species Group Name', X2019='2019',X2020='2020',X2021 = '2021', X2022 = '2022', X2023='2023') 
-```
 
 \pagebreak
 
@@ -145,28 +106,4 @@ flextable::regulartable(data.frame(year = 1999:2000,
       flextable::set_caption("Summary of ecosystem considerations for GOA POP.")
 ```
 
-\pagebreak
-
-```{r exvessel}
-flextable::regulartable(data.frame(year = 1999:2000,
-                 catch = 1:2)) %>%  
-      flextable::set_caption("GOA rockfish ex-vessel market data. Total and retained catch (thousand metric tons), number of vessels, catcher vessel share of retained catch, value (million US$), price (US$ per pound), Central Gulf’s share of GOA rockfish retained catch, and Pacific ocean perch, northern rockfish, and dusk rockfish share of GOA rockfish retained catch; 2011-2015 average and 2016-2020.")
-```
-
-\pagebreak
-
-```{r wholesale}
-flextable::regulartable(data.frame(year = 1999:2000,
-                 catch = 1:2)) %>%  
-      flextable::set_caption("GOA rockfish first-wholesale market data. Production (thousand metric tons), value (million US$), price (US$ per pound), Pacific ocean perch, northern rockfish and dusky rockfish share of GOA rockfish value and price (US$ per pound), and head-and-gut share of value; 2011-2015 average and 2016-2020. Source: NMFS Alaska Region At-sea Production Reports; and ADF&G Commercial Operators Annual Reports (COAR). Data compiled and provided by the Alaska Fisheries Information Network (AKFIN).")
-```
-
-
-```{r globalmarket}
-flextable::regulartable(data.frame(year = 1999:2000,
-                 catch = 1:2)) %>%  
-      flextable::set_caption("Rockfish U.S. trade and global market data. Global production of rockfish and Pacific Ocean perch (thousand metric tons), U.S. Pacific ocean perch shares of global production, export volume (thousand metric tons), value (million US$) and price (US$ per pound), China’s share of Pacific Ocean perch export value and the Chinese Yaun/U.S. Dollar exchange rate; 2011-2015 average and 2016-2020")
-```
-
-\pagebreak
 \pagebreak
