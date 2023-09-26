@@ -54,6 +54,10 @@ afscdata::goa_pop(year)
 
 # get data files together (dat and ctl) ----
 
+## manually rename a file; lookup funs want "bts"
+file.rename(from=here::here(year, 'data','output','goa_ts_length_comp.csv'),
+to = here::here(year, 'data','output','goa_bts_length_comp.csv'))
+
 # weight-at-age
 # note from ben on these admb called functions: !!! I'm having trouble running this function via R2admb so stepped out and ran it command line, works fine if I compile it command line and then use the R2admb run function, maybe I'll pass the .exe instead of rebuilding the .tpl each year?
 afscassess::weight_at_age(year = year,
@@ -80,6 +84,7 @@ afscassess::fish_age_comp(year = year,
                           plus_age = plus_age,
                           lenbins = lengths,
                           rmv_yrs = c(1987, 1989))
+
 # expanded comps (expanded in years with obs catch data)
 # afscassess::fish_age_comp(year = year,
 #                           exp_meth = 'exp_len',
@@ -100,7 +105,8 @@ afscassess::bts_age_comp(year = year,
 afscassess::fish_length_comp_pop(year = year,
                                  rec_age = rec_age,
                                  lenbins = lengths,
-                                 rmv_yrs = c(1988, 1993, 1994, 2003, 2007, 2009, 2011, 2013, 2015, 2017, 2019, 2021, 2022, 2023))
+                                 rmv_yrs = c(1988, 1993, 1994, 2003, 2007, 2009,
+                                  2011, 2013, 2015, 2017, 2019, 2021, 2022, 2023))
 
 # bottom trawl survey size comp (not fit to in model, used for size-age matrices)
 afscassess::bts_length_comp(year = year,
