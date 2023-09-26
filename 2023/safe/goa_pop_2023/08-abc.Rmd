@@ -58,8 +58,8 @@ The executive summary contains the appropriate one- and two-year ahead projectio
 For Scenario 2 (Author's *F*); we use pre-specified catches to increase accuracy of short-term projections in fisheries where the catch is usually less than the ABC. This was suggested to help management with setting preliminary ABCs and OFLs for two-year ahead specifications.
 
 The method to calculate catches for this scenario is as follows:
-  1. In-year catches are defined as the actual observed catch through ~October 1, plus the average catch taken between October 1 and December 31 of the previous three years (`r year-3` to `r year-1`). The expansion factor for the observed catch through `r year` is 1.17; the estimated in-year catch for `r year` is `r prettyNum(c1,big.mark=',')` t.
-  2. For `r year+1` and `r year+2`, predicted catch is given by the ratio of the lass three catches to their respective TACs, multiplied by the TACs in future year $y^{*}$ given above (which are generally the same as the ABCs): $\langle \sum_{y-3}^{y-1}\frac{C_y}{TAC_y} \rangle TAC_{y^*}$. The average catch to TAC ratio in the previous three years was 0.79; predicted catches for `r year+1` and `r year+2` are `r prettyNum(c2,big.mark=',')` t and `r prettyNum(c3,big.mark=',')` t, respectively.
+  1. In-year catches are defined as the actual observed catch through ~October 1, plus the average catch taken between October 1 and December 31 of the previous three years (`r year-3` to `r year-1`). The expansion factor for the observed catch through `r year` is `r round(yld_rat$ratio,2)`; the estimated in-year catch for `r year` is `r prettyNum(c1,big.mark=',')` t.
+  2. For `r year+1` and `r year+2`, predicted catch is given by the ratio of the lass three catches to their respective TACs, multiplied by the TACs in future year $y^{*}$ given above (which are generally the same as the ABCs): $\langle \sum_{y-3}^{y-1}\frac{C_y}{TAC_y} \rangle TAC_{y^*}$. The average catch to TAC ratio in the previous three years was `r round(yld_rat$yld,2)`; predicted catches for `r year+1` and `r year+2` are `r prettyNum(c2,big.mark=',')` t and `r prettyNum(c3,big.mark=',')` t, respectively.
 
 Projected catches, spawning biomass, and fishing mortality rates corresponding to the alternative harvest scenarios over a 13-year period are shown in Tables \@ref(tab:projections_catches) through \@ref(tab:projections_f).
 
@@ -141,23 +141,29 @@ The fishery CPUE shows consistent patterns in abundance similar to the bottom tr
 
 #### Overview
 
-Apportionment of ABC and OFL among regulatory areas uses the random effects model ("REMA" version `0.1.0`) developed by the survey averaging working group. This model estimates random effects parameters that control the variation of estimated biomass across years and areas, and is fit to the trawl survey biomass estimates (with associated variance) for the Western, Central, and Eastern GOA. The REMA model fits the survey data in each area well (Figure 10.\@ref(fig:rema)). Both the observations and predictions indicate that most biomass is in the Central Gulf; biomass has increased in the Central and Western Gulf, and decreased in the Eastern Gulf. The estimated apportionment among areas are as follows: 6.8% for the Western area (up from 4.6% in 2019), 80.5% for the Central area (up from 75.8% in 2019), and 12.7% for the Eastern area (down from 19.6% in 2019). This corresponds to recommended ABC's of 2,602 t for the Western area, 30,806 t for the Central area, and 4,860 t for the Eastern area.
+Apportionment of ABC and OFL among regulatory areas uses the random effects model ("REMA" version `0.1.0`) developed by the survey averaging working group, and downscales the estimates to account for closed areas in the Eastern Gulf.  The Eastern Gulf is comprised of two sub-areas for apportionment purposes: the area west of $140^{\circ}W$ longitude ("West Yakutat") and the area east and southeast of $140^{\circ}W$ longitude ("East Yakutat and Southeast Outside", or "SEO"). Amendment 41 prohibited trawling in the latter area, so we re-calculate apportionment rates for the Eastern Gulf to consider the ratio of biomass both within and outside of the closed area. The Groundfish Plan Team recommended use of a weighted average so apportionment values do not change too dramatically with each new survey observation.
 
+The workflow to calculate allocation is as follows:
 
-#### Amendment 41 Downscaling
+  1. Apply the `REMA` model to estimate random effects parameters that control the variation of estimated biomass across years and areas, and is fit to the trawl survey biomass estimates (with associated variance) for the Western, Central, and Eastern GOA. The REMA model fits the survey data in each area well (see figure below). Both the observations and predictions indicate that most biomass is in the Central Gulf; biomass has increased in the Central and Western Gulf, and decreased in the Eastern Gulf. The estimated apportionment among areas are as follows: `r round(100*subset(rema_props, year == 2023)[5],1)`% for the Western area (down from 6.8% in 2021), `r round(100*subset(rema_props, year == 2023)[3],1)`% for the Central area (down from 80.5% in 2021), and `r round(100*subset(rema_props, year == 2023)[4],1)`% for the Eastern area (up from 12.7% in 2021). This corresponds to recommended ABCs of 2,602 t for the Western area, 30,806 t for the Central area, and 4,860 t for the Eastern area.
 
-The Eastern gulf is comprised of two sub-areas for apportionment purposes: the area west of $140^{\circ}W$ longitude ("West Yakutat") and the area east and southeast of $140^{\circ}W$ longitude ("East Yakutat and Southeast Outside"). Amendment 41 prohibited trawling in the latter area, so we re-calculate apportionment rates for the Eastern Gulf to consider the ratio of biomass both within and outside of the closed area. This re-calculation is obtained by:
-
-  1. Taking the ratio of estimated biomass between the open and closed area (W. Yakutat versus E. Yakutat/SEO). The ratio for `r year` using biomass from `r paste0(seq(year-4,year,2),collapse = ', ')` is XX, up/down from the ratio of 0.29 used in `r year-2`. 
+```{r rema, fig.cap="Observed survey biomass (black points) with 95% confidence intervals (black error bars), and estimated fits from teh REMA model (black lines) with 95% confidence intervals (grey ribbon) for three areas of the Gulf of Alaska.", eval = TRUE}
+knitr::include_graphics(here(year,'mgmt',model,'apport','rema_outs.png'))
+```
+ 
+ 
   
-  2.  Pete to help clarify: This calculation was based on the team's previous recommendation that we use the weighted average of the upper 95% confidence interval for the W.
-Yakutat. We computed this interval this year using the weighted average of the ratio for 2019, 2021 and 2023. We calculated the approximate upper 95% confidence interval using the variance of a weighted mean for the 2017-2021 weighed mean ratio. 
+  
+  
+  2. Obtain the biomass ratios between the open and closed areas (W. Yakutat versus E. Yakutat/SEO)  from the last four calendar years (These ratios are provided by the survey program and are accessed via AKFIN). Using these values, first calculate a weighted average of the mean ($\mu_w$) and upper limit of the 95% confidence interval ($\sigma_w$) for the W. Yakutat biomass ratio (where most recent surveys are weighted higher). Then calculate a total ratio for use in apportionment via $\mu_w = 2 \sqrt(\sigma_w)$. 
+
+The ratio for `r year` using biomass from `r paste0(seq(year-4,year,2),collapse = ', ')` is XX, up/down from the ratio of 0.29 used in `r year-2`.  
 
 Applying the biomass ratio to the [ABC](#oflabc) for the Eastern Gulf results in an ABC apportionment of 1,409 t to the W. Yakutat area, with 3,451 t unharvested in the E. Yakutat/SEO. The OFL for POP, where $F_{OFL}$ = $F_{35\%}$=0.12), is 45,580. Using the same approach as for ABCs, the OFL for the Western Gulf, Central Gulf, and W. Yakutat^[In 2012, the Plan Team and SSC recommended combined OFLs for the Western, Central, and West Yakutat areas (W/C/WYK) because the original rationale of an overfished stock no longer applied. However, because of concerns over stock structure, the OFL for SEO remained separate to ensure this unharvested OFL was not utilized in another area. The Council adopted these recommendations.] is 41,470 t and 4,110 t in the SEO area. 
 
 ### Status Determination
 
-> The status definitions under the MSFCMA have been truncated from this report. The status determinations described below are derived from the offical catch estimates and the `r year` projected spawning biomass under (Harvest Scenarios)[#harvestscenarios] 6 and 7.
+> The status definitions under the MSFCMA have been truncated from this report. 
 
 #### Overfishing 
 
@@ -166,9 +172,9 @@ This is less than the `r year-1` OFL of `r prettyNum(45580,big.mark=",")` t. *Th
 
 #### Overfished (Harvest Scenario 6)
 
-The minimum stock size threshold (MSST) for POP is given by the $B_{35\%}$ which is `r prettyNum(b35_23,big.mark=",")` in `r year`. The estimated stock spawning biomass in `r year` is above the MSST at `r prettyNum(ssb_23,big.mark=",")`. *The stock is not overfished*.
+The minimum stock size threshold (MSST) for POP is given by the $B_{35\%}$ which is `r prettyNum(b35_24,big.mark=",")` in `r year`. The estimated stock spawning biomass in `r year` is nearly double the MSST at `r prettyNum(ssb_24,big.mark=",")`. *The stock is not overfished*.
 
 #### Approaching Overfished (Harvest Scenario 7)
-The mean estimated stock spawning biomass in `r year+2` is above the MSST at 189,598. *The stock is not approaching an overfished state*.
+The mean estimated stock spawning biomass in `r year+2` is above the MSST. *The stock is not approaching an overfished state*.
 
 The fishing mortality that would have produced a catch for `r year-1` equal to the `r year-1` OFL is `r best_f`.
