@@ -93,7 +93,7 @@ describing maturity-at-age are estimated conditionally within the model so
 that uncertainty in model results (e.g., ABC) can be linked to
 uncertainty in maturity parameter estimates.
 
-# Model Uncertainty
+# Model Uncertainty {#modeluncertainty}
 
 Evaluation of model uncertainty is obtained through a Markov Chain Monte
 Carlo (MCMC) algorithm (Gelman et al. 1995). The chain length of the
