@@ -1,6 +1,6 @@
-## Area Allocation of Harvest
-
 \newpage
+
+## Area Allocation of Harvest
 
 The apportionment of harvest for `r year` and `r year+1` was conducted using the REMA model using the same assumptions as in 2021:
 
