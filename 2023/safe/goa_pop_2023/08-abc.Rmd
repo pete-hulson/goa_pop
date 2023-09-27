@@ -35,20 +35,19 @@ The first five scenarios are designed to provide a range of harvest alternatives
 
 +   *Scenario 1*:  In all future years, $F$ is set equal to max$F_{ABC}$ (Rationale:  Historically, TAC has been constrained by ABC, so this scenario provides a likely upper limit on future TACs.)
 
-+   *Scenario 2*:  In `r year` and `r year+1`, $F$ is set equal to a constant fraction of max $F_{ABC}$, where this fraction is equal to the ratio of the realized catches in `r paste0(range(year-3, year-1), collapse='-')` to the ABC (which is generally the same s the TAC) recommended in the assessment for each of those years. For the remainder of the future years, maximum permissible ABC is used. (Rationale:  Using recent catch to ABC ratios will yield more realistic projections for the POP fishery, which rarely realizes its full TAC or ABC.) Detail on the exact calculation of these values is shown [below](#authorsF).
++   *Scenario 2*:  In `r year+1` and `r year+2`, $F$ is set equal to a constant fraction of max $F_{ABC}$, where this fraction is equal to the ratio of the realized catches in `r paste0(range(year-3, year-1), collapse='-')` to the ABC (which is generally the same as the TAC) recommended in the assessment for each of those years. For the remainder of the future years, maximum permissible ABC is used. (Rationale:  Using recent catch to ABC ratios will yield more realistic projections for the POP fishery, which rarely realizes its full TAC or ABC). The exact calculation of these values is shown [below](#authorsF).
 
-+   *Scenario 3*:  In all future years, $F$ is set equal to 50% of max $F_{ABC}$. (Rationale:  This scenario provides a likely lower bound on $F_{ABC}$ that still allows future harvest rates to be adjusted downward when stocks fall below reference levels.)
++   *Scenario 3*:  In all future years, $F$ is set equal to 50% of max $F_{ABC}$. (Rationale:  This scenario provides a lower bound on $F_{ABC}$ that still allows future harvest rates to be adjusted downward when stocks fall below reference levels.)
 
-+   *Scenario 4*:  In all future years, $F$ is set equal to the 2015-2019 average F. (Rationale:  For some stocks, TAC can be well below ABC, and recent average $F$ may provide a better indicator of FTAC than $F_{ABC}$.)
++   *Scenario 4*:  In all future years, $F$ is set equal to the `r paste0(range(year-6, year-2), collapse='-')` average F. (Rationale:  For some stocks, TAC can be well below ABC, and recent average $F$ may provide a better indicator of FTAC than $F_{ABC}$.)
 
 +   *Scenario 5*:  In all future years, $F$ is set equal to zero. (Rationale:  In extreme cases, TAC may be set at a level close to zero.)
 
-In addition to the seven standard harvest scenarios, Amendments 48/48 to the BSAI and GOA Groundfish Fishery Management Plans require projections of the likely OFL two years into the future. These are needed to satisfy the MSFCMA’s requirement to determine whether a stock is currently in an overfished condition or is approaching an overfished condition. These two scenarios are as follows (for Tier 3 stocks, the MSY level is defined as $B_{35\%}$):
+Two other scenarios are needed to satisfy the MSFCMA’s requirement to determine whether a stock is currently in an overfished condition or is approaching an overfished condition. These two scenarios are as follow (for Tier 3 stocks, the MSY level is defined as $B_{35\%}$): 
 
-+   *Scenario 6*:  In all future years, $F$ is set equal to FOFL. (Rationale:  This scenario determines whether a stock is overfished. If the stock is expected to be above 1) above its MSY level in `r year` or 2) above ½ of its MSY level in  `r year` and above its MSY level in  `r year+10` under this scenario, then the stock is not overfished.) While Scenario 6 gives the best estimate of OFL for `r year`, it does not provide the best estimate of OFL for `r year + 1`, because the mean `r year` catch under Scenario 6 is predicated on the `r year` catch being equal to the `r year` OFL, whereas the actual `r year` catch will likely be less than the `r year` OFL.
-The executive summary contains the appropriate one- and two-year ahead projections for both ABC and OFL.
++   *Scenario 6*:  In all future years, $F$ is set equal to $F_{OFL}$. (Rationale:  This scenario determines whether a stock is overfished. If the stock is expected to be above 1) above its MSY level in `r year` or 2) above ½ of its MSY level in  `r year` and above its MSY level in  `r year+10` under this scenario, then the stock is not overfished.) While Scenario 6 gives the best estimate of OFL for `r year`, it does not provide the best estimate of OFL for `r year + 1`, because the mean `r year` catch under Scenario 6 is predicated on the `r year` catch being equal to the `r year` OFL, whereas the actual `r year` catch will likely be less than the `r year` OFL. The executive summary contains the appropriate one- and two-year ahead projections for both ABC and OFL.
 
-+   *Scenario 7*:  In `r year` and `r year+1`, $F$ is set equal to max$F_{ABC}$, and in all subsequent years $F$ is set equal to $F_{OFL}$ .(Rationale: This scenario determines whether a stock is approaching an overfished condition. If the stock is 1) above its MSY level in `r year+1` or 2) above 1/2 of its *MSY* level in `r year+1` and expected to be above its MSY level in `r year+13` under this scenario, then the stock is not approaching an overfished condition.)
++   *Scenario 7*:  In `r year` and `r year+1`, $F$ is set equal to max$F_{ABC}$, and in all subsequent years $F$ is set equal to $F_{OFL}$. (Rationale: This scenario determines whether a stock is approaching an overfished condition. If the stock is 1) above its MSY level in `r year+1` or 2) above 1/2 of its *MSY* level in `r year+1` and expected to be above its MSY level in `r year+13` under this scenario, then the stock is not approaching an overfished condition.)
 
 
 #### How Future Catches are Specified for Scenario 2 (Author's F) {#authorsF}
@@ -58,11 +57,13 @@ The executive summary contains the appropriate one- and two-year ahead projectio
 For Scenario 2 (Author's *F*); we use pre-specified catches to increase accuracy of short-term projections in fisheries where the catch is usually less than the ABC. This was suggested to help management with setting preliminary ABCs and OFLs for two-year ahead specifications.
 
 The method to calculate catches for this scenario is as follows:
-  1. In-year catches are defined as the actual observed catch through ~October 1, plus the average catch taken between October 1 and December 31 of the previous three years (`r year-3` to `r year-1`). The expansion factor for the observed catch through `r year` is `r round(yld_rat$ratio,2)`; the estimated in-year catch for `r year` is `r prettyNum(c1,big.mark=',')` t.
-  2. For `r year+1` and `r year+2`, predicted catch is given by the ratio of the lass three catches to their respective TACs, multiplied by the TACs in future year $y^{*}$ given above (which are generally the same as the ABCs): $\langle \sum_{y-3}^{y-1}\frac{C_y}{TAC_y} \rangle TAC_{y^*}$. The average catch to TAC ratio in the previous three years was `r round(yld_rat$yld,2)`; predicted catches for `r year+1` and `r year+2` are `r prettyNum(c2,big.mark=',')` t and `r prettyNum(c3,big.mark=',')` t, respectively.
+
+  1.    In-year catches are defined as the actual observed catch through ~October 1, plus the average catch taken between October 1 and December 31 of the previous three complete years (`r year-3` to `r year-1`). The expansion factor for the observed catch through `r year` is `r round(yld_rat$ratio,2)`; the estimated in-year catch for `r year` is `r prettyNum(c1,big.mark=',')` t.
+  
+  2.    For `r year+1` and `r year+2`, predicted catch is given by the ratio of the lass three catches to their respective TACs, multiplied by the TACs in future year $y^{*}$ given above (which are generally the same as the ABCs): $\langle \sum_{y-3}^{y-1}\frac{C_y}{TAC_y} \rangle TAC_{y^*}$. The resultant average ratio from catch to TAC in the previous three years is `r round(yld_rat$yld,2)`; predicted catches for `r year+1` and `r year+2` are `r prettyNum(c2,big.mark=',')` t and `r prettyNum(c3,big.mark=',')` t, respectively.
 
 Projected catches, spawning biomass, and fishing mortality rates corresponding to the alternative harvest scenarios over a 13-year period are shown in Tables \@ref(tab:projections_catches) through \@ref(tab:projections_f).
-
+ 
 
 During the 2006 CIE review, it was suggested that projections should account for uncertainty in the entire assessment, not just recruitment from the endpoint of the assessment. We continue to present an alternative projection scenario using the uncertainty of the full assessment model, harvesting at the same estimated yield ratio as Scenario 2, except for all years instead of the next two. This projection propagates uncertainty throughout the entire assessment procedure based on MCMC. The projection shows wide credibility intervals on future spawning biomass (Figure 9-17). The $B_{35\%}$ and $B_{40\%}$  reference points and future recruitment are based on the 1979-`r year-2` age-2 recruitments, and this projection predicts that the median spawning biomass will eventually tend toward these reference points while at harvesting at $F_{40\%}$ . 
 During the 2006 CIE review, it was suggested that projections should account for uncertainty in the entire assessment, not just recruitment from the endpoint of the assessment. We continue to present an alternative projection scenario using the uncertainty of the full assessment model, harvesting at the same estimated yield ratio as Scenario 2, except for all years instead of the next two.
@@ -73,13 +74,13 @@ The $B_{35\%}$ and $B_{40\%}$ reference points and future recruitment is based o
 ## Risk Table and ABC recommendation {#risktable}
 
 The SSC in its December 2018 minutes recommended that all assessment authors use the risk table when determining whether to recommend an ABC lower than the maximum permissible.
-The risk table template and examples of concerns for each level are provided in the most recent full assessment; the risk table scoring for POP has not changed since 2021:
+
+The risk table scoring for POP has not changed since 2021, with the exception that the 2021 SSC requested that the number of Risk Table categories (i.e., levels of concern) be reduced from four to three. Per leadership instruction, we have consolidated what were previously categories 2 and 3 ("substantially increased" and "major concern" into a single category, "increased/major concern"). This impacts the first two considerations, which were rated a level 2 in the 2021 Assessment.
 
 ```{r}
 l1 = "Level 1: No increased concerns"
-l2 = "Level 2: Substantially increased concerns"
-l3 = "Level 3: Major concern"
-l4 = "Level 4: Extreme concern"
+l2 = "Level 2: Increased/major concern"
+l3 = "Level 3: Extreme concern" 
 require(flextable)
 data.frame(assess = l2,
            pop = l2,
@@ -106,12 +107,13 @@ An abridged summary of the considerations that led to this determination for eac
 
 The GOA POP assessment model exhibits a negative retrospective pattern (spawning biomass continues to increase with new data).
 
-This is driven by increases in the trawl survey biomass, which has been consistently under-estimated since 2013, and may be suggestive of model-misspecification.
-This results in a an "assessment considerations" score of level 2, a substantially increased concern.
+This is driven by increases in the trawl survey biomass, which has been consistently under-estimated since 2013, and may be suggestive of model-misspecification. *This results in a an "assessment considerations" score of level 2, an increased/major concern.*
 
 ### Population dynamics considerations
 
-The model estimates above-average recruitment events in the last three decades to account for the increasing survey biomass observations (Figures 10.\@ref(fig:recruitment) and 10.\@ref(fig:recdevs)).  The estimated recruitment events are still insufficient to satisfactorily fit the recent survey data; these increases are not observed in the early time series nor are they typical for an ecosystem that is warming (with the exception of sablefish). The unusual trend of rapid increases in stock size and recruitment estimates results in a *Level 2 (substantially increased concern) population dynamics rating*.
+The model estimates above-average recruitment events in the last three decades to account for the increasing survey biomass observations (Figures 10.\@ref(fig:recruitment) and 10.\@ref(fig:recdevs)).  The estimated recruitment events are still insufficient to satisfactorily fit the recent survey data; these increases are not observed in the early time series nor are they typical for an ecosystem that is warming (with the exception of sablefish). 
+
+The unusual trend of rapid increases in stock size and recruitment estimates results in a *Level 2 (an increased/major concern) population dynamics rating*.
   
 ### Environmental/Ecosystem considerations
 
@@ -151,10 +153,6 @@ The workflow to calculate allocation is as follows:
 knitr::include_graphics(here(year,'mgmt',model,'apport','rema_outs.png'))
 ```
  
- 
-  
-  
-  
   2. Obtain the biomass ratios between the open and closed areas (W. Yakutat versus E. Yakutat/SEO)  from the last four calendar years (These ratios are provided by the survey program and are accessed via AKFIN). Using these values, first calculate a weighted average of the mean ($\mu_w$) and upper limit of the 95% confidence interval ($\sigma_w$) for the W. Yakutat biomass ratio (where most recent surveys are weighted higher). Then calculate a total ratio for use in apportionment via $\mu_w = 2 \sqrt(\sigma_w)$. 
 
 The ratio for `r year` using biomass from `r paste0(seq(year-4,year,2),collapse = ', ')` is XX, up/down from the ratio of 0.29 used in `r year-2`.  
