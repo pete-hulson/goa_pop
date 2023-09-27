@@ -4,6 +4,7 @@ author: "MK"
 date: "2023-09-11"
 output: html_document
 ---
+
 The associated model files to conduct the base assessment model are available at https://github.com/pete-hulson/goa_pop/tree/main/2023.
 
 A list naming the required text files (complete parameter and data/input files in the native code of the stock assessment program), model executable, and any other supplementary electronic files that will accompany the assessment document when archived (note: archiving specific instructions will be developed in 2024.)
