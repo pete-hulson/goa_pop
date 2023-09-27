@@ -1,7 +1,4 @@
----
-bibliography: ["VAST_safe.bib"]   
-csl: "fishfish.csl"
----
+\newpage
 
 # Appendix 10d Model Equations {#appxeqs}
 
@@ -66,7 +63,7 @@ The $\lambda$ notation indicates the weight assigned to each likelihood componen
 +---------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------+-------------------------------------+
 | $\sum_{DA}Binom(n_{a,D},\hat m_a)+\lambda_m \frac{1}{1+e^{-\delta(a-a_{50\%})}}$                        | Maturity                                                                                                  | $n_{ay}$ number of observations at age by dataset                                               | 1000 (penalty on maturity at age 0) |
 +---------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------+-------------------------------------+
-| $\frac{1} {2\sigma_\theta^2} ln \langle\frac{\theta}{\theta_{prior}} \rangle^2$                         | Prior penalty for natural mortality \$M\$, survey catchability $q$ and recruitment variability $\sigma_r$ | $\theta$ parameter estimate, $\sigma_{\theta}^2$ prior uncertainty, $\theta_{prior}$ prior mean | N/A                                 |
+| $\frac{1} {2\sigma_\theta^2} ln \langle\frac{\theta}{\theta_{prior}} \rangle^2$                         | Prior penalty for natural mortality $M$, survey catchability $q$ and recruitment variability $\sigma_r$ | $\theta$ parameter estimate, $\sigma_{\theta}^2$ prior uncertainty, $\theta_{prior}$ prior mean | N/A                                 |
 +---------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------+-------------------------------------+
 | $\lambda_r\langle \frac{1}{2\sigma_r^2}\sum_Y \epsilon_y^r+Yln\sigma_r\rangle$                          | Recruitment deviation penalty                                                                             | $\sigma_r$ recruitment variability                                                              | 1                                   |
 +---------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------+-------------------------------------+
