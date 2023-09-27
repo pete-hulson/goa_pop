@@ -2,7 +2,7 @@
 
 ## Summary of Changes in Assessment Inputs
 
-*Changes in the input data*: We updated the catch for `r year-1`, assumed catches of `r prettyNum(c1, big.mark = ',')` t for `r year`, `r prettyNum(c2, big.mark = ',')` t for `r year+1` and `r prettyNum(c3, big.mark = ',')` t for `r year+1` (see Specified catch estimation section for details). We use bottom trawl survey biomass through `r year`, fishery age composition data through 2022, and survey age composition through 2021.  
+*Changes in the input data*: We updated the catch for `r year-1`, assumed catches of `r prettyNum(c1, big.mark = ',')` t for `r year`, `r prettyNum(c2, big.mark = ',')` t for `r year+1` and `r prettyNum(c3, big.mark = ',')` t for `r year+1` (see [How Future Catch is Specified](#authorsF) for details). We use bottom trawl survey biomass through `r year`, fishery age composition data through 2022, and survey age composition through 2021.  
 
 *Changes in the assessment methodology*: The assessment methodology is the same as the most recent assessment (Hulson et. al. 2021).
 
@@ -10,7 +10,7 @@
 
 ## Summary of Results
 
-For the `r year` fishery, we recommend the maximum allowable ABC of `r abc` t. This ABC is a `r round(100*(abc_23-abc_22)/abc_22,1)`% increase from the `r year-1` ABC of `r abc_22p` t. The increase is attributed to the fact that the model has observed six consecutive survey biomass estimates larger than 1 million tons as well as an increase in survey biomass in 2023 compared to 2021. (This same dynamic resulted in increases in ABC between 2019 and 2021). The corresponding reference values for Pacific ocean perch are summarized in the following table, with the recommended ABC and OFL values in bold. The stock is not subject to overfishing, is not currently overfished, nor is it approaching a condition of being overfished. 
+For the `r year+1` fishery, we recommend the maximum allowable ABC of `r prettyNum(abc_24,big.mark=',')` t. This ABC is a `r round(100*(abc_24-abc_22)/abc_22,1)`% increase from the ABC recommended by last year's model for 2024 of `r abc_22p` t. The increase is attributed to the fact that the model has observed six consecutive survey biomass estimates larger than 1 million tons as well as an increase in survey biomass in 2023 compared to 2021. (This same dynamic resulted in increases in ABC between 2019 and 2021). The corresponding reference values for Pacific ocean perch are summarized in the following table. The stock is not subject to overfishing, is not currently overfished, nor is it approaching a condition of being overfished. 
 
 ```{r, child= "01a-main_table.Rmd", eval = T}
 
