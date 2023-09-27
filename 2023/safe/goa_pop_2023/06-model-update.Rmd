@@ -18,7 +18,7 @@ POP assessment is a single-sex, age-structured statistical catch-at-age
 model written in AD Model Builder (see Fournier et al. 2012 for recent
 reference) as described in Courtney et al. (2007). Formulae for the
 population dynamics, observation, and likelihood components of the
-assessment model are presented in [Appendix 10d](#appxeqs).
+assessment model are presented in the [Appendix](#appxeqs).
 
 ## Description of Base Model
 
