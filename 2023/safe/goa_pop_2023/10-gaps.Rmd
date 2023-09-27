@@ -1,2 +1,6 @@
 # Data Gaps and Research Priorities 
 > Operational Update: The reader is referred to the last full stock assessment (Hulson et al., 2021) for the entirety of the POP Data Gaps and Research Priorities section.
+
+# Acknowledgements
+
+The authors would like to acknowledge fruitful discussions with P. Spencer and the input of the 2023 September Groundfish Plan Team, as well as a review by C. Lunsford.
