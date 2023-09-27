@@ -54,9 +54,6 @@ afscdata::goa_pop(year)
 
 # get data files together (dat and ctl) ----
 
-## manually rename a file; lookup funs want "bts"
-file.rename(from=here::here(year, 'data','output','goa_ts_length_comp.csv'),
-to = here::here(year, 'data','output','goa_bts_length_comp.csv'))
 
 # weight-at-age
 # note from ben on these admb called functions: !!! I'm having trouble running this function via R2admb so stepped out and ran it command line, works fine if I compile it command line and then use the R2admb run function, maybe I'll pass the .exe instead of rebuilding the .tpl each year?
@@ -133,6 +130,10 @@ afscassess::age_error(year = year,
                       rec_age = rec_age, 
                       plus_age = plus_age)
 
+## manually rename a file; lookup funs want "bts"
+file.rename(from=here::here(year, 'data','output','goa_ts_length_comp.csv'),
+to = here::here(year, 'data','output','goa_bts_length_comp.csv'))
+
 # concatenate dat file, for now writing it to output folder in data
 afscassess::concat_dat_pop(year = year,
                            species = species,
@@ -173,9 +174,7 @@ afscassess::write_ctl_pop(year = year,
 
 # run base model
 setwd(here::here(year, "mgmt", curr_mdl_fldr))
-
 R2admb::run_admb(mdl_name, verbose = TRUE)
-
 
 # run mcmc within it's own sub-folder ----
 
@@ -194,7 +193,7 @@ file.copy(c(paste0(mdl_name, ".tpl"),
           overwrite = TRUE)
 
 # set sigr to mle in ctl file (Maia - you will want to look into this at some point)
-
+## MK note: PH and I discussed this; fixing sigmaR after mod conditioning is pretty standard
 afscassess::write_ctl_pop(year = year,
                           base_mdl_fldr = prev_mdl_fldr,
                           curr_mdl_fldr = curr_mdl_fldr,
@@ -257,6 +256,7 @@ suppressWarnings(afscassess::run_proj(st_year = year,
 
 
 # run apportionment ----
+# requires download of egoa fractions from AKFIN (format as CSV w/o header material; colnames unchanged)
 afscassess::run_apport_pop(year = year,
                            model = curr_mdl_fldr)
 
@@ -350,7 +350,7 @@ scale_color_manual(values = c(rich_cols[2:3],
 'red',rich_cols[4:7],'black',
 rich_cols[8:10],'goldenrod')) +
 geom_line() +
-scale_y_continuous(limits = c(0,15)) +
+scale_y_continuous(limits = c(0,10)) +
 scale_x_continuous(limits = c(0,0.3), breaks = seq(0,0.3,0.05))+
 labs(x = 'M', y = 'NLL (scaled)', color = 'Like. Component')
 
@@ -358,7 +358,8 @@ ggsave(file = here::here(year, "mgmt", curr_mdl_fldr, "profiles",paste0(Sys.Date
 width = 6, height =4 , dpi = 500)
 
 # create figures ----
-catch <- read.csv(here(year,'data','output','fsh_catch.csv')) %>% mutate(catch = catch/1000)
+catch <- read.csv(here(year,'data','output','fsh_catch.csv')) %>% 
+mutate(catch = catch/1000)
 ggplot(subset(catch, year < 2023), aes(x = year, y =catch)) +
   geom_line(lwd = 1.1) +
   geom_point(data = subset(catch, year == 2023),
@@ -371,11 +372,12 @@ ggsave(here(year,'safe','goa_pop_2023','figs','catch_timeseries.png'))
 ## to use these functions it will want to look into processed/ for the fac
 #afscassess::correct_comps(year, model_dir = curr_mdl_fldr, modname = mdl_name,
 #dat_name = dat_name,  rec_age = 2, plus_age = 25, len_bins = lengths)
-afscassess::plot_comps(year, folder = paste0('mgmt/',curr_mdl_fldr))
+afscassess::plot_comps(year, folder = paste0('mgmt/',curr_mdl_fldr),save = TRUE)
 
 ## params 
-afscassess::plot_params(year, folder = paste0('mgmt/',curr_mdl_fldr),
-model_name = mdl_name)
+afscassess::plot_params(year, 
+folder = paste0('mgmt/',curr_mdl_fldr),
+model_name = mdl_name, save = TRUE)
 
 ## retros
 afscassess::plot_retro(year, folder = paste0('mgmt/',curr_mdl_fldr), n_retro = 10 )
@@ -389,7 +391,7 @@ folder = paste0('mgmt/',curr_mdl_fldr),
 model_name = mdl_name, rec_age = rec_age)
 
 
-afscassess::plot_compare_biomass_pop(year,
+afscassess::plot_compare_biomass(year,
 models = c('2020.1-2021','2020.1-2023'))
 
 ## comparison of survey fits
@@ -481,27 +483,56 @@ ggsave(last_plot(), file =here::here(year,'mgmt', curr_mdl_fldr, "figs", "selex_
        width = 6, height = 6, unit = 'in')
 
 
-
+## key derived quantities with uncertainty and comparison
 biolabs <- as_labeller(c(
   'tot_biom'="Total Biomass (kt, ages 2+)",
-  'sp_biom'="Spawning Biomass (kt)",
-  'F'="Fishing Mortality",
-  'recruits'="Age-2 Recruits (thousands)")
+  'spawn_biom'="Spawning Biomass (kt)",
+  'Frate'="Fishing Mortality",
+  'age2_recruits'="Age-2 Recruits (thousands)")
 )
-read.csv(here(year,'mgmt',model,'processed','bio_rec_f.csv')) %>%
-  mutate(src = '2023 Model') %>%
-  bind_rows(., read.csv(here(year,'mgmt',"2020.1-2021",'processed','bio_rec_f.csv')) %>%
-  mutate(src = '2021 Model')) %>%
-  reshape2::melt(., id = c('year', 'src')) %>%
-  mutate(value = ifelse(value >1000,value/1000,value)) %>%
-  ggplot(., aes(x = year, y = value, color = src)) +
-  geom_line()+
+
+mcmc_summary_raw <- read.csv(here(year,'mgmt',curr_mdl_fldr,'processed','mceval.csv')) 
+## manually rename the last chunk because the processing function didn't expect rec or F
+names(mcmc_summary_raw)[282:(281+length(1961:2023))] <- paste0('age2_recruits_',1961:2023)
+names(mcmc_summary_raw)[345:407] <- paste0('Frate_',1961:2023)
+
+mcmc_summary_raw %>%
+reshape2::melt()%>%
+filter(grepl("biom|rec|Frate",variable)) %>%
+mutate(year = as.numeric(stringr::str_sub(variable,-4,-1)),
+variable = stringr::str_sub(variable, 1, -6)) %>%
+mutate(src = '2023 Model') %>%
+bind_rows(., read.csv(here(year,'mgmt',"2020.1-2021",'processed','mceval.csv')) %>%
+reshape2::melt() %>%
+filter(grepl("biom|rec|Frate",variable)) %>%
+mutate(year = as.numeric(stringr::str_sub(variable,-4,-1)),
+variable = stringr::str_sub(variable, 1, -6)) %>%
+mutate(src = '2021 Model')) %>%
+mutate(value = ifelse(value >1000,value/1000,value)) %>%
+group_by(variable, year, src) %>%
+summarise(median = median(value),lower = quantile(value, probs = 0.025), upper = quantile(value, probs = 0.975)) ->
+mcmc_summary
+
+write.csv(subset(mcmc_summary, src == '2023 Model'), 
+file = here(year,'mgmt',curr_mdl_fldr,'processed','mceval_summary.csv'), row.names = FALSE)             
+summarize(median = median(value),
+              lower = median(value) - qt(1- 0.05/2, (n() - 1))*sd(value)/sqrt(n()),
+              upper = median(value) + qt(1- 0.05/2, (n() - 1))*sd(value)/sqrt(n())) 
+mcmc_summary %>% filter(year == 2023 & variable == 'spawn_biom')
+
+mcmc_summary %>%
+filter(variable %in% c('spawn_biom', 'tot_biom', 'age2_recruits','Frate')) %>%
+  ggplot(., aes(x = year,  color = src, fill = src)) +
+  geom_line(aes(y=median))+
+  geom_ribbon(aes(ymin =lower, ymax = upper),alpha = 0.2, color = NA)+
   theme(legend.position = 'top') +
+  scale_fill_manual(values = c('grey44','blue'))+
   scale_color_manual(values = c('grey44','blue'))+
   facet_wrap(~variable,scales = 'free_y',labeller = biolabs) +
   labs(x = 'Year', y = '',color = '') 
 
-ggsave(last_plot(), file =here::here(year,'mgmt', curr_mdl_fldr, "figs", "bio_f_rec_compare.png"), 
+ggsave(last_plot(), file =here::here(year,'mgmt', curr_mdl_fldr, "figs", 
+"bio_f_rec_compare.png"), 
        width = 7, height =7, unit = 'in')
 
 ### survey CPUE
