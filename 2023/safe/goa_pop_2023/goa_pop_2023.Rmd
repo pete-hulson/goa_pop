@@ -70,15 +70,19 @@ year = 2023
 date = 'October 22, 2023'
 model = '2020.1-2023'
 end_proj = year + 15
+
+## read in exec summ and assign derived quants
+execsumm <-  read.csv(here::here(year,'mgmt',model,'processed','exec_summ.csv'))
+
 best_f = 0.0641 # from the best_f function in groundfishr package
-ofl_23 = 8000 # placeholder while i figure things out
-b35_23 = 10000 # aka MSST
-ssb_23 <- 10000 # current s biomass
-tb_23 <- 100000 # total biomass
+ofl_24 = execsumm[1,'ofl'] 
+b35_24 =  execsumm[1,'sb35']  # aka MSST
+ssb_24 <- execsumm[1,'ssb_proj'] # current s biomass
+tb_24 <- execsumm[1,'tb_proj'] # total biomass
 abc_22 <- 36196; abc_22p <- prettyNum(abc_22,big.mark=',') ## 2022 model's ABC for 2024
-abc_23 <- 40185 ## this year's ABC for 2024
-abc<-prettyNum(round(abc_23,1),big.mark=',')
-yld_rat <- read.csv(here::here(year,'mgmt',model,'procesed'))
+abc_24 <- execsumm[1,'abc'] ## this year's ABC for 2024 
+yld_rat <- read.csv(here::here(year,'data','output','yld_rat.csv')) ## ratio is 2023 expansion; yld is 3 yr catch/tac avg
+
 ## catch in 2022
 c0 <- round(as.numeric(strsplit(readLines(here::here(year,'mgmt',model,'goa_pop_2023.dat'))[47]," ")[[1]][62]))
             
@@ -92,13 +96,16 @@ pcatch<- round(as.numeric(pcatch[c(2,5,8)]))
 c1 <- pcatch[1] # estimated catch in current year
 c2 <- pcatch[2] # proj catch year + 1
 c3 <- pcatch[3] # proj catch year + 2
-# todo: build a function/switch to auto run the tier(a/b) - also for overfishing/overfished
+
+## read in rema and apportionment stuff
+load(here::here(year, 'mgmt',model,'apport','2023-09-16-rema_output.rdata')) ## apport_out
+rema_props <- apport_out$proportion_biomass_by_strata
 
 ## load in derived quants & model results
-mdlres <- list.files(here(year,'mgmt',model,'processed'), pattern = '.csv', full.names = TRUE)
-for(i in 1:length(mdlres)){
-  assign(x = gsub('.csv','',basename(mdlres[i])), value = read.csv(mdlres[i]))
-}
+# mdlres <- list.files(here(year,'mgmt',model,'processed'), pattern = '.csv', full.names = TRUE)
+# for(i in 1:length(mdlres)){
+#   assign(x = gsub('.csv','',basename(mdlres[i])), value = read.csv(mdlres[i]))
+# }
 ```
  
 ```{r, child="01-summary.Rmd", eval = T}
@@ -130,6 +137,7 @@ for(i in 1:length(mdlres)){
 
 ```{r, child="10-gaps.Rmd", eval = T}
 ```
+
 \pagebreak
 \allsectionsfont{\centering}
 # References
@@ -142,12 +150,6 @@ for(i in 1:length(mdlres)){
 ```
 
 ```{r, child="12-figures-update.Rmd", eval = T}
-```
-
-```{r, child="13-append_a.Rmd", eval = T}
-```
-
-```{r, child="14-append_vast.Rmd", eval = T}
 ```
 
 ```{r, child="15-append_cie.Rmd", eval = T}
