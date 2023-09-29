@@ -64,18 +64,11 @@ The method to calculate catches for this scenario is as follows:
 
 Projected catches, spawning biomass, and fishing mortality rates corresponding to the alternative harvest scenarios over a 13-year period are shown in Tables \@ref(tab:projections_catches) through \@ref(tab:projections_f).
  
-
-During the 2006 CIE review, it was suggested that projections should account for uncertainty in the entire assessment, not just recruitment from the endpoint of the assessment. We continue to present an alternative projection scenario using the uncertainty of the full assessment model, harvesting at the same estimated yield ratio as Scenario 2, except for all years instead of the next two. This projection propagates uncertainty throughout the entire assessment procedure based on MCMC. The projection shows wide credibility intervals on future spawning biomass (Figure 9-17). The $B_{35\%}$ and $B_{40\%}$  reference points and future recruitment are based on the 1979-`r year-2` age-2 recruitments, and this projection predicts that the median spawning biomass will eventually tend toward these reference points while at harvesting at $F_{40\%}$ . 
-During the 2006 CIE review, it was suggested that projections should account for uncertainty in the entire assessment, not just recruitment from the endpoint of the assessment. We continue to present an alternative projection scenario using the uncertainty of the full assessment model, harvesting at the same estimated yield ratio as Scenario 2, except for all years instead of the next two.
-This projection propagates uncertainty throughout the entire assessment procedure based on MCMC.
-The projection shows wide credibility intervals on future spawning biomass (Figure 10.\@ref(fig:ssbproj)).
-The $B_{35\%}$ and $B_{40\%}$ reference points and future recruitment is based on the 1979-2019 age-2 recruitment, and this projection predicts that the median spawning biomass will eventually tend toward these reference points while at harvesting at $F_{40\%}$.
-
 ## Risk Table and ABC recommendation {#risktable}
 
 The SSC in its December 2018 minutes recommended that all assessment authors use the risk table when determining whether to recommend an ABC lower than the maximum permissible.
 
-The risk table scoring for POP has not changed since 2021, with the exception that the 2021 SSC requested that the number of Risk Table categories (i.e., levels of concern) be reduced from four to three. Per leadership instruction, we have consolidated what were previously categories 2 and 3 ("substantially increased" and "major concern" into a single category, "increased/major concern"). This impacts the first two considerations, which were rated a level 2 in the 2021 Assessment.
+The risk table scoring for POP has not changed since 2021, with the exception that the 2021 SSC requested that the number of Risk Table categories (i.e., levels of concern) be reduced from four to three. Per leadership instruction in 2023, we have consolidated what were previously categories 2 and 3 ("substantially increased" and "major concern" into a single category, "increased/major concern"). This impacts the first two considerations, which were rated a level 2 in the 2021 Assessment.
 
 ```{r}
 l1 = "Level 1: No increased concerns"
