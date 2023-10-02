@@ -2,11 +2,11 @@
 
 # Figures
 
-```{r catch, fig.cap="Estimated and observed long-term (top figure) and short-term (bottom figure) catch history for GOA POP.", eval = TRUE}
-knitr::include_graphics(here::here(year,'safe','goa_pop_2023','figs','catch_timeseries.png'))
+```{r catch, fig.cap="Observed catches for POP for the entire time series (main figure) and since 1995 (inset).", eval = TRUE}
+knitr::include_graphics(here::here(year, 'mgmt', model, "figs",'catch_timeseries.png'))
 ```
 
-```{r survey, fig.cap="NMFS Groundfish Survey observed biomass estimates (points) with 95% sampling error confidence intervals for GOA POP (vertical bars). ", eval = TRUE}
+```{r survey, fig.cap="NMFS Groundfish Survey observed biomass estimates (points) with 95% sampling error confidence intervals for GOA POP (vertical bars). Model estimates are shown in black.", eval = TRUE}
 knitr::include_graphics(here::here(year,'mgmt', model, "figs", "srv1_biomass.png"))
 ```
 
@@ -30,9 +30,8 @@ knitr::include_graphics(here::here(year,'mgmt', model, "figs", "hists.png"))
 knitr::include_graphics(here::here(year,'mgmt', model, "figs", "bio_f_rec_compare.png"))
 ```
 
-```{r recdevs, fig.cap="Time series of recruitment deviations, with 95% interval obtained via MCMC.", eval = TRUE}
-knitr::include_graphics(here::here(year,'mgmt', model, "figs", "placeholder.jpg"))
-
+```{r recdevs, fig.cap="Time series of recruitment deviations, 1975-2023, from the 2023 base model (blue) and 2021 base model (grey), with 95% intervals obtained via MCMC.", eval = TRUE}
+knitr::include_graphics(here::here(year,'mgmt', model, "figs", "recdevs.png"))
 ```
 
 ```{r selex, fig.cap="Estimated selectivity curves, maturity-at-age and weight-at-age for GOA POP.", eval = TRUE}
