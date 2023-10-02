@@ -54,7 +54,7 @@ A comparison of these values is as follows:
 ## Parameters Estimated Inside the Assessment Model
 
 The parameters estimated conditionally inside the assessment model are
-listed in the table below.]
+listed in the table below.
 
 | Parameter                            | Symbol                            | Number |
 |----------------------------|--------------------------|------------------|
@@ -77,21 +77,21 @@ Three parameters are estimated with priors: natural mortality
 ($M \sim N(0.0661,0.00661)$), catchability ($q \sim N(1, 0.45)$), and
 the uncertainty in recruitment deviations ($\sigma_r \sim N(1.7,0.11)$).
 
-Fishery and survey selectivity is age-based. Fishery selectivity is
+Fishery and survey selectivity are age-based. Fishery selectivity is
 time-blocked into four periods. The period from 1961-1976 is asymptotic
 (via a logistic curve), and the three periods from 1977 onwards are
 dome-shaped (via an averaged logistic gamma for the second block, and a
 gamma function for the third and fourth blocks). Bottom trawl survey
 selectivity is estimated to be asymptotic with the logistic curve.
 
-Maturity-at-age is conditionally estimated within the
-assessment following the method presented in Hulson et al. (2011).
-Parameter estimates for maturity-at-age are obtained by fitting two
-datasets collected on female POP maturity from Lunsford (1999) and
-Conrath and Knoth (2013). Parameters for the logistic function
-describing maturity-at-age are estimated conditionally within the model so
-that uncertainty in model results (e.g., ABC) can be linked to
-uncertainty in maturity parameter estimates.
+Maturity-at-age is conditionally estimated within the assessment
+following the method presented in Hulson et al. (2011). Parameter
+estimates for maturity-at-age are obtained by fitting two datasets
+collected on female POP maturity from Lunsford (1999) and Conrath and
+Knoth (2013). Parameters for the logistic function describing
+maturity-at-age are estimated conditionally within the model so that
+uncertainty in model results (e.g., ABC) can be linked to uncertainty in
+maturity parameter estimates.
 
 # Model Uncertainty {#modeluncertainty}
 
