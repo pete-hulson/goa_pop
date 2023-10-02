@@ -160,7 +160,7 @@ names(proj_temp) <- c("Year",	"Maximum permissible F",	"Author’s F* (pre-speci
 flextable::regulartable(proj_temp) %>%  
   flextable::set_caption("Table of 13-year projected catches corresponding to the alternative harvest scenarios, using stochastic methods if possible (mean values or other statistics may be shown in the case of stochastic recruitment scenarios). This set of projections encompasses six harvest scenarios designed to satisfy the requirements of Amendment 56, the National Environmental Protection Act, and the Magnuson-Stevens Fishery Conservation and Management Act (MSFCMA). For a description of scenarios see Projections and Harvest Alternatives. All units in t.")%>%
   flextable::font(fontname = "Times New Roman", part = "all") %>% 
-  flextable::fontsize(size = 11, part = "all")
+  flextable::fontsize(size = 10, part = "all")
 ```
 
 \pagebreak
@@ -173,7 +173,7 @@ names(proj_temp) <- c("Year",	"Maximum permissible F",	"Author’s F* (pre-speci
 flextable::regulartable(proj_temp) %>%  
   flextable::set_caption("Table of 13-year projected spawning biomass corresponding to the alternative harvest scenarios, using stochastic methods if possible (mean values or other statistics may be shown in the case of stochastic recruitment scenarios). This set of projections encompasses six harvest scenarios designed to satisfy the requirements of Amendment 56, the National Environmental Protection Act, and the Magnuson-Stevens Fishery Conservation and Management Act (MSFCMA). For a description of scenarios see Projections and Harvest Alternatives. All units in t.")%>%
   flextable::font(fontname = "Times New Roman", part = "all") %>% 
-  flextable::fontsize(size = 11, part = "all")
+  flextable::fontsize(size = 10, part = "all")
 ```
 
 \pagebreak
@@ -186,7 +186,7 @@ names(proj_temp) <- c("Year",	"Maximum permissible F",	"Author’s F* (pre-speci
 flextable::regulartable(proj_temp) %>%  
   flextable::set_caption("Table of 13-year projected fishing mortality rates corresponding to the alternative harvest scenarios, using stochastic methods if possible (mean values or other statistics may be shown in the case of stochastic recruitment scenarios). This set of projections encompasses six harvest scenarios designed to satisfy the requirements of Amendment 56, the National Environmental Protection Act, and the Magnuson-Stevens Fishery Conservation and Management Act (MSFCMA). For a description of scenarios see Projections and Harvest Alternatives. All units in t.")%>%
   flextable::font(fontname = "Times New Roman", part = "all") %>% 
-  flextable::fontsize(size = 11, part = "all")
+  flextable::fontsize(size = 10, part = "all")
 ```
 
 \pagebreak
