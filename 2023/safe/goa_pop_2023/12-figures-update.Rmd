@@ -6,24 +6,24 @@
 knitr::include_graphics(here::here(year, 'mgmt', model, "figs",'catch_timeseries.png'))
 ```
 
-```{r survey, fig.cap="NMFS Groundfish Survey observed biomass estimates (points) with 95% sampling error confidence intervals for GOA POP (vertical bars). Model estimates are shown in black.", eval = TRUE}
+```{r survey, fig.cap="NMFS Groundfish Survey observed biomass estimates with 95% sampling error confidence intervals for GOA POP (grey points and vertical bars). Model estimates are shown in black.", eval = TRUE, out.width = "95%", out.height="80%"}
 knitr::include_graphics(here::here(year,'mgmt', model, "figs", "srv1_biomass.png"))
 ```
 
-```{r fishagecomps, fig.cap="Fishery age compositions for GOA POP. Observed = bars, predicted from author recommended model = circles. Colors follow cohorts.", eval = TRUE}
+```{r fishagecomps, fig.cap="Observed (colored bars) and predicted (black points) fishery age compositions for GOA POP.", eval = TRUE}
 knitr::include_graphics(here::here(year,'mgmt', model, "figs", "fsh_age_comp.png"))
 ```
 
-```{r fishlengthcomps, fig.cap="Fishery length (cm) compositions for GOA POP. Observed = bars, predicted from author recommended model = circles. Colors follow cohorts.", eval = TRUE}
+```{r fishlengthcomps, fig.cap="Observed (colored bars) and predicted (black points) fishery length (cm) compositions for GOA POP.", eval = TRUE}
 knitr::include_graphics(here::here(year,'mgmt', model, "figs", "fsh_length_comp.png"))
 ```
 
-```{r survagecomps, fig.cap="Groundfish survey age compositions for GOA POP. Observed = bars, predicted from author recommended model = circles. Colors follow cohorts.", eval = TRUE}
+```{r survagecomps, fig.cap="Observed (colored bars) and predicted (black points) groundfish bottom trawl survey age compositions for GOA POP.", eval = TRUE}
 knitr::include_graphics(here::here(year,'mgmt', model, "figs", "srv_age_comp.png"))
 ```
 
-```{r hists, fig.cap="Histograms of estimated posterior distributions of key parameters derived from MCMC for GOA POP. The vertical black lines are the recommended model estimates.", eval = TRUE}
-knitr::include_graphics(here::here(year,'mgmt', model, "figs", "hists.png"))
+```{r hists, fig.cap="Histograms (blue) of estimated posterior distributions and medians (vertical dashed lines) of key parameters derived from MCMC for GOA POP.", eval = TRUE}
+knitr::include_graphics(here::here(year,'mgmt', model, "figs", "hists_redux.png"))
 ```
 
 ```{r biofreccompare, fig.cap="Comparison of recruitment, fishing mortality rates, spawning and total biomass for the 2023 Update model (blue) and 2021 Full model (grey). The shaded ribbon represents the 95% quantile obtained via mcmc.", eval = TRUE}

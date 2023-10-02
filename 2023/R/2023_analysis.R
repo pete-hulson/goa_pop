@@ -366,7 +366,7 @@ mutate(catch = catch/1000)
 cplot1<-ggplot(catch, aes(x = year, y =catch)) +
   geom_line() + 
   labs(x = 'Year', y = 'Catch (t)')
-cplot2<-ggplot(subset(catch, year > 1995), aes(x = year, y =catch)) +
+cplot2<-ggplot(subset(catch, year > 1994), aes(x = year, y =catch)) +
   geom_line() + 
   scale_y_continuous(limits = c(0,35))+
   labs(x = 'Year', y = 'Catch (t)')
@@ -547,6 +547,41 @@ filter(variable %in% c('spawn_biom', 'tot_biom', 'age2_recruits','Frate')) %>%
 ggsave(last_plot(), file =here::here(year,'mgmt', curr_mdl_fldr, "figs", 
 "bio_f_rec_compare.png"), 
        width = 7, height =7, unit = 'in')
+
+
+## update histogram plot
+
+parlabs <- as_labeller(c(
+  'natmort'="Natural Mortality (M)",
+  'ABC'="ABC (kt)",
+  'tot_biom_2023'="Current Total Biomass (kt)",
+  'spawn_biom_2023'="Current Spawning Biomass (kt)",
+  "q_srv1" = 'Trawl Survey Catchability q',
+  'F40' = 'F40'))
+
+mcmc_key_pars <- mcmc_summary_raw %>%
+  dplyr::select(natmort, ABC, tot_biom_2023, F40, spawn_biom_2023, q_srv1) %>%
+  reshape2::melt() %>%
+  dplyr::mutate(value = ifelse(value > 1000,value/1000,value))
+
+medians <- mcmc_key_pars %>%
+  dplyr::group_by(variable) %>%
+  summarize(median = median(value),
+            lower = median(value) - qt(1- 0.05/2, (n() - 1))*sd(value)/sqrt(n()),
+            upper = median(value) + qt(1- 0.05/2, (n() - 1))*sd(value)/sqrt(n()))
+
+  
+ggplot(mcmc_key_pars, aes(x=value))+ 
+  geom_histogram(fill = alpha('dodgerblue',0.85), color = 'dodgerblue') + 
+  geom_vline(data=medians, aes(xintercept = median), linetype = 'dashed', color = 'black') +
+  theme(axis.ticks.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.title = element_blank()) +
+  facet_wrap(~variable, scales = 'free_x', labeller = parlabs, ncol = 2)
+
+ggsave(last_plot(), file =here::here(year,'mgmt', curr_mdl_fldr, "figs", 
+                                     "hists_redux.png"), 
+       width = 6, height =4, unit = 'in')
 
 ## recdevs plot (requires parameter_summary csv made below)
 
