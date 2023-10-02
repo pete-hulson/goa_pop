@@ -102,11 +102,32 @@ flextable::regulartable(read.csv(here::here(year, 'data','output','goa_bts_age_c
 \pagebreak
 
 ```{r resultscompare}
-flextable::regulartable(data.frame(year = 1999:2000,
-                                   catch = 1:2)) %>%  
-  flextable::set_caption("Summary of results from the previous recommended model compared to the current recommended model")%>%
-  flextable::font(fontname = "Times New Roman", part = "all") %>% 
-  flextable::fontsize(size = 11, part = "all")
+read.csv(here::here(year, 'mgmt', model,'processed','parameter_summary.csv')) %>%
+  mutate(src = '2023 Model')%>%
+  merge(.,read.csv(here::here(year, 'base','processed','parameter_summary.csv')) %>%
+          mutate(src = '2021 Model'), by = 'variable')  %>%
+  mutate(value = paste0(round(median.x,2), " (",round(median.y,2),")")) %>%
+  select('Likelihood Component/Parameter' = Parameter.x, '2023 Value (2021 Value)' =value) %>%
+  bind_rows(., 
+            
+            read.csv(here::here(year, 'mgmt', model,'processed','likelihoods.csv')) %>%
+              mutate(src = '2023 Model')%>%
+              merge(.,read.csv(here::here(year, 'mgmt','2020.1-2021','processed','likelihoods.csv')) %>%
+                      mutate(src = '2021 Model'), by = 'variable')  %>%
+              mutate(value = paste0(round(value.x,2), " (",round(value.y,2),")")) %>%
+              filter(!(variable %in% c("Fishery CPUE Likelihood",
+                                       "Alternative Survey Abundance Index Likelihood",
+                                       "Bottom Trawl Survey Size Composition Likelihood",
+                                       "Alternative Survey Size Composition Likelihood",
+                                       "Priors q Alternative Survey"))) %>%
+              select('Likelihood Component/Parameter' = variable, '2023 Value (2021 Value)' =value))  %>%
+  
+  flextable::flextable(.) %>%
+  flextable::width(j = 1, width = 3.5, unit = 'in') %>%
+    flextable::width(j = 2, width = 2.75, unit = 'in') %>%
+      flextable::set_caption("Comparison of median parameter estimates (from MCMC) and likelihood component scores from the base model and the 2021 model (shown in parentheses). The MLE for sigma R is 0.764 in the base model and 0.771 in the 2021 model; that parameter is fixed for MCMC analyses.") %>%
+flextable::font(fontname = "Times New Roman", part = "all") %>% 
+  flextable::fontsize(size = 11, part = "all")  
 ```
  
 \pagebreak
@@ -116,6 +137,7 @@ flextable::flextable(read.csv(here::here(year, 'mgmt', model,'processed','parame
   flextable::colformat_double(j = 2:4, digits = 3) %>%
   flextable::width(j = 1, width = 2.5, unit = 'in') %>%
   flextable::set_header_labels( values = c('Estimated parameter','2.5% Interval','Median','97.5% Interval')) %>%
+    flextable::set_caption("Estimated parameters from the base model, with 95% intervals derived via MCMC. The MLE for sigma R is 0.764 and is fixed for MCMC analyses.") %>%
   flextable::font(fontname = "Times New Roman", part = "all") %>% 
   flextable::fontsize(size = 11, part = "all")  
 ```

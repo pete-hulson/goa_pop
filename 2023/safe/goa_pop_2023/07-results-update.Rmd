@@ -12,19 +12,8 @@ The model achieved convergence as defined by an invertible Hessian matrix and a 
 
 ### Parameter Estimates and Parameter Uncertainty 
 
-The following table lists all estimated parameters in the base model. It includes the associated asymptotic standard error estimates or other statistical measures of uncertainty.  Time series of deviation parameters (fishing mortality rates $F$ for 1961-`r year` and recruitment deviations from 1935-`r year`) are shown in figures 10.\@ref(fig:biofreccompare) and 10.\@ref(fig:recdevs), respectively.
-
-
-```{r}
-flextable::flextable(read.csv(here::here(year, 'mgmt', model,'processed','parameter_summary.csv')) %>% select(-variable)) %>%
-  flextable::colformat_double(j = 2:4, digits = 3) %>%
-  flextable::width(j = 1, width = 2.5, unit = 'in') %>%
-  flextable::set_header_labels( values = c('Estimated parameter','2.5% Interval','Median','97.5% Interval')) %>%
-  flextable::font(fontname = "Times New Roman", part = "all") %>% 
-  flextable::fontsize(size = 11, part = "all")  
-```
-
-
+Table 10.\@ref(tab:parposteriorst) lists all estimated parameters in the base model. It includes the associated asymptotic standard error estimates or other statistical measures of uncertainty.  Time series of deviation parameters (fishing mortality rates $F$ for 1961-`r year` and recruitment deviations from 1935-`r year`) are shown in figures 10.\@ref(fig:biofreccompare) and 10.\@ref(fig:recdevs), respectively.
+ 
 From the MCMC chains described in [Model Uncertainty](#modeluncertainty), we summarize the posterior densities of key parameters for the recommended model using histograms (Figure 10.\@ref(fig:hists)) and credible intervals (Table 10.\@ref(tab:parposteriorst)). We also use these posterior distributions to show uncertainty around time series estimates of survey biomass (Figure 10.\@ref(fig:survey)), total and spawning biomass, fully selected fishing mortality and recruitment (Figure 10.\@ref(fig:biofreccompare)).
 
 Table 10.\@ref(tab:parposteriorst) shows the maximum likelihood estimate (MLE) of key parameters with their corresponding standard deviation derived from the Hessian matrix. Also shown are the MCMC, mean, median, standard deviation and the corresponding Bayesian 95% credible intervals (BCI). The Hessian and MCMC standard deviations are similar for q, M, and F40%, but the MCMC standard deviations are larger for the estimates of female spawning biomass and ABC. These larger standard deviations indicate that these parameters are more uncertain than indicated by the Hessian approximation. The distributions of these parameters with the exception of natural mortality are slightly skewed with higher means than medians for current spawning biomass and ABC, indicating possibilities of higher biomass estimates (Figure 10.\@ref(fig:biofreccompare)). 
@@ -53,9 +42,9 @@ The estimated selectivity curves are shown in Figure (Figure 10.\@ref(fig:selex)
 
 #### Recruitment
 
+Recruitment (as measured by age 2 fish) for POP is highly variable and large recruitments comprise much of the biomass for future years (Figure 10.\@ref(fig:biofreccompare)). The model estimates that recruitment was below average from 1975-1985 (Figure 10.\@ref(fig:recdevs)), after which is was above average for many years. The survey age data and the large 2013-2019 survey biomass suggests that there were strong year classes in 2008, 2010, 2012, 2014 and 2018 (Figure 10.\@ref(fig:recdevs)). However, these recent recruitments are still highly uncertain as indicated by the MCMC credible intervals in Figure 10.\@ref(fig:recdevs). The high recruitment estimate of 2018 has been revised downwards from the 2021 assessment with the addition of survey and fishery ages through 2021 and 2022, respectively, and is now of a similar scale to earlier estimates.
 
-Recruitment (as measured by age 2 fish) for POP is highly variable and large recruitments comprise much of the biomass for future years (Figure 10.\@ref(fig:biofreccompare)). Recruitment has increased since the early 1970s, starting with the 1986 year class. Since the 1990s there have been several larger than average year classes, with the largest resulting in 2006. The largest differences in estimated recruitment between the current assessment and the 2020 assessment resulted at the end of the time series (Table  10.\@ref(tab:timeseriest) and Figure 10.\@ref(fig:biofreccompare)), which should not be unexpected given the influence of additional age composition data on recent recruitment estimates. The survey age data and the large 2013-2019 survey biomass suggests that the 2006-2009, 2010, 2012, and 2016 year classes may be above average (Figure 10.\@ref(fig:recdevs)). However, these recent recruitments are still highly uncertain as indicated by the MCMC credible intervals in Figure 10.\@ref(fig:recdevs). POP do not seem to exhibit much of a stock-recruitment relationship because large recruitments have occurred during periods of high and low biomass (Figure 10.\@ref(fig:biofreccompare) and Table 10.\@ref(tab:timeseriest)). There is no explicit stock-recruitment relationship for POP in the model. The average annual recruitment in numbers spawned after 1976 is estimated to be `r prettyNum(round(exp(4.449)*1000,0), big.mark = ',')`.
-ude the average of year classes spawned after 1976.*
+POP do not seem to exhibit much of a stock-recruitment relationship because large recruitments have occurred during periods of high and low biomass (Figure 10.\@ref(fig:biofreccompare) and Table 10.\@ref(tab:timeseriest)). There is no explicit stock-recruitment relationship for POP in the model. The average annual recruitment in numbers spawned after 1976 is estimated to be `r prettyNum(round(exp(4.449)*1000,0), big.mark = ',')`.
 
 
 ### Retrospective and Historical Analysis
