@@ -104,7 +104,7 @@ This is driven by increases in the trawl survey biomass, which has been consiste
 
 ### Population dynamics considerations
 
-The model estimates above-average recruitment events in the last three decades to account for the increasing survey biomass observations (Figures 10.\@ref(fig:recruitment) and 10.\@ref(fig:recdevs)).  The estimated recruitment events are still insufficient to satisfactorily fit the recent survey data; these increases are not observed in the early time series nor are they typical for an ecosystem that is warming (with the exception of sablefish). 
+The model estimates above-average recruitment events in the last three decades to account for the increasing survey biomass observations (Figures 10.\@ref(fig:survey), 10.\@ref(fig:biofreccompare) and 10.\@ref(fig:recdevs)).  The estimated recruitment events are still insufficient to satisfactorily fit the recent survey data; these increases are not observed in the early time series nor are they typical for an ecosystem that is warming (with the exception of sablefish). 
 
 The unusual trend of rapid increases in stock size and recruitment estimates results in a *Level 2 (an increased/major concern) population dynamics rating*.
   
