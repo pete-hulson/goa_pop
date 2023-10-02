@@ -358,14 +358,27 @@ ggsave(file = here::here(year, "mgmt", curr_mdl_fldr, "profiles",paste0(Sys.Date
 width = 6, height =4 , dpi = 500)
 
 # create figures ----
+
+
+
 catch <- read.csv(here(year,'data','output','fsh_catch.csv')) %>% 
 mutate(catch = catch/1000)
-ggplot(subset(catch, year < 2023), aes(x = year, y =catch)) +
-  geom_line(lwd = 1.1) +
-  geom_point(data = subset(catch, year == 2023),
-             size = 4, pch = 17)+
+cplot1<-ggplot(catch, aes(x = year, y =catch)) +
+  geom_line() + 
   labs(x = 'Year', y = 'Catch (t)')
-ggsave(here(year,'safe','goa_pop_2023','figs','catch_timeseries.png'))
+cplot2<-ggplot(subset(catch, year > 1995), aes(x = year, y =catch)) +
+  geom_line() + 
+  scale_y_continuous(limits = c(0,35))+
+  labs(x = 'Year', y = 'Catch (t)')
+
+
+vp <- grid::viewport(width = 0.5, height = 0.5, x = 0.70, y = 0.65)
+png(here::here(year,'mgmt',curr_mdl_fldr,'figs', 'catch_timeseries.png'),
+    width = 6, height = 4, unit = 'in', res = 500)
+print(cplot1)
+print(cplot2, vp = vp)
+dev.off()
+ 
 
 
 ## comp data fits ----
@@ -373,13 +386,13 @@ ggsave(here(year,'safe','goa_pop_2023','figs','catch_timeseries.png'))
 #afscassess::correct_comps(year, model_dir = curr_mdl_fldr, modname = mdl_name,
 #dat_name = dat_name,  rec_age = 2, plus_age = 25, len_bins = lengths)
 afscassess::plot_comps(year, folder = paste0('mgmt/',curr_mdl_fldr),save = TRUE)
-
+# afscassess::plot_catch(year, folder = paste0('mgmt/',curr_mdl_fldr),save = TRUE)
 ## params 
 afscassess::plot_params(year, 
 folder = paste0('mgmt/',curr_mdl_fldr),
 model_name = mdl_name, save = TRUE)
 
-## retros
+
 afscassess::plot_retro(year, folder = paste0('mgmt/',curr_mdl_fldr), n_retro = 10 )
 afscassess::plot_selex(year, folder = paste0('mgmt/',curr_mdl_fldr))
 afscassess::plot_survey(year, folder = paste0('mgmt/',curr_mdl_fldr))
@@ -534,6 +547,31 @@ filter(variable %in% c('spawn_biom', 'tot_biom', 'age2_recruits','Frate')) %>%
 ggsave(last_plot(), file =here::here(year,'mgmt', curr_mdl_fldr, "figs", 
 "bio_f_rec_compare.png"), 
        width = 7, height =7, unit = 'in')
+
+## recdevs plot (requires parameter_summary csv made below)
+
+bind_rows(read.csv(here::here(year,'mgmt',model,'processed','parameter_summary_devs.csv')) %>%
+  filter(grepl('rec',variable)) %>%
+  mutate(src = '2023 Model'),
+  read.csv(here::here(year,'base','processed','parameter_summary_devs.csv')) %>%
+  filter(grepl('rec',variable)) %>%
+    mutate(src = '2021 Model')) %>%
+  ggplot2::ggplot(., aes(x = year, color = src)) +
+  geom_hline(yintercept =0, linetype = 'dashed', color = 'grey88') +
+  geom_point(aes(y= median)) +
+  geom_errorbar(aes(ymin = Q1, ymax = Q3), width = 0, alpha =0.5) +
+  scale_color_manual(values = c(alpha('grey44',0.5),'blue')) +
+  scale_y_continuous(limits = c(-2.5,2.5)) +
+  scale_x_continuous(limits = c(1975,2025), 
+                     breaks = c(seq(1975,2020,5),2023), 
+                     labels = c(seq(1975,2020,5),2023))+
+  labs(x = 'Year', y = 'log Recruitment Deviation', color = '') +
+  theme(legend.position = c(0.1,0.8))
+
+ggsave(last_plot(), file =here::here(year,'mgmt', curr_mdl_fldr, "figs", 
+                                     "recdevs.png"), 
+       width = 6, height =4, unit = 'in')
+
 
 ### survey CPUE
 library(akgfmaps)
