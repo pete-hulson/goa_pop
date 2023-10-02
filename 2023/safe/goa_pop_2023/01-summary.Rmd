@@ -2,7 +2,7 @@
 
 ## Summary of Changes in Assessment Inputs
 
-*Changes in the input data*: We updated the catch for `r year-1`, assumed catches of `r prettyNum(c1, big.mark = ',')` t for `r year`, `r prettyNum(c2, big.mark = ',')` t for `r year+1` and `r prettyNum(c3, big.mark = ',')` t for `r year+1` (see [How Future Catch is Specified](#authorsF) for details). We use bottom trawl survey biomass through `r year`, fishery age composition data through 2022, and survey age composition through 2021.  
+*Changes in the input data*: This assessment includes updated catch for `r year-1`, assumed catches of `r prettyNum(c1, big.mark = ',')` t for `r year`, `r prettyNum(c2, big.mark = ',')` t for `r year+1` and `r prettyNum(c3, big.mark = ',')` t for `r year+1` (see [How Future Catch is Specified](#authorsF) for details). Additional data additions include bottom trawl survey biomass through `r year`, fishery age composition data through 2022, and survey age composition through 2021.  
 
 *Changes in the assessment methodology*: The assessment methodology is the same as the most recent assessment (Hulson et. al. 2021).
 
