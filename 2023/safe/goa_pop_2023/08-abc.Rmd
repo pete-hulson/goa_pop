@@ -62,7 +62,7 @@ The method to calculate catches for this scenario is as follows:
   
   2.    For `r year+1` and `r year+2`, predicted catch is given by the ratio of the lass three catches to their respective TACs, multiplied by the TACs in future year $y^{*}$ given above (which are generally the same as the ABCs): $\langle \sum_{y-3}^{y-1}\frac{C_y}{TAC_y} \rangle TAC_{y^*}$. The resultant average ratio from catch to TAC in the previous three years is `r round(yld_rat$yld,2)`; predicted catches for `r year+1` and `r year+2` are `r prettyNum(c2,big.mark=',')` t and `r prettyNum(c3,big.mark=',')` t, respectively.
 
-Projected catches, spawning biomass, and fishing mortality rates corresponding to the alternative harvest scenarios over a 13-year period are shown in Tables \@ref(tab:projectionsCatches) through \@ref(tab:projections_f).
+Projected catches, spawning biomass, and fishing mortality rates corresponding to the alternative harvest scenarios over a 13-year period are shown in Tables \@ref(tab:projectionsCatches) through \@ref(tab:projectionsF).
  
 ## Risk Table and ABC recommendation {#risktable}
 
