@@ -62,7 +62,7 @@ The method to calculate catches for this scenario is as follows:
   
   2.    For `r year+1` and `r year+2`, predicted catch is given by the ratio of the lass three catches to their respective TACs, multiplied by the TACs in future year $y^{*}$ given above (which are generally the same as the ABCs): $\langle \sum_{y-3}^{y-1}\frac{C_y}{TAC_y} \rangle TAC_{y^*}$. The resultant average ratio from catch to TAC in the previous three years is `r round(yld_rat$yld,2)`; predicted catches for `r year+1` and `r year+2` are `r prettyNum(c2,big.mark=',')` t and `r prettyNum(c3,big.mark=',')` t, respectively.
 
-Projected catches, spawning biomass, and fishing mortality rates corresponding to the alternative harvest scenarios over a 13-year period are shown in Tables \@ref(tab:projections_catches) through \@ref(tab:projections_f).
+Projected catches, spawning biomass, and fishing mortality rates corresponding to the alternative harvest scenarios over a 13-year period are shown in Tables \@ref(tab:projectionsCatches) through \@ref(tab:projections_f).
  
 ## Risk Table and ABC recommendation {#risktable}
 
@@ -136,13 +136,13 @@ The fishery CPUE shows consistent patterns in abundance similar to the bottom tr
 
 #### Overview
 
-Apportionment of ABC and OFL among regulatory areas uses the random effects model ("REMA" version `0.1.0`) developed by the survey averaging working group, and downscales the estimates to account for closed areas in the Eastern Gulf.  The Eastern Gulf is comprised of two sub-areas for apportionment purposes: the area west of $140^{\circ}W$ longitude ("West Yakutat") and the area east and southeast of $140^{\circ}W$ longitude ("East Yakutat and Southeast Outside", or "SEO"). Amendment 41 prohibited trawling in the latter area, so we re-calculate apportionment rates for the Eastern Gulf to consider the ratio of biomass both within and outside of the closed area. The Groundfish Plan Team recommended use of a weighted average so apportionment values do not change too dramatically with each new survey observation.
+Apportionment of ABC and OFL among regulatory areas uses the random effects model ("REMA" version `0.1.0`) developed by the survey averaging working group; these estimates are then downscaled to account for closed areas in the Eastern Gulf.  The Eastern Gulf is comprised of two sub-areas for apportionment purposes: the area west of $140^{\circ}W$ longitude ("West Yakutat") and the area east and southeast of $140^{\circ}W$ longitude ("East Yakutat and Southeast Outside", or "SEO"). Amendment 41 prohibited trawling in the latter area, so we re-calculate apportionment for the Eastern Gulf to consider the ratio of biomass both within and outside of the closed area. The Groundfish Plan Team recommended use of a weighted average so apportionment values do not change too dramatically with each new survey observation.
 
 The workflow to calculate allocation is as follows:
 
   1. Apply the `REMA` model to estimate random effects parameters that control the variation of estimated biomass across years and areas, and is fit to the trawl survey biomass estimates (with associated variance) for the Western, Central, and Eastern GOA. The REMA model fits the survey data in each area well (see figure below). Both the observations and predictions indicate that most biomass is in the Central Gulf; biomass has increased in the Central and Western Gulf, and decreased in the Eastern Gulf. The estimated apportionment among areas are as follows: `r round(100*subset(rema_props, year == 2023)[5],1)`% for the Western area (down from 6.8% in 2021), `r round(100*subset(rema_props, year == 2023)[3],1)`% for the Central area (down from 80.5% in 2021), and `r round(100*subset(rema_props, year == 2023)[4],1)`% for the Eastern area (up from 12.7% in 2021). This corresponds to recommended ABCs of 2,602 t for the Western area, 30,806 t for the Central area, and 4,860 t for the Eastern area.
 
-```{r rema, fig.cap="Observed survey biomass (black points) with 95% confidence intervals (black error bars), and estimated fits from teh REMA model (black lines) with 95% confidence intervals (grey ribbon) for three areas of the Gulf of Alaska.", eval = TRUE}
+```{r fig.cap="Observed survey biomass (black points) with 95% confidence intervals (black error bars), and estimated fits from teh REMA model (black lines) with 95% confidence intervals (grey ribbon) for three areas of the Gulf of Alaska.", eval = TRUE, out.width="60%",out.height="60%"}
 knitr::include_graphics(here(year,'mgmt',model,'apport','rema_outs.png'))
 ```
  
