@@ -153,7 +153,7 @@ flextable::regulartable(data.frame(year = 1999:2000,
 
 \pagebreak
 
-```{r projections_catches}
+```{r projectionsCatches}
 proj_temp <- read.csv(here::here(year,'mgmt','2020.1-2023','processed','mscen_yld.csv'))
 proj_temp$year <- as.character(proj_temp$year)
 proj_temp[,2:8] <- sapply(proj_temp[,2:8], FUN = function(x) prettyNum(round(x),big.mark = ','))
