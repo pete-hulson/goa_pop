@@ -31,7 +31,7 @@ knitr::include_graphics(here::here(year,'mgmt', model, "figs", "bio_f_rec_compar
 ```
 
 ```{r recdevs, fig.cap="Time series of recruitment deviations, with 95% interval obtained via MCMC.", eval = TRUE}
-
+knitr::include_graphics(here::here(year,'mgmt', model, "figs", "placeholder.jpg"))
 
 ```
 
