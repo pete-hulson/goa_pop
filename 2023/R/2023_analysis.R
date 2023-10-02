@@ -638,6 +638,29 @@ Rmisc::multiplot(plotlist = list(p1,p2), cols = 1)
 dev.off()
 
 # create tables ----
+
+## NAA as a separate file
+mrep <- readLines(here::here(year, 'mgmt',model,paste0(modname,'.rep')))
+naa0 <- mrep[grep('Numbers',mrep):(grep('Numbers',mrep)+length(1961:2023))] 
+df1 <- strsplit(naa0[-1], " ")
+df1 <- do.call(rbind, df1)
+df1 <- df1[,-2]
+df1 <- as.data.frame(df1)
+names(df1) <- c('Year',paste0('age_',2:29))
+write.csv(df1,file =  here::here(year, 'mgmt',model,'processed','naa.csv'),row.names = FALSE)
+
+
+
+x_full = data.frame()
+for (i in 2:length(naa0) ) {
+  x<-data.frame(naa0[[i]])
+  writeLines(x[[i]],"test.csv")
+  data<-read.csv("test.csv", header=F, sep=" ")
+  df<-data[,colSums(is.na(data)) == 0]
+  print(df)
+}
+
+## parameter summaries
 allpars <- read.csv(here::here(year, 'mgmt',model,'processed','mcmc.csv')) %>%
   reshape2::melt() %>%
   dplyr::group_by(variable) %>%
