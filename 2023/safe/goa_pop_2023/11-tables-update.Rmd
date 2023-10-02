@@ -20,7 +20,6 @@ flextable::regulartable(read.csv(here::here(year,'safe','goa_pop_2023','static_t
   flextable::fontsize(size = 11, part = "all")
 ```
 
-
 \pagebreak
 
 ```{r fishlengthcompst}
@@ -69,7 +68,7 @@ flextable::regulartable(read.csv(here::here(year, 'data','output','fsh_age_comp.
 ```{r survobs}
 flextable::regulartable(read.csv(here::here(year, 'data','output','goa_total_bts_biomass.csv')) %>% 
                           dplyr::mutate(cv = se/biomass, year = as.character(year)) %>%
-                          dplyr::select(Year = year, 'Biomass (t)' = biomass, CV = cv) )%>%
+                          dplyr::select(Year = year, 'Biomass (t)' = biomass, CV = cv)) %>%
   flextable::set_caption("Biomass estimates (t) with coefficient of variation (CV) for gulf-wide total biomass for POP in the GOA from trawl surveys after 1990. ") %>%
     flextable::colformat_double(j = 3, digits = 2) %>%
     flextable::colformat_double(j = 2, big.mark =',') %>%
@@ -113,11 +112,12 @@ flextable::regulartable(data.frame(year = 1999:2000,
 \pagebreak
 
 ```{r parposteriorst}
-flextable::regulartable(data.frame(year = 1999:2000,
-                                   catch = 1:2)) %>%  
-  flextable::set_caption("Estimates of key parameters and associated uncertainty derived from either Hessian or MCMC.")%>%
+flextable::flextable(read.csv(here::here(year, 'mgmt', model,'processed','parameter_summary.csv')) %>% select(-variable)) %>%
+  flextable::colformat_double(j = 2:4, digits = 3) %>%
+  flextable::width(j = 1, width = 2.5, unit = 'in') %>%
+  flextable::set_header_labels( values = c('Estimated parameter','2.5% Interval','Median','97.5% Interval')) %>%
   flextable::font(fontname = "Times New Roman", part = "all") %>% 
-  flextable::fontsize(size = 11, part = "all")
+  flextable::fontsize(size = 11, part = "all")  
 ```
 
 \pagebreak
