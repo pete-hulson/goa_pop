@@ -1,6 +1,6 @@
 \newpage
 
-# Appendix 10d Model Equations {#appxeqs}
+# Appendix 10 Model Equations {#appxeqs}
 
 ## Population Dynamics
 
