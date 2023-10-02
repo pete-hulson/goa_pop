@@ -572,6 +572,22 @@ ggsave(last_plot(), file =here::here(year,'mgmt', curr_mdl_fldr, "figs",
                                      "recdevs.png"), 
        width = 6, height =4, unit = 'in')
 
+## prettier REMA plot (with theme)
+
+load(here::here(year, 'mgmt',model,'apport','2023-09-16-rema_output.rdata'))  ## apport_out
+apport_out$biomass_by_strata$strata = factor(apport_out$biomass_by_strata$strata,
+                                             levels=c('WESTERN GOA','CENTRAL GOA','EASTERN GOA'))
+ggplot(data = apport_out$biomass_by_strata, aes(x = year)) +
+  geom_line(aes(y = pred), color = 'goldenrod') +
+  geom_ribbon(aes(ymin = pred_lci, ymax = pred_uci), alpha = 0.2, fill = 'goldenrod') +
+  geom_point(aes(y = obs), color = 'grey22') +
+  geom_errorbar(aes(ymin = obs_lci, ymax = obs_uci), width = 0, color = 'grey22') +
+  facet_wrap(~strata) +
+  labs(x = 'Year', y = 'Biomass (t)')
+
+ggsave(last_plot(),
+       file = here::here(year,'mgmt',model,'apport','rema_outs_redux.png'),
+       width = 6, height =4 , unit = 'in',dpi =520)
 
 ### survey CPUE
 library(akgfmaps)
