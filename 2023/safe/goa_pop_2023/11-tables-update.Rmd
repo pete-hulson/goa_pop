@@ -37,7 +37,6 @@ flextable::regulartable(read.csv(here::here(year, 'data','output','fsh_length_co
                             values_from = value)) %>%
   flextable::set_caption("Fishery length frequency data for POP in the GOA for the most recent 10 complete years used in the model. Input sample sizes (number of hauls) are in parentheses.") %>%
   flextable::colformat_double(j = 2:11,digits = 3) %>%
-  flextable::width(j = 2:11, width = 0.3, unit = 'in') %>%
   flextable::compose(i = 30, j = 1, flextable::as_paragraph('45+')) %>%
   flextable::font(fontname = "Times New Roman", part = "all") %>% 
   flextable::fontsize(size = 11, part = "all")
@@ -59,8 +58,7 @@ flextable::regulartable(read.csv(here::here(year, 'data','output','fsh_age_comp.
                             names_glue = "{year} ({n_h})",
                             values_from = value)) %>%
   flextable::set_caption("Fishery age frequency data for POP in the GOA for the most recent 10 complete years used in the model. Input sample sizes (number of hauls) are in parentheses.") %>%
-  flextable::colformat_double(j = 2:11,digits = 3) %>%
-  flextable::width(j = 2:11, width = 0.3, unit = 'in') %>%
+  flextable::colformat_double(j = 2:11,digits = 3) %>% 
   flextable::compose(i = 24, j = 1, flextable::as_paragraph('25+')) %>%
   flextable::font(fontname = "Times New Roman", part = "all") %>% 
   flextable::fontsize(size = 11, part = "all") 
@@ -96,7 +94,6 @@ flextable::regulartable(read.csv(here::here(year, 'data','output','goa_bts_age_c
                             values_from = value)) %>%
   flextable::set_caption("Survey age frequency data for POP in the GOA for the most recent 10 complete years used in the model. Input sample sizes (number of hauls) are in parentheses.") %>%
   flextable::colformat_double(j = 2:11,digits = 3) %>%
-  flextable::width(j = 2:11, width = 0.3, unit = 'in') %>%
   flextable::compose(i = 24, j = 1, flextable::as_paragraph('25+')) %>%
   flextable::font(fontname = "Times New Roman", part = "all") %>% 
   flextable::fontsize(size = 11, part = "all")  
