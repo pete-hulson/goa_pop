@@ -2,44 +2,59 @@
 
 ## Area Allocation of Harvest
 
-The apportionment of harvest for `r year` and `r year+1` was conducted using the REMA model using the same assumptions as in 2021:
+The apportionment of harvest for `r year+1` and `r year+2` was conducted using the REMA model using the same assumptions as in 2021:
 
-  1. Because Amendment 41 prohibited trawling in the Eastern area east of 140° W longitude, the ABC derived from REMA is split between W. Yakutat and E. Yakutat/SE using a weighted average of area-specific biomass ratios (see [Area Allocation of Harvests ](#apportionment) for a description of this approach).
+1. Because Amendment 41 prohibits trawling in the Eastern area east of 140° W longitude, the ABC allocation derived from REMA for the Eastern Gulf is split between W. Yakutat and E. Yakutat/Southeast Outside ('Southeast' or 'SEO') using a weighted average of area-specific biomass ratios obtained from AKFIN (see [Area Allocation of Harvests ](#apportionment) for a description of this approach).
 
-  2. Because concerns regarding stock structure differences in the SEO vs other areas, the OFL for the SEO region remains separate.
- 
-The following table shows the recommended apportionment for 
-The apportionment percentages are the same as in the last full assessment.  
+2. The OFL for the SEO region remains separate because of concerns regarding stock structure differences in the SEO vs other areas. Per the 2012 Groundfish Plan team, OFLs are combined for the Western, Central, and West Yakutat areas (W/C/WYK) because the original rationale of an overfished stock no longer applied. 
 
 ```{r}
-# apportionment table example
-appo <- safe::apportion
+## load three relevant tables to env(abc_apport, abc_apport_wyax, ofl_apport)
+lapply(list.files(here::here(year, 'mgmt',model,'processed'),pattern = '_apport',full.names = TRUE), 
+       FUN = function(x){
+         y <- read.csv(x) 
+         assign(x=gsub('.csv','',basename(x)), value  =y, envir = .GlobalEnv);rm(y);rm(x)
+       }
+)
 
-flextable::flextable(appo[-1,]) %>% 
-    flextable::add_header_row(values = paste0(appo[1,], "%"), top=FALSE) %>%
-    flextable::border_remove() %>% 
-    flextable::compose(i=1, j=1:2, part='header', 
-                       value=flextable::as_paragraph('')) %>%
-    flextable::compose(i=2, j=1:2, part='header', 
-                        value=flextable::as_paragraph('Area Apportionment')) %>% 
-    flextable::merge_h(i=1:2, part = "header") %>% 
-    flextable::font(fontname = "Times New Roman", part = "all") %>%
-    flextable::fontsize(size = 11, part = "all") %>% 
-    flextable::align(j = 1, part = "all", align="left") %>% 
-     flextable::compose(i = 1:2, j = 1, 
-                       value = flextable::as_paragraph(as.character(year)), 
-                       part = "body") %>% 
-    flextable::compose(i = 3:4, j = 1, 
-                       value = flextable::as_paragraph(as.character(year+1)), 
-                       part = "body")  %>% 
-    flextable::compose(i = 1:4, j = 2, 
-                       value = flextable::as_paragraph(rep(c('ABC (t)', 'OFL (t)'), 2)), 
-                       part = "body") %>% 
-    # flextable::height(height = 0.2, part='body') %>% 
-    # flextable::hrule(rule = "exact") %>% 
-    flextable::hline_top(part='all') %>% 
-    flextable::hline_bottom() 
+## manually bind correct values
+## ofl_apport is missing year 1, back it out using percentages
+ofl_to_eyak <- round((1-abc_apport_wyak$wyak_p)*ofl_apport$ofl*abc_apport[1,'egoa'])
+ofl_apport[2,3:4] <- c(ofl_apport$ofl[2]-ofl_to_eyak[2], ofl_to_eyak[2])
+
+appo0 <- data.frame(year = as.character(c(year+1,year+2)),
+                    item = c(rep('ABC (t)',2),rep('OFL (t)',2)),
+                    WGOA = c(abc_apport[2:3,'wgoa'],rep(0,2)),
+                    CGOA = c(abc_apport[2:3,'cgoa'],rep(0,2)),
+                    EGOA_wyak = unlist(c(abc_apport_wyak['wyak'],ofl_apport['ofl_wcgoa_wyak'])),
+                    EGOA_seo = unlist(c(abc_apport_wyak[1:2,'eyak_se'],ofl_apport['ofl_eyak_se'])),
+                    total = unlist(c(abc_apport[2:3,'goa'],ofl_apport['ofl']))) 
+
+appo0[3:4,'WGOA'] <- appo0[3:4,'EGOA_wyak'] ## move to LHS for formatting
+
+flextable::flextable(appo0) %>% 
+  ## format OFL stuff
+  flextable::merge_at( i = 3, j = 3:5, part = 'body') %>%
+  flextable::merge_at( i = 4, j = 3:5, part = 'body') %>%
+  flextable::align(i = 1, align = 'center', part = 'header')  %>%
+  flextable::align(i = 3:4, j = 3, align = 'center', part = 'body') %>% 
   
+  flextable::add_header_row(values = paste0(c('REMA-derived apportionment (%)', 
+                                              100*abc_apport[1,'wgoa'],
+                                              100*abc_apport[1,'cgoa'],
+                                              100*abc_apport[1,'egoa'],
+                                              100*abc_apport[1,'goa'])), 
+                            colwidths = c(2,1,1,2,1)) %>%
+  flextable::set_header_labels(values = c('Year','','Western','Central','W. Yakutat','E. Yakutat/SE','Total')) %>%
+  flextable::colformat_double(big.mark = ',', j = 3:7, digits = 0) %>%
+  flextable::vline(j = c(2,3,4,6), part = 'body')%>%
+  flextable::hline(i = c(2), part = 'body') %>%
+  flextable::font(fontname = "Times New Roman", part = "all") %>%
+  flextable::fontsize(size = 11, part = "all")  %>%
+  flextable::bg(i = c(1,3), bg = 'grey88') %>% 
+  flextable::hline_top(part='all') %>% 
+  flextable::hline_bottom() 
+
 ```
 
 Amendment 41 prohibited trawling in the Eastern area east of 140° W longitude. 
@@ -55,26 +70,26 @@ flextable::flextable(apportion2) %>%
   flextable::font(fontname = "Times New Roman", part = "all") %>%
   flextable::fontsize(size = 11, part = "all") %>%
   flextable::compose(i = 1, j = 1, 
-                       value = flextable::as_paragraph(as.character(year)), 
-                       part = "body") %>% 
+                     value = flextable::as_paragraph(as.character(year)), 
+                     part = "body") %>% 
   flextable::compose(i = 2, j = 1, 
-                       value = flextable::as_paragraph(as.character(year+1)), 
-                       part = "body") %>% 
+                     value = flextable::as_paragraph(as.character(year+1)), 
+                     part = "body") %>% 
   flextable::compose(i = 1:2, j = 2, 
-                       value = flextable::as_paragraph(rep('ABC (t)', 2)), 
-                       part = "body") %>% 
+                     value = flextable::as_paragraph(rep('ABC (t)', 2)), 
+                     part = "body") %>% 
   flextable::compose(j=1:2, part='header', 
-                      value=flextable::as_paragraph('')) %>% 
+                     value=flextable::as_paragraph('')) %>% 
   flextable::compose(j=3, part='header', 
-                      value=flextable::as_paragraph('W. Yakutat')) %>% 
-    flextable::compose(j=4, part='header', 
-                      value=flextable::as_paragraph('E. Yakutat/Southeast')) %>% 
+                     value=flextable::as_paragraph('W. Yakutat')) %>% 
+  flextable::compose(j=4, part='header', 
+                     value=flextable::as_paragraph('E. Yakutat/Southeast')) %>% 
   flextable::width(j = 3, width = 1) %>% 
   flextable::width(j = 4, width = 1.5) %>% 
-          flextable::hline_top(part='all') %>% 
-    flextable::hline_bottom() %>% 
+  flextable::hline_top(part='all') %>% 
+  flextable::hline_bottom() %>% 
   flextable::align(j = 1, part = "body", align="left")
-  
+
 ```
 
 \newpage
