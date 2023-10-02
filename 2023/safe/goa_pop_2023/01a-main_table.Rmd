@@ -18,5 +18,7 @@ safe0 <- read.csv(here::here(year,'mgmt','2020.1-2023','processed','exec_summ.cs
 safe0[9:11,] <-  sapply(safe0[9:11,],  FUN = function(x) format(round(as.numeric(x), 2), nsmall = 2))
 safe0[c(4:8,12:14),] <- sapply(safe0[c(4:8,12:14),],  FUN = function(x) prettyNum(x,big.mark=','))
 data[1:13,2:5] <- safe0[2:14,]
-safe::main_table(data, year, tier=3, c1, c2, c3)
+safe::main_table(data, year, tier=3, c1, c2, c3)  %>% 
+  flextable::fontsize(size = 9, part = "all")
+  
 ```
