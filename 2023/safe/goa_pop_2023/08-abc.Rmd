@@ -21,9 +21,9 @@ Female spawning biomass for `r year+1` is estimated at `r prettyNum(ssb_24,big.m
 | $B_{100\%}$      | The equilibrium spawning biomass that would be obtained in the absence of fishing                                                                          | `r prettyNum(execsumm[1,'sb0'],big.mark =',')` t |
 | $B_{40\%}$       | 40% of the equilibrium spawning biomass that would be obtained in the absence of fishing                                                                   | `r prettyNum(execsumm[1,'sb40'],big.mark =',')` t |
 | $B_{35\%}$       | 35% of the equilibrium spawning biomass that would be obtained in the absence of fishing                                                                   | `r prettyNum(execsumm[1,'sb35'],big.mark =',')` t |
-| $F_{40\%}$       | The fishing mortality rate that reduces the equilibrium level of spawning per recruit to 40% of the level that would be obtained in the absence of fishing | `r prettyNum(execsumm[1,'f_abc'],big.mark =',')`    |
+| $F_{40\%}$       | The fishing mortality rate that reduces the equilibrium level of spawning per recruit to 40% of the level that would be obtained in the absence of fishing | `r prettyNum(round(execsumm[1,'f_abc'],2),big.mark =',')`    |
 | ABC             | Yield at $F_{40\%}$ in 2024                                                                                                                                       | `r prettyNum(abc_24,big.mark =',')` t |
-| $F_{35\%}$       | The fishing mortality rate that reduces the equilibrium level of spawning per recruit to 35% of the level that would be obtained in the absence of fishing |`r prettyNum(execsumm[1,'f_ofl'],big.mark =',')`    |
+| $F_{35\%}$       | The fishing mortality rate that reduces the equilibrium level of spawning per recruit to 35% of the level that would be obtained in the absence of fishing |`r prettyNum(round(execsumm[1,'f_ofl'],2),big.mark =',')`    |
 | OFL             | Yield at $F_{35\%}$  in 2024 | `r prettyNum(execsumm[1,'ofl'],big.mark =',')` t  |
 
 ### Specification of OFL and Maximum Permissible ABC {#oflabc}
