@@ -8,7 +8,7 @@ editor_options:
 
 > Operational Update: The data description for POP has been truncated to highlight relevant updates or changes made for this cycle. The reader is referred to the last full assessment (Hulson et al., 2021) for the entirety of this section. There was a typographical error in the previous assessment where the Data table indicated that age compositions taken on NMFSC groundfish survey in 1984 and 1987 were included in the model; this was not the case and the table below has been corrected.
 
-The following table summarizes the data used for this assessment (bold font denotes new data to this year's assessment)
+The following table summarizes the data used for this assessment (bold font denotes new data to this year's assessment).
 
 ```{r}
 
@@ -22,7 +22,7 @@ data.frame(Source = c(rep("NMFS Groundfish survey", 2),
            Years = c("1984-1999 (triennial), 2001-2023 (biennial)",
                      "1990, 1993, 1996, 1999, 2003, 2005, 2007, 2009, 2011, 2013, 2015, 2017, 2019, 2021",
                      "1961-2023",
-                     "1990,1998-2002, 2004, 2005, 2006, 2008, 2010, 2012, 2014, 2016, 2018, 2020, 2022",
+                     "1990, 1998-2002, 2004, 2005, 2006, 2008, 2010, 2012, 2014, 2016, 2018, 2020, 2022",
                      "1963-1977, 1991-1997"))  %>% 
   flextable::flextable() %>% 
     flextable::width(j = ~ Source, width = 1) %>% 
@@ -39,16 +39,13 @@ data.frame(Source = c(rep("NMFS Groundfish survey", 2),
 
 ## Fishery
 
-Catches as used in the model are shown in Table \@ref(tab:commcatch); discards are not used in the model. Fishery-dependent compositional data (catch-at-age and catch-at-length, and associated input sample sizes) are shown in Tables \@ref(tab:fishlengthcompst) and \@ref(tab:fishagecompst).
+Catches as used in the model are shown in Table \@ref(tab:commcatch); discards are not used in the model. Fishery-dependent compositional data (catch-at-length and catch-at-age, and associated input sample sizes) are shown in Tables \@ref(tab:fishlengthcompst) and \@ref(tab:fishagecompst), respectively.
 
 ## Survey
 
-Survey biomass estimates and associated sampling variability (annual CVs) are shown in Table \@ref(tab:survobs). Suvey compositional data (survey catch at age and associated input sample sizes) are shown in Table \@ref(tab:survagecompst).
-
-A VAST index of relative abundance has been developed for POP but is not currently used in the assessment. Details on the development of this index, and comparisons to the design-based methods, are available in the Appendix of the previous model.
-
+Survey biomass estimates and associated sampling variability (annual CVs) are shown in Table \@ref(tab:survobs). Suvey compositional data (survey catch-at-age and associated input sample sizes) are shown in Table \@ref(tab:survagecompst).
 
 ## Other time series data used in the assessment
 
-The input size-at-age matrices are time-varying in this assessment, and are updated with the availability of new survey data. The parameters used to inform these matrices, and a comparison between previous and current values, are provided in the [Modeling Section](#parest). 
+The input size-at-age matrices are time-varying in this assessment. The matrices corresponding to the recent time period are updated with the availability of new survey data. The parameters used to inform these matrices, and a comparison between previous and current values, are provided in the [Modeling Section](#parest). 
  
