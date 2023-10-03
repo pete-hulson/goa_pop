@@ -12,17 +12,17 @@ editor_options:
 
 POP in the GOA are managed under Tier 3 of Amendment 56. It is assumed that the equilibrium level of recruitment is equal to the average of age-2 recruitments between 1979 and `r year-2` (i.e., the 1977-`r year-4` year classes). The most recent two years of recruitment are not included in the projection due to uncertainty. This definition of equilibrium recruitment is used to estimate the  $B_{40\%}$ reference point. Other useful biomass reference points which can be calculated using this assumption are $B_{100\%}$ and $B_{35\%}$, defined analogously to $B_{40\%}$.
 
-Female spawning biomass for `r year+1` is estimated at 216,635 t. This is above  $B_{40\%}$=132,767 t. Under Amendment 56, Tier 3, the maximum permissible fishing mortality for ABC is $F_{40\%}$ and fishing mortality for OFL is $F_{35\%}$. The `r year+1` estimates of biomass-based reference points, and the resultant ABC and OFL based on the fishing mortality rates are:
+Female spawning biomass for `r year+1` is estimated at `r prettyNum(ssb_24,big.mark =',')` t. This is above  $B_{40\%}$=`r prettyNum(exec_summ[1,'sb40'],big.mark =',')` t. Under Amendment 56, Tier 3, the maximum permissible fishing mortality for ABC is $F_{40\%}$ and fishing mortality for OFL is $F_{35\%}$. The `r year+1` estimates of biomass-based reference points, and the resultant ABC and OFL based on the fishing mortality rates are:
 
 | Reference Point | Description                                                                                                                                                | Value   |
 |------------------------|------------------------|------------------------|
-| $B_{100\%}$      | The equilibrium spawning biomass that would be obtained in the absence of fishing                                                                          | 331,917 t |
-| $B_{40\%}$       | 40% of the equilibrium spawning biomass that would be obtained in the absence of fishing                                                                   | 132,767 t |
-| $B_{35\%}$       | 35% of the equilibrium spawning biomass that would be obtained in the absence of fishing                                                                   | 116,171 t |
-| $F_{40\%}$       | The fishing mortality rate that reduces the equilibrium level of spawning per recruit to 40% of the level that would be obtained in the absence of fishing | 0.10    |
-| ABC             | Yield at $F_{40\%}$ in 2024                                                                                                                                       | 38,268 t |
-| $F_{35\%}$       | The fishing mortality rate that reduces the equilibrium level of spawning per recruit to 35% of the level that would be obtained in the absence of fishing | 0.12    |
-| OFL             | Yield at $F_{35\%}$  in 2024                                                                                                                                       | 45,580 t  |
+| $B_{100\%}$      | The equilibrium spawning biomass that would be obtained in the absence of fishing                                                                          | `r prettyNum(exec_summ[1,'sb0'],big.mark =',')` t |
+| $B_{40\%}$       | 40% of the equilibrium spawning biomass that would be obtained in the absence of fishing                                                                   | `r prettyNum(exec_summ[1,'sb40'],big.mark =',')` t |
+| $B_{35\%}$       | 35% of the equilibrium spawning biomass that would be obtained in the absence of fishing                                                                   | `r prettyNum(exec_summ[1,'sb35'],big.mark =',')` t |
+| $F_{40\%}$       | The fishing mortality rate that reduces the equilibrium level of spawning per recruit to 40% of the level that would be obtained in the absence of fishing | `r prettyNum(exec_summ[1,'f_abc'],big.mark =',')`    |
+| ABC             | Yield at $F_{40\%}$ in 2024                                                                                                                                       | `r prettyNum(abc_24,big.mark =',')` t |
+| $F_{35\%}$       | The fishing mortality rate that reduces the equilibrium level of spawning per recruit to 35% of the level that would be obtained in the absence of fishing |`r prettyNum(exec_summ[1,'f_ofl'],big.mark =',')`    |
+| OFL             | Yield at $F_{35\%}$  in 2024                                                                                                                                       | `r prettyNum(exec_summ[1,'ofl'],big.mark =',')` t  |
 
 
 ### Specification of OFL and Maximum Permissible ABC {#oflabc}
@@ -43,7 +43,7 @@ The first five scenarios are designed to provide a range of harvest alternatives
 
 +   *Scenario 5*:  In all future years, $F$ is set equal to zero. (Rationale:  In extreme cases, TAC may be set at a level close to zero.)
 
-Two other scenarios are needed to satisfy the MSFCMA’s requirement to determine whether a stock is currently in an overfished condition or is approaching an overfished condition. These two scenarios are as follow (for Tier 3 stocks, the MSY level is defined as $B_{35\%}$): 
+Two other scenarios are needed to satisfy the MSFCMA’s requirement to determine whether a stock is currently in an overfished condition or is approaching an overfished condition. These two scenarios are as follows (for Tier 3 stocks, the MSY level is defined as $B_{35\%}$): 
 
 +   *Scenario 6*:  In all future years, $F$ is set equal to $F_{OFL}$. (Rationale:  This scenario determines whether a stock is overfished. If the stock is expected to be above 1) above its MSY level in `r year` or 2) above ½ of its MSY level in  `r year` and above its MSY level in  `r year+10` under this scenario, then the stock is not overfished.) While Scenario 6 gives the best estimate of OFL for `r year`, it does not provide the best estimate of OFL for `r year + 1`, because the mean `r year` catch under Scenario 6 is predicated on the `r year` catch being equal to the `r year` OFL, whereas the actual `r year` catch will likely be less than the `r year` OFL. The executive summary contains the appropriate one- and two-year ahead projections for both ABC and OFL.
 
@@ -54,13 +54,13 @@ Two other scenarios are needed to satisfy the MSFCMA’s requirement to determin
 
 > The method for specifying catches in years `r year` to `r year+2` has not changed from the 2021 assessment. 
 
-For Scenario 2 (Author's *F*); we use pre-specified catches to increase accuracy of short-term projections in fisheries where the catch is usually less than the ABC. This was suggested to help management with setting preliminary ABCs and OFLs for two-year ahead specifications.
+For Scenario 2 (*Author's F*); we use pre-specified catches to increase accuracy of short-term projections in fisheries where the catch is usually less than the ABC. This was suggested to help management with setting preliminary ABCs and OFLs for two-year ahead specifications.
 
 The method to calculate catches for this scenario is as follows:
 
   1.    In-year catches are defined as the actual observed catch through ~October 1, plus the average catch taken between October 1 and December 31 of the previous three complete years (`r year-3` to `r year-1`). The expansion factor for the observed catch through `r year` is `r round(yld_rat$ratio,2)`; the estimated in-year catch for `r year` is `r prettyNum(c1,big.mark=',')` t.
   
-  2.    For `r year+1` and `r year+2`, predicted catch is given by the ratio of the lass three catches to their respective TACs, multiplied by the TACs in future year $y^{*}$ given above (which are generally the same as the ABCs): $\langle \sum_{y-3}^{y-1}\frac{C_y}{TAC_y} \rangle TAC_{y^*}$. The resultant average ratio from catch to TAC in the previous three years is `r round(yld_rat$yld,2)`; predicted catches for `r year+1` and `r year+2` are `r prettyNum(c2,big.mark=',')` t and `r prettyNum(c3,big.mark=',')` t, respectively.
+  2.    For `r year+1` and `r year+2`, predicted catch is given by the ratio of the last three catches to their respective TACs, multiplied by the TACs in future year $y^{*}$ given above (which are generally the same as the ABCs): $\langle \sum_{y-3}^{y-1}\frac{C_y}{TAC_y} \rangle TAC_{y^*}$. The resultant average ratio from catch to TAC in the previous three years is `r round(yld_rat$yld,2)`; predicted catches for `r year+1` and `r year+2` are `r prettyNum(c2,big.mark=',')` t and `r prettyNum(c3,big.mark=',')` t, respectively.
 
 Projected catches, spawning biomass, and fishing mortality rates corresponding to the alternative harvest scenarios over a 13-year period are shown in Tables \@ref(tab:projectionsCatches) through \@ref(tab:projectionsF).
  
@@ -98,7 +98,9 @@ An abridged summary of the considerations that led to this determination for eac
 
 ### Assessment considerations {#assessmentconsiderations}
 
-The GOA POP assessment model exhibits a negative retrospective pattern (spawning biomass continues to increase with new data). This is driven by ongoing increases in the trawl survey biomass, which have been consistently under-estimated since 2013, and may be suggestive of model-misspecification. This effect was less pronounced in the 2023, likely due to high uncertainty in the observed survey biomass. *This results in a an "assessment considerations" score of level 2, an increased/major concern.*
+The GOA POP assessment model exhibits a negative retrospective pattern (spawning biomass continues to increase with new data), though this effect was less pronounced in the 2023, likely due to high uncertainty in the observed survey biomass. This is driven by ongoing increases in the trawl survey biomass, which have been consistently under-estimated since 2013, and may be suggestive of model misspecification. 
+
+*This results in a an "assessment considerations" score of level 2, an increased/major concern.*
 
 ### Population dynamics considerations
 
@@ -122,7 +124,7 @@ Potential competitors are large year classes of juvenile sablefish (2016, 2018) 
 
 ### Fishery performance
 
-The fishery CPUE shows consistent patterns in abundance similar to the bottom trawl survey and there have been no recent changes to spatial distribution of catch, percent of TAC taken, or fishing duration. There are no indications of adverse signals or concerns about the fishery in terms of resource-use, performance, or behavior. We will continue to monitor the fishery performance as it pertains to the COVID-19 pandemic.
+There have been no recent changes to spatial distribution of catch, percent of TAC taken, or fishing duration. There are no indications of adverse signals or concerns about the fishery in terms of resource-use, performance, or behavior.  
 
 *Fishery Performance for POP is scored as Level 1 (normal concern)*.
  
@@ -138,15 +140,17 @@ Apportionment of ABC and OFL among regulatory areas uses the random effects mode
 
 The workflow to calculate allocation is as follows:
 
-  1. Apply the `REMA` model to estimate random effects parameters that control the variation of estimated biomass across years and areas, and is fit to the trawl survey biomass estimates (with associated variance) for the Western, Central, and Eastern GOA. The REMA model fits the survey data in each area well, except for the terminal value in the Eastern GOA, which is under-fit (see figure below). That observation is far outside the previous time series for that region, and the uncertainty is higher than previously observed. Both the observations and predictions indicate that most biomass is in the Central Gulf; biomass has increased in the Central and Western Gulf, and decreased in the Eastern Gulf. The estimated apportionment among areas are as follows: `r round(100*subset(rema_props, year == 2023)[5],1)`% for the Western area (down from 6.8% in 2021), `r round(100*subset(rema_props, year == 2023)[3],1)`% for the Central area (down from 80.5% in 2021), and `r round(100*subset(rema_props, year == 2023)[4],1)`% for the Eastern area (up from 12.7% in 2021). This corresponds to recommended `r year+1` ABCs of `r prettyNum(appo0[1,'WGOA'],big.mark = ',')` t for the Western area, `r prettyNum(appo0[1,'CGOA'],big.mark = ',')` t for the Central area, and `r prettyNum(sum(appo0[1,c('EGOA_wyak', 'EGOA_seo')]),big.mark = ',')` t for the Eastern area.
+  1. Apply the `REMA` model to estimate random effects parameters that control the variation of estimated biomass across years and areas, and is fit to the trawl survey biomass estimates (with associated variance) for the Western, Central, and Eastern GOA. The REMA model fits the survey data in each area well, except for the terminal value in the Eastern GOA, which is under-fit (see figure below). That observation is far outside the previous time series for that region, and the uncertainty is higher than previously observed. Both the observations and predictions indicate that most biomass is in the Central Gulf; biomass has decreased in the Central and Western Gulf, and increased in the Eastern Gulf. The estimated apportionment among areas have changed accordingly: `r round(100*subset(rema_props, year == 2023)[5],1)`% for the Western area (down from 6.8% in 2021), `r round(100*subset(rema_props, year == 2023)[3],1)`% for the Central area (down from 80.5% in 2021), and `r round(100*subset(rema_props, year == 2023)[4],1)`% for the Eastern area (up from 12.7% in 2021). 
+  
+These apportionment percentages correspond to recommended `r year+1` ABCs of `r prettyNum(appo0[1,'WGOA'],big.mark = ',')` t for the Western area, `r prettyNum(appo0[1,'CGOA'],big.mark = ',')` t for the Central area, and `r prettyNum(sum(appo0[1,c('EGOA_wyak', 'EGOA_seo')]),big.mark = ',')` t for the Eastern area.
 
-```{r fig.cap="Observed survey biomass with 95% confidence intervals (black points and error bars), and estimated fits from the REMA model with 95% confidence intervals (gold lines and ribbon) for three areas of the Gulf of Alaska.", eval = TRUE, out.width="80%",out.height="60%"}
+```{r fig.cap="Observed survey biomass with 95% confidence intervals (black points and error bars), and estimated fits from the REMA model with 95% confidence intervals (gold lines and ribbon) for three areas of the Gulf of Alaska.", eval = TRUE, out.width="80%",out.height="60%",align = 'center'}
 knitr::include_graphics(here::here(year,'mgmt',model,'apport','rema_outs_redux.png'))
 ```
  
-  2. Obtain the biomass ratios between the open and closed areas (W. Yakutat versus E. Yakutat/SEO) from the last four calendar years (These ratios are provided by the survey program and are accessed via AKFIN). Using these values, first calculate a weighted average of the mean ($\mu_w$) and upper limit of the 95% confidence interval ($\sigma_w$) for the W. Yakutat biomass ratio (where most recent surveys are weighted higher). Then calculate a total ratio for use in apportionment via $\mu_w = 2 \sqrt{\sigma_w}$. The ratio for `r year` using survey observations from `r paste0(seq(year-4,year,2),collapse = ', ')` is 0.22, down from the ratio of 0.29 used in `r year-2`.  
+  2. Obtain the biomass ratios in the Eastern GOA between the open and closed areas (W. Yakutat versus E. Yakutat/SEO) from the last four calendar years (These ratios are provided by the survey program and are accessed via AKFIN). Using these values, first calculate a weighted average of the mean ($\mu_w$) and upper limit of the 95% confidence interval ($\sigma_w$) for the W. Yakutat biomass ratio (assigning greater weight to more recent surveys). Then calculate a total ratio for use in apportionment via $\mu_w = 2 \sqrt{\sigma_w}$. The ratio for `r year+1` using survey observations from `r paste0(seq(year-4,year,2),collapse = ', ')` is 0.22, down from the ratio of 0.29 used in `r year-2`.  
   
-Applying the biomass ratio to the `r year+1` [ABC](#oflabc) for the Eastern Gulf results in an ABC apportionment of `r prettyNum(appo0[1,'EGOA_wyak'],big.mark = ',')` t to the W. Yakutat area, with `r prettyNum(appo0[1,'EGOA_seo '],big.mark = ',')` t unharvested in the E. Yakutat/SEO. The `r year+1` OFL for POP, where $F_{OFL}$ = $F_{35\%}$=0.12), is `r prettyNum(appo0[3,'total'],big.mark = ',')`. Using the same approach as for ABCs, the `r year+1` OFL for the Western Gulf, Central Gulf, and W. Yakutat^[In 2012, the Plan Team and SSC recommended combined OFLs for the Western, Central, and West Yakutat areas (W/C/WYK) because the original rationale of an overfished stock no longer applied. However, because of concerns over stock structure, the OFL for SEO remained separate to ensure this unharvested OFL was not utilized in another area. The Council adopted these recommendations.] is `r prettyNum(appo0[3,'WGOA'],big.mark = ',')` t and `r prettyNum(appo0[3,'EGOA_seo'],big.mark = ',')` t in the Southeast/Outside area. 
+Applying the biomass ratio to the `r year+1` [ABC](#oflabc) for the Eastern Gulf results in an ABC apportionment of `r prettyNum(appo0[1,'EGOA_wyak'],big.mark = ',')` t to the W. Yakutat area, with `r prettyNum(appo0[1,'EGOA_seo'],big.mark = ',')` t unharvested in the E. Yakutat/SEO. The `r year+1` OFL for POP, where $F_{OFL}$ = $F_{35\%}$=0.12), is `r prettyNum(appo0[3,'total'],big.mark = ',')`. Using the same approach as for ABCs, the `r year+1` OFL for the Western Gulf, Central Gulf, and W. Yakutat^[In 2012, the Plan Team and SSC recommended combined OFLs for the Western, Central, and West Yakutat areas (W/C/WYK) because the original rationale of an overfished stock no longer applied. However, because of concerns over stock structure, the OFL for SEO remained separate to ensure this unharvested OFL was not utilized in another area. The Council adopted these recommendations.] is `r prettyNum(appo0[3,'WGOA'],big.mark = ',')` t and `r prettyNum(appo0[3,'EGOA_seo'],big.mark = ',')` t in the Southeast/Outside area. 
 
 ### Status Determination
 
