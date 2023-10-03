@@ -8,15 +8,15 @@ editor_options:
 
 > Operational Update: The data description for POP has been truncated to
 > highlight relevant details and changes made for this cycle. The reader
-> is referred to the last full assessment (Hulson et al., 2021) for the
+> is referred to the last full assessment [@Hulson2021] for the
 > entirety of this section.
 
 ## General Model Structure
 
 The model structure used for this Operational Update is unchanged from 2021. The
 POP assessment is a single-sex, age-structured statistical catch-at-age
-model written in AD Model Builder (see Fournier et al. 2012 for recent
-reference) as described in Courtney et al. (2007). Formulae for the
+model written in AD Model Builder (see @fournier_ad_2012 for recent
+reference) as described in @courtney_extending_2007. Formulae for the
 population dynamics, observation, and likelihood components of the
 assessment model are presented in the [Appendix](#appxeqs).
 
@@ -99,7 +99,7 @@ maturity parameter estimates.
 # Model Uncertainty {#modeluncertainty}
 
 Evaluation of model uncertainty is obtained through a Markov Chain Monte
-Carlo (MCMC) algorithm (Gelman et al. 1995). The chain length of the
+Carlo (MCMC) algorithm [@gelman_markov_1996]. The chain length of the
 MCMC was 10,000,000 and was thinned to one iteration out of every 2,000.
 We omit the first 2,000,000 iterations to allow for a burn-in period. We
 use these MCMC methods to provide further evaluation of uncertainty in

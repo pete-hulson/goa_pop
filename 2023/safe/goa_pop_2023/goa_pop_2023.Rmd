@@ -59,7 +59,7 @@ if(params$species_complex=="no"){
 title: `r title`
 ---
 
-```{r load, warning=F, message=F}
+```{r load, warning=F, message=F, echo = FALSE}
 # load
 library(safe)
 library(here)
@@ -73,8 +73,6 @@ end_proj = year + 15
 
 ## read in exec summ and assign derived quants
 execsumm <-  read.csv(here::here(year,'mgmt',model,'processed','exec_summ.csv'))
-
-best_f = 0.0641 # from the best_f function in groundfishr package
 ofl_24 = execsumm[1,'ofl'] 
 b35_24 =  execsumm[1,'sb35']  # aka MSST
 ssb_24 <- execsumm[1,'ssb_proj'] # current s biomass
@@ -101,11 +99,16 @@ c3 <- pcatch[3] # proj catch year + 2
 load(here::here(year, 'mgmt',model,'apport','2023-09-16-rema_output.rdata')) ## apport_out
 rema_props <- apport_out$proportion_biomass_by_strata
 
-## load in derived quants & model results
-# mdlres <- list.files(here(year,'mgmt',model,'processed'), pattern = '.csv', full.names = TRUE)
-# for(i in 1:length(mdlres)){
-#   assign(x = gsub('.csv','',basename(mdlres[i])), value = read.csv(mdlres[i]))
-# }
+
+
+
+## load three relevant tables to env(abc_apport, abc_apport_wyax, ofl_apport)
+invisible(lapply(list.files(here::here(year, 'mgmt',model,'processed'),pattern = '_apport',full.names = TRUE), 
+       FUN = function(x){
+         y <- read.csv(x) 
+         assign(x=gsub('.csv','',basename(x)), value  =y, envir = .GlobalEnv);rm(y);rm(x)
+       }
+))
 ```
  
 ```{r, child="01-summary.Rmd", eval = T}
@@ -139,9 +142,11 @@ rema_props <- apport_out$proportion_biomass_by_strata
 ```
 
 \pagebreak
+
 \allsectionsfont{\centering}
 # References
 <div id="refs"></div>
+
 
 ```{r, child="11a-auxiliaryfiles.Rmd", eval = T}
 ```
