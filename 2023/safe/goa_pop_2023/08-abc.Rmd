@@ -8,22 +8,23 @@ editor_options:
 
 > Operational Update: The description of Amendment 56 specifications for POP and details regarding the development of the Risk Table have been truncated to provide minimal background and highlight relevant updates or changes made for this cycle. The reader is referred to the last full assessment (Hulson et al., 2021) for the entirety of this section, including details on the projection approach.
 
+
 ### Amendment 56 Reference Points
 
-POP in the GOA are managed under Tier 3 of Amendment 56. It is assumed that the equilibrium level of recruitment is equal to the average of age-2 recruitments between 1979 and `r year-2` (i.e., the 1977-`r year-4` year classes). The most recent two years of recruitment are not included in the projection due to uncertainty. This definition of equilibrium recruitment is used to estimate the  $B_{40\%}$ reference point. Other useful biomass reference points which can be calculated using this assumption are $B_{100\%}$ and $B_{35\%}$, defined analogously to $B_{40\%}$.
+POP in the GOA are managed under Tier 3 of Amendment 56. It is assumed that the equilibrium level of recruitment is equal to the average of age-2 recruitments between 1979 and `r year-2` (i.e., the 1977-`r year-4` year classes). The most recent two years of recruitment are not included in the projection due to uncertainty. This definition of equilibrium recruitment is used to estimate the  $B_{40}$ reference point. Other useful biomass reference points which can be calculated using this assumption are $B_{100}$ and $B_{35}$, defined analogously to $B_{40}$.
 
-Female spawning biomass for `r year+1` is estimated at `r prettyNum(ssb_24,big.mark =',')` t. This is above  $B_{40\%}$=`r prettyNum(exec_summ[1,'sb40'],big.mark =',')` t. Under Amendment 56, Tier 3, the maximum permissible fishing mortality for ABC is $F_{40\%}$ and fishing mortality for OFL is $F_{35\%}$. The `r year+1` estimates of biomass-based reference points, and the resultant ABC and OFL based on the fishing mortality rates are:
+Female spawning biomass for `r year+1` is estimated at `r prettyNum(ssb_24,big.mark =',')` t.  This is above  $B_{40}$=`r prettyNum(execsumm[1,'sb40'],big.mark =',')` t. Under Amendment 56, Tier 3, the maximum permissible fishing mortality for ABC is $F_{40}$ and fishing mortality for OFL is $F_{35}$. The `r year+1` estimates of biomass-based reference points, and the resultant ABC and OFL based on the fishing mortality rates are:
+
 
 | Reference Point | Description                                                                                                                                                | Value   |
 |------------------------|------------------------|------------------------|
-| $B_{100\%}$      | The equilibrium spawning biomass that would be obtained in the absence of fishing                                                                          | `r prettyNum(exec_summ[1,'sb0'],big.mark =',')` t |
-| $B_{40\%}$       | 40% of the equilibrium spawning biomass that would be obtained in the absence of fishing                                                                   | `r prettyNum(exec_summ[1,'sb40'],big.mark =',')` t |
-| $B_{35\%}$       | 35% of the equilibrium spawning biomass that would be obtained in the absence of fishing                                                                   | `r prettyNum(exec_summ[1,'sb35'],big.mark =',')` t |
-| $F_{40\%}$       | The fishing mortality rate that reduces the equilibrium level of spawning per recruit to 40% of the level that would be obtained in the absence of fishing | `r prettyNum(exec_summ[1,'f_abc'],big.mark =',')`    |
+| $B_{100\%}$      | The equilibrium spawning biomass that would be obtained in the absence of fishing                                                                          | `r prettyNum(execsumm[1,'sb0'],big.mark =',')` t |
+| $B_{40\%}$       | 40% of the equilibrium spawning biomass that would be obtained in the absence of fishing                                                                   | `r prettyNum(execsumm[1,'sb40'],big.mark =',')` t |
+| $B_{35\%}$       | 35% of the equilibrium spawning biomass that would be obtained in the absence of fishing                                                                   | `r prettyNum(execsumm[1,'sb35'],big.mark =',')` t |
+| $F_{40\%}$       | The fishing mortality rate that reduces the equilibrium level of spawning per recruit to 40% of the level that would be obtained in the absence of fishing | `r prettyNum(execsumm[1,'f_abc'],big.mark =',')`    |
 | ABC             | Yield at $F_{40\%}$ in 2024                                                                                                                                       | `r prettyNum(abc_24,big.mark =',')` t |
-| $F_{35\%}$       | The fishing mortality rate that reduces the equilibrium level of spawning per recruit to 35% of the level that would be obtained in the absence of fishing |`r prettyNum(exec_summ[1,'f_ofl'],big.mark =',')`    |
-| OFL             | Yield at $F_{35\%}$  in 2024                                                                                                                                       | `r prettyNum(exec_summ[1,'ofl'],big.mark =',')` t  |
-
+| $F_{35\%}$       | The fishing mortality rate that reduces the equilibrium level of spawning per recruit to 35% of the level that would be obtained in the absence of fishing |`r prettyNum(execsumm[1,'f_ofl'],big.mark =',')`    |
+| OFL             | Yield at $F_{35\%}$  in 2024 | `r prettyNum(execsumm[1,'ofl'],big.mark =',')` t  |
 
 ### Specification of OFL and Maximum Permissible ABC {#oflabc}
 
@@ -144,7 +145,7 @@ The workflow to calculate allocation is as follows:
   
 These apportionment percentages correspond to recommended `r year+1` ABCs of `r prettyNum(appo0[1,'WGOA'],big.mark = ',')` t for the Western area, `r prettyNum(appo0[1,'CGOA'],big.mark = ',')` t for the Central area, and `r prettyNum(sum(appo0[1,c('EGOA_wyak', 'EGOA_seo')]),big.mark = ',')` t for the Eastern area.
 
-```{r fig.cap="Observed survey biomass with 95% confidence intervals (black points and error bars), and estimated fits from the REMA model with 95% confidence intervals (gold lines and ribbon) for three areas of the Gulf of Alaska.", eval = TRUE, out.width="80%",out.height="60%",align = 'center'}
+```{r fig.cap="Observed survey biomass with 95% confidence intervals (black points and error bars), and estimated fits from the REMA model with 95% confidence intervals (gold lines and ribbon) for three areas of the Gulf of Alaska.", eval = TRUE, out.width="80%",out.height="60%"}
 knitr::include_graphics(here::here(year,'mgmt',model,'apport','rema_outs_redux.png'))
 ```
  
@@ -165,5 +166,10 @@ The official catch estimate for the most recent complete year (`r year-1`) is `r
 The minimum stock size threshold (MSST) for POP is given by the $B_{35\%}$ which is `r prettyNum(b35_24,big.mark=",")` in `r year`. The estimated stock spawning biomass in `r year` is nearly double the MSST at `r prettyNum(ssb_24,big.mark=",")`. *The stock is not overfished*.
 
 #### Approaching Overfished (Harvest Scenario 7)
+
 The mean estimated stock spawning biomass in `r year+2` is above the MSST. *The stock is not approaching an overfished state*.
+
+
+
+
 
