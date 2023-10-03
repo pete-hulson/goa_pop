@@ -504,7 +504,7 @@ biolabs <- as_labeller(c(
   'age2_recruits'="Age-2 Recruits (thousands)")
 )
 
-mcmc_summary_raw <- read.csv(here(year,'mgmt',curr_mdl_fldr,'processed','mceval.csv')) 
+mcmc_summary_raw <- read.csv(here::here(year,'mgmt',curr_mdl_fldr,'processed','mceval.csv')) 
 ## manually rename the last chunk because the processing function didn't expect rec or F
 names(mcmc_summary_raw)[282:(281+length(1961:2023))] <- paste0('age2_recruits_',1961:2023)
 names(mcmc_summary_raw)[345:407] <- paste0('Frate_',1961:2023)
@@ -515,7 +515,7 @@ filter(grepl("biom|rec|Frate",variable)) %>%
 mutate(year = as.numeric(stringr::str_sub(variable,-4,-1)),
 variable = stringr::str_sub(variable, 1, -6)) %>%
 mutate(src = '2023 Model') %>%
-bind_rows(., read.csv(here(year,'mgmt',"2020.1-2021",'processed','mceval.csv')) %>%
+bind_rows(., read.csv(here::here(year,'mgmt',"2020.1-2021",'processed','mceval.csv')) %>%
 reshape2::melt() %>%
 filter(grepl("biom|rec|Frate",variable)) %>%
 mutate(year = as.numeric(stringr::str_sub(variable,-4,-1)),
@@ -523,11 +523,14 @@ variable = stringr::str_sub(variable, 1, -6)) %>%
 mutate(src = '2021 Model')) %>%
 mutate(value = ifelse(value >1000,value/1000,value)) %>%
 group_by(variable, year, src) %>%
-summarise(median = median(value),lower = quantile(value, probs = 0.025), upper = quantile(value, probs = 0.975)) ->
+summarise(median = median(value),
+          lower = quantile(value, probs = 0.025), 
+          upper = quantile(value, probs = 0.975)) ->
 mcmc_summary
 
 write.csv(subset(mcmc_summary, src == '2023 Model'), 
-file = here(year,'mgmt',curr_mdl_fldr,'processed','mceval_summary.csv'), row.names = FALSE)             
+file = here(year,'mgmt',curr_mdl_fldr,'processed','mceval_summary.csv'), row.names = FALSE) 
+
 summarize(median = median(value),
               lower = median(value) - qt(1- 0.05/2, (n() - 1))*sd(value)/sqrt(n()),
               upper = median(value) + qt(1- 0.05/2, (n() - 1))*sd(value)/sqrt(n())) 
