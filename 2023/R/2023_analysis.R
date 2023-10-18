@@ -750,3 +750,27 @@ f_rec_devs <- filter(allpars, grepl('dev',variable)) %>%
 
 write.csv(f_rec_devs,here::here(year, 'mgmt', curr_mdl_fldr,'processed','parameter_summary_devs.csv'),row.names = FALSE)
 write.csv(other_pars,here::here(year, 'mgmt', curr_mdl_fldr,'processed','parameter_summary.csv'),row.names = FALSE)
+
+
+## Figures for Director's Briefing Nov 2022----
+
+### survey data
+ggplot(data= NULL, aes(x = year)) +
+geom_point(data=subset(dat, src == '2023 Assessment' &
+ name == 'Observed' & year < 2023), aes(y = value), color = 'grey88') +
+ geom_errorbar(data=subset(dat, src == '2023 Assessment' & year < 2023), width = 0, 
+aes( ymin = lci, ymax = uci), color ='grey88') +
+geom_point(data=subset(dat, src == '2023 Assessment' &
+ name == 'Observed' & year == 2023), aes(y = value), size = 3, color = 'dodgerblue2') +
+geom_errorbar(data=subset(dat, src == '2023 Assessment' & year == 2023), width = 0, 
+aes( ymin = lci, ymax = uci), color ='dodgerblue2') +
+
+labs(x = 'Year', y = 'Survey Biomass (t)', color = '') +
+theme(legend.position = c(0.2,0.8)) +
+theme_void()
+
+ggsave(last_plot(),
+height = 4, width = 6, unit = 'in',
+file = here(here(year,'mgmt',curr_mdl_fldr,'figs','directorsbriefing_survyobs.png')))
+
+
