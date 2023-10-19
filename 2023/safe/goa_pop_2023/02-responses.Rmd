@@ -17,7 +17,7 @@ This was investigated as part of the CIE review and authors did not find large d
 
 >*2. Continued evaluation of methods for weighting for the compositional data as new models are developed and/or changes are made to input data.(Plan Team, November 2018)*
 
-**P. Hulson has completed a technical memoranda...**
+Recent work has been completed that provides age and length composition input sample size using bootstrap methodologies for all AFSC trawl surveys [@Hulson2023] and work is currently being initiated that will develop methods to determine age and length compositiion input sample size for fishery-dependent data. We will investigate the inclusion of these input sample sizes to weight compositional data in future assessments.
 
 >*3. Investigation of natural mortality, as the current estimate of 0.066 is higher than the expected value from the prior distribution (0.05) and the prior may be constraining the model. (Plan Team, November 2018; SSC, December 2020; CIE, 2021)*
 
@@ -25,7 +25,7 @@ Natural mortality $M$ was investigated during this cycle in response to CIE comm
 
 >*4. Incorporation of hydroacoustic information into the assessment as the species are regularly found throughout the water column. Exploration of using the raw acoustic survey lengths, the acoustic abundance weighted length compositions, or using the bottom trawl survey selectivity as a proxy. (SSC, December 2018; September 2019; Plan Team, November 2020; SSC, December 2020)*
 
-POP biomass estimates from the hydro-acoustic survey are availble from 2013 onwards. The authors have elected to continue reporting these values in the SAFE for for full operational assessments; as in 2021 these data are not included in the base model. This data source will be considered as POP is transitioned to a new modeling framework by a new author in subsequent cycles.
+POP biomass estimates from the hydro-acoustic survey are available from 2013 onwards. The authors have elected to continue reporting these values in the SAFE for for full operational assessments; as in 2021 these data are not included in the base model. This data source will be considered as POP is transitioned to a new modeling framework by a new author in subsequent cycles.
 
 >*5. Re-examination of fishery-dependent information, e.g., how age samples are being collected. (SSC, December 2018; SSC, December 2020)*
 
@@ -33,8 +33,7 @@ This topic has not been revisited this cycle, as the authors suspect that deeper
 
 >*6. Examination of catchability, which has been an ongoing issue for POP and other rockfish species, coupled with selectivity (SSC, December 2018; Plan Team, November 2019; SSC, December 2019; SSC, December 2020)*
 
-A manuscript is currently in preparation by P. Hulson to inform priors for catchability. The authorship team plans to transition to a framework where $q$ is calculated analytically and selectivity is estimated with greater flexibility in future cycles. The current cycle has not changed the configuration of $q$ from 2021. 
-
+The authorship team plans to transition to a framework where $q$ is calculated analytically and selectivity is estimated with greater flexibility in future cycles. The current cycle has not changed the configuration of $q$ from 2021. 
 
 >*7. Evaluate the impacts of using a VAST model for POP abundance and/or apportionment. (SSC, December 2018; Plan Team, November 2019; SSC, December 2019)*	
 
