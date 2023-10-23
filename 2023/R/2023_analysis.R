@@ -462,7 +462,7 @@ filter(biomass >0)
 
 png(filename=here(here(year,'dev','mb_vs_db','mb_db_comparison.png')), 
     width = 6, height = 4, units = 'in', type ="cairo", res = 200)
-rbind(biomass_dat) %>%
+rbind(biomass_dat,vast) %>%
 mutate(lci = biomass-1.96*sd, uci = biomass+1.96*sd) %>%
 ggplot(.,
  aes(x = year, y = biomass, fill = src, color = src)) +
