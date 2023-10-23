@@ -26,7 +26,7 @@ knitr::include_graphics(here::here(year,'mgmt', model, "figs", "srv_age_comp.png
 knitr::include_graphics(here::here(year,'mgmt', model, "figs", "hists_redux.png"))
 ```
 
-```{r biofreccompare, fig.cap="Comparison of recruitment, fishing mortality rates, spawning and total biomass for the 2023 Update model (blue) and 2021 Full model (grey). The shaded ribbon represents the 95% quantile obtained via MCMC.", eval = TRUE}
+```{r biofreccompare, fig.cap="Comparison of recruitment, fishing mortality rates, spawning and total biomass for the 2023 Update model (blue) and 2021 Full model (grey). The shaded ribbon represents the 95% quantile obtained via MCMC; Age-2 recruits and F rates were not included in the MCMC analysis in 2021, so those figures show the mean estimates only.", eval = TRUE}
 knitr::include_graphics(here::here(year,'mgmt', model, "figs", "bio_f_rec_compare.png"))
 ```
 

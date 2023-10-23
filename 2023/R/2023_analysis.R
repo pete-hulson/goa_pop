@@ -487,7 +487,7 @@ read.csv(here(year,'mgmt',curr_mdl_fldr,'processed','selex.csv')) %>%
   ggplot(., aes(x = age, y = value, color = variable)) +
   scale_x_continuous(limits = c(0,30), breaks = seq(0,30,5))+
   geom_line(lwd = 1.1) +
-  theme(text = element_text(family = "Times New Roman"))+
+  # theme(text = element_text(family = "Times New Roman"))+
   theme(legend.position = 'top') +
   scale_color_manual(values = c("#023047","#126782","#219ebc","#8ecae6","#fb8500","#ffb703"),
                      labels = c(paste0('Fishery ',c("1967-1976","1977-1995","1996-2006","2007-2023")),
