@@ -460,6 +460,8 @@ select(year = Year, biomass = Estimate_metric_tons, sd = SD_mt) %>%
 mutate(src = 'VAST (model-based)') %>%
 filter(biomass >0)
 
+png(filename=here(here(year,'dev','mb_vs_db','mb_db_comparison.png')), 
+    width = 6, height = 4, units = 'in', type ="cairo", res = 200)
 rbind(biomass_dat) %>%
 mutate(lci = biomass-1.96*sd, uci = biomass+1.96*sd) %>%
 ggplot(.,
@@ -472,12 +474,10 @@ scale_color_manual(values = c('blue','grey45')) +
 scale_fill_manual(values = c('blue','grey45')) +
 #scale_y_continuous(limits = c(0,2500), expand = c(0,0)) +
 labs(x = 'Year', y = 'Biomass (1000 t)', fill = '', color = '')
+dev.off()
 
-ggsave(last_plot(),
-height = 4, width = 6, unit = 'in',
-file = here(here(year,'dev','mb_vs_db','mb_db_comparison.png')))
-
-
+png(filename=here::here(year,'mgmt', curr_mdl_fldr, "figs", "selex_mat.png"), 
+    width = 6, height = 6, units = 'in', type ="cairo", res = 200)
 read.csv(here(year,'mgmt',curr_mdl_fldr,'processed','selex.csv')) %>%
   reshape2::melt(., id = 'age') %>%
   bind_rows(.,read.csv(here(year,'mgmt',curr_mdl_fldr,'processed','waa_mat.csv')) %>%
@@ -493,10 +493,7 @@ read.csv(here(year,'mgmt',curr_mdl_fldr,'processed','selex.csv')) %>%
                      labels = c(paste0('Fishery ',c("1967-1976","1977-1995","1996-2006","2007-2023")),
                                 'Survey','Maturity'))+
   labs(x = 'Age', y = 'Proportion', color = '')
-
-ggsave(last_plot(), file =here::here(year,'mgmt', curr_mdl_fldr, "figs", "selex_mat.png"), 
-       width = 6, height = 6, unit = 'in')
-
+dev.off()
 
 ## key derived quantities with uncertainty and comparison
 biolabs <- as_labeller(c(
@@ -549,6 +546,9 @@ summarize(median = median(value),
               upper = median(value) + qt(1- 0.05/2, (n() - 1))*sd(value)/sqrt(n())) 
 mcmc_summary %>% filter(year == 2020 & variable == 'spawn_biom')
 
+png(filename=here::here(year,'mgmt', curr_mdl_fldr, "figs", 
+                              "bio_f_rec_compare.png"), 
+    width = 6, height = 6, units = 'in', type ="cairo", res = 200)
 mcmc_summary %>%
   filter(variable %in% c('spawn_biom', 'tot_biom', 'age2_recruits','Frate')) %>%
   ggplot(., aes(x = year,  color = src, fill = src)) +
@@ -559,11 +559,7 @@ mcmc_summary %>%
   scale_color_manual(values = c('grey44','blue'))+
   facet_wrap(~variable,scales = 'free_y',labeller = biolabs) +
   labs(x = 'Year', y = '',color = '', fill = '') 
-
-ggsave(last_plot(), file =here::here(year,'mgmt', curr_mdl_fldr, "figs", 
-"bio_f_rec_compare.png"), 
-       width = 7, height =7, unit = 'in')
-
+dev.off()
 
 ## update histogram plot
 
@@ -586,7 +582,9 @@ medians <- mcmc_key_pars %>%
             lower = median(value) - qt(1- 0.05/2, (n() - 1))*sd(value)/sqrt(n()),
             upper = median(value) + qt(1- 0.05/2, (n() - 1))*sd(value)/sqrt(n()))
 
-  
+png(filename=here::here(year,'mgmt', curr_mdl_fldr, "figs", 
+                        "hists_redux.png"), 
+    width = 6, height = 4, units = 'in', type ="cairo", res = 200)  
 ggplot(mcmc_key_pars, aes(x=value))+ 
   geom_histogram(fill = alpha('dodgerblue',0.85), color = 'dodgerblue') + 
   geom_vline(data=medians, aes(xintercept = median), linetype = 'dashed', color = 'black') +
@@ -595,12 +593,12 @@ ggplot(mcmc_key_pars, aes(x=value))+
         axis.title = element_blank()) +
   facet_wrap(~variable, scales = 'free_x', labeller = parlabs, ncol = 2)
 
-ggsave(last_plot(), file =here::here(year,'mgmt', curr_mdl_fldr, "figs", 
-                                     "hists_redux.png"), 
-       width = 6, height =4, unit = 'in')
+dev.off()
 
 ## recdevs plot (requires parameter_summary csv made below)
-
+png(filename=here::here(year,'mgmt', curr_mdl_fldr, "figs", 
+                        "recdevs.png"), 
+    width = 6, height = 4, units = 'in', type ="cairo", res = 200)  
 bind_rows(read.csv(here::here(year,'mgmt',model,'processed','parameter_summary_devs.csv')) %>%
   filter(grepl('rec',variable)) %>%
   mutate(src = '2023 Model'),
@@ -619,9 +617,7 @@ bind_rows(read.csv(here::here(year,'mgmt',model,'processed','parameter_summary_d
   labs(x = 'Year', y = 'log Recruitment Deviation', color = '') +
   theme(legend.position = c(0.1,0.8))
 
-ggsave(last_plot(), file =here::here(year,'mgmt', curr_mdl_fldr, "figs", 
-                                     "recdevs.png"), 
-       width = 6, height =4, unit = 'in')
+dev.off()
 
 ## prettier REMA plot (with theme)
 
