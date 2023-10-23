@@ -485,7 +485,9 @@ read.csv(here(year,'mgmt',curr_mdl_fldr,'processed','selex.csv')) %>%
   reshape2::melt(., id = 'age')) %>%
   filter(variable != 'waa') %>%
   ggplot(., aes(x = age, y = value, color = variable)) +
+  scale_x_continuous(limits = c(0,30), breaks = seq(0,30,5))+
   geom_line(lwd = 1.1) +
+  theme(text = element_text(family = "Times New Roman"))+
   theme(legend.position = 'top') +
   scale_color_manual(values = c("#023047","#126782","#219ebc","#8ecae6","#fb8500","#ffb703"),
                      labels = c(paste0('Fishery ',c("1967-1976","1977-1995","1996-2006","2007-2023")),
@@ -509,14 +511,23 @@ mcmc_summary_raw <- read.csv(here::here(year,'mgmt',curr_mdl_fldr,'processed','m
 names(mcmc_summary_raw)[282:(281+length(1961:2023))] <- paste0('age2_recruits_',1961:2023)
 names(mcmc_summary_raw)[345:407] <- paste0('Frate_',1961:2023)
 
+
+
 mcmc_summary_raw %>%
 reshape2::melt()%>%
 filter(grepl("biom|rec|Frate",variable)) %>%
 mutate(year = as.numeric(stringr::str_sub(variable,-4,-1)),
 variable = stringr::str_sub(variable, 1, -6)) %>%
 mutate(src = '2023 Model') %>%
+bind_rows(., read.csv(here::here(year,'mgmt',"2020.1-2021",'processed','bio_rec_f.csv')) %>%
+            select(year,Frate = 'F',  age2_recruits=recruits,tot_biom,spawn_biom = sp_biom) %>%
+            reshape2::melt(id = 'year') %>% 
+            mutate(src = '2021 Model') %>%
+            select(variable, value, year, src)) %>%
+            
+  
 bind_rows(., read.csv(here::here(year,'mgmt',"2020.1-2021",'processed','mceval.csv')) %>%
-reshape2::melt() %>%
+            reshape2::melt() %>% 
 filter(grepl("biom|rec|Frate",variable)) %>%
 mutate(year = as.numeric(stringr::str_sub(variable,-4,-1)),
 variable = stringr::str_sub(variable, 1, -6)) %>%
@@ -531,13 +542,15 @@ mcmc_summary
 write.csv(subset(mcmc_summary, src == '2023 Model'), 
 file = here(year,'mgmt',curr_mdl_fldr,'processed','mceval_summary.csv'), row.names = FALSE) 
 
+
+
 summarize(median = median(value),
               lower = median(value) - qt(1- 0.05/2, (n() - 1))*sd(value)/sqrt(n()),
               upper = median(value) + qt(1- 0.05/2, (n() - 1))*sd(value)/sqrt(n())) 
-mcmc_summary %>% filter(year == 2023 & variable == 'spawn_biom')
+mcmc_summary %>% filter(year == 2020 & variable == 'spawn_biom')
 
 mcmc_summary %>%
-filter(variable %in% c('spawn_biom', 'tot_biom', 'age2_recruits','Frate')) %>%
+  filter(variable %in% c('spawn_biom', 'tot_biom', 'age2_recruits','Frate')) %>%
   ggplot(., aes(x = year,  color = src, fill = src)) +
   geom_line(aes(y=median))+
   geom_ribbon(aes(ymin =lower, ymax = upper),alpha = 0.2, color = NA)+
@@ -545,7 +558,7 @@ filter(variable %in% c('spawn_biom', 'tot_biom', 'age2_recruits','Frate')) %>%
   scale_fill_manual(values = c('grey44','blue'))+
   scale_color_manual(values = c('grey44','blue'))+
   facet_wrap(~variable,scales = 'free_y',labeller = biolabs) +
-  labs(x = 'Year', y = '',color = '') 
+  labs(x = 'Year', y = '',color = '', fill = '') 
 
 ggsave(last_plot(), file =here::here(year,'mgmt', curr_mdl_fldr, "figs", 
 "bio_f_rec_compare.png"), 
