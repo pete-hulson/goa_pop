@@ -455,8 +455,9 @@ biomass_dat <- read.csv(here(year,'data','raw','goa_total_bts_biomass_data.csv')
 mutate(sd = sqrt(biomass_var) ) %>%
 select(year, 
 biomass = total_biomass,sd) %>% mutate(src = 'Design-based')
-vast <- read.csv(here(year,'dev','mb_vs_db','table_for_ss3.csv')) %>% 
-select(year = Year, biomass = Estimate_metric_tons, sd = SD_mt) %>%
+vast <- read.csv(here(year,'dev','mb_vs_db','vast_2023.csv')) %>% 
+select(year = Time, biomass = Estimate, sd = Std..Error.for.Estimate) %>%
+mutate(biomass = biomass/1000, sd = sd/1000) %>%
 mutate(src = 'VAST (model-based)') %>%
 filter(biomass >0)
 
