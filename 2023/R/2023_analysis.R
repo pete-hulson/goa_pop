@@ -652,8 +652,8 @@ s2021 <- raw_surv %>%
   dplyr::select(Year,COMMON_NAME, CPUE_KGHA  = Catch_KG, LATITUDE = Lat, LONGITUDE = Lon) %>%
   dplyr::filter(Year == 2021) %>%
   make_idw_map(region = "goa",
-                set.breaks = "jenks", ## auto
-              #set.breaks = c(0, 100000, 250000, 500000, 750000), ## standardized breaks
+               # set.breaks = "jenks", ## auto
+               set.breaks = c(0,1000, 2000, 3000, 4000,7500), ## standardized breaks
                in.crs = "+proj=longlat",
               
                out.crs = "EPSG:3338", # Set output coordinate reference system
@@ -670,13 +670,13 @@ s2021 <- raw_surv %>%
   #                           res = 300, 
   #                           bg = "transparent")
 
-s2019 <- raw_surv%>% 
+s2023 <- raw_surv%>% 
   mutate( COMMON_NAME = 'Pacific Ocean Perch') %>%
   dplyr::select(Year,COMMON_NAME, CPUE_KGHA  = Catch_KG, LATITUDE = Lat, LONGITUDE = Lon) %>%
-  dplyr::filter(Year == 2019) %>%
+  dplyr::filter(Year == 2023) %>%
   make_idw_map(region = "goa",
-              set.breaks = "jenks", ## auto
-              #set.breaks = c(0,100000, 250000, 500000, 750000), ## standardized breaks
+               #set.breaks = "jenks", ## auto
+                  set.breaks = c(0,1000, 2000, 3000, 4000,7500), ## standardized breaks
                in.crs = "+proj=longlat",
                out.crs = "EPSG:3338", # Set output coordinate reference system
                use.survey.bathymetry = FALSE, ## for GOA
@@ -693,10 +693,10 @@ s2019 <- raw_surv%>%
   #                           bg = "transparent")
 
 
-p1 <- s2019$plot+theme(legend.position = 'right') 
-p2 <- s2021$plot+theme(legend.position = 'right') 
+p1 <- s2021$plot+theme(legend.position = 'right') 
+p2 <- s2023$plot+theme(legend.position = 'right') 
 
-png(file = here(year,'base','figs','2_cpue_maps.png'),
+png(file = here::here(year,'mgmt',model,'figs','cpue_maps.png'),
 width = 8, height = 10, unit = 'in', res = 520)
 Rmisc::multiplot(plotlist = list(p1,p2), cols = 1)
 dev.off()
