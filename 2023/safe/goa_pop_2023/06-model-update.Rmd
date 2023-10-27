@@ -81,7 +81,7 @@ Three parameters are estimated with priors: natural mortality
 the uncertainty in recruitment deviations ($\sigma_r \sim N(1.7,0.11)$).
 
 Fishery and survey selectivity are age-based. Fishery selectivity is
-time-blocked into four periods, corresponding with large-scale changes in the fishery and management structure (Table 10.\@ref(tab:mgmtmeasures)). The period from 1961-1976 is asymptotic
+time-blocked into four periods, corresponding with large-scale changes in the fishery and management structure (Table \@ref(tab:mgmtmeasures)). The period from 1961-1976 is asymptotic
 (via a two-parameter logistic curve), and the three periods from 1977 onwards are each
 dome-shaped (via an averaged logistic gamma for the second block, and a
 gamma function for the third and fourth blocks, with two estimated parameters for each block). Bottom trawl survey
