@@ -5,7 +5,7 @@ params:
   species_complex: "no"
   area: "Gulf of Alaska"
   tier: 3
-author: "Maia S. Kapur, Peter-John F. Hulson, Benjamin C. Williams"
+author: "Maia S. Kapur, Peter-John F. Hulson, Benjamin C. Williams, Ferriss, B."
 date: "November 2023"
 
 # don't do anything below this line unless you are cool with the consequences
