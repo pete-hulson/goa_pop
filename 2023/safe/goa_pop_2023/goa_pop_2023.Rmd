@@ -1,11 +1,11 @@
 ---
 params: 
-  chapter: 10
+  chapter: 9
   species: "Pacific Ocean Perch"
   species_complex: "no"
   area: "Gulf of Alaska"
   tier: 3
-author: "Maia S. Kapur, Peter-John F. Hulson, Ben Williams"
+author: "Maia S. Kapur, Peter-John F. Hulson, Benjamin C. Williams"
 date: "November 2023"
 
 # don't do anything below this line unless you are cool with the consequences
@@ -33,7 +33,7 @@ csl: "fishfish.csl"
 ---
 
 This report may be cited as:
-Kapur, M., Hulson, P-J., Williams, B., 2023. Assessment of the Pacific Ocean Perch Stock in the Gulf of Alaska. North Pacific Fishery Management Council, Anchorage, AK. Available from https://www.npfmc.org/library/safe-reports/
+Kapur, M.S., Hulson, P-J., Williams, B.C., 2023. Assessment of the Pacific Ocean Perch Stock in the Gulf of Alaska. North Pacific Fishery Management Council, Anchorage, AK. Available from https://www.npfmc.org/library/safe-reports/
   
 
 

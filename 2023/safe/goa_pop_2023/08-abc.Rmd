@@ -72,8 +72,8 @@ The SSC in its December 2018 minutes recommended that all assessment authors use
 The risk table scoring for POP has not changed since 2021, with the exception that the 2021 SSC requested that the number of Risk Table categories (i.e., levels of concern) be reduced from four to three. Per leadership instruction in 2023, we have consolidated what were previously categories 2 and 3 ("substantially increased" and "major concern" into a single category, "increased/major concern"). This impacts the first two considerations, which were rated a level 2 in the 2021 Assessment.
 
 ```{r}
-l1 = "Level 1: No increased concerns"
-l2 = "Level 2: Increased/major concern"
+l1 = "Level 1: No concern"
+l2 = "Level 2: Major concern"
 l3 = "Level 3: Extreme concern" 
 require(flextable)
 data.frame(assess = l2,
@@ -99,9 +99,9 @@ An abridged summary of the considerations that led to this determination for eac
 
 ### Assessment considerations {#assessmentconsiderations}
 
-The GOA POP assessment model exhibits a negative retrospective pattern (spawning biomass continues to increase with new data), though this effect was less pronounced in the 2023, likely due to high uncertainty in the observed survey biomass. This is driven by ongoing increases in the trawl survey biomass, which have been consistently under-estimated since 2013, and may be suggestive of model misspecification. 
+The GOA POP assessment model exhibits a strong negative retrospective pattern (spawning biomass continues to increase with new data), though this effect was less pronounced in the 2023, likely due to high uncertainty in the observed survey biomass. This is driven by ongoing increases in the trawl survey biomass, which have been consistently under-estimated since 2013, and may be suggestive of model misspecification. 
 
-*This results in a an "assessment considerations" score of level 2, an increased/major concern.*
+*This results in a an "assessment considerations" score of level 2, an major concern.*
 
 ### Population dynamics considerations
 
@@ -111,16 +111,46 @@ The unusual trend of rapid increases in stock size and recruitment estimates res
   
 ### Environmental/Ecosystem considerations
 
-Ocean thermal conditions have been moderate for adult POP and moderate to below average for larvae. Numerous temperature time series showed signs of cooling from previous surveys (returning to average from recent marine heatwave years 2014-2016, 2019) at the surface and at depth, and 2022 surface temperatures are predicted to continue cooling, in alignment with La Niña conditions and a negative Pacific Decadal Oscillation.
+The most recent data available suggest an ecosystem risk Level 1 – Normal: “No apparent environmental/ecosystem concerns.” This score is informed by moderate thermal conditions, mixed trends for zooplankton abundance, moderate predation, and increased competition for zooplankton prey resources. The warmer surface waters predicted for 2024 may be favorable for POP larval survival. 
+Ecosystem: While optimal temperatures for POP life stages are not known, it is reasonable to expect that the 2023 average ocean temperatures at depth on the shelf edge (for adults) and surface temperatures (for larvae) were adequate for POP.  POP are semi-demersal/pelagic, outer shelf and continental slope (150-420 m depths) dwellers as adults, with a pelagic then inshore benthic juvenile stage (age 1 to 3) in the Gulf of Alaska (GOA) (Carlson and Haight 1976, Love et al. 2002, Rooper and Bolt 2005, Rooper et al. 2007, NPFMC 2010). There is evidence that POP are being observed higher in the water column, potentially a result of an expanding population. As warm spring temperatures are favorable for larval survival (Doyle 2009), cooler spring to above average summer temperatures  varying from 5.8°C (WGOA Bottom Trawl Survey, O’Leary 2023) to 10.5°C (Icy Strait, SEAK, Fergusson 2023) were cooler than optimal, but not considered detrimental. While optimal temperatures are not known for adults, there is no indication of concern given bottom temperatures along the shelf edge in the GOA cooled to average in 2023 (AFSC longline survey: Siwicke 2023). Surface temperatures are predicted to warm in late winter/early spring of 2024, in alignment with El Niño conditions (Bond 2023). These warmer surface temperatures in April/May (larval release) may be favorable for larval survival. As it takes time for warm surface waters to extend to depth, shelf bottom temperatures are not expected to warm in the spring. 
 
-Potential competition levels with juvenile sablefish and pink salmon are unknown.
+Prey: Planktivorous foraging conditions were average to below average across the GOA in 2023. The primary prey of the adult Pacific Ocean Perch include calanoid copepods, euphausiids, myctophids, and miscellaneous prey in the GOA (Byerly 2001, Yang 2000, Yang 2003). POP body condition increased to average in 2023 after below average condition (i.e. lower weights at length) since 2015 (Bottom Trawl Survey, O’Leary, 2023b). The timing of this declining trend matches the time frame of increasing POP population since the 2014-2016 marine heatwave and could be explained by prey availability and competition within an expanding population. Zooplankton biomass in the WGOA progressed from below average in the spring (lower calanoid copepod biomass and higher euphausiid biomass) to improved conditions in the summer (above average biomass of large calanoid copepods and euphausiids, but continued lower small copepod biomass; Shelikof St., Kimmel 2023, and Seward Line, Hopcroft 2023). Summer planktivorous foraging conditions were somewhat improved with above average large calanoid copepod and euphausiid biomass, but continued lower small copepod biomass (Shelikof, Kimmel 2023). Eastern GOA inside waters had below average total zooplankton biomass, although euphuasiids were above average here as in the western GOA. Planktivorous seabird reproductive success, an indicator of zooplankton availability and nutritional quality, was approximately average south of Kodiak (Chowiet Isl.), and in the central GOA (Middleton Island on shelf edge off Seward) (Drummond 2023, Whelan 2023), and above average in the EGOA (St. Lazaria Isl.).
 
-Regionally, zooplankton trends varied from the western to eastern GOA.
+Predators & Competitors: Predation pressure is considered moderate and competition may have increased in 2023. Predators of juvenile POP include Pacific halibut, arrowtooth flounder, seabirds, rockfish, salmon, and lingcod (Moss 2016). Predators of adults include Pacific halibut, sablefish, and sperm whales (Moss 2016). Halibut and arrowtooth flounder populations remain low relative to previous levels, and, in general, there is no cause to suspect increased predation pressure on larval or adult demersal shelf rockfish. Potential competitors include large returns of pink salmon (Whitehouse, 2023, Vulstek, 2023), a relatively large and increasing population of walleye pollock, other POP as the population continues to increase, and continued large year classes of juvenile sablefish (Goethell 2023). POP are being found shallower in the water column, increasing their habitat overlap and potential competition for zooplankton prey with walleye pollock. 
 
-Potential competitors are large year classes of juvenile sablefish (2016, 2018) and a pink salmon. Halibut and arrowtooth flounder populations remain low relative to previous levels, and, in general, there is no cause to suspect increased predation pressure on larval or adult demersal shelf rockfish.
 
 *Environmental and ecosystem effects for POP are scored as Level 1 (normal concern)*.
  
+
+#### References for Environmental & Ecosystem Considerations
+Bond, N. 2023. Seasonal Projections from the National Multi-Model Ensemble (NMME). In Ferriss, B., 2023. Ecosystem Status Report 2023: Gulf of Alaska, Stock Assessment and Fishery Evaluation Report, North Pacific Fishery Management Council, 1007 West Third, Suite 400, Anchorage, Alaska 99501.
+Byerly, M.M. 2001. Ecology of age-1 copper rockfish (Sebastes caurinus) in vegetated habitats of Sitka Sound, Alaska. M.S. Thesis. University of Alaska Fairbanks, Juneau, Alaska.
+Carlson, H.R., and R.E. Haight. 1976. Juvenile life of Pacific ocean perch, Sebastes alutus, in coastal fiords of southeastern Alaska: their environment, growth, food habits, and schooling behavior. Trans. Am. Fish. Soc. 105:191-201.
+Danielson, S., and R. Hopcroft. 2023. Ocean temperature synthesis: Seward line may survey. In Ferriss, B., 2023. Ecosystem Status Report 2023: Gulf of Alaska, Stock Assessment and Fishery Evaluation Report, North Pacific Fishery Management Council, 1007 West Third, Suite 400, Anchorage, Alaska 99501.
+Doyle, M. J., Picquelle, S. J., Mier, K. L., Spillane, M. C., Bond, N. A. 2009. Larval fish abundance and physical forcing in the Gulf of Alaska, 1981-2003. Prog. Ocean. 80(3-4): 163-187.
+Drummond, B., Kettle, A. and Renner, H. 2023. Seabird synthesis: Alaska Maritime National Wildlife Refuge data.  In Ferriss, B., 2023. Ecosystem Status Report 2023: Gulf of Alaska, Stock Assessment and Fishery Evaluation Report, North Pacific Fishery Management Council, 1007 West Third, Suite 400, Anchorage, Alaska 99501.
+Fergusson, E. and Strasburger, W. 2023. Long-term trends in zooplankton densities in Icy Strait, Southeast Alaska. In Ferriss, B., 2023. Ecosystem Status Report 2023: Gulf of Alaska, Stock Assessment and Fishery Evaluation Report, North Pacific Fishery Management Council, 1007 West Third, Suite 400, Anchorage, Alaska 99501.
+Fergusson, E. and Strasburger, W. 2023. Ocean temperature synthesis: Southeast Coastal Monitoring Survey. In Ferriss, B., 2023. Ecosystem Status Report 2023: Gulf of Alaska, Stock Assessment and Fishery Evaluation Report, North Pacific Fishery Management Council, 1007 West Third, Suite 400, Anchorage, Alaska 99501.
+Hinckley, S., et al. 2019. Connectivity between spawning and nursery areas for Pacific cod (Gadus macrocephalus) in the Gulf of Alaska. Deep Sea Research Part II: Topical Studies in Oceanography 165 (2019): 113-126.
+Hopcroft, R. 2023. Seward Line: Large Copepod & Euphausiid Biomass. In Ferriss, B., 2023. Ecosystem Status Report 2023: Gulf of Alaska, Stock Assessment and Fishery Evaluation Report, North Pacific Fishery Management Council, 1007 West Third, Suite 400, Anchorage, Alaska 99501.
+Kimmel, D., Axler, K., Cormack, B., Crouser, D., Fennie, W., Keister, J., Lamb, J., Pinger, C., Rogers, L., and Suryan, R. 2023. Current and Historical Trends for Zooplankton in the Western Gulf of Alaska. In Ferriss, B., 2023. Ecosystem Status Report 2023: Gulf of Alaska, Stock Assessment and Fishery Evaluation Report, North Pacific Fishery Management Council, 1007 West Third, Suite 400, Anchorage, Alaska 99501.
+Love, M.S., M. Yoklavich, and L. Thorsteinson. 2002. The rockfishes of the northeast Pacific. U. of California Press. 405 pp.
+Major, Richard L., and Herbert H. Shippen. 1970. Synopsis of biological data on Pacific ocean perch, Sebastodes alutus. FAO Fisheries Synopsis no.79
+Monnahan, C.C., Dorn, M.W., Correa, G.M., Deary, A.L., Ferriss, B.E., Levine, M., McGowan, D.W., Rogers, L., Shotwell, S.K., Tyrell, A. and Zador, S. 2023. Assessment of the walleye pollock stock in the Gulf of Alaska. In Stock assessment and fishery evaluation report for the groundfish resources of the Gulf of Alaska, North Pacific Fishery Management Council, 1007 West Third, Suite 400, Anchorage, Alaska 99501.
+Morgan, C.A., B.R., Beckman, L.A. Weitkamp, and K.L. Fresh. 2019. Recent ecosystem disturbance in the Northern California Current. Fisheries, 44(10), pp.465-474.
+Moss, J. H., et al. 2016. Surviving the Gauntlet: A comparative study of the pelagic, demersal, and spatial linkages that determine groundfish recruitment and diversity in the Gulf of Alaska ecosystem.  NPRB GOA Project G81 Upper Trophic Level Final Report). Anchorage, AK: North Pacific Research Board. NWAFC Processed Rep (2016): 88-21.
+NPFMC (North Pacific Fishery Management Council). 2010. Essential Fish Habitat (EFH): 5-year review for 2010, Summary Report. North Pacific Fishery Management Council, 605 W. 4th Ave, suite 306.  Anchorage, AK 99501.
+O’Leary, C.  2023a. Ocean temperature synthesis: Bottom trawl survey. In Ferriss, B., 2023. Ecosystem Status Report 2023: Gulf of Alaska, Stock Assessment and Fishery Evaluation Report, North Pacific Fishery Management Council, 1007 West Third, Suite 400, Anchorage, Alaska 99501.
+O’Leary, C. and Rohan, S. 2023b. Gulf of Alaska Groundfish Condition. In Ferriss, B., 2023. Ecosystem Status Report 2023: Gulf of Alaska, Stock Assessment and Fishery Evaluation Report, North Pacific Fishery Management Council, 1007 West Third, Suite 400, Anchorage, Alaska 99501.
+Rooper, C.N. , J.L. Boldt, and M. Zimmermann. 2007. An assessment of juvenile Pacific Ocean perch (Sebastes alutus) habitat use in a deepwater nursery.  Estuarine, Coastal and Shelf Science 75:371-380
+Rooper, C.N. and J.L. Boldt. 2005. Distribution of juvenile Pacific ocean perch Sebastes alutus in the Aleutian Islands in relation to benthic habitat. Alaska Fisheries Research Bulletin 11(2):102-112.
+Siwicke, K. 2023. Ocean temperature synthesis: Longline survey. In Ferriss, B., 2023. Ecosystem Status Report 2023: Gulf of Alaska, Stock Assessment and Fishery Evaluation Report, North Pacific Fishery Management Council, 1007 West Third, Suite 400, Anchorage, Alaska 99501.
+Vulstek, S., Russell, J. R. 2023. Trends in survival of coho, sockeye, and pink salmon from Auke Creek, Southeast Alaska. In Ferriss, B., 2023. Ecosystem Status Report 2023: Gulf of Alaska, Stock Assessment and Fishery Evaluation Report, North Pacific Fishery Management Council, 1007 West Third, Suite 400, Anchorage, Alaska 99501.
+Whelan, S., Hatch, S.A., Arimitsu, M., and Piatt, J.F. 2023. Seabird breeding performance on Middleton Island. In Ferriss, B., 2023. Ecosystem Status Report 2023: Gulf of Alaska, Stock Assessment and Fishery Evaluation Report, North Pacific Fishery Management Council, 1007 West Third, Suite 400, Anchorage, Alaska 99501.
+Yang, M., and M.W. Nelson. 2000. Food habits of the commercially important groundfishes in the Gulf of Alaska in 1990, 1993, and 1996. U. S. Dep. Commer. NOAA Tech. Memo. NMFS-AFSC- 112, 174 p.
+Yang, M-S. 2003. Food habits of important groundfishes in the Aleutian Islands in 1994 and 1997. U.S. Dep. Commer., AFSC Processed Report 203-07., 233 p.
+ 
+
 
 ### Fishery performance
 
