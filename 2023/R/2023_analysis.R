@@ -360,7 +360,7 @@ width = 6, height =4 , dpi = 500)
 # create figures ----
 
 
-
+## catch with inset
 catch <- read.csv(here(year,'data','output','fsh_catch.csv')) %>% 
 mutate(catch = catch/1000)
 cplot1<-ggplot(catch, aes(x = year, y =catch)) +
@@ -380,6 +380,57 @@ print(cplot2, vp = vp)
 dev.off()
  
 
+ ## catch fits
+png(filename=here::here(year,'mgmt', curr_mdl_fldr, "figs", 
+                              "catch_fits.png"), 
+    width = 6, height = 4, units = 'in', type ="cairo", res = 200)
+catch_obspred <- read.csv(here::here(year,'mgmt',curr_mdl_fldr,'processed','catch.csv')) %>% 
+ reshape2::melt(id = 'year')
+ ggplot(data = NULL, aes(x = year, y =value/1000, color = variable)) +
+  geom_line(data=subset(catch_obspred, variable == 'pred')) + 
+  geom_point(data=subset(catch_obspred, variable != 'pred')) + 
+  scale_color_manual(values = c('grey22','blue'), labels = c('Observed','Predicted'))+
+  theme(legend.position = 'top') +
+  labs(x = 'Year', y = 'Catch (t)', color = '')
+dev.off()
+
+## projection stuff 
+
+pdt <- data.frame(read.table(here::here(year,'mgmt',curr_mdl_fldr,'proj',"goa_pop_out","bigfile.out"), header=TRUE))
+pdt.long <- pivot_longer(pdt, cols=c(-Alternative, -Spp, -Yr), names_to='metric') %>%
+  mutate(Alternative=factor(Alternative)) %>% group_by(Yr, Alternative, metric) %>%
+  dplyr::summarize(med=median(value), lwr=quantile(value, .1), upr=quantile(value, .9), .groups='drop')
+g <- ggplot(pdt.long, aes(Yr,  med, ymin=lwr, ymax=upr, fill=Alternative, color=Alternative)) +
+  facet_wrap('metric', scales='free_y') + ylim(0,NA) +
+  geom_ribbon(alpha=.4) + theme_bw() +
+  labs(x='Year', y='Estimated 80% CI')
+
+## SB vs Year custom plot for ppt
+
+# proj_scenario0[,1:3] %>%
+#   filter(V4 == 'SSBMean') %>%
+pdt.long %>%
+  filter(metric == 'SSB' & Alternative %in% c(1,4)) %>%
+  ggplot(., aes(x = Yr, y = med, color = Alternative)) +
+  theme(legend.position = 'none') +
+  geom_point() +
+  geom_ribbon(aes(ymin = lwr, ymax = upr, fill = Alternative), color =NA, alpha = 0.2) +
+  scale_y_continuous(limits = c(0,100)) +
+   scale_x_continuous(limits = c(2022,2040), labels = seq(2022,2042,4),
+                     breaks =  seq(2022,2042,4)) +
+  scale_color_manual(values = c('dodgerblue','grey44')) +
+  scale_fill_manual(values = c('dodgerblue','grey44')) +
+  geom_hline(yintercept = 37.033, linetype = 'dotted') +
+  geom_hline(yintercept = 32.404) +
+  geom_text(x = 2035, y = 85, label = 'Alt. 4 (avg F)', color = 'grey44', size = 2) + 
+  geom_text(x = 2035, y = 45, label = 'Alt. 1 (maxABC)', color = 'dodgerblue', size = 2) + 
+  geom_text(x = 2023, y = 40, label = 'SB40', size = 2) + 
+  geom_text(x = 2023, y = 30, label = 'SB35', size = 2) + 
+ 
+  labs(y = 'SSB (1000 t)', x = 'Projection Year')
+
+ggsave(last_plot()  , file = here::here('figs','proejction_2Alt.png'), width = 6, height = 4, unit = 'in', dpi = 520)
+```
 
 ## comp data fits ----
 ## to use these functions it will want to look into processed/ for the fac
