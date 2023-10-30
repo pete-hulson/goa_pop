@@ -397,7 +397,7 @@ dev.off()
 ## projection stuff 
 
 pdt <- data.frame(read.table(here::here(year,'mgmt',curr_mdl_fldr,'proj',"goa_pop_out","bigfile.out"), header=TRUE))
-pdt.long <- pivot_longer(pdt, cols=c(-Alternative, -Spp, -Yr), names_to='metric') %>%
+pdt.long <- tidyr::pivot_longer(pdt, cols=c(-Alternative, -Spp, -Yr), names_to='metric') %>%
   mutate(Alternative=factor(Alternative)) %>% group_by(Yr, Alternative, metric) %>%
   dplyr::summarize(med=median(value), lwr=quantile(value, .1), upr=quantile(value, .9), .groups='drop')
 g <- ggplot(pdt.long, aes(Yr,  med, ymin=lwr, ymax=upr, fill=Alternative, color=Alternative)) +
@@ -406,31 +406,88 @@ g <- ggplot(pdt.long, aes(Yr,  med, ymin=lwr, ymax=upr, fill=Alternative, color=
   labs(x='Year', y='Estimated 80% CI')
 
 ## SB vs Year custom plot for ppt
-
-# proj_scenario0[,1:3] %>%
-#   filter(V4 == 'SSBMean') %>%
+png(filename=here::here(year,'mgmt', curr_mdl_fldr, "figs", 
+                              "proj_sb.png"), 
+    width = 6, height = 4, units = 'in', type ="cairo", res = 200)
 pdt.long %>%
   filter(metric == 'SSB' & Alternative %in% c(1,4)) %>%
   ggplot(., aes(x = Yr, y = med, color = Alternative)) +
   theme(legend.position = 'none') +
   geom_point() +
   geom_ribbon(aes(ymin = lwr, ymax = upr, fill = Alternative), color =NA, alpha = 0.2) +
-  scale_y_continuous(limits = c(0,100)) +
-   scale_x_continuous(limits = c(2022,2040), labels = seq(2022,2042,4),
-                     breaks =  seq(2022,2042,4)) +
+  scale_y_continuous(limits = c(100,260)) +
+   scale_x_continuous(limits = c(2023,2035), labels = seq(2023,2035,2),
+                     breaks =  seq(2023,2035,2)) +
   scale_color_manual(values = c('dodgerblue','grey44')) +
   scale_fill_manual(values = c('dodgerblue','grey44')) +
-  geom_hline(yintercept = 37.033, linetype = 'dotted') +
-  geom_hline(yintercept = 32.404) +
-  geom_text(x = 2035, y = 85, label = 'Alt. 4 (avg F)', color = 'grey44', size = 2) + 
-  geom_text(x = 2035, y = 45, label = 'Alt. 1 (maxABC)', color = 'dodgerblue', size = 2) + 
-  geom_text(x = 2023, y = 40, label = 'SB40', size = 2) + 
-  geom_text(x = 2023, y = 30, label = 'SB35', size = 2) + 
- 
+  geom_hline(yintercept = 137.447, linetype = 'dotted') + ## b40
+  geom_hline(yintercept = 120.266) + ## b35
+  geom_text(x = 2030, y = 200, label = 'Alt. 4 (avg F)', 
+  color = 'grey44', size = 2) + 
+  geom_text(x = 2030, y = 160, label = 'Alt. 1 (maxABC)', 
+  color = 'dodgerblue', size = 2) + 
+  geom_text(x = 2024, y = 140, label = 'SB40', size = 2) + 
+  geom_text(x = 2024, y = 115, label = 'SB35', size = 2) + 
   labs(y = 'SSB (1000 t)', x = 'Projection Year')
 
-ggsave(last_plot()  , file = here::here('figs','proejction_2Alt.png'), width = 6, height = 4, unit = 'in', dpi = 520)
-```
+dev.off()
+
+
+## retro recruitment
+retro_mc <- read.csv(here::here(year,'mgmt',curr_mdl_fldr,'processed',"retro_mcmc.csv"))
+yrs <- 1961:2023
+max_year = 2023
+peels = 10
+q_name <- purrr::map_chr(c(.025,.975), ~ paste0("q", .x*100))
+q_fun <- purrr::map(c(.025,.975), ~ purrr::partial(quantile, probs = .x, na.rm = TRUE)) %>%
+    purrr::set_names(nm = q_name)
+
+  retro_mc %>%
+    dplyr::select(paste0("log_rec_dev_", yrs), retro_year) %>%
+    tidyr::pivot_longer(c(-retro_year), values_to = "biomass") %>%
+    dplyr::mutate(year = as.numeric(stringr::str_extract(name, "[[:digit:]]+")),
+                  biomass = biomass / 1000) %>%
+    dplyr::group_by(year, retro_year) %>%
+    dplyr::summarise_at(dplyr::vars(biomass), tibble::lst(!!!q_fun, median)) %>%
+    dplyr::mutate(Retro = factor(retro_year)) %>%
+    dplyr::ungroup() -> dat
+
+
+  dat %>%
+    dplyr::select(year, retro_year, median) %>%
+    dplyr::group_by(year) %>%
+    dplyr::mutate(pdiff = (median - median[retro_year==max_year]) /
+                    median[retro_year==max_year]) %>%
+    tidyr::drop_na() %>%
+    dplyr::filter(year %in% (max_year-peels):max_year) %>%
+    dplyr::ungroup() %>%
+    dplyr::filter(year == retro_year, year !=max_year) %>%
+    dplyr::summarise(rho = mean(pdiff)) %>%
+    dplyr::pull(rho) -> ssb_rho
+
+      png(filename=here::here(year, 'mgmt',curr_mdl_fldr, "figs", "retro_rec.png"), width = 6.5, height = 6.5,
+      units = "in", type ="cairo", res = 200)
+
+    dat %>%
+    # filter(retro_year==2022) %>%
+    ggplot2::ggplot(ggplot2::aes(year, median, color = Retro, group = Retro)) +
+    ggplot2::geom_line() +
+    ggplot2::geom_ribbon(ggplot2::aes(ymin = q2.5, ymax = q97.5, fill = Retro),
+                         alpha = .05, color = NA) +
+    ggplot2::ylab("Log Rec-Dev \n") +
+    ggplot2::xlab("\nYear") +
+    ggplot2::expand_limits(y = 0) +
+    scico::scale_fill_scico_d(palette = "roma") +
+    scico::scale_color_scico_d(palette = "roma") +
+    funcr::theme_report() +
+    ggplot2::scale_x_continuous(breaks = afscassess::tickr(dat, year, 10, start = 1960)$breaks,
+                                labels = afscassess::tickr(dat, year, 10, start = 1960)$labels) +
+    ggplot2::annotate(geom = "text", x=1963, y=Inf, hjust = -0.05, vjust = 2,
+                      label = paste0("Mohn's rho = ", round(ssb_rho, 3)),
+                      family = "Times") +
+    ggplot2::theme(legend.position = "none") 
+
+dev.off()
 
 ## comp data fits ----
 ## to use these functions it will want to look into processed/ for the fac
