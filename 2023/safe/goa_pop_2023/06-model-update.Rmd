@@ -51,7 +51,7 @@ A comparison of these values is as follows:
 | $t_0$, age at weight zero                                                                          | -0.37             | -0.38         |
 | $a$, $b$, slope and intercept of linear relationship between sd(length at age) and age, post 1980s | -0.02, 2.18       | -0.02, 2.17   |
 
-An exploratory model was run wherein the 2021 size-at-age probability matrix for 1980-present was used instead of the updated matrix; estimated female spawning biomass and total (2+ biomass) for `r year+1` varied by less than `r max(c(round(100*(227991-227630)/227991,2),round(100*(649941-649010)/649941,2)))`%.
+An exploratory model was run wherein the 2021 size-at-age probability matrix for 1980-present was used instead of the updated matrix; estimated female spawning biomass and total (2+ biomass) for `r year+1` varied by less than `r max(c(round(100*(227991-227630)/227991,2),round(100*(649941-649010)/649941,2)))`%. Therefore, updating the length and age data from the 2023 trawl survey had minimal impact on model estimates of biomass.
  
 
 ## Parameters Estimated Inside the Assessment Model
