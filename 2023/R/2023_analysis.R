@@ -708,10 +708,10 @@ dev.off()
 png(filename=here::here(year,'mgmt', curr_mdl_fldr, "figs", 
                         "recdevs.png"), 
     width = 6, height = 4, units = 'in', type ="cairo", res = 200)  
-bind_rows(read.csv(here::here(year,'mgmt',model,'processed','parameter_summary_devs.csv')) %>%
+bind_rows(read.csv(here::here(year,'mgmt',curr_mdl_fldr,'processed','parameter_summary_devs.csv')) %>%
   filter(grepl('rec',variable)) %>%
   mutate(src = '2023 Model'),
-  read.csv(here::here(year,'base','processed','parameter_summary_devs.csv')) %>%
+read.csv(here::here(year,'mgmt',prev_mdl_fldr,'processed','parameter_summary_devs.csv')) %>%
   filter(grepl('rec',variable)) %>%
     mutate(src = '2021 Model')) %>%
   ggplot2::ggplot(., aes(x = year, color = src)) +
