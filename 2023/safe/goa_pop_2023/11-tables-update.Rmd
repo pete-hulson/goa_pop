@@ -37,7 +37,7 @@ flextable::regulartable(read.csv(here::here(year, 'data','output','fsh_length_co
                             names_from = c(year,n_h),
                             names_glue = "{year} ({n_h})",
                             values_from = value)) %>%
-  flextable::set_caption("Fishery length frequency data for POP in the GOA for the most recent 10 complete years used in the model. Input sample sizes (sqaure root of nominal sample size scaled with a maximum of 100) are in parentheses.") %>%
+  flextable::set_caption("Fishery length frequency data for POP in the GOA for the most recent 10 complete years used in the model. Input sample sizes (square root of nominal sample size scaled with a maximum of 100) are in parentheses.") %>%
   flextable::colformat_double(j = 2:11,digits = 3) %>%
   flextable::compose(i = 30, j = 1, flextable::as_paragraph('45+')) %>%
   flextable::font(fontname = "Times New Roman", part = "all") %>% 
