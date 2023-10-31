@@ -136,7 +136,7 @@ flextable::regulartable(read.csv(here::here(year, 'mgmt',model,'processed','mcev
   flextable::set_caption("Estimated time series of fully-selected fishing mortality rate, age 2+ Recruitment, female spawning biomass, and total biomass (2+) for POP in the GOA. Values shown are the median and 95% credible intervals (parentheses) from the MCMC estimated posterior distribution.") %>%
   flextable::set_header_labels(values = c('Year',
                                           'Fully Selected F', 
-                                          'Age 2+ Recruits (1000s)',
+                                          'Age 2+ Recruits (millions)',
                                           'SSB (kt)',
                                           'Total 2+ Biomass (kt)')) %>%
   flextable::width(j = c(2,5), width = 1.5, unit = 'in') %>%
