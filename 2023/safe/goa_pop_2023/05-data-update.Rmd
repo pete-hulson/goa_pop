@@ -19,7 +19,7 @@ data.frame(Source = c(rep("NMFS Groundfish survey", 2),
                     "Catch",
                     "Age composition",
                     "Length composition"),
-           Years = c("1984-1999 (triennial), 2001-2023 (biennial)",
+           Years = c("1990-1999 (triennial), 2001-2023 (biennial)",
                      "1990, 1993, 1996, 1999, 2003, 2005, 2007, 2009, 2011, 2013, 2015, 2017, 2019, 2021",
                      "1961-2023",
                      "1990, 1998-2002, 2004, 2005, 2006, 2008, 2010, 2012, 2014, 2016, 2018, 2020, 2022",
@@ -43,7 +43,7 @@ Catches as used in the model are shown in Table \@ref(tab:commcatch); discards a
 
 ## Survey
 
-Survey biomass estimates and associated sampling variability (annual CVs) are shown in Table \@ref(tab:survobs). Suvey compositional data (survey catch-at-age and associated input sample sizes) are shown in Table \@ref(tab:survagecompst).
+Survey biomass estimates and associated sampling variability (annual CVs) are shown in Table \@ref(tab:survobs). Suvey compositional data (survey catch-at-age and associated input sample sizes) are shown in Table \@ref(tab:survagecompst). This assessment includes a new survey observation for 2023, which was higher and more uncertain than the previous ten years of survey data. The increased uncertainty is attributed to a small number of unusually large trawls in the eastern Gulf.
 
 ## Other time series data used in the assessment
 
