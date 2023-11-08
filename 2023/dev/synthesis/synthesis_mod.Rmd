@@ -114,7 +114,15 @@ This is the first time the scale is in line between the models.
 I also realized that the maturity p2 was supposed to be logged, so instead of 0.66 used -0.4 for the slope.
 ```{r}
 mod100_09 <- r4ss::SS_output(here('2023','ss','v-100.09'))
-SS_plots(mod100_09)
+r4ss::SS_plots(mod100_09)
+png(here('2023','mgmt','2020.1-2023','figs','survey_age_data.png'),
+width = 10, height = 7, unit = 'in', res = 400)
+SSplotComps(mod100_09, subplot = 1,fleets = 2, kind = 'AGE', datonly = TRUE)
+dev.off()
+png(here('2023','mgmt','2020.1-2023','figs','fsh_age_data.png'),
+width = 10, height = 7, unit = 'in', res = 400)
+SSplotComps(mod100_09, subplot = 1,fleets = 1, kind = 'AGE', datonly = TRUE)
+dev.off()
 
 mod09sb <- mod100_09$derived_quants[grep('SSB_',mod100_09$derived_quants$Label),] %>%  
 mutate(variable = 'SpawnBio',

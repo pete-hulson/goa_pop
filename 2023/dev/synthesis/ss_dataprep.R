@@ -53,10 +53,10 @@ write.csv(trawl0,here('2023','data','for_ss',paste0(Sys.Date(),'-cpue.csv')), ro
 # bins 2-25
 # it looks like the sqrt(nsamples) is what gets passed to the likelihood function
 # these are in the 100s-1000s; nhauls is unused
-fsh_age0 <- read.csv(here('2023','data','raw','fsh_specimen_data.csv'))
+fsh_age0 <- read.table(here('2023','data','raw','fsh_specimen_data.txt'), sep = ',', header = T)
 
 fsh_age1 <- fsh_age0 %>%
-  filter(year %in% c(1990,1998:2002,2004:2006,seq(2008,2020,2))) %>%
+  filter(year %in% c(1990,1998:2002,2004:2006,seq(2008,2022,2))) %>%
   mutate(age = ifelse(age > 25,25,age)) %>% 
   group_by(year, age) %>%
   summarise(n =n())
@@ -71,7 +71,7 @@ fsh_age3 <- merge(fsh_age2, fsh_age1, by = 'year') %>%
                      names_from = age, values_from = freq,
                      values_fill = 0) 
 
-fsh_age_plot <- melt(fsh_age3, id = 'year')
+fsh_age_plot <- reshape2::melt(fsh_age3, id = 'year')
 
 ggplot(fsh_age_plot, aes(x = variable, y = value )) +
   geom_bar(stat = 'identity')+
@@ -89,7 +89,7 @@ fsh_age3 %>% mutate(`2` = 0,
 srv_age0 <- read.csv(here('2023','data','raw','bts_specimen_data.csv'))
 srv_age1 <- srv_age0 %>%
   filter(year %in% c(1990, 1993, 1996 ,1999 ,2003, 2005 ,2007, 2009 ,
-                     2011 ,2013, 2015, 2017 ,2019)) %>%
+                     2011 ,2013, 2015, 2017 ,2019,2021)) %>%
   filter(!is.na(age)) %>%
   mutate(age = ifelse(age > 25,25,age)) %>% 
   mutate(age = ifelse(age<2,2,age)) %>% 
@@ -105,7 +105,7 @@ srv_age3 <- merge(srv_age2, srv_age1, by = 'year') %>%
                      names_from = age, values_from = freq,
                      values_fill = 0) 
 
-srv_age_plot <- melt(srv_age3, id = 'year')
+srv_age_plot <- reshape2::melt(srv_age3, id = 'year')
 
 ggplot(srv_age_plot, aes(x = variable, y = value )) +
   geom_bar(stat = 'identity')+
