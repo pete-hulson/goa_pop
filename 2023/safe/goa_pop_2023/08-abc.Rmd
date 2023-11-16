@@ -30,9 +30,7 @@ Female spawning biomass for `r year+1` is estimated at `r prettyNum(ssb_24,big.m
 
 #### Standard Harvest Scenarios (Harvest Projections) {#harvestprojections}
 
-A standard set of projections is required for each stock managed under Tier 3 of Amendment 56. This set of projections encompasses seven harvest scenarios designed to satisfy the requirements of Amendment 56, the National Environmental Policy Act, and the Magnuson-Stevens Fishery Conservation and Management Act (MSFCMA). They are as follows; the modifications made for the present assessment are indicated where appropriate.
-
-The first five scenarios are designed to provide a range of harvest alternatives that are likely to bracket the final TAC for `r year`, are as follow (“max$F_{ABC}$” refers to the maximum permissible value of $F_{ABC}$ under Amendment 56):
+A standard set of projections is required for each stock managed under Tier 3 of Amendment 56. Five of the seven standard scenarios support the alternative harvest strategies analyzed in the Alaska Groundfish Harvest Specifications Final Environmental Impact Statement. They are as follows (“max$F_{ABC}$” refers to the maximum permissible value of $F_{ABC}$ under Amendment 56):
 
 +   *Scenario 1*:  In all future years, $F$ is set equal to max$F_{ABC}$ (Rationale:  Historically, TAC has been constrained by ABC, so this scenario provides a likely upper limit on future TACs.)
 
