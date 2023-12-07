@@ -1,3 +1,17 @@
+read.csv(here::here('2023', 'mgmt','2020.1-2023','processed','mceval_summary.csv')) %>%
+
+  dplyr::mutate(year = as.character(year), 
+                median = ifelse(median<1,signif(median,2),round(median,0))) %>%
+  dplyr::mutate(lower = ifelse(lower<1,signif(lower,2),round(lower,0))) %>%
+  dplyr::mutate(upper = ifelse(upper<1,signif(upper,2),round(upper,0))) %>%
+  dplyr::mutate(value = median) %>%
+  
+  dplyr::filter(variable %in% c('Frate','tot_biom','spawn_biom', 'spawn_biom_proj','tot_biom_proj', 'age2_recruits') & year < 2025) %>%
+  dplyr::mutate(variable = gsub('_proj','',variable)) %>%
+  dplyr::select(year, variable, value) %>%
+  tidyr::pivot_wider(id_cols = variable, names_from = year, values_from = value) %>%
+  write.table(., file = here('2023/sara/values.csv'),row.names = FALSE, sep = ' ')
+
 
  report << "SARA file for Angie Greig" << endl;
 
