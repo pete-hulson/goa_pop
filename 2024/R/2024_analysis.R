@@ -45,14 +45,7 @@ afscassess::sp_switch(species)
 afscdata::goa_pop(year)
 
 # get data files together (dat and ctl) ----
-
-
-# weight-at-age
-# note from ben on these admb called functions: !!! I'm having trouble running this function via R2admb so stepped out and ran it command line, works fine if I compile it command line and then use the R2admb run function, maybe I'll pass the .exe instead of rebuilding the .tpl each year?
-afscassess::weight_at_age(year = year,
-                          admb_home = admb_home,
-                          rec_age = rec_age,
-                          area = "goa")
+## this is a truncated set of code applicable for a harvest projection only
 
 # fishery catch (note: this automates the in-year estimation)
 ## output/yld_ratio.csv has the expansion factor ($ratio) and the 3-year catch/TAC ratio ($yld)
@@ -65,178 +58,7 @@ suppressWarnings(afscassess::clean_catch(year = year,
 afscassess::bts_biomass(year = year, 
                         rmv_yrs = c(1984, 1987))
 
-# fishery age comp
-# base case (currently used)
-afscassess::fish_age_comp(year = year,
-                          exp_meth = 'marg_len',
-                          rec_age = rec_age, 
-                          plus_age = plus_age,
-                          lenbins = lengths,
-                          rmv_yrs = c(1987, 1989))
 
-# expanded comps (expanded in years with obs catch data)
-# afscassess::fish_age_comp(year = year,
-#                           exp_meth = 'exp_len',
-#                           rec_age = rec_age, 
-#                           plus_age = plus_age,
-#                           lenbins = lengths,
-#                           rmv_yrs = c(1987, 1989),
-#                           id = "exp")
-
-# bottom trawl survey age comp
-afscassess::bts_age_comp(year = year,
-                         area = "goa",
-                         rec_age = rec_age,
-                         plus_age = plus_age,
-                         rmv_yrs = c(1984,1987))
-
-# fishery size comp
-afscassess::fish_length_comp_pop(year = year,
-                                 rec_age = rec_age,
-                                 lenbins = lengths,
-                                 rmv_yrs = c(1988, 1993, 1994, 2003, 2007, 2009,
-                                  2011, 2013, 2015, 2017, 2019, 2021, 2022, 2023))
-
-# bottom trawl survey size comp (not fit to in model, used for size-age matrices)
-afscassess::bts_length_comp(year = year,
-                            area = "goa",
-                            sa_index = 2,
-                            lenbins = lengths)
-
-# 60s size-age matrix
-afscassess::size_at_age_pop_60(year = year,
-                               rec_age = rec_age,
-                               lenbins = lengths)
-
-# current size-age matrix
-afscassess::size_at_age(year = year,
-                        admb_home = admb_home,
-                        rec_age = rec_age,
-                        lenbins = lengths)
-
-# ageing error matrix
-afscassess::age_error(year = year, 
-                      reader_tester = "reader_tester.csv", 
-                      admb_home = admb_home, 
-                      species = species, 
-                      rec_age = rec_age, 
-                      plus_age = plus_age)
-
-## manually rename a file; lookup funs want "bts"
-file.rename(from=here::here(year, 'data','output','goa_ts_length_comp.csv'),
-to = here::here(year, 'data','output','goa_bts_length_comp.csv'))
-
-# concatenate dat file, for now writing it to output folder in data
-afscassess::concat_dat_pop(year = year,
-                           species = species,
-                           area = "goa",
-                           folder = "data/output",
-                           dat_name = dat_name,
-                           rec_age = rec_age,
-                           plus_age = plus_age,
-                           spawn_mo = 5)
-
-# write ctl file, for now writing it to output folder in data
-afscassess::write_ctl_pop(year = year,
-                          base_mdl_fldr = '2020.1-2021',
-                          mdl_name = "Model_1",
-                          ctl_name = dat_name,
-                          dat_name = dat_name,
-                          folder = "data/output")
-
-
-# run base model ----
-
-# write dat and ctl files to base model folder
-afscassess::concat_dat_pop(year = year,
-                           species = species,
-                           area = "goa",
-                           folder = "mgmt/2020.1-2023",
-                           dat_name = dat_name,
-                           rec_age = rec_age,
-                           plus_age = plus_age,
-                           spawn_mo = 5)
-
-afscassess::write_ctl_pop(year = year,
-                          base_mdl_fldr = '2020.1-2021',
-                          mdl_name = "Model_1",
-                          ctl_name = dat_name,
-                          dat_name = dat_name,
-                          folder = "mgmt/2020.1-2023")
-
-# run base model
-setwd(here::here(year, "mgmt", curr_mdl_fldr))
-R2admb::run_admb(mdl_name, verbose = TRUE)
-
-# run mcmc within it's own sub-folder ----
-
-# create mcmc folder and copy over model files
-
-if (!dir.exists(here::here(year, "mgmt", curr_mdl_fldr, "mcmc"))){
-  dir.create(here::here(year, "mgmt", curr_mdl_fldr, "mcmc"), recursive=TRUE)
-}
-
-file.copy(c(paste0(mdl_name, ".tpl"),
-            paste0(mdl_name, ".exe"),
-            paste0(dat_name, "_", year, ".dat"),
-            paste0(dat_name, "_", year, ".ctl"),
-            "mat.dat"),
-          here::here(year, "mgmt", curr_mdl_fldr, "mcmc"),
-          overwrite = TRUE)
-
-# set sigr to mle in ctl file (Maia - you will want to look into this at some point)
-## MK note: PH and I discussed this; fixing sigmaR after mod conditioning is pretty standard
-afscassess::write_ctl_pop(year = year,
-                          base_mdl_fldr = prev_mdl_fldr,
-                          curr_mdl_fldr = curr_mdl_fldr,
-                          mdl_name = "Model_1",
-                          ctl_name = dat_name,
-                          dat_name = dat_name,
-                          folder = paste0("mgmt/", curr_mdl_fldr),
-                          mcmc = TRUE)
-
-# run mcmc
-
-setwd(here::here(year, "mgmt", curr_mdl_fldr, "mcmc"))
-
-# for testing
-# mk note: this take 2 mins on laptop
-# mcmcruns <- 1e5
-# mcmcsave <- mcmcruns / 50
-
-# for full run
-# mk note: 2.75 hours on laptop
-mcmcruns <- 1e7
-mcmcsave <- mcmcruns / 5000
-
-R2admb::run_admb(mdl_name, verbose = TRUE, mcmc = TRUE, 
-                 mcmc.opts = R2admb::mcmc.control(mcmc = mcmcruns,
-                                                  mcsave = mcmcsave, 
-                                                  mcmcpars = 'log_mean_rec'))
-
-system(paste0(mdl_name,'.exe',' -mceval'))
-
-
-# run retrospective, returns run time for testing ----
-
-# for testing
-#mcmcruns_ret <- 10000
-#mcmcsave_ret <- mcmcruns / 5
-
-# for full run
-# mk note: 1.35 hours on laptop
- mcmcruns_ret = 500000  # Could change these, but 500,000 is a manageable number to deal with
- mcmcsave_ret = mcmcruns_ret / 250
-
-# run retro (note: there's warnings that pop up for closing unused connection, can disregard)
-suppressWarnings(afscassess::run_retro_pop(year = year, 
-                                           model = curr_mdl_fldr, 
-                                           model_name = mdl_name, 
-                                           dat_name = dat_name, 
-                                           n_retro = 10, 
-                                           mcmcon = TRUE, 
-                                           mcmc =  mcmcruns_ret, 
-                                           mcsave = mcmcsave_ret))
  
 # run projections ----
 
@@ -244,11 +66,13 @@ suppressWarnings(afscassess::run_retro_pop(year = year,
 suppressWarnings(afscassess::run_proj(st_year = year,
                                       spec = dat_name,
                                       model = curr_mdl_fldr,
-                                      on_year = TRUE))
+                                      on_year = FALSE))
 
 
 # run apportionment ----
-# requires download of egoa fractions from AKFIN (format as CSV w/o header material; colnames unchanged)
+# requires download of egoa fractions from AKFIN 
+## (format as CSV w/o header material; colnames unchanged)
+## pasted the same values from 2023 since no new survey
 afscassess::run_apport_pop(year = year,
                            model = curr_mdl_fldr)
 
@@ -256,98 +80,18 @@ afscassess::run_apport_pop(year = year,
 # process results ----
 
 # example to get model results without running mcmc
-mdl_res <- afscassess::process_results_pop(year = year,
+## should update the timestamp 
+mdl_res <- afscassess::process_results_pop(year = 2023,
                                            model_dir = here::here(year, "mgmt",curr_mdl_fldr), 
                                            modname = mdl_name,
+                                           dat_name = "goa_pop",
                                            rec_age = rec_age,
                                            plus_age = plus_age, 
                                            size_bins = lengths,
                                            mcmc = FALSE,
-                                           proj = FALSE,
-                                           on_year = TRUE)
-
-# example to get model results with mcmc, retrospective, and projection model runs
-mdl_res <- afscassess::process_results_pop(year = year,
-                                           model_dir = here::here(year, "mgmt", curr_mdl_fldr), 
-                                           modname = mdl_name,
-                                           dat_name = dat_name,
-                                           rec_age = rec_age,
-                                           plus_age = plus_age, 
-                                           size_bins = lengths,
-                                           mcmc = TRUE,
-                                           no_mcmc = mcmcruns,
-                                           mcsave = mcmcsave,
                                            proj = TRUE,
-                                           on_year = TRUE,
-                                           retro = TRUE,
-                                           retro_mcmc = TRUE,
-                                           no_mcmc_ret = mcmcruns_ret,
-                                           mcsave_ret = mcmcsave_ret)
+                                           on_year = FALSE)
 
-## Run Profiles on Base model ----
-
-## Natural Mortality
-mvec = seq(0.01,0.3,0.02)
-
-for(m in seq_along(mvec)){
-new_dir <- here::here(year, "mgmt", curr_mdl_fldr, "profiles",paste0(Sys.Date(),'-Mprofile_M=',mvec[m]))
-dir.create(new_dir)
-file.copy(from = list.files(here::here(year,'mgmt',curr_mdl_fldr), full.names = TRUE), to = new_dir, overwrite = TRUE)
-
-## populate the relevant lines in the CTL
-ctl_file <- list.files(new_dir, pattern = "*.ctl", full.names = TRUE)
-newctl <- read.delim(ctl_file, sep = ' ', header = FALSE)
-newctl$V1[which(newctl$V3 == 'mprior')] <- mvec[m]
-newctl$V1[which(newctl$V3 == 'cvmprior')] <- 0.1
-newctl$V1[which(newctl$V3 == 'ph_m')] <- -1
-newctl$V1 <- newctl$V1
-write.table(newctl, ctl_file, quote = FALSE,row.names = FALSE, col.names = FALSE)
-
-## run the new model
-setwd(new_dir)
-shell('admb Model_20_1.tpl')
-shell('Model_20_1')
-}
-
-## process all the profile runs
-mdirs <- list.files(here::here(year, "mgmt", curr_mdl_fldr, "profiles"), 
-    pattern = 'profile_M=', full.names = T, recursive = FALSE)
-
-lapply(mdirs, FUN = function(x) afscassess::process_results_pop(model_dir=x, year = year,
-modname = mdl_name, rec_age = rec_age, plus_age = plus_age, size_bins = lengths, 
-proj = FALSE, on_year = TRUE, mcmc = FALSE))
-
-m_likes <- do.call(rbind, 
- lapply(list.files(mdirs, pattern = 'likelihoods.csv', recursive = TRUE, full.names = TRUE), 
- FUN = read.csv)) %>% 
- mutate(M_fixed =as.numeric(sub('.*=', '', model))) %>%  ## pull out fixed value of M
-filter(weight !=0)
-
-min_likes_var <- m_likes %>% 
-filter(value != 0 ) %>%
-group_by(variable) %>% 
-summarise(min_value = min(value))
-
-m_likes %>%
-filter(weight != 0 & value != 0) %>%
-merge(., min_likes_var, by = 'variable') %>% 
-mutate(value_adj=ifelse(value == 0,value, value - min_value)) %>%
-select(weight, variable, M_fixed,value,value_adj )-> m_likes
-
-rich_cols <- r4ss::rich.colors.short(length(unique(m_likes$variable)), alpha = 1)
-
-ggplot(m_likes, aes(x =M_fixed, y = value_adj, color = variable )) +
-theme(legend.position = c(0.8,0.5))+
-scale_color_manual(values = c(rich_cols[2:3],
-'red',rich_cols[4:7],'black',
-rich_cols[8:10],'goldenrod')) +
-geom_line() +
-scale_y_continuous(limits = c(0,10)) +
-scale_x_continuous(limits = c(0,0.3), breaks = seq(0,0.3,0.05))+
-labs(x = 'M', y = 'NLL (scaled)', color = 'Like. Component')
-
-ggsave(file = here::here(year, "mgmt", curr_mdl_fldr, "profiles",paste0(Sys.Date(),"-Mprofile_ymax=15.png")),
-width = 6, height =4 , dpi = 500)
 
 # create figures ----
 
