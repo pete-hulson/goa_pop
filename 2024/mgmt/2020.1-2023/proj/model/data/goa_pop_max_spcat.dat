@@ -1,0 +1,17 @@
+#_Number_of_years with specified catch
+2
+# Number of species
+1
+# data files for each species
+data/goa_pop.dat
+# ABC Multipliers
+1
+# Population scalars
+1000
+# Number of TAC model categories
+1
+# TAC model indices (for aggregating)
+1
+# Catch in each future year
+2023	29794 # Finalized previous year catch
+2024	16151.4933241824 # Estimated from catch thru 2024-05-18 with expansion factor = 5.3484
