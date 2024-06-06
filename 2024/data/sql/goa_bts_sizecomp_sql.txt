@@ -1,0 +1,13 @@
+<SQL>
+SELECT
+  "SURVEY" AS "survey",
+  "YEAR" AS "year",
+  "SPECIES_CODE" AS "species_code",
+  "SUMMARY_AREA" AS "summary_area",
+  "LENGTH" AS "length",
+  "MALES" AS "males",
+  "FEMALES" AS "females",
+  "UNSEXED" AS "unsexed",
+  "TOTAL" AS "total"
+FROM (goa.sizecomp_total) "q01"
+WHERE ("SPECIES_CODE" IN (30060.0))

@@ -1,0 +1,51 @@
+<SQL>
+SELECT *
+FROM (
+  SELECT
+    "cruisejoin",
+    "region",
+    "survey_name",
+    "hauljoin",
+    "end_latitude",
+    "end_longitude",
+    "bottom_depth",
+    "abundance_haul",
+    "stratum",
+    "gear_temperature",
+    "performance",
+    "species_code",
+    "sex",
+    "length",
+    "frequency",
+    EXTRACT(year FROM "start_date") AS "year"
+  FROM (
+    SELECT
+      "...1"."CRUISEJOIN" AS "cruisejoin",
+      "...1"."REGION" AS "region",
+      "SURVEY_NAME" AS "survey_name",
+      "START_DATE" AS "start_date",
+      "...2"."HAULJOIN" AS "hauljoin",
+      "END_LATITUDE" AS "end_latitude",
+      "END_LONGITUDE" AS "end_longitude",
+      "BOTTOM_DEPTH" AS "bottom_depth",
+      "ABUNDANCE_HAUL" AS "abundance_haul",
+      "STRATUM" AS "stratum",
+      "GEAR_TEMPERATURE" AS "gear_temperature",
+      "PERFORMANCE" AS "performance",
+      "SPECIES_CODE" AS "species_code",
+      "SEX" AS "sex",
+      "LENGTH" AS "length",
+      "FREQUENCY" AS "frequency"
+    FROM (racebase.cruise) "...1"
+    LEFT JOIN (racebase.haul) "...2"
+      ON ("...1"."CRUISEJOIN" = "...2"."CRUISEJOIN")
+    LEFT JOIN (racebase.length) "...3"
+      ON ("...2"."HAULJOIN" = "...3"."HAULJOIN")
+  ) "q01"
+) "q02"
+WHERE
+  ("abundance_haul" = 'Y') AND
+  ("year" <= 2024.0) AND
+  ("region" IN ('GOA')) AND
+  ("species_code" IN (30060.0))
+ORDER BY "year"

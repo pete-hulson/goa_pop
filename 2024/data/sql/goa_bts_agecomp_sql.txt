@@ -1,0 +1,12 @@
+<SQL>
+SELECT
+  "SURVEY" AS "survey",
+  "SURVEY_YEAR" AS "survey_year",
+  "SPECIES_CODE" AS "species_code",
+  "SEX" AS "sex",
+  "AGE" AS "age",
+  "AGEPOP" AS "agepop",
+  "MEAN_LENGTH" AS "mean_length",
+  "STANDARD_DEVIATION" AS "standard_deviation"
+FROM (goa.agecomp_total) "q01"
+WHERE ("SPECIES_CODE" IN (30060.0))
