@@ -254,6 +254,23 @@ suppressWarnings(afscassess::run_proj(st_year = year,
                                       model = curr_mdl_fldr,
                                       on_year = TRUE))
 
+# Best F (for SARA files) ----
+# Use this year's model to recalculate the F for the previous year 
+## that would have produced the specified OFL for the previous year
+# provide naa, waa, etc from terminal year of model - can rip from Proj
+projdat <- readLines(here::here(year, "mgmt", curr_mdl_fldr, "proj.dat"))
+ages <- as.numeric(unlist(strsplit(projdat[35]," "))[2:length(unlist(strsplit(projdat[35]," ")))])
+naa <- as.numeric(unlist(strsplit(projdat[36]," "))[ages])
+waa <- as.numeric(unlist(strsplit(projdat[32]," "))[ages]) ## fishery WAA
+saa <-  as.numeric(unlist(strsplit(projdat[34]," "))[ages])
+mort <-  as.numeric(unlist(strsplit(projdat[26]," "))[ages])
+
+afscassess::best_f(data = data.frame(age = ages, naa, waa, saa),
+                   m = mort, 
+                   type = 1, ## one sex, one gear,
+                   f_ratio= NULL, ## only one gear
+                   last_ofl = 45580, ## last model's OFL for last year (2022 for 2022, https://meetings.npfmc.org/CommentReview/DownloadFile?p=b1e05a01-b24d-4eaa-9a99-06b118df5f57.pdf&fileName=GOA%20POP%20PRESENTATION.pdf)
+                   last_f = 0.071)
 
 # run apportionment ----
 # requires download of egoa fractions from AKFIN (format as CSV w/o header material; colnames unchanged)
