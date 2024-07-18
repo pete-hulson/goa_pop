@@ -1,0 +1,45 @@
+# Executive Summary
+
+Gulf of Alaska `r species` (*Sebastes alutus*) have historically been assessed on a biennial stock assessment schedule to coincide with the availability of new trawl survey data (odd years). 
+In 2017, the Alaska Fisheries Science Center (AFSC) participated in a stock assessment prioritization process. 
+It was recommended that Gulf of Alaska (GOA) `r species` remain on a biennial stock assessment schedule with a full stock assessment produced in even years and a partial stock assessment produced in odd years. 
+For a partial assessment, the projection model is updated with new catch information and results are used to recommend harvest levels for the next two years. 
+This incorporates the most current catch information without re-estimating model parameters and biological reference points.
+
+Gulf of Alaska `r species` are classified as a Tier 3 stock and are assessed using a statistical age-structured model.
+This assessment consists of a population model, which uses survey and fishery data to generate a historical time series of population estimates, and a projection model, which uses results from the population model to predict future population estimates and recommended harvest levels. 
+The data used in this assessment includes total catch biomass, fishery age and size compositions, trawl survey abundance estimates, and trawl survey age compositions. 
+
+## Summary of Changes in Assessment Inputs
+
+*Changes in the input data:* There were no changes made to the assessment model inputs as this is an off-cycle year. 
+New data added to the projection model included updated catch data from `r year-1` (`r c0` t) and new estimated catches for `r year`-`r year + 2`. 
+Catch data were queried on `r data_pull`. 
+The `r year` catch was estimated by increasing the observed catch by an expansion factor of `r round(yld$ratio, 3)`, which accounts for the average fraction of catch taken after `r data_pull2` in the last three complete years (`r year - 3`-`r year-1`). 
+This expansion factor increased from last year’s expansion factor of 1.036 and resulted in an estimated catch for `r year` of `r c1` t. 
+To estimate future catches, we updated the yield ratio to `r round(yld$yld, 2)`, which was the average ratio of catch to ABC for the last three complete catch years. 
+This yield ratio was multiplied by the projected ABCs from the updated projection model to generate catches of `r c2` t in `r year + 1` and `r c3` t in `r year + 2`.
+
+
+*Changes in assessment methodology:* There were no changes from the `r year-1` assessment [@Williams2022] since this is an off-cycle year.
+
+
+## Summary of Results
+
+*ABC recommendation*  
+The projected total biomass for `r year+1` is `r tot` t. 
+The recommended ABC for `r year+1` is `r abc` t, the maximum allowable ABC under Tier `r tier`. 
+This ABC is a `r perc`% decrease compared to the `r year` ABC of `r abc0` and a 1% increase from the projected 2024 ABC from the last full  assessment.
+The 2024 GOA-wide OFL for `r species` is `r ofl` t.
+The stock is not being subject to overfishing, is not currently overfished, nor is it approaching a condition of being overfished. 
+
+Reference values for GOA `r species` are summarized in the following table, with the recommended ABC and OFL values in bold.
+
+```{r, child= "01a-main_table.Rmd", eval = T}
+
+```
+
+
+```{r, child= "01b-apportionment.Rmd", eval = T}
+
+```

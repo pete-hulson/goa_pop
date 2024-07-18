@@ -5,12 +5,12 @@ params:
   species_complex: "no"
   area: "Gulf of Alaska"
   tier: 3
-author: "Maia S. Kapur, Peter-John F. Hulson, Benjamin C. Williams, Ferriss, B."
-date: "November 2023"
+author: " Benjamin C. Williams, Maia S. Kapur and Peter-John F. Hulson,"
+date: "November 2024"
 
 # don't do anything below this line unless you are cool with the consequences
 output:
-  bookdown::word_document2:
+  bookdown::html_document2:
      reference_docx: "template.docx"
      toc: false
      number_sections: false
@@ -31,11 +31,6 @@ bibliography: "safe_bibby.bib"
 csl: "fishfish.csl"
 
 ---
-
-This report may be cited as:
-Kapur, M.S., Hulson, P-J., Williams, B.C., 2023. Assessment of the Pacific Ocean Perch Stock in the Gulf of Alaska. North Pacific Fishery Management Council, Anchorage, AK. Available from https://www.npfmc.org/library/safe-reports/
-  
-
 
 ```{r setup, include=FALSE, echo = FALSE}
 # remotes::install_github("crsh/rmdfiltr")
@@ -62,105 +57,70 @@ title: `r title`
 ```{r load, warning=F, message=F, echo = FALSE}
 # load
 library(safe)
+library(officedown)
 library(here)
 library(dplyr)
 # globals
+folder = "update"
 species = params$species
-year = 2023
-date = 'October 22, 2023'
-model = '2020.1-2023'
-end_proj = year + 15
+year = yr = 2024
+data_pull = read.table(here::here(year, "data", "raw", "data_called.txt"))[2,1]
+data_pull2 = paste(months(as.Date(data_pull)), 
+                    format(as.Date(data_pull,format="%Y-%m-%d"), format = "%d"))
+catch = vroom::vroom(here::here(year, "data", "output", "fsh_catch.csv"))
+yld = vroom::vroom(here::here(year, "data", "output", "yld_rat.csv"))
+prj = readLines(here::here(year, folder, "proj", "model", "data", "pop_spcat.dat"))
 
-## read in exec summ and assign derived quants
-execsumm <-  read.csv(here::here(year,'mgmt',model,'processed','exec_summ.csv'))
-ofl_24 = execsumm[1,'ofl'] 
-b35_24 =  execsumm[1,'sb35']  # aka MSST
-ssb_24 <- execsumm[1,'ssb_proj'] # current s biomass
-tb_24 <- execsumm[1,'tb_proj'] # total biomass
-abc_22 <- 36196; abc_22p <- prettyNum(abc_22,big.mark=',') ## 2022 model's ABC for 2024
-abc_24 <- execsumm[1,'abc'] ## this year's ABC for 2024 
-yld_rat <- read.csv(here::here(year,'data','output','yld_rat.csv')) ## ratio is 2023 expansion; yld is 3 yr catch/tac avg
+c0 = safe::comma(dplyr::filter(catch, year==yr-1)$catch)
+c1 = safe::comma(round(yld$proj_catch)) # estimated catch in current year
+c2 = safe::comma(stringr::str_sub(prj[grep(year+1, prj)], 6, 10)) # proj catch year + 1
+c3 = safe::comma(stringr::str_sub(prj[grep(year+2, prj)], 6, 10)) # proj catch yera + 2
 
-## catch in 2022
-c0 <- round(as.numeric(strsplit(readLines(here::here(year,'mgmt',model,'goa_pop_2023.dat'))[47]," ")[[1]][62]))
-            
-pcatch <- readLines(here::here(year,'mgmt',model,'proj','model','data','goa_pop_spcat.dat'))[16:18] %>%
-  strsplit(.,'\t') %>% 
-  unlist() %>%
-  strsplit(.,'\\#') %>%
-  unlist()
-pcatch<- round(as.numeric(pcatch[c(2,5,8)]))
+exec_summ <- vroom::vroom(here::here(year, folder, "processed", "exec_summ.csv"))
 
-c1 <- pcatch[1] # estimated catch in current year
-c2 <- pcatch[2] # proj catch year + 1
-c3 <- pcatch[3] # proj catch year + 2
+tier = exec_summ[2,4]
+tot = safe::comma(exec_summ[3,4])
 
-## read in rema and apportionment stuff
-load(here::here(year, 'mgmt',model,'apport','2023-09-16-rema_output.rdata')) ## apport_out
-rema_props <- apport_out$proportion_biomass_by_strata
+ofl = safe::comma(exec_summ[11,4])
+ofl0 = safe::comma(exec_summ[11,3])
+sb1 = safe::comma(exec_summ[4,4])
+sb2 = safe::comma(exec_summ[4,5])
+b35 = safe::comma(exec_summ[7,4])
+b40 = safe::comma(exec_summ[6,4])
+b100 = safe::comma(exec_summ[5,4])
 
+f40 = exec_summ[8,4]
+f35 = exec_summ[10,4]
 
+# bring in as numeric
+abc = as.numeric(exec_summ[13,4])
+abc0 = as.numeric(exec_summ[13,2])
+abc01 = as.numeric(exec_summ[13,3])
 
+# calculate percents
+perc = round((abc-abc0)/abc0 * 100)
+perc1 = round((abc-abc01)/abc01 * 100)
 
-## load three relevant tables to env(abc_apport, abc_apport_wyax, ofl_apport)
-invisible(lapply(list.files(here::here(year, 'mgmt',model,'processed'),pattern = '_apport',full.names = TRUE), 
-       FUN = function(x){
-         y <- read.csv(x) 
-         assign(x=gsub('.csv','',basename(x)), value  =y, envir = .GlobalEnv);rm(y);rm(x)
-       }
-))
+# change to text
+
+abc = comma(abc)
+abc0 = comma(abc0)
 ```
- 
+
+This report may be cited as:
+Williams, B.C., M.S. Kapur, and P-J F. Hulson, 2024. Assessment of the Pacific Ocean Perch Stock in the Gulf of Alaska. North Pacific Fishery Management Council, Anchorage, AK. Available from https://www.npfmc.org/library/safe-reports/
+  
+  
 ```{r, child="01-summary.Rmd", eval = T}
 ```
 
 ```{r, child="02-responses.Rmd", eval = T}
 ```
-
-```{r, child="03-intro-update.Rmd", eval = T}
-```
-
-```{r, child="04-fishery-update.Rmd", eval = T}
-```
-
-```{r, child="05-data-update.Rmd", eval = T}
-```
-
-```{r, child="06-model-update.Rmd", eval = T}
-```
-
-```{r, child="07-results-update.Rmd", eval = T}
-```
-
-```{r, child="08-abc.Rmd", eval = T}
-```
-
-```{r, child="09-ecosystem.Rmd", eval = T}
-```
-
-```{r, child="10-gaps.Rmd", eval = T}
-```
-
 \pagebreak
-
 \allsectionsfont{\centering}
 # References
 <div id="refs"></div>
 
 
-```{r, child="11a-auxiliaryfiles.Rmd", eval = T}
+```{r, child="12-figures.Rmd", eval = T}
 ```
-
-```{r, child="11-tables-update.Rmd", eval = T}
-```
-
-```{r, child="12-figures-update.Rmd", eval = T}
-```
-
-```{r, child="15-append_cie.Rmd", eval = T}
-```
-
-```{r, child="16-append_eqs.Rmd", eval = T}
-```
-
-

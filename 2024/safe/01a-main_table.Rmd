@@ -1,0 +1,10 @@
+```{r}
+# have to muck with the data formats...
+for(i in 2:5){
+  for(j in c(3:7, 11:13)){
+  exec_summ[j,i] = comma(exec_summ[j,i])
+  }
+}
+
+safe::main_table(exec_summ, year, tier=3, c1, c2, c3)
+```

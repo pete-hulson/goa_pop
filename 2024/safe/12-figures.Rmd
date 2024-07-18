@@ -1,0 +1,11 @@
+# Figures
+
+```{r fig1, fig.cap = "Gulf of Alaska Pacific ocean perch catch/age 2+ biomass ratio with approximate 95\\% confidence intervals. Observed catch values were used for 1991-2022, the 2023 catch values were estimated using an expansion factor. The horizontal dashed line is the mean value for the entire dataset."}
+
+knitr::include_graphics(here::here(year, "figs", "catch_bio.png"))
+```
+
+```{r fig2, fig.cap = "Line plot of geostatistical and design-based model estimates of abundance for Gulf of Alaska trawl surveys. Geostatistical model (VAST) and design-based model estimates of trawl survey abundance for Pacific ocean perch in the Gulf of Alaska. Shaded areas are 95\\% confidence intervals, the dashed lines are the data means. VAST-2021 uses the default Gamma observation error settings with 500 knots, VAST-lognormal uses a lognormal error distribution and will be brought forward as the preferred survey abundance estimator in the next full assessment."}
+
+knitr::include_graphics(here::here(year, "figs", "bts_biomass.png"))
+```

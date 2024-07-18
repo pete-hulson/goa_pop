@@ -1,5 +1,5 @@
 <SQL>
-SELECT *
+SELECT "q01".*
 FROM (
   SELECT "LHS".*, "fmp_subarea", "gear_type"
   FROM (
@@ -63,7 +63,7 @@ FROM (
         "GEAR_MODIFIER_DESCRIPTION" AS "gear_modifier_description",
         "AKFIN_VDATE" AS "akfin_vdate"
       FROM (norpac.debriefed_spcomp_mv) "q01"
-    ) "q02"
+    ) "q01"
   ) "LHS"
   LEFT JOIN (
     SELECT
@@ -159,14 +159,14 @@ FROM (
         "TRIP_TARGET_NAME" AS "trip_target_name",
         "GEAR_MODIFIER_DESCRIPTION" AS "gear_modifier_description",
         "AKFIN_VDATE" AS "akfin_vdate"
-      FROM (norpac.debriefed_haul_mv) "q03"
-    ) "q04"
+      FROM (norpac.debriefed_haul_mv) "q01"
+    ) "q01"
   ) "RHS"
     ON (
       "LHS"."join_key" = "RHS"."join_key" AND
       "LHS"."haul_seq" = "RHS"."haul_seq"
     )
-) "q05"
+) "q01"
 WHERE
   ("year" <= 2024.0) AND
   ("species" IN (301.0)) AND
