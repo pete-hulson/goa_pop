@@ -2,50 +2,69 @@
 
 ## Area Allocation of Catches
 
-> The apportionment of catches for `r year+1` and `r year+2` was conducted using the REMA model using the same assumptions as in 2021. Details on the workflow to calculate apportionment are provided in [Area Allocation of Catches](#apportionment).
+> The apportionment of catches for `r year+1` and `r year+2` was conducted using the REMA model using the same assumptions as in 2021. Details on the workflow to calculate apportionment are provided in @Kapur2023.
 
-Because Amendment 41 prohibits trawling in the Eastern area east of 140° W longitude, the ABC allocation derived from REMA for the Eastern Gulf is split between W. Yakutat and E. Yakutat/Southeast Outside ('Southeast' or 'SEO') using a weighted average of area-specific biomass ratios obtained from the trawl survey. The OFL for the SEO region remains separate because of concerns regarding stock structure differences in the SEO vs other areas. Per the 2012 Groundfish Plan team recommendation, OFLs are combined for the Western, Central, and West Yakutat areas (W/C/WYK). 
+Because Amendment 41 prohibits trawling in the Eastern area east of 140° W longitude, the ABC allocation derived from REMA for the Eastern Gulf is split between W. Yakutat and E. Yakutat/Southeast Outside ('Southeast' or 'SEO') using a weighted average of area-specific biomass ratios obtained from the trawl survey. The OFL for the SEO region was previously separate because of concerns regarding stock structure differences in the SEO vs other areas. Per the 2023 Groundfish Plan team recommendation, OFLs are combined GOA-wide. 
 
-```{r echo = FALSE, eval = T}
+```{r echo = FALSE, eval = T, message=F}
 ## manually bind correct values
-## ofl_apport is missing year 1, back it out using percentages
-ofl_to_eyak <- round((1-abc_apport_wyak$wyak_p)*ofl_apport$ofl*abc_apport[1,'egoa'])
-ofl_apport[2,3:4] <- c(ofl_apport$ofl[2]-ofl_to_eyak[2], ofl_to_eyak[2])
+exec_summ <- vroom::vroom(here::here(year, folder, "processed", "exec_summ.csv"))
+abc = as.numeric(exec_summ[13,4])
+abc1 = as.numeric(exec_summ[13,5])
+ofl = as.numeric(exec_summ[11,4])
+ofl1 = as.numeric(exec_summ[11,5])
 
-appo0 <- data.frame(year = as.character(c(year+1,year+2)),
-                    item = c(rep('ABC (t)',2),rep('OFL (t)',2)),
-                    WGOA = c(abc_apport[2:3,'wgoa'],rep(0,2)),
-                    CGOA = c(abc_apport[2:3,'cgoa'],rep(0,2)),
-                    EGOA_wyak = unlist(c(abc_apport_wyak['wyak'],ofl_apport['ofl_wcgoa_wyak'])),
-                    EGOA_seo = unlist(c(abc_apport_wyak[1:2,'eyak_se'],ofl_apport['ofl_eyak_se'])),
-                    total = unlist(c(abc_apport[2:3,'goa'],ofl_apport['ofl']))) 
+abc_appo = round(abc * abc_apport[1,3:5])
+abc_appo1 = round(abc1 * abc_apport[1,3:5])
+# gotta be the same sum - make sure rounding didn't misplace a ton
+# abc - sum(abc_appo)
+# abc1 - sum(abc_appo1)
 
-appo0[3:4,'WGOA'] <- appo0[3:4,'EGOA_wyak'] ## move to LHS for formatting
+# split egoa
+wy = round(abc_apport_wyak$wyak_p[1] * abc_appo[1,'egoa']) 
+wy1 = round(abc_apport_wyak$wyak_p[1] * abc_appo1[1,'egoa'])
+seo = abc_appo[1,'egoa'] - wy
+seo1 = abc_appo1[1,'egoa'] - wy1
 
-flextable::flextable(appo0) %>% 
-  ## format OFL stuff
-  flextable::merge_at( i = 3, j = 3:5, part = 'body') %>%
-  flextable::merge_at( i = 4, j = 3:5, part = 'body') %>%
-  flextable::align(i = 1, align = 'center', part = 'header')  %>%
-  flextable::align(i = 3:4, j = 3, align = 'center', part = 'body') %>% 
-  
-  flextable::add_header_row(values = paste0(c('REMA-derived apportionment (%)', 
+# gotta sum the same
+# abc_appo$egoa - (wy + seo) 
+# abc_appo1$egoa - (wy1 + seo1) 
+
+# all looks good? then make a table
+abc_appo %>% 
+  dplyr::mutate(wyak = wy,
+                seo = seo) %>% 
+    add_row() %>% 
+    dplyr::mutate(year = as.character(rep(year+1, 2)),
+                  item = c('ABC (t)', 'OFL (t)'),
+                  total = c(abc, ofl)) %>% 
+  bind_rows(
+abc_appo1 %>% 
+  dplyr::mutate(wyak = wy1,
+                seo = seo1) %>% 
+    add_row() %>% 
+    dplyr::mutate(year = as.character(rep(year+2, 2)),
+                  item = c('ABC (t)', 'OFL (t)'),
+                  total = c(abc1, ofl1))) %>% 
+  dplyr::select(year, item, wgoa, cgoa, wyak, seo, total) -> appo
+
+# in theory this self updates - though doublecheck the rounding addition
+flextable::flextable(appo) %>% 
+    flextable::add_header_row(values = paste0(c('REMA-derived apportionment (%)', 
                                               100*abc_apport[1,'wgoa'],
                                               100*abc_apport[1,'cgoa'],
                                               100*abc_apport[1,'egoa'],
                                               100*abc_apport[1,'goa'])), 
-                            colwidths = c(2,1,1,2,1)) %>%
-  flextable::set_header_labels(values = c('Year','Quantity','Western','Central','W. Yakutat','E. Yakutat/SEO','Total')) %>%
-  flextable::colformat_double(big.mark = ',', j = 3:7, digits = 0) %>%
-  flextable::vline(j = c(2,3,4,6), part = 'body')%>%
-  flextable::vline(j = c(2,3,4,6), part = 'header')%>%
-  flextable::hline(i = c(2), part = 'body') %>%
+                            colwidths = c(2,1,1,2,1)) %>% 
+    flextable::set_header_labels(values = c('Year','Quantity','Western','Central','W. Yakutat','E. Yakutat/SEO','Total')) %>% 
+  flextable::align(i=1:2, j=3:6, align='center', part='header') %>% 
+  flextable::border_remove() %>%
   flextable::font(fontname = "Times New Roman", part = "all") %>%
-  flextable::fontsize(size = 11, part = "all")  %>%
-  flextable::bg(i = c(1,3), bg = 'grey88') %>% 
-  flextable::hline_top(part='all') %>% 
-  flextable::hline_bottom()  
+    flextable::fontsize(size = 11, part = "all") %>% 
+    flextable::align(j = 1, part = "all", align="left") %>% 
+    flextable::hline_top(part='all') %>% 
+    flextable::vline(j = c(4,6), part = 'header') %>% 
+    flextable::hline_bottom() 
+
 
 ```
-
-\newpage

@@ -94,6 +94,7 @@ f35 = exec_summ[10,4]
 
 # bring in as numeric
 abc = as.numeric(exec_summ[13,4])
+abc1 = as.numeric(exec_summ[13,5])
 abc0 = as.numeric(exec_summ[13,2])
 abc01 = as.numeric(exec_summ[13,3])
 
