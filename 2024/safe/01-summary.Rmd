@@ -21,7 +21,7 @@ To estimate future catches, we updated the yield ratio to `r round(yld$yld, 2)`,
 This yield ratio was multiplied by the projected ABCs from the updated projection model to generate catches of `r c2` t in `r year + 1` and `r c3` t in `r year + 2`.
 
 
-*Changes in assessment methodology:* There were no changes from the `r year-1` assessment [@Williams2022] since this is an off-cycle year.
+*Changes in assessment methodology:* There were no changes from the `r year-1` assessment [@Kapur2023] since this is an off-cycle year.
 
 
 ## Summary of Results

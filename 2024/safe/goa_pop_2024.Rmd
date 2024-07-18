@@ -105,6 +105,11 @@ perc1 = round((abc-abc01)/abc01 * 100)
 
 abc = comma(abc)
 abc0 = comma(abc0)
+
+abc_apport = read.csv(here::here(year, 'base','processed', 'abc_apport.csv'))
+abc_apport_wyak = read.csv(here::here(year, 'base','processed', 'abc_apport_wyak.csv'))
+ofl_apport = read.csv(here::here(year, 'base','processed', 'ofl_apport.csv'))
+
 ```
 
 This report may be cited as:

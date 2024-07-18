@@ -28,6 +28,7 @@ clean_catch(year, species=species, TAC=TAC)
 bts_biomass(year=year, area=area, rmv_yrs=c(1984,1987)) # design-based
 
 # run projection
+# went in and 'hand coded' an exec_summ.csv file with a different format in the base model - this will then get propagated for all following years - yeah
 proj_ak(year=year, last_full_assess = 2023, species=species, region=area,
         rec_age=rec_age, folder=folder, off_yr=TRUE)
 

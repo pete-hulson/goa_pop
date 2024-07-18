@@ -2,7 +2,7 @@
 
 > "The SSC requests that all authors fill out the risk table in 2019…" (SSC December 2018)  
 
-We provide a risk table in the Harvest Recommendations section. After completing this exercise, we do not recommend ABC be reduced below maximum permissible ABC. 
+A risk table will be provided in the next full assessment. 
 
 ## Responses to SSC and Plan Team Comments Specific to this Assessment
  
@@ -36,7 +36,7 @@ The authorship team plans to transition to a framework where $q$ is calculated a
 
 >*7. Evaluate the impacts of using a VAST model for POP abundance and/or apportionment. (SSC, December 2018; Plan Team, November 2019; SSC, December 2019)*	
 
-Previous investigations have shown the model to be sensitive to the biomass index used (VAST vs. design-based). While the trajectory of both indices is similar (Figure \@ref(fig:vastcompare)), the uncertainty for the VAST index is lower, and means are generally higher; these discrepancies appear to have some spatial patterns that are not yet fully understood. Following the CIE panel's recommendation, the base model used for POP assessment will continue fitting to the design-based estimates. The AFSC’s Groundfish Assessment Program (GAP) has formed a technical working group to resolve model based estimates of trawl surveys. The assessment authors will consider their advice in developing future versions of this model. Please consult the Appendices of the last full assessment [@Hulson2021] for more discussion of this topic. 
+Previous investigations have shown the model to be sensitive to the biomass index used (VAST vs. design-based). While the trajectory of both indices is similar (Figure \@ref(fig:vastcompare)), the uncertainty for the VAST index is lower, and means are generally higher; these discrepancies appear to have some spatial patterns that are not yet fully understood. Following the CIE panel's recommendation, the base model used for POP assessment will continue fitting to the design-based estimates. The AFSC’s Groundfish Assessment Program (GAP) has formed a technical working group to resolve model based estimates of trawl surveys. The assessment authors will consider their advice in developing future versions of this model. Please consult the Appendices of @Hulson2021 for more discussion of this topic. 
 
 ```{r vastcompare, fig.cap="Comparison of indices of relative abundance derived from a model (VAST, grey points) or using the survey design (blue points). Vertical bars are 95% confidence intervals.", eval = TRUE}
 ## code to make this in 2023_analysis.R, towards the bottom

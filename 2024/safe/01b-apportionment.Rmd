@@ -6,7 +6,7 @@
 
 Because Amendment 41 prohibits trawling in the Eastern area east of 140° W longitude, the ABC allocation derived from REMA for the Eastern Gulf is split between W. Yakutat and E. Yakutat/Southeast Outside ('Southeast' or 'SEO') using a weighted average of area-specific biomass ratios obtained from the trawl survey. The OFL for the SEO region remains separate because of concerns regarding stock structure differences in the SEO vs other areas. Per the 2012 Groundfish Plan team recommendation, OFLs are combined for the Western, Central, and West Yakutat areas (W/C/WYK). 
 
-```{r echo = FALSE, eval = F}
+```{r echo = FALSE, eval = T}
 ## manually bind correct values
 ## ofl_apport is missing year 1, back it out using percentages
 ofl_to_eyak <- round((1-abc_apport_wyak$wyak_p)*ofl_apport$ofl*abc_apport[1,'egoa'])
