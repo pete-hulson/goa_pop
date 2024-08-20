@@ -9,7 +9,7 @@ library(dplyr)
 theme_set(theme_report())
 
 # retrieve base model from 2023 full assessment
-accepted_model(2023, 'mgmt/2020.1-2023', 2024)
+# accepted_model(2023, 'mgmt/2020.1-2023', 2024)
 
 # globals ----
 year <- 2024
