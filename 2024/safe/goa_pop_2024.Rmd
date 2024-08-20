@@ -1,16 +1,16 @@
 ---
 params: 
   chapter: 9
-  species: "Pacific Ocean Perch"
+  species: "Pacific ocean perch"
   species_complex: "no"
   area: "Gulf of Alaska"
   tier: 3
-author: " Benjamin C. Williams, Maia S. Kapur and Peter-John F. Hulson,"
-date: "November 2024"
+author: "Benjamin C. Williams, Maia S. Kapur, Peter-John F. Hulson"
+date: "September 2024"
 
 # don't do anything below this line unless you are cool with the consequences
 output:
-  bookdown::html_document2:
+  bookdown::word_document2:
      reference_docx: "template.docx"
      toc: false
      number_sections: false
@@ -78,7 +78,7 @@ c3 = safe::comma(stringr::str_sub(prj[grep(year+2, prj)], 6, 10)) # proj catch y
 
 exec_summ <- vroom::vroom(here::here(year, folder, "processed", "exec_summ.csv"))
 
-tier = exec_summ[2,4]
+tier = exec_summ[2,4]$y3
 tot = safe::comma(exec_summ[3,4])
 
 ofl = safe::comma(exec_summ[11,4])
@@ -99,8 +99,8 @@ abc0 = as.numeric(exec_summ[13,2])
 abc01 = as.numeric(exec_summ[13,3])
 
 # calculate percents
-perc = round((abc-abc0)/abc0 * 100)
-perc1 = round((abc-abc01)/abc01 * 100)
+perc = abs(round((abc-abc0)/abc0 * 100, 2))
+perc1 = abs(round((abc-abc01)/abc01 * 100, 2))
 
 # change to text
 
