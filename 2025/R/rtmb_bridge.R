@@ -1,0 +1,298 @@
+# bridge GOA Pacific ocean perch from ADMB to RTMB
+# ben.williams@noaa.gov
+# 2025-05
+
+# load ----
+library(RTMB)
+library(tidyverse)
+library(Matrix)
+library(here)
+library(scico)
+
+# globals ---- 
+year = 2025
+ages = 2:25
+years = 1961:2023
+length_bins = 16:45
+
+source(here::here(year, 'r', "utils.R"))
+source(here::here(year, 'r', "models.R"))
+
+# bridge data from 2023 model
+REP = readLines(here::here(year, "base", "model_20_1.rep"))
+PAR = readLines(here::here(year, "base", "model_20_1.par"))
+DAT = readLines(here::here(year, "base", "goa_pop_2023.dat"))
+CTL = readLines(here::here(year, "base", "goa_pop_2023.ctl"))
+
+# data ----
+maa = as.numeric(stringr::str_split(REP[grep('Maturity', REP)], " ")[[1]][3:30])
+waa = as.numeric(stringr::str_split(REP[grep('Weight', REP)], " ")[[1]][3:30])
+wt_mature = waa * maa / 2
+fish_block_ind = case_when(
+  years <= 1976 ~ 1,
+  years <= 1995 ~ 2,
+  years <= 2006 ~ 3,
+  TRUE ~ 4
+)
+
+a50_vals = c(as.numeric(PAR[grep('\\ba502:', PAR)+1]), NA, as.numeric(PAR[grep('\\ba50:', PAR)+1]), as.numeric(PAR[grep('\\ba503:', PAR)+1]))  
+delta_vals = c(as.numeric(PAR[grep('\\bdelta2:', PAR)+1]), NA, as.numeric(PAR[grep('\\bdelta:', PAR)+1]),as.numeric(PAR[grep('\\bdelta3:', PAR)+1]))
+a50S = 
+
+catch_obs = c(as.double(stringr::str_split(DAT[grep("Fishery catch", DAT)+3], " ")[[1]]))
+
+srv_yrs = as.numeric(stringr::str_split(DAT[grep('Trawl survey years', DAT)+1], " ")[[1]]) 
+srv_ind = ifelse(years %in% srv_yrs, 1, 0)
+srv_obs = as.numeric(stringr::str_split(DAT[grep('Trawl survey years', DAT)+3], " ")[[1]]) 
+srv_sd = as.numeric(stringr::str_split(DAT[grep('Trawl survey years', DAT)+5], " ")[[1]]) 
+
+fish_age_yrs = as.numeric(stringr::str_split(DAT[grep('Fishery Age Composition', DAT)+5], " ")[[1]]) 
+as.data.frame(t(mapply(rbind, stringr::str_split(REP[grep('Obs_P_fish_age', REP)+1:length(fish_age_yrs)], " ")))) %>% 
+  dplyr::select(-V2) -> fish_ac
+names(fish_ac) <- c('year', paste0('age-', ages))
+fish_ac %>% 
+  mutate(across(c(year, starts_with('age')), as.numeric)) -> fish_ac
+
+fish_age_ind = ifelse(years %in% fish_age_yrs, 1, 0)
+fish_age_iss = sqrt(as.numeric(stringr::str_split(DAT[grep('nsamples_fish_age', DAT)+1], " ")[[1]])) 
+fish_age_obs = fish_ac %>% 
+  select(starts_with('age')) %>% 
+  as.matrix() %>% 
+  t() %>% 
+  unname()
+
+srv_age_yrs = as.numeric(stringr::str_split(DAT[grep('Trawl Survey Age Composition', DAT)+5], " ")[[1]]) 
+as.data.frame(t(mapply(rbind, stringr::str_split(REP[grep('Obs_P_srv1_age', REP)+1:length(srv_age_yrs)], " ")))) %>% 
+  dplyr::select(-V2) -> srv_ac
+names(srv_ac) <- c('year', paste0('age-', ages))
+srv_ac %>% 
+  mutate(across(c(year, starts_with('age')), as.numeric)) -> srv_ac
+
+srv_age_ind = ifelse(years %in% srv_age_yrs, 1, 0)
+srv_age_iss = sqrt(as.numeric(stringr::str_split(DAT[grep('nsamples_srv1_age', DAT)+1], " ")[[1]])) 
+srv_age_obs = srv_ac %>% 
+  select(starts_with('age')) %>% 
+  as.matrix() %>% 
+  t() %>% 
+  unname()
+
+fish_size_yrs = as.numeric(stringr::str_split(DAT[grep('Fishery Size Composition', DAT)+5], " ")[[1]]) 
+as.data.frame(t(mapply(rbind, stringr::str_split(REP[grep('Obs_P_fish_size', REP)+1:length(fish_size_yrs)], " ")))) %>% 
+  dplyr::select(-V2) -> fish_sc
+names(fish_sc) <- c('year', paste0('l-', length_bins))
+fish_sc %>% 
+  mutate(across(c(year, starts_with('l')), as.numeric)) -> fish_sc
+
+fish_size_ind = ifelse(years %in% fish_size_yrs, 1, 0)
+fish_size_iss = as.numeric(stringr::str_split(DAT[grep('Number of samples:', DAT)[3]+1], " ")[[1]]) 
+fish_size_obs = fish_sc %>% 
+  select(starts_with('l')) %>% 
+  as.matrix() %>% 
+  t() %>% 
+  unname()
+
+as.data.frame(t(mapply(rbind, stringr::str_split(DAT[grep('Size-age transition matrix', DAT)+3:(2+length(maa))], " ")))) %>% 
+  mutate(across(everything(), as.numeric)) %>% 
+  as.matrix() -> saa
+
+as.data.frame(t(mapply(rbind, stringr::str_split(DAT[grep('Size-age matrix using mean estimation', DAT)+1:(length(maa))], " ")))) %>% 
+  mutate(across(everything(), as.numeric)) %>% 
+  as.matrix() -> saa2
+
+fish_saa_ind = ifelse(years >= 1990, 2, 1)
+saa_array <- array(NA, dim = c(28, 30, 2))
+
+# Assign the two matrices into the 3D array
+saa_array[,,1] <- saa
+saa_array[,,2] <- saa2
+
+as.data.frame(t(mapply(rbind, stringr::str_split(DAT[grep('Ageing error matrix', DAT)+2:(1+length(maa))], " ")))) %>% 
+  mutate(across(everything(), as.numeric)) %>% 
+  as.matrix() -> ae
+
+yield_ratio = as.numeric(stringr::str_split(CTL[grep("yield", CTL)], " ")[[1]][1])
+
+data = list(ages = as.integer(ages),
+            years = as.integer(years),
+            length_bins = as.integer(length_bins),
+            waa = waa,
+            maa = maa,
+            wt_mature = wt_mature,
+            spawn_mo = 5,
+            fish_block_ind = as.integer(fish_block_ind),
+            catch_obs = catch_obs,
+            catch_ind = as.integer(rep(1, length(catch_obs))),
+            catch_wt = rep(50, length(years)),
+            # fish_block_ind = rep(1, length(years)),
+            # fish_sel_type = rep(0, length(years)),
+            srv_yrs = as.integer(srv_yrs),
+            srv_ind = as.integer(srv_ind),
+            srv_obs = srv_obs,
+            srv_sd = srv_sd,
+            srv_wt = 1.0,
+            fish_age_yrs = as.integer(fish_age_yrs),
+            fish_age_ind = as.integer(fish_age_ind),
+            fish_age_iss = fish_age_iss,
+            fish_age_obs = fish_age_obs,
+            fish_age_wt = 1.0,
+            srv_age_yrs = as.integer(srv_age_yrs),
+            srv_age_ind = as.integer(srv_age_ind),
+            srv_age_iss = srv_age_iss,
+            srv_age_obs = srv_age_obs,
+            srv_age_wt = 1.0,
+            fish_size_yrs = as.integer(fish_size_yrs),
+            fish_size_ind = as.integer(fish_size_ind),
+            fish_size_iss = fish_size_iss,
+            fish_size_obs = fish_size_obs,
+            fish_size_wt = 1.0,
+            age_error = unname(ae),
+            size_age = unname(saa),
+            fish_saa_ind = as.integer(fish_saa_ind),
+            saa_array = saa_array,
+            wt_fmort_reg = 0.1,
+            wt_rec_var = 1,
+            mean_M = 0.0614,
+            cv_M = 0.1,
+            mean_q = 1.15,
+            cv_q = 0.447213595,
+            mean_sigmaR = 1.7,
+            cv_sigmaR = 0.2,
+            yield_ratio = yield_ratio
+)
+str(data)
+
+# parameters ----
+A = nrow(ae)
+pars = list(log_M = as.numeric(PAR[grep('logm', PAR)+1]),
+            log_a50C = log(a50_vals),
+            deltaC = delta_vals,
+            log_a50S = log(as.numeric(PAR[grep('\\ba50_srv1:', PAR)+1])),
+            deltaS = as.numeric(PAR[grep('\\bdelta_srv1:', PAR)+1]),
+            log_q = as.numeric(PAR[grep('\\blog_q_srv1:', PAR)+1]),
+            log_mean_R = as.numeric(PAR[grep('\\blog_mean_rec:', PAR)+1]),
+            init_log_Rt = rev(as.numeric(stringr::str_split(PAR[grep('\\log_rec_dev:', PAR)+1], " ")[[1]])[2:(A-1)]),
+            log_Rt = as.numeric(stringr::str_split(PAR[grep('\\log_rec_dev:', PAR)+1], " ")[[1]])[-(1:(A-1))],
+            log_mean_F = as.numeric(PAR[grep('\\blog_avg_F:', PAR)+1]),
+            log_Ft = as.numeric(stringr::str_split(PAR[grep('\\blog_F_devs:', PAR)+1], " ")[[1]])[2:64],
+            log_F35 = log(as.numeric(PAR[grep('\\bmF35:', PAR)+1])),
+            log_F40 = log(as.numeric(PAR[grep('\\bmF40:', PAR)+1])),
+            log_F50 = log(as.numeric(PAR[grep('\\bmF50:', PAR)+1])),
+            sigmaR = as.numeric(PAR[grep('\\bsigr:', PAR)+1])
+)
+
+str(pars)
+
+# map ----
+map = list(
+  log_M = factor(NA),
+  log_a50C = rep(factor(NA), 4),
+  deltaC = rep(factor(NA), 4),
+  log_a50S = factor(NA),
+  deltaS = factor(NA),
+  log_q = factor(NA),
+  log_mean_R = factor(NA),
+  init_log_Rt = rep(factor(NA), A-2),
+  log_Rt = rep(factor(NA), length(years)),
+  log_mean_F = factor(NA),
+  log_Ft = rep(factor(NA), length(years)),
+  log_F35 = factor(NA),
+  log_F40 = factor(NA),
+  log_F50 = factor(NA),
+  sigmaR = factor(NA)
+)
+str(map)
+
+# test ----
+bridge(pars)
+
+# match the base model
+obj <- RTMB::MakeADFun(bridge, 
+                       pars)
+fit <- nlminb(start = obj$par,
+              objective = obj$fn,
+              gradient = obj$gr,
+              control = list(iter.max=100000,
+                             eval.max=20000))
+rpt <- obj$report(obj$env$last.par.best)
+
+# compare ----
+ssqcatch = round(as.numeric(stringr::str_split(REP[grep("SSQ Catch Likelihood", REP)], " ")[[1]][2]), 4)
+srv_like = round(as.numeric(stringr::str_split(REP[grep("Bottom Trawl Survey Likelihood", REP)], " ")[[1]][2]), 4)
+fa_like = round(as.numeric(stringr::str_split(REP[grep("Fishery Age Composition Likelihood", REP)], " ")[[1]][2]), 4)
+sa_like = round(as.numeric(stringr::str_split(REP[grep("Bottom Trawl Survey Age Composition Likelihood", REP)], " ")[[1]][2]), 4)
+ss_like = round(as.numeric(stringr::str_split(REP[grep("Fishery Size Composition Likelihood", REP)], " ")[[1]][2]), 4)
+recdev = round(as.numeric(stringr::str_split(REP[grep("Recruitment Deviations Likelihood", REP)], " ")[[1]][2]), 4)
+fmort = round(as.numeric(stringr::str_split(REP[grep("Fishing Mortality Deviations Penalty", REP)], " ")[[1]][2]), 4)
+pM = round(as.numeric(stringr::str_split(REP[grep("Priors M", REP)], " ")[[1]][2]), 4)
+pq = round(as.numeric(stringr::str_split(REP[grep("Priors q", REP)], " ")[[1]][2]), 4)
+pS = round(as.numeric(stringr::str_split(REP[grep("Priors SigmaR", REP)], " ")[[1]][2]), 4)
+spr = round(as.numeric(stringr::str_split(REP[grep("Spawner-recruit penalty", REP)], " ")[[1]][2]), 4)
+datalike = round(as.numeric(stringr::str_split(REP[grep("Data Likelihood", REP)], " ")[[1]][2]), 4)
+
+# likelihood table ----
+data.frame(Likelihood = c("Catch", "Survey", "Fish age", "Survey age", "Fish size", "Recruitment", "F regularity", "SPR penalty", "M prior", "q prior", "Sigma R prior", "Sub total"),
+           ADMB = c(ssqcatch, srv_like, fa_like, sa_like, ss_like, recdev, fmort, spr, pM, pq, pS, 
+                    sum(c(ssqcatch, srv_like, fa_like, sa_like, ss_like, recdev, fmort, spr, pM, pq, pS))),
+           RTMB = round(c(rpt$ssqcatch, rpt$like_srv, rpt$like_fish_age, rpt$like_srv_age, 
+                          rpt$like_fish_size, rpt$like_rec, rpt$f_regularity,
+                          rpt$sprpen, rpt$nll_M, rpt$nll_q, rpt$nll_sigmaR, 
+                          sum(c(rpt$ssqcatch, rpt$like_srv, rpt$like_fish_age, rpt$like_srv_age, 
+                                rpt$like_fish_size, rpt$like_rec, rpt$f_regularity,
+                                rpt$sprpen, rpt$nll_M, rpt$nll_q, rpt$nll_sigmaR))), 4)) %>% 
+  mutate(Difference = ADMB - RTMB) %>% 
+  flextable::flextable()
+
+# key parameters ----
+tot = as.numeric(REP[grep("TotalBiomass for 2024", REP)+1])
+sp = as.numeric(REP[grep("Female_Spawning Biomass for 2024", REP)+1])
+ofl = as.numeric(REP[grep("\\bOFL for 2024", REP)+1])
+fofl = as.numeric(REP[grep("F_OFL for 2024", REP)+1])
+abc = as.numeric(REP[grep("\\bABC for 2024", REP)+1])
+fabc = as.numeric(REP[grep("F_ABC for 2024", REP)+1])
+prj = proj_bio(rpt)[1,]
+
+data.frame(Item = c("M", "q", "Log mean recruitment", "Log mean F", 'a50_1', 'delta_1', 'a50_3', 'delta_3', 'a50_4', 'delta_4', 'a50_survey', 'delta_survey',
+                    "2024 Total biomass", "2024 Spawning biomass", "2024 OFL", "2024 F OFL", " 2024 ABC", "2024 F ABC"),
+           ADMB = round(c(exp(pars$log_M), exp(pars$log_q), pars$log_mean_R, pars$log_mean_F, a50_vals[1], 
+                          delta_vals[1], a50_vals[3], delta_vals[3], a50_vals[4], delta_vals[4], 
+                          exp(pars$log_a50S), pars$deltaS, tot, sp, ofl, fofl, abc, fabc), 4),
+           RTMB = round(c(rpt$M, rpt$q, rpt$log_mean_R, rpt$log_mean_F, rpt$a50C[1], rpt$deltaC[1], 
+                          rpt$a50C[3], rpt$deltaC[3], rpt$a50C[4], rpt$deltaC[4], rpt$a50S, rpt$deltaS,
+                          prj$tot_bio, prj$spawn_bio, prj$catch_ofl, prj$F35, prj$catch_abc, prj$F40),4)) %>% 
+  mutate(Difference = ADMB - RTMB) %>% 
+  flextable::flextable()
+
+# data likelihood
+rpt$ssqcatch + rpt$like_srv + rpt$like_srv_age + rpt$like_fish_age + rpt$like_fish_size # data objective function
+
+
+# basic comparison plots ----
+# spawn bio
+plot(rpt$years, as.numeric(stringr::str_split(REP[grep("SpBiom", REP)], " ")[[1]][-c(1:2)])) 
+lines(rpt$years, rpt$spawn_bio)
+
+# tot bio
+plot(rpt$years, as.numeric(stringr::str_split(REP[grep("Tot_biom", REP)], " ")[[1]][-c(1:2)])) 
+lines(rpt$years, rpt$tot_bio)
+
+# slx
+plot(2:29, as.numeric(stringr::str_split(fsh_slx[1], " ")[[1]][-1])) 
+lines(2:29, rpt$slx_block[,1])
+
+lines(2:29, as.numeric(stringr::str_split(fsh_slx[2], " ")[[1]][-1]), type = "p", col=2) 
+lines(2:29, rpt$slx_block[,2], col=2)
+
+lines(2:29, as.numeric(stringr::str_split(fsh_slx[3], " ")[[1]][-1]), type = "p", col=3) 
+lines(2:29, rpt$slx_block[,3], col=3)
+
+lines(2:29, as.numeric(stringr::str_split(fsh_slx[4], " ")[[1]][-1]), type = "p", col=4) 
+lines(2:29, rpt$slx_block[,4], col=4)
+
+lines(2:29, as.numeric(stringr::str_split(REP[grep("Bottom_Trawl_Survey_Selectivity", REP)], " ")[[1]][-c(1:2)]), type="p", col=5) 
+lines(2:29, rpt$slx_srv, col=5)
+
+plot(rpt$years, as.numeric(stringr::str_split(REP[grep("Recruitment", REP)], " ")[[1]][-c(1:2)]), type="p") 
+lines(rpt$years, rpt$recruits)
+
+plot(rpt$years, as.numeric(stringr::str_split(REP[grep("Fully_selected_F", REP)], " ")[[1]][-c(1:2)]), type="p") 
+lines(rpt$years, rpt$Ft)
