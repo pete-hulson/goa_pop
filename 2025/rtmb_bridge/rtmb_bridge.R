@@ -186,21 +186,21 @@ pars = list(log_M = as.numeric(PAR[grep('logm', PAR)+1]),
 data = readRDS(here::here(year, 'rtmb_bridge', "data.rds"))
 pars = readRDS(here::here(year, 'rtmb_bridge', "pars.rds"))
 
-pars = list(log_M = log(0.0614),
-            log_a50C = log(c(6, 2.5, 2.5)),
-            deltaC = c(1.5,4.5, 4.5),
-            log_a50S = log(7.3),
-            deltaS = 3.8,
-            log_q = log(1.15),
-            log_mean_R = 3.0,
-            init_log_Rt = rep(0, 26),
-            log_Rt = rep(0, sum(data$catch_ind)),
-            log_mean_F = 0,
-            log_Ft = rep(0, sum(data$catch_ind)),
-            log_F35 = 0,
-            log_F40 = 0,
-            log_F50 = 0,
-            sigmaR = 1.7)
+# pars = list(log_M = log(0.0614),
+#             log_a50C = log(c(6, 2.5, 2.5)),
+#             deltaC = c(1.5,4.5, 4.5),
+#             log_a50S = log(7.3),
+#             deltaS = 3.8,
+#             log_q = log(1.15),
+#             log_mean_R = 3.0,
+#             init_log_Rt = rep(0, 26),
+#             log_Rt = rep(0, sum(data$catch_ind)),
+#             log_mean_F = 0,
+#             log_Ft = rep(0, sum(data$catch_ind)),
+#             log_F35 = 0,
+#             log_F40 = 0,
+#             log_F50 = 0,
+#             sigmaR = 1.7)
 
 # limits ----
 # not currently used 
@@ -249,6 +249,10 @@ fit <- nlminb(start = obj$par,
               control = list(iter.max=100000,
                              eval.max=20000))
 rpt <- obj$report(obj$env$last.par.best)
+saveRDS(obj, here::here(2025, 'rtmb_bridge', 'results', 'obj.RDS'))
+saveRDS(fit, here::here(2025, 'rtmb_bridge', 'results', 'fit.RDS'))
+saveRDS(rpt, here::here(2025, 'rtmb_bridge', 'results', 'report.RDS'))
+
 prj = proj_bio(rpt)[1,]
 sdreport(obj, getJointPrecision = TRUE)
 
