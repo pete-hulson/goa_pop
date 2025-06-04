@@ -1,0 +1,171 @@
+---
+params: 
+  chapter: 10
+  species: "Pacific Ocean Perch"
+  species_complex: "no"
+  area: "Gulf of Alaska"
+  tier: 3
+author: " Benjamin Williams, Peter-John F. Hulson, and Bridget Ferriss"
+date: "November 2025"
+
+# don't do anything below this line unless you are cool with the consequences
+output:
+  bookdown::word_document2:
+     reference_docx: "template.docx"
+     toc: false
+     number_sections: false
+     css: "styles.css"
+     pandoc_args:  
+       - '--lua-filter=scholarly-metadata.lua'
+       - '--lua-filter=author-info-blocks.lua'
+
+always_allow_html: true        
+fontsize: 11pt
+geometry:
+  - top=1in
+  - bottom=1in
+  - left=1in
+  - right=1in     
+fig_caption: true
+bibliography: "safe_bibby.bib"
+csl: "fishfish.csl"
+
+---
+
+```{r setup, include=FALSE, echo = FALSE}
+# remotes::install_github("crsh/rmdfiltr")
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.pos = "!h", out.extra = "")
+knitr::opts_knit$set(eval.after = "fig.cap")
+x = 1
+sprintf("Figure %s. " , paste0(params$chapter, '.',x))
+```
+
+```{r}
+if(params$species_complex=="no"){
+   title = paste0(params$chapter, ". Assessment of the ", tools::toTitleCase(params$species), " Stock in the ", params$area)
+  } else {
+    title = paste0(params$chapter, ". Assessment of the ", tools::toTitleCase(params$species), " Stock Complex in the ", params$area)  
+  }
+
+
+```
+
+---
+title: `r title`
+---
+
+```{r load, warning=F, message=F}
+# load
+library(safe)
+library(here)
+# globals
+species = params$species
+year = yr = 2025
+source(here::here(year, 'r', 'utils.r'))
+data_pull = read.table(here::here(year, "data", "raw", "data_called.txt"))[2,1]
+data_pull2 = paste(months(as.Date(data_pull)), 
+                    format(as.Date(data_pull,format="%Y-%m-%d"), format = "%d"))
+catch = vroom::vroom(here::here(year, "data", "output", "fish_catch.csv"))
+yld = vroom::vroom(here::here(year, "data", "output", "yld_rat.csv"))
+prj = readLines(here::here(year, 'm22.1c', "proj", "model", "data", "nork_spcat.dat"))
+
+c0 = comma(dplyr::filter(catch, year==yr-1)$catch)
+c1 = comma(round(yld$proj_catch)) # estimated catch in current year
+c2 = comma(stringr::str_sub(prj[grep(year+1, prj)], 6, 10)) # proj catch year + 1
+c3 = comma(stringr::str_sub(prj[grep(year+2, prj)], 6, 10)) # proj catch yera + 2
+
+exec_summ <- vroom::vroom(here::here(year, folder, "processed", "exec_summ.csv"))
+exec_summ0 <- vroom::vroom(here::here(year-1, 'update', "processed", "exec_summ.csv"))
+
+mod = readRDS(here::here(year, folder, 'm24.rds'))
+bf_dat = data.frame(age = 2:51,
+                naa = mod$Nat[,64],
+                waa = mod$waa,
+                saa = mod$slx[,1])
+
+best_f = afscassess::best_f(data = bf_dat, m=mod$M, last_ofl = 5750, last_f = 0.061) %>% 
+  gsub(".*=", "", .) %>% 
+  as.numeric(.) %>% 
+  round(., 3)
+tier = exec_summ[2,4]
+tot = comma(exec_summ[3,4])
+
+ofl = comma(exec_summ[11,4])
+ofl0 = comma(exec_summ0[11,2])
+sb1 = comma(exec_summ[4,4])
+sb2 = comma(exec_summ[4,5])
+b35 = comma(exec_summ[7,4])
+b40 = comma(exec_summ[6,4])
+b100 = comma(exec_summ[5,4])
+
+f40 = exec_summ[9,4]
+f35 = exec_summ[8,4]
+
+# bring in as numeric
+abc = as.numeric(exec_summ[13,4])
+abc0 = as.numeric(exec_summ[13,2])
+abc01 = as.numeric(exec_summ[13,3])
+
+# calculate percents
+perc = round((abc-abc0)/abc0 * 100)
+perc1 = round((abc-abc01)/abc01 * 100)
+
+# change to text
+
+abc = comma(abc)
+abc0 = comma(abc0)
+```
+```
+This report may be cited as:
+
+Williams, B.C. Hulson, P-J.F. and Ferris, B.E. 2025. Assessment of the Pacific ocean perch stock in the Gulf of Alaska. North Pacific Fishery Management Council, Anchorage, AK. Available from https://www.npfmc.org/library/safe-reports/
+
+```{r, child="01-summary.Rmd", eval = T}
+```
+
+```{r, child="02-responses.Rmd", eval = T}
+```
+
+```{r, child="03-intro-update.Rmd", eval = T}
+```
+
+```{r, child="04-fishery-update.Rmd", eval = T}
+```
+
+```{r, child="05-data-update.Rmd", eval = T}
+```
+
+```{r, child="06-model-update.Rmd", eval = T}
+```
+
+```{r, child="07-results.Rmd", eval = T}
+```
+
+```{r, child="08-abc.Rmd", eval = T}
+```
+
+```{r, child="09-ecosystem.Rmd", eval = T}
+```
+
+```{r, child="10-gaps.Rmd", eval = T}
+```
+\pagebreak
+\allsectionsfont{\centering}
+# References
+<div id="refs"></div>
+
+```{r, child="11-tables.Rmd", eval = T}
+```
+
+```{r, child="12-figures.Rmd", eval = T}
+```
+
+```{r, child="13-append_a.Rmd", eval = T}
+```
+
+```{r, child="14-append_vast.Rmd", eval = T}
+```
+
+
+```{r, child="16-append_eqs.Rmd", eval = T}
+```

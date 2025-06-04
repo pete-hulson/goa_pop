@@ -1,0 +1,135 @@
+---
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+# Fishery
+
+> Operational Update: This is a truncated version of the Fishery description for POP. The reader is referred to the last full assessment (Hulson et al., 2021) for the entirety of this section.
+
+## Description of the Directed Fishery
+
+A POP trawl fishery by the U.S.S.R. and Japan began in the GOA in the early 1960s.
+This fishery developed rapidly, with massive efforts by the Soviet and Japan¬ese fleets.
+Catches peaked in 1965, when a total of nearly 350,000 metric tons (t) was caught.
+This apparent overfishing resulted in a precipitous decline in catches in the late 1960s.
+Catches continued to decline in the 1970s, and by 1978 catches were only 8,000 t (Figure 9-1).
+Foreign fishing dominated the fishery from 1977 to 1984, and catches generally declined during this period.
+Most of the catch was taken by Japan (Carlson et al. 1986).
+Catches reached a minimum in 1985, after foreign trawling in the GOA was prohibited.
+
+The domestic fishery first became important in 1985 and expanded each year until 1991 (Figure 9-1).
+Much of the expansion of the domestic fishery was apparently related to increasing annual quotas; quotas increased from 3,702 t in 1986 to 20,000 t in 1989.
+In the years 1991-95, overall catches of slope rockfish diminished as a result of the more restrictive management policies enacted during this period.
+The restrictions included: (1) establishment of the management subgroups, which limited harvest of the more desired species; (2) reduction of total allowable catch (TAC) to promote rebuilding of POP stocks; and (3) conservative in-season management practices in which fisheries were sometimes closed even though substantial unharvested TAC remained.
+These closures were necessary because, given the large fishing power of the rockfish trawl fleet, there was substantial risk of exceeding the TAC if the fishery were to remain open.
+Since 1996, catches of POP have increased again, as good recruitment and increasing biomass for this species have resulted in larger TAC's.
+In recent years, the TAC's for POP have usually been fully taken (or nearly so) in each management area except Southeast Outside.
+(The prohibition of trawling in Southeast Outside during these years has resulted in almost no catch of POP in this area).
+In 2013, approximately 21% of the TAC was taken in the Western GOA. NMFS did not open directed fishing for POP in this area because the catch potential from the expected effort (15 catcher/processors) for a one day fishery (shortest allowed) exceeded the available TAC.
+The 2014 fishery in this area didn't occur until October but nearly all of the TAC was harvested.
+
+### Catch Patterns
+
+Detailed catch information for POP in the years since 1977 is listed in Table 9-1.
+The reader is cautioned that actual catches of POP in the commercial fishery are only shown for 1988-2019; for previous years, the catches listed are for the POP complex (a former management grouping consisting of POP and four other rockfish species), POP alone, or all Sebastes rock¬fish, depending upon the year (see Table 9-1).
+POP make up the majority of catches from this complex.
+
+The acceptable biological catches and quotas in Table 9-1 are Gulf-wide values, but in actual practice the NPFMC has divided these into separate, annual apportionments for each of the three regulatory areas of the GOA.
+Historically, bottom trawls have accounted for nearly all the commercial harvest of POP.
+In recent years, however, the portion of the POP catch taken by pelagic trawls has increased.
+The percentage of the POP Gulf-wide catch taken in pelagic trawls increased from an average of 7% during 1990-2005 to an average of 24% and up to 31% after 2006.
+
+Before 1996, most of the POP trawl catch (\>90%) was taken by large factory-trawlers that processed the fish at sea.
+A significant change occurred in 1996, however, when smaller shore-based trawlers began taking a sizeable portion of the catch in the Central area for delivery to processing plants in Kodiak.
+These vessels averaged about 50% of the catch in the Central Gulf area since 1998.
+By 2008, catcher vessels were taking 60% of the catch in the Central Gulf area and 35% in the West Yakutat area.
+Factory trawlers continue to take nearly all the catch in the Western Gulf area.
+
+In 2007, the Central GOA Rockfish Program was implemented to enhance resource conservation and improve economic efficiency for harvesters and processors who participate in the Central GOA rockfish fishery.
+This rationalization program establishes cooperatives among trawl vessels and processors which receive exclusive harvest privileges for rockfish management groups.
+The primary rockfish management groups are northern rockfish, POP, and pelagic shelf rockfish.
+
+### Bycatch and Discards
+
+Gulf-wide discard rates (% discarded, current as of October 24, 2021) for POP in the commercial fishery are listed as follows:
+
+| Year | Discard(%) |
+|------|------------|
+| 2000 | 11.3       |
+| 2001 | 8.6        |
+| 2002 | 7.3        |
+| 2003 | 15.1       |
+| 2004 | 8.2        |
+| 2005 | 5.7        |
+| 2006 | 7.8        |
+| 2007 | 3.7        |
+| 2008 | 4.1        |
+| 2009 | 6.8        |
+| 2010 | 4.1        |
+| 2011 | 6.6        |
+| 2012 | 4.8        |
+| 2013 | 7.6        |
+| 2014 | 9.5        |
+| 2015 | 3.8        |
+| 2016 | 6.8        |
+| 2017 | 14.8       |
+| 2018 | 4.7        |
+| 2019 | 7.4        |
+| 2020 | 4.5        |
+| 2021 | 2.2        |
+| 2022 | xx         |
+
+ 
+
+Total FMP groundfish catch estimates in the GOA rockfish targeted fisheries are shown in Table 9-3.
+For the GOA rockfish fishery, the largest non-rockfish bycatch groups are arrowtooth flounder, Atka mackerel, walleye pollock, Pacific cod, and sablefish.
+Catch of POP in other GOA fisheries is mainly in arrowtooth flounder, walleye pollock-midwater, and rex sole targeted fishing (Table 9-4).
+
+Non-FMP species catch in the rockfish target fisheries is dominated by giant grenadier and miscellaneous fish (Table 9-5).
+
+The increase in POP discards in 2017 can likely be attributed to an extremely high bycatch of POP in the arrowtooth flounder directed fishery (Table 9-4).
+
+Hulson et al. (2014) compared bycatch for the combined rockfish fisheries in the Central GOA from before and during the Rockfish Program to determine the impacts of the Rockfish Program and found the bycatch of the majority of FMP groundfish species in the Central GOA was reduced following implementation of the Rockfish Program.
+
+Prohibited species catch in the GOA rockfish fishery is generally low (Table 9-6).
+Catch of prohibited and non-target species generally decreased with implementation of the Central GOA Rockfish Program (Hulson et al. 2014).
+
+## Management Measures
+
+In 1991, the NPFMC divided the slope assemblage in the GOA into three management subgroups: POP, shortraker/rougheye rockfish, and all other species of slope rockfish.
+
+In 1993, a fourth management subgroup, northern rockfish, was also created.
+In 2004, shortraker rockfish and rougheye rockfish were divided into separate subgroups.
+These subgroups were established to protect POP, shortraker rockfish, rougheye rockfish, and northern rockfish (the four most sought-after commercial species in the assemblage) from possible overfishing.
+
+Each subgroup is now assigned an individual ABC (acceptable biological catch) and TAC (total allowable catch), whereas prior to 1991, an ABC and TAC was assigned to the entire assemblage.
+
+Each subgroup ABC and TAC is apportioned to the three management areas of the GOA (Western, Central, and Eastern) based on distribution of survey biomass.
+Amendment 32, which took effect in 1994, established a rebuilding plan for POP.
+The amendment stated that "stocks will be considered to be rebuilt when the total biomass of mature females is equal to or greater than BMSY" (Federal Register: April 15, 1994).
+Prior to Amendment 32, overfishing levels had been defined GOA-wide.
+Under Amendment 32, "the overfishing level would be distributed among the eastern, central, and western areas in the same proportions as POP biomass occurs in those areas. This measure would avoid localized depletion of POP and would rebuild POP at equal rates in all regulatory areas of the GOA." This measure established management area OFLs for POP.
+Amendment 41, which took effect in 2000, prohibited trawling in the Eastern area east of 140 degrees W.
+longitude.
+Since most slope rockfish, especially POP, are caught exclusively with trawl gear, this amendment could have concentrated fishing effort for slope rockfish in the Eastern area in the relatively small area between 140 degrees and 147 degrees W.
+longitude that remained open to trawling.
+To ensure that such a geographic over-concentration of harvest would not occur, since 1999 the NPFMC divided the Eastern area into two smaller management areas: West Yakutat (area between 147 and 140 degrees W. longitude) and East Yakutat/Southeast Outside (area east of 140 degrees W. longitude).
+Separate ABC's and TAC's are now assigned to each of these smaller areas for POP, while separate OFLs have remained for the Western, Central, and Eastern GOA management areas.
+In November, 2006, NMFS issued a final rule to implement Amendment 68 of the GOA groundfish Fishery Management Plan for 2007 through 2011.
+This action implemented the Central GOA Rockfish Program (formerly the Rockfish Pilot Program or RPP).
+The intention of this program is to enhance resource conservation and improve economic efficiency for harvesters and processors in the rockfish fishery.
+This should spread out the fishery in time and space, allowing for better prices for product and reducing the pressure of what was an approximately two week fishery in July.
+The authors will pay close attention to the benefits and consequences of this action.
+Since the original establishment of separate OFLs by management areas for POP in the rebuilding plan (Amendment 32) in 1994, the spawning stock biomass has tripled.
+The rebuilding plan required that female spawning biomass be greater than Bmsy and the stock is now 53% higher than Bmsy (using B40% as a proxy for Bmsy).
+Management has prosecuted harvest accurately within major management areas using ABC apportionments.
+While evidence of stock structure exists in the GOA, it does appear to be along an isolation by distance cline, not sympatric groups (Palof et al. 2011; Kamin et al. 2013).
+Palof et al. (2011) also suggest that the Eastern GOA might be distinct genetically, but this area is already its own management unit, and has additional protection with the no trawl zone.
+Hanselman et al. (2007) showed that POP are reasonably resilient to serial localized depletions (areas replenish on an annual basis).
+The NPFMC stock structure template was completed for GOA POP in 2012 (Hanselman et al. 2012a).
+Recommendations from this exercise were to continue to allocate ABCs by management area or smaller.
+However, the original rationale for area-specific OFLs from the rebuilding plan no longer exists because the overall population is above target levels and is less vulnerable to occasional overages.
+Therefore, in terms of rebuilding the stock, management area OFLs are no longer a necessity for the GOA POP stock.
+Management measures since the break out of POP from slope rockfish are summarized in Table 9-2.

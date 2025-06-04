@@ -1,0 +1,49 @@
+\newpage 
+
+# Figures
+
+```{r catch, fig.cap="Observed catches for POP for the entire time series (main figure) and since 1995 (inset).", eval = TRUE}
+knitr::include_graphics(here::here(year, 'mgmt', model, "figs",'catch_timeseries.png'))
+```
+
+```{r survey, fig.cap="NMFS Groundfish Survey observed biomass estimates with 95% sampling error confidence intervals for GOA POP (grey points and vertical bars). Model estimates are shown in black.", eval = TRUE, out.width = "95%", out.height="80%"}
+knitr::include_graphics(here::here(year,'mgmt', model, "figs", "srv1_biomass.png"))
+```
+
+```{r fishagecomps, fig.cap="Observed (colored bars) and predicted (black points) fishery age compositions for GOA POP.", eval = TRUE}
+knitr::include_graphics(here::here(year,'mgmt', model, "figs", "fsh_age_comp.png"))
+```
+
+```{r fishlengthcomps, fig.cap="Observed (colored bars) and predicted (black points) fishery length (cm) compositions for GOA POP.", eval = TRUE}
+knitr::include_graphics(here::here(year,'mgmt', model, "figs", "fsh_length_comp.png"))
+```
+
+```{r survagecomps, fig.cap="Observed (colored bars) and predicted (black points) groundfish bottom trawl survey age compositions for GOA POP.", eval = TRUE}
+knitr::include_graphics(here::here(year,'mgmt', model, "figs", "srv_age_comp.png"))
+```
+
+```{r hists, fig.cap="Histograms (blue) of estimated posterior distributions and medians (vertical dashed lines) of key parameters derived from MCMC for GOA POP.", eval = TRUE}
+knitr::include_graphics(here::here(year,'mgmt', model, "figs", "hists_redux.png"))
+```
+
+```{r biofreccompare, fig.cap="Comparison of recruitment, fishing mortality rates, spawning and total biomass for the 2023 Update model (blue) and 2021 Full model (grey). The shaded ribbon represents the 95% quantile obtained via MCMC; Age-2 recruits and F rates were not included in the MCMC analysis in 2021, so those figures show the mean estimates only.", eval = TRUE}
+knitr::include_graphics(here::here(year,'mgmt', model, "figs", "bio_f_rec_compare.png"))
+```
+
+```{r recdevs, fig.cap="Time series of recruitment deviations, 1975-2023, from the 2023 base model (blue) and 2021 base model (grey), with 95% intervals obtained via MCMC.", eval = TRUE}
+knitr::include_graphics(here::here(year,'mgmt', model, "figs", "recdevs.png"))
+```
+
+```{r selex, fig.cap="Estimated selectivity curves, maturity-at-age and weight-at-age for GOA POP.", eval = TRUE}
+knitr::include_graphics(here::here(year,'mgmt', model, "figs", "selex_mat.png"))
+```
+
+
+```{r spr, fig.cap="Time series of estimated fishing mortality versus estimated spawning stock biomass (phase-plane plot), including applicable OFL and maximum FABC definitions for the stock, including 2 years of projected values. Target levels correspond to B35% and F35% for author recommended model.", eval = TRUE}
+knitr::include_graphics(here::here(year,'mgmt', model, "figs", "phase_plane.png"))
+```
+
+```{r retrospective, fig.cap="Retrospective peels of estimated female spawning biomass for the past 10 years from the recommended model with 95% credible intervals derived from MCMC (top), and the percent difference in female spawning biomass from the recommended model in the terminal year with 95% credible intervals from MCMC.", eval = TRUE}
+knitr::include_graphics(here::here(year,'mgmt', model, "figs", "retro.png"))
+```
+

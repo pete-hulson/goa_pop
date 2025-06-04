@@ -1,0 +1,125 @@
+---
+bibliography: ["VAST_safe.bib"]   
+csl: "fishfish.csl"
+---
+
+# Appendix 10d Model Equations {#appxeqs}
+
+## Parameter definitions.
+\begin{array}{l l}
+\text{Parameter} & \text{Definition} \\
+  y & \text{Year} \\
+  a & \text{Age class} \\
+  l & \text{Length bin} \\
+  w_a & \text{Vector of estimated weight at age}, a_0 \rightarrow a_+ \\
+  m_a & \text{Vector of estimated maturity at age}, a_0 \rightarrow a_+ \\
+  a_0 & \text{Age at first recruitment} \\
+  a_+ & \text{Age when age classes are pooled} \\
+  \mu_r & \text{Average annual recruitment, log-scale estimation} \\
+  \mu_f & \text{Average fishing mortality} \\
+  \sigma_r & \text{Recruitment variability} \\
+  \varepsilon^r_y & \text{Annual recruitment deviation} \\
+  \varepsilon^r_a & \text{Initial recruitment deviation by age} \\
+  \phi_y & \text{Annual fishing mortality deviation} \\
+   fS_a & \text{Vector of fishery selectivity at age}, a_0 \rightarrow a_+ \\
+   sS_a & \text{Vector of survey selectivity at age}, a_0 \rightarrow a_+ \\
+   \delta & \text{logistic slope parameter} \\
+   a_{50} & \text{logistic age at 50\% selectivity} \\
+   n^*_y & \text{Input sample size} \\
+   M & \text{Natural mortality} \\
+   F_{a,y} & \text{Fishing mortality by age class and year} (fS_a \mu_fe^\epsilon) \\
+   Z_{a,y} & \text{Total mortality by age class and year} (F_{a,y}+M) \\
+   T_{a,a ^\prime} & \text{Aging error matrix} \\
+   T_{a,l} & \text{Size at age transition matrix} \\
+   q & \text{Survey catchability coefficient} \\
+   SB_y & \text{Annual female spawning biomass} \\
+
+\end{array}
+
+## Population dynamics
+
+First year  
+\begin{equation} 
+   N_{a,1} = \begin{cases}
+          e^{\mu_r+\epsilon^r_y} & a = a_0  \\
+          e^{(\mu_r + \epsilon^r_a)} e^{-M(a-1)} & a_0<a<a_+  \\
+          \frac{e^{\mu_r -M(a-1)}}{(1-e^{-M})} & a = a_+ 
+    \end{cases} \\
+
+\end{equation}
+
+Subsequent years 
+\begin{equation} 
+   N_{a,y} = \begin{cases}
+          e^{\mu_r+\epsilon^r_y} & a = a_0  \\
+          N_{a-1,y-1}e^{-\left(Z_{a-1,y-1}\right)} & a_0<a<a_+  \\
+          N_{a-1,y-1}e^{-\left(Z_{a-1,y-1}\right)} + N_{a,y-1}e^{-\left(Z_{a,y-1} \right)} & a = a_+ 
+    \end{cases} 
+\end{equation}
+Annual spawning biomass
+\begin{equation} 
+ SB_y = 0.5 \sum\limits_{a_0}^{a_+}N_{a,y} w_a m_a 
+\end{equation}
+
+
+Observation model 
+
+\begin{array}[r]{l l}
+S_a = \frac{1}{1+e^{-\delta (a-a_{50})}}  & \text{Logistic selectivity} \\
+\hat{C}_y = \sum\limits_{a_0}^{a_+}\frac{N_{a,y}F_{a,y}\left( 1-e^{-Z_{a,y}}  \right)}{Z_{a,y}} w_a & \text{Catch} \\
+F_{a,y} = fS_a F_y = fS_a e^{\mu_f + \phi_y} & \text{Fishing mortality} \\
+\hat{I}_y = q \sum\limits_{a_0}^{a_+} N_{a,y} sS_a w_a & \text{Bottom trawl survey biomass index} \\
+\hat{P}_{a,y} = \frac{N_{a,y} sS_a}{\sum_a^{a+} N_{a,y} sS_a}  T_{a,a ^\prime} & \text{Bottom trawl survey age composition} \\ 
+
+\hat{P}_{a,y} = \frac{\hat{C}_{a,y}}{\sum_a^{a+} \hat{C}_{a,y}} T_{a,a ^\prime} & \text{Fishery age composition} \\ 
+
+\hat{P}_{l,y} = \frac{\hat{C}_{l,y}}{\sum_l^{l+} \hat{C}_{l,y}} T_{a,l} & \text{Fishery length composition} \\ 
+
+\end{array}
+
+Likelihood components
+
+\begin{array}[r]{l l c}
+\text{Likelihood} & \text{Component} & \text{Model weight } (\lambda) \\
+
+\mathcal{L} = \lambda\sum\limits_{y}ln \left ( \frac{C_y+1^{-5}}{\hat{C}_y+1^{-5}} \right )^2 & \text{Catch} & \text{5, 50} \\
+
+\mathcal{L} = \lambda \sum\limits_{y} \left[ \log(\sigma_{y}) + 0.5 \left( \frac{\log\left( \frac{I_y}{\hat{I}_y^{\text{bc}}} \right)}{\sigma_y} \right)^2 \right] & \text{Trawl survey biomass} & \text{1.0} \\
+
+\text{where } \sigma_{y} = \sqrt{\log\left( 1 + \frac{SE(I_y)^2}{I_y^2} \right)} \text{ and } \hat{I}_y^{\text{bc}} = \hat{I}_y \cdot \exp\left(0.5 \sigma_y^2\right) & & \\
+
+\mathcal{L} = \lambda\sum\limits_{y} -n^*_y \sum\limits_{a_o}^{a_+} \left(P_{a,y}+ 1^{-5} \right) ln\left(\hat{P}_{a,y}+ 1^{-5} \right) & \text{Age compositions} & \text{1.0} \\
+
+\mathcal{L} = \lambda\sum\limits_{y} -n^*_y \sum\limits_{l}^{l_+} \left(P_{l,y}+ 1^{-5} \right) ln\left(\hat{P}_{l,y}+ 1^{-5} \right) & \text{Length compositions} & \text{1.0} \\
+
+\mathcal{L} = \lambda \left[\frac{\sum\limits_y \left( \epsilon^r_y + \frac{\sigma_R^2}{2} \right)^2}{2 \cdot \sigma_R^2} + n_{\epsilon^r}^*\cdot ln(\sigma_r)\right] & \text{Recruitment deviation penalty} & \text{1.0} \\
+
+\mathcal{L} = \lambda \sum\limits_y\phi_y & \text{Fishing mortality deviation penalty} & \text{0.1} \\
+
+\frac{1}{2\sigma^2_\theta}ln\left( \frac{\theta}{\theta_{prior}} \right)^2 & \text{Prior penalties for} M, q, \sigma_r, a_{50}, \delta~ \\
+&  \theta~ \text{parameter estimate}, \sigma^r_\theta \text{prior uncertainty} \\
+& \theta_{prior}~ \text{prior mean}
+\end{array}
+
+
+\begin{array}[r]{l l c}
+\text{Likelihood} & \text{Component} & \text{Model weight } (\lambda) \\
+
+\mathcal{L} = \lambda\sum\limits_{y}ln \left ( \frac{C_y+1^{-5}}{\hat{C}_y+1^{-5}} \right )^2 & \text{Catch} & \text{50} \\
+
+\mathcal{L} =\lambda\sum\limits_{y} \left [ log(\sigma_{y}) + 0.5 \left( \tfrac{log(I_y / \hat{I}_y)} {\sigma_{y}}\right)^2 \right ] & \text{Trawl survey biomass} & \text{0.25} \\
+
+\text{        where } \sigma_{y} = \sqrt{log \left( 1 + \frac{SE(I_y)^2}{I_y^2} \right )} & & \\
+
+\mathcal{L} = \lambda\sum\limits_{y} -n^*_y \sum\limits_{a_o}^{a_+} \left(P_{a,y}+ 1^{-5} \right) ln\left(\hat{P}_{a,y}+ 1^{-5} \right) & \text{Age compositions} & \text{0.5} \\
+
+\mathcal{L} = \lambda\sum\limits_{y} -n^*_y \sum\limits_{l}^{l_+} \left(P_{l,y}+ 1^{-5} \right) ln\left(\hat{P}_{l,y}+ 1^{-5} \right) & \text{Length compositions} & \text{0.5} \\
+
+\mathcal{L} = \lambda \left[\frac{\sum\limits_y \left( \epsilon^r_y + \frac{\sigma_R^2}{2} \right)^2}{2 \cdot \sigma_R^2}\right] & \text{Recruitment deviation penalty} & \text{1.0} \\
+
+\mathcal{L} = \lambda \sum\limits_y\phi_y & \text{Fishing mortality deviation penalty} & \text{0.1} \\
+
+\frac{1}{2\sigma^2_\theta}ln\left( \frac{\theta}{\theta_{prior}} \right)^2 & \text{Prior penalties for} M, q, \sigma_r, a_{50}, \delta~ \\
+&  \theta~ \text{parameter estimate}, \sigma^r_\theta \text{prior uncertainty} \\
+& \theta_{prior}~ \text{prior mean}
+\end{array}

@@ -1,0 +1,51 @@
+## Responses to SSC and Plan Team Comments on Assessments in General
+
+> "The SSC requests that all authors fill out the risk table in 2019…" (SSC December 2018)  
+
+We provide a risk table in the Harvest Recommendations section. After completing this exercise, we do not recommend ABC be reduced below maximum permissible ABC.
+
+## Responses to SSC and Plan Team Comments Specific to this Assessment
+ 
+Several topics have emerged as recommended areas of exploration across multiple cycles of POP.
+For concision, the following section states each topic once, the date(s) the topic or recommendation was mentioned, and the author response. 
+ 
+Many of these topics were endorsed for consideration in the 2021 CIE review, which is summarized in [Appendix 10c](#appxie). That appendix includes detailed responses to high-priority requests and comments; where applicable, results are briefly summarized below.
+
+>*1. Re-evaluation of the age-plus group, as changes to the model and input data have occurred since this was previously evaluated (Plan Team, November 2018; CIE, 2021)*
+
+This was investigated as part of the CIE review and authors did not find large differences in derived quantities when the plus group was reduced from 29 to 25; this is sensible given that growth is stable after age twenty and there is a paucity of data for older individuals.
+
+>*2. Continued evaluation of methods for weighting for the compositional data as new models are developed and/or changes are made to input data.(Plan Team, November 2018)*
+
+P. Hulson has completed a technical memoranda...
+
+>*3. Investigation of natural mortality, as the current estimate of 0.066 is higher than the expected value from the prior distribution (0.05) and the prior may be constraining the model. (Plan Team, November 2018; SSC, December 2020; CIE, 2021)*
+
+Natural mortality $M$ was investigated during this cycle in response to CIE comments (see [Appendix 10c](#appxie) for details). The prior on $M$ does appear to be constraining in the present ADMB model, but additional explorations suggest the range of $M$ from 0.04-0.07 is a) indeed consistent with the data and b) recoverable in an alternative modeling framework, even in the presence of a broader prior on $M$. The new author plans to transition the POP assessment to a Stock Synthesis model in future cycles and eliminate the need for this restrictive prior. For the present Operational Update, we have retained the configuration of the 2021 assessment (including the prior as is).
+
+>*4. Incorporation of hydroacoustic information into the assessment as the species are regularly found throughout the water column. Exploration of using the raw acoustic survey lengths, the acoustic abundance weighted length compositions, or using the bottom trawl survey selectivity as a proxy. (SSC, December 2018; September 2019; Plan Team, November 2020; SSC, December 2020)*
+
+POP biomass estimates from the hydro-acoustic survey are availble from 2013 onwards. The authors have elected to continue reporting these values in the SAFE, but as in 2021 these data are not included in the base model. This data source will be considered as POP is transitioned to a new modeling framework by a new author in subsequent cycles.
+
+>*5. Re-examination of fishery-dependent information, e.g., how age samples are being collected. (SSC, December 2018; SSC, December 2020)*
+
+This topic has not been revisited this cycle, as the authors suspect that deeper investigations into data weighting will be illustrative of the value of revisiting data collection methods. This comment will be considered as POP is transitioned to a new modeling framework by a new author in subsequent cycles.
+
+>*6. Examination of catchability, which has been an ongoing issue for POP and other rockfish species, coupled with selectivity (SSC, December 2018; Plan Team, November 2019; SSC, December 2019; SSC, December 2020)*
+
+A manuscript is currently in preparation by P. Hulson to inform priors for catchability. The authorship team plans to transition to a framework where $q$ is calculated analytically and selectivity is estimated with greater flexibility in future cycles. The current cycle has not changed the configuration of $q$ from 2021. 
+
+
+>* *7. Evaluate the impacts of using a VAST model for POP abundance and/or apportionment. (SSC, December 2018; Plan Team, November 2019; SSC, December 2019)*	
+
+Previous investigations have shown the model to be sensitive to the biomass index used (VAST vs. design-based). While the trajectory of both indices is similar (Figure 10\@ref(fig:vastcompare)), the differences between them are are not yet well-understood. Following the CIE panel's recommendation, the base model used for POP assessment will continue fitting to the design-based estimates. The AFSC’s Groundfish Assessment Program (GAP) has formed a technical working group to resolve model based estimates of trawl surveys. The assessment authors will consider their advice in developing future versions of this model.
+
+```{r vastcompare, fig.cap="Comparison of model-based (VAST) and design-based indices of relative abundance through 2021.", eval = TRUE}
+## code to make this in 2023_analysis.R, towards the bottom
+knitr::include_graphics(here('2023','dev','mb_vs_db','mb_db_comparison.png'))
+```
+ 
+ 
+
+
+ 

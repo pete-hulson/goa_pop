@@ -1,0 +1,8 @@
+\newpage
+
+# Auxiliary Files
+
+The associated ADMB model files to conduct the base assessment model are available at https://github.com/pete-hulson/goa_pop/tree/main/2023/mgmt/2020.1-2023. A script to reproduce this assessment (including profiles, MCMC analyses, retrospectives, projections, and apportionment) is available at https://github.com/pete-hulson/goa_pop/blob/main/2023/R/2023_analysis.R. 
+
+
+ 

@@ -1,0 +1,163 @@
+# Tables
+
+```{r commcatch}
+knitr::kable(data.frame(year = 1999:2000,
+                 catch = 1:2), 
+             caption = "Commercial catch (t) of POP in the GOA, with Gulf-wide values of acceptable biological catch (ABC) and fishing quotas (t), 1977-2020 (2021 catch as of 9/25/2021). Note:  There were no foreign or joint venture catches after 1988. Catches prior to 1989 are landed catches only. Catches in 1989 and 1990 also include fish reported in weekly production reports as discarded by processors. Catches in 1991-2019 also include discarded fish, as determined through a  blend of weekly production reports and information from the domestic observer program. Definitions of terms:  JV = Joint venture; Tr = Trace catches. Catch defined as follows:  1977, all Sebastes rockfish for Japanese catch, and POP for catches of other nations; 1978, POP only; 1979-87, the 5 species comprising the POP complex; 1988-2019, POP. Quota defined as follows:  1977-86, optimum yield; 1987, target quota; 1988-2019 total allowable catch. Sources: Catch:  1977-84, Carlson et al. (1986); 1985-88, Pacific Fishery Information Network (PacFIN); 1989-2019, National Marine Fisheries Service, Alaska Region. ABC and Quota: 1977-1986 Karinen and Wing (1987); 1987-1990, Heifetz et al. (2000); 1991-2019, NMFS AKRO BLEND/Catch Accounting System via AKFIN database.",
+             booktabs = TRUE)
+```
+
+\pagebreak
+
+```{r mgmtmeasures}
+flextable::regulartable(data.frame(year = 1999:2000,
+                 catch = 1:2)) %>%  
+      flextable::set_caption("Management measures since the break out of POP from slope rockfish.")
+```
+
+\pagebreak
+
+```{r fmpgroundfish}
+flextable::regulartable(data.frame(year = 1999:2000,
+                 catch = 1:2)) %>%  
+      flextable::set_caption("FMP groundfish species caught in rockfish targeted fisheries in the GOA. Conf. = Confidential because of less than three vessels or processors. Source: NMFS AKRO Blend/Catch Accounting System via AKFIN through 9/25/2021.")
+```
+
+\pagebreak
+
+```{r popbycatch}
+flextable::regulartable(data.frame(year = 1999:2000,
+                 catch = 1:2)) %>%  
+      flextable::set_caption("Catch (t) of GOA POP as bycatch in other fisheries. Source: NMFS AKRO Blend/Catch Accounting System via AKFIN through 9/25/2021.")
+```
+
+\pagebreak
+
+```{r fmpbycatch}
+flextable::regulartable(data.frame(year = 1999:2000,
+                 catch = 1:2)) %>%  
+      flextable::set_caption("Non-FMP species bycatch estimates in tons for GOA rockfish targeted fisheries. Conf. = Confidential because of less than three vessels. Source: NMFS AKRO Blend/Catch Accounting System via AKFIN through 9/25/2021.")
+```
+
+\pagebreak
+
+```{r psc}
+flextable::regulartable(data.frame(year = 1999:2000,
+                 catch = 1:2)) %>%  
+      flextable::set_caption("Prohibited Species Catch (PSC) estimates reported in tons for halibut and herring, and thousands of animals for crab and salmon, by year, for the GOA rockfish fishery. Source: NMFS AKRO Blend/Catch Accounting System PSCNQ via AKFIN through 9/25/2021.")
+```
+
+\pagebreak
+
+```{r fishlengthcompst}
+flextable::regulartable(data.frame(year = 1999:2000,
+                 catch = 1:2)) %>%  
+      flextable::set_caption("Fishery length frequency data for POP in the GOA for the most recent 10 complete years.")
+```
+
+\pagebreak
+
+```{r fishagecompst}
+flextable::regulartable(data.frame(year = 1999:2000,
+                 catch = 1:2)) %>%  
+      flextable::set_caption("Fishery age compositions for GOA POP.")
+```
+
+\pagebreak
+
+```{r survobs}
+flextable::regulartable(data.frame(year = 1999:2000,
+                 catch = 1:2)) %>%  
+      flextable::set_caption("Biomass estimates (t) with coefficient of variation (CV) for gulf-wide total biomass for POP in the GOA from trawl surveys after 1990. The 2001 survey did not sample the eastern GOA (the Yakutat and Southeastern areas). Substitute estimates of biomass for the Yakutat and Southeastern areas were obtained by averaging the biomass estimates for POP in these areas in the 1993, 1996, and 1999 surveys, that portion of the variance was obtained by using a weighted average of the three prior surveys’ variance.")
+```
+
+\pagebreak
+
+```{r survagecompst}
+flextable::regulartable(data.frame(year = 1999:2000,
+                 catch = 1:2)) %>%  
+      flextable::set_caption("Survey age composition (% frequency) data for POP in the GOA.  Age compositions for are based on “break and burn” reading of otoliths.")
+```
+
+\pagebreak
+
+```{r resultscompare}
+flextable::regulartable(data.frame(year = 1999:2000,
+                 catch = 1:2)) %>%  
+      flextable::set_caption("Summary of results from the previous recommended model compared to the current recommended model")
+```
+
+\pagebreak
+
+```{r biomassts}
+flextable::regulartable(data.frame(year = 1999:2000,
+                 catch = 1:2)) %>%  
+      flextable::set_caption("Estimated time series of female spawning biomass, 6+ biomass (age 6 and greater), catch/6 + biomass, and number of age two recruits for POP in the GOA. Estimates are shown for the current assessment and from the previous SAFE.")
+```
+
+\pagebreak
+
+```{r parposteriorst}
+flextable::regulartable(data.frame(year = 1999:2000,
+                 catch = 1:2)) %>%  
+      flextable::set_caption("Estimates of key parameters and associated uncertainty derived from either Hessian or MCMC.")
+```
+
+\pagebreak
+
+
+```{r recruitmentt}
+flextable::regulartable(data.frame(year = 1999:2000,
+                 catch = 1:2)) %>%  
+      flextable::set_caption("Estimated time series of recruitment, female spawning biomass, and total biomass (2+) for POP in the GOA. Columns headed with 2.5% and 97.5% represent the lower and upper 95% credible intervals from the MCMC estimated posterior distribution.")
+```
+
+\pagebreak
+
+```{r NAAmatsel}
+flextable::regulartable(data.frame(year = 1999:2000,
+                 catch = 1:2)) %>%  
+      flextable::set_caption("Estimated numbers (thousands) in 2021, fishery selectivity (from the most recent time block), and survey selectivity of POP in the GOA. Also shown are schedules of age specific weight and female maturity.")
+```
+
+\pagebreak
+
+```{r projections}
+flextable::regulartable(data.frame(year = 1999:2000,
+                 catch = 1:2)) %>%  
+      flextable::set_caption("Set of projections of spawning biomass and yield for POP in the GOA. This set of projections encompasses six harvest scenarios designed to satisfy the requirements of Amendment 56, the National Environmental Protection Act, and the Magnuson-Stevens Fishery Conservation and Management Act (MSFCMA). For a description of scenarios see Projections and Harvest Alternatives. All units in t. B40% = 132,767 t, B35% = 116,171 t, F40% =0.10, and F35% =0.12. ")
+```
+
+\pagebreak
+
+```{r ecosystem}
+flextable::regulartable(data.frame(year = 1999:2000,
+                 catch = 1:2)) %>%  
+      flextable::set_caption("Summary of ecosystem considerations for GOA POP.")
+```
+
+\pagebreak
+
+```{r exvessel}
+flextable::regulartable(data.frame(year = 1999:2000,
+                 catch = 1:2)) %>%  
+      flextable::set_caption("GOA rockfish ex-vessel market data. Total and retained catch (thousand metric tons), number of vessels, catcher vessel share of retained catch, value (million US$), price (US$ per pound), Central Gulf’s share of GOA rockfish retained catch, and Pacific ocean perch, northern rockfish, and dusk rockfish share of GOA rockfish retained catch; 2011-2015 average and 2016-2020.")
+```
+
+\pagebreak
+
+```{r wholesale}
+flextable::regulartable(data.frame(year = 1999:2000,
+                 catch = 1:2)) %>%  
+      flextable::set_caption("GOA rockfish first-wholesale market data. Production (thousand metric tons), value (million US$), price (US$ per pound), Pacific ocean perch, northern rockfish and dusky rockfish share of GOA rockfish value and price (US$ per pound), and head-and-gut share of value; 2011-2015 average and 2016-2020. Source: NMFS Alaska Region At-sea Production Reports; and ADF&G Commercial Operators Annual Reports (COAR). Data compiled and provided by the Alaska Fisheries Information Network (AKFIN).")
+```
+
+
+```{r globalmarket}
+flextable::regulartable(data.frame(year = 1999:2000,
+                 catch = 1:2)) %>%  
+      flextable::set_caption("Rockfish U.S. trade and global market data. Global production of rockfish and Pacific Ocean perch (thousand metric tons), U.S. Pacific ocean perch shares of global production, export volume (thousand metric tons), value (million US$) and price (US$ per pound), China’s share of Pacific Ocean perch export value and the Chinese Yaun/U.S. Dollar exchange rate; 2011-2015 average and 2016-2020")
+```
+
+\pagebreak
+\pagebreak

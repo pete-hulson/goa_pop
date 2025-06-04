@@ -1,0 +1,222 @@
+\newpage
+
+# Tables
+
+```{r commcatch}
+catch <- read.csv(here::here(year,'safe','goa_pop_2023','static_tables','catch_abc_quota.csv'))
+catch[,2:4] <- round(catch[,2:4],0)
+catch$Year<-as.character(catch$Year)
+flextable::regulartable(catch) %>%
+  flextable::set_caption("Commercial catch (t) of POP in the GOA, with Gulf-wide values of acceptable biological catch (ABC) and fishing quotas (t), 1977-2023 (2023 catch as of 9/25/2023). Note:  There were no foreign or joint venture catches after 1988. Catches prior to 1989 are landed catches only. Catches in 1989 and 1990 also include fish reported in weekly production reports as discarded by processors. Catches in 1991-2019 also include discarded fish, as determined through a  blend of weekly production reports and information from the domestic observer program. Definitions of terms: Catch defined as follows:  1977, all Sebastes rockfish for Japanese catch, and POP for catches of other nations; 1978, POP only; 1979-87, the 5 species comprising the POP complex; 1988-2019, POP. Quota defined as follows:  1977-86, optimum yield; 1987, target quota; 1988-2019 total allowable catch. Sources: Catch:  1977-84, Carlson et al. (1986); 1985-88, Pacific Fishery Information Network (PacFIN); 1989-2019, National Marine Fisheries Service, Alaska Region. ABC and Quota: 1977-1986 Karinen and Wing (1987); 1987-1990, Heifetz et al. (2000); 1991-2019, NMFS AKRO BLEND/Catch Accounting System via AKFIN database.")%>%
+  flextable::font(fontname = "Times New Roman", part = "all") %>% 
+  flextable::fontsize(size = 11, part = "all")
+```
+
+\pagebreak
+
+```{r mgmtmeasures}
+flextable::regulartable(read.csv(here::here(year,'safe','goa_pop_2023','static_tables','mgmt_measures.csv'))) %>%  
+  flextable::set_caption("Management measures since the break out of POP from slope rockfish.") %>%
+  flextable::set_header_labels(Catch..t. = 'Catch (t)', ABC= 'ABC (t)', OFL = 'OFL (t)', TAC = 'TAC (t)', Management.Measures = 'Management Measures')%>%
+  flextable::font(fontname = "Times New Roman", part = "all") %>% 
+  flextable::fontsize(size = 11, part = "all") %>%
+  flextable::width(j = 5, width = 3, unit = 'in')
+```
+
+\pagebreak
+
+```{r fishlengthcompst}
+flextable::regulartable(read.csv(here::here(year, 'data','output','fsh_length_comp.csv')) %>% 
+                          select(-n_s, -SA_Index) %>%
+                          dplyr::filter(year > 1972) %>%
+                          reshape2::melt(id = c('year','n_h')) %>%
+                          dplyr::mutate('Length (cm)' = as.numeric(gsub('X','',variable) ) ) %>%
+                          # select(year,n_h,length) %>% 
+                          tidyr::pivot_wider(
+                            id_cols = 'Length (cm)',
+                            names_from = c(year,n_h),
+                            names_glue = "{year} ({n_h})",
+                            values_from = value)) %>%
+  flextable::set_caption("Fishery length frequency data for POP in the GOA for the most recent 10 complete years used in the model. Input sample sizes (square root of nominal sample size scaled with a maximum of 100) are in parentheses.") %>%
+  flextable::colformat_double(j = 2:11,digits = 3) %>%
+  flextable::compose(i = 30, j = 1, flextable::as_paragraph('45+')) %>%
+  flextable::font(fontname = "Times New Roman", part = "all") %>% 
+  flextable::fontsize(size = 11, part = "all")
+
+```
+
+\pagebreak
+
+```{r fishagecompst}
+flextable::regulartable(read.csv(here::here(year, 'data','output','fsh_age_comp.csv')) %>% 
+                          mutate(n_h = floor(sqrt(n_s))) %>% 
+                          select(-n_s, -AA_Index) %>%
+                          dplyr::filter(year > 2004) %>%
+                          reshape2::melt(id = c('year','n_h')) %>%
+                          dplyr::mutate('Age (yr)' = as.numeric(gsub('X','',variable) ) ) %>%
+                          # select(year,n_h,length) %>% 
+                          tidyr::pivot_wider(
+                            id_cols = 'Age (yr)',
+                            names_from = c(year,n_h),
+                            names_glue = "{year} ({n_h})",
+                            values_from = value)) %>%
+  flextable::set_caption("Fishery age frequency data for POP in the GOA for the most recent 10 complete years used in the model. Input sample sizes (square root of nominal sample size) are in parentheses.") %>%
+  flextable::colformat_double(j = 2:11,digits = 3) %>% 
+  flextable::compose(i = 24, j = 1, flextable::as_paragraph('25+')) %>%
+  flextable::font(fontname = "Times New Roman", part = "all") %>% 
+  flextable::fontsize(size = 11, part = "all") 
+```
+
+\pagebreak
+
+```{r survobs}
+flextable::regulartable(read.csv(here::here(year, 'data','output','goa_total_bts_biomass.csv')) %>% 
+                          dplyr::mutate(cv = se/biomass, year = as.character(year)) %>%
+                          dplyr::select(Year = year, 'Biomass (t)' = biomass, CV = cv)) %>%
+  flextable::set_caption("Biomass estimates (t) with coefficient of variation (CV) for gulf-wide total biomass for POP in the GOA from trawl surveys after 1990. The 2001 survey did not sample the eastern GOA (the Yakutat and Southeastern areas). Substitute estimates of biomass for the Yakutat and Southeastern areas were obtained by averaging the biomass estimates for POP in these areas in the 1993, 1996, and 1999 surveys, that portion of the variance was obtained by using a weighted average of the three prior surveys’ variance.") %>%
+    flextable::colformat_double(j = 3, digits = 2) %>%
+    flextable::colformat_double(j = 2, big.mark =',') %>%
+  flextable::font(fontname = "Times New Roman", part = "all") %>% 
+  flextable::fontsize(size = 11, part = "all") 
+```
+
+\pagebreak
+
+```{r survagecompst}
+flextable::regulartable(read.csv(here::here(year, 'data','output','goa_bts_age_comp.csv')) %>% 
+                          mutate(n_h = floor(sqrt(n_s))) %>% 
+                          select(-n_s, -AA_Index) %>%
+                          dplyr::filter(year > 2002) %>%
+                          reshape2::melt(id = c('year','n_h')) %>%
+                          dplyr::mutate('Age (yr)' = as.numeric(gsub('X','',variable) ) ) %>%
+                          # select(year,n_h,length) %>% 
+                          tidyr::pivot_wider(
+                            id_cols = 'Age (yr)',
+                            names_from = c(year,n_h),
+                            names_glue = "{year} ({n_h})",
+                            values_from = value)) %>%
+  flextable::set_caption("Survey age frequency data for POP in the GOA for the most recent 10 complete years used in the model. Input sample sizes (square root of nominal sample size) are in parentheses.") %>%
+  flextable::colformat_double(j = 2:11,digits = 3) %>%
+  flextable::compose(i = 24, j = 1, flextable::as_paragraph('25+')) %>%
+  flextable::font(fontname = "Times New Roman", part = "all") %>% 
+  flextable::fontsize(size = 11, part = "all")  
+
+```
+ 
+ 
+\pagebreak
+
+```{r parposteriorst}
+flextable::flextable(read.csv(here::here(year, 'mgmt', model,'processed','parameter_summary.csv')) %>% select(-variable)) %>%
+  flextable::colformat_double(j = 2:4, digits = 3) %>%
+  flextable::width(j = 1, width = 2.5, unit = 'in') %>%
+  flextable::set_header_labels( values = c('Estimated parameter','2.5% Interval','Median','97.5% Interval')) %>%
+    flextable::set_caption("Estimated parameters from the base model, with 95% credible intervals derived via MCMC. The MLE for sigma R is 0.764 and is fixed for MCMC analyses.") %>%
+  flextable::font(fontname = "Times New Roman", part = "all") %>% 
+  flextable::fontsize(size = 11, part = "all")  
+```
+
+\pagebreak
+
+
+```{r timeseriest}
+flextable::regulartable(read.csv(here::here(year, 'mgmt',model,'processed','mceval_summary.csv')) %>%
+                          dplyr::mutate(year = as.character(year), median = ifelse(median<1,signif(median,2),round(median,0))) %>%
+                          dplyr::mutate(lower = ifelse(lower<1,signif(lower,2),round(lower,0))) %>%
+                          dplyr::mutate(upper = ifelse(upper<1,signif(upper,2),round(upper,0))) %>%
+                          dplyr::mutate(value = paste0(prettyNum(median, big.mark = ',')," (",
+                                                       prettyNum(lower, big.mark = ','),
+                                                       ", ",
+                                                       prettyNum(upper, big.mark = ','),")")) %>%
+                          
+                          dplyr::filter(variable %in% c('Frate','tot_biom','spawn_biom', 'spawn_biom_proj','tot_biom_proj', 'age2_recruits') & year < 2025) %>%
+                          dplyr::mutate(variable = gsub('_proj','',variable)) %>%
+                          dplyr::select(year, variable, value) %>%
+                          tidyr::pivot_wider(id_cols = year, names_from = variable, values_from = value)) %>%
+  flextable::set_caption("Estimated time series of fully-selected fishing mortality rate, age 2+ Recruitment, female spawning biomass, and total biomass (2+) for POP in the GOA. Values shown are the median and 95% credible intervals (parentheses) from the MCMC estimated posterior distribution.") %>%
+  flextable::set_header_labels(values = c('Year',
+                                          'Fully Selected F', 
+                                          'Age 2+ Recruits (millions)',
+                                          'SSB (kt)',
+                                          'Total 2+ Biomass (kt)')) %>%
+  flextable::width(j = c(2,5), width = 1.5, unit = 'in') %>%
+  flextable::width(j = c(3), width = 1.75, unit = 'in') %>%
+  flextable::width(j = 4, width = 1.25, unit = 'in') %>%
+  # flextable::width(j = 1, width = 0.25, unit = 'in') %>%
+  flextable::font(fontname = "Times New Roman", part = "all") %>% 
+  flextable::fontsize(size = 9, part = "all")  
+```
+\pagebreak
+ 
+```{r resultscompare}
+read.csv(here::here(year, 'mgmt', model,'processed','parameter_summary.csv')) %>%
+  mutate(src = '2023 Model')%>%
+  merge(.,read.csv(here::here(year, 'base','processed','parameter_summary.csv')) %>%
+          mutate(src = '2021 Model'), by = 'variable')  %>%
+  mutate(value = paste0(round(median.x,2), " (",round(median.y,2),")")) %>%
+  select('Likelihood Component/Parameter' = Parameter.x, '2023 Value (2021 Value)' =value) %>%
+  bind_rows(., 
+            
+            read.csv(here::here(year, 'mgmt', model,'processed','likelihoods.csv')) %>%
+              mutate(src = '2023 Model')%>%
+              merge(.,read.csv(here::here(year, 'mgmt','2020.1-2021','processed','likelihoods.csv')) %>%
+                      mutate(src = '2021 Model'), by = 'variable')  %>%
+              mutate(value = paste0(round(value.x,2), " (",round(value.y,2),")")) %>%
+              filter(!(variable %in% c("Fishery CPUE Likelihood",
+                                       "Alternative Survey Abundance Index Likelihood",
+                                       "Bottom Trawl Survey Size Composition Likelihood",
+                                       "Alternative Survey Size Composition Likelihood",
+                                       "Priors q Alternative Survey"))) %>%
+              select('Likelihood Component/Parameter' = variable, '2023 Value (2021 Value)' =value))  %>%
+  
+  flextable::flextable(.) %>%
+  flextable::width(j = 1, width = 3.5, unit = 'in') %>%
+    flextable::width(j = 2, width = 2.75, unit = 'in') %>%
+      flextable::set_caption("Comparison of median parameter estimates (from MCMC) and likelihood component scores from the base model and the 2021 model (shown in parentheses). The MLE for sigma R is 0.764 in the base model and 0.771 in the 2021 model; that parameter is fixed for MCMC analyses.") %>%
+flextable::font(fontname = "Times New Roman", part = "all") %>% 
+  flextable::fontsize(size = 11, part = "all")  
+```
+
+\pagebreak
+
+```{r projectionsCatches}
+proj_temp <- read.csv(here::here(year,'mgmt','2020.1-2023','processed','mscen_yld.csv'))
+proj_temp$year <- as.character(proj_temp$year)
+proj_temp[,2:8] <- sapply(proj_temp[,2:8], FUN = function(x) prettyNum(round(x),big.mark = ','))
+names(proj_temp) <- c("Year",	"Maximum permissible F",	"Author’s F* (pre-specified catch)",	"Half maximum F",	"5-year average F",	"No fishing",	"Overfished",	"Approaching overfished")
+flextable::regulartable(proj_temp) %>%  
+  flextable::set_caption("Table of 13-year projected catches corresponding to the alternative harvest scenarios, using stochastic methods if possible (mean values or other statistics may be shown in the case of stochastic recruitment scenarios). This set of projections encompasses six harvest scenarios designed to satisfy the requirements of Amendment 56, the National Environmental Protection Act, and the Magnuson-Stevens Fishery Conservation and Management Act (MSFCMA). For a description of scenarios see Projections and Harvest Alternatives. All units in t.")%>%
+  flextable::font(fontname = "Times New Roman", part = "all") %>% 
+  flextable::width(j = 1, width = 0.5, unit = 'in') %>% 
+  flextable::fontsize(size = 10, part = "all")
+```
+
+\pagebreak
+
+```{r projectionsSsb}
+proj_temp <- read.csv(here::here(year,'mgmt','2020.1-2023','processed','mscen_ssb.csv'))
+proj_temp$year <- as.character(proj_temp$year)
+proj_temp[,2:8] <- sapply(proj_temp[,2:8], FUN = function(x) prettyNum(round(x),big.mark = ','))
+names(proj_temp) <- c("Year",	"Maximum permissible F",	"Author’s F* (pre-specified catch)",	"Half maximum F",	"5-year average F",	"No fishing",	"Overfished",	"Approaching overfished")
+flextable::regulartable(proj_temp) %>%  
+  flextable::set_caption("Table of 13-year projected spawning biomass corresponding to the alternative harvest scenarios, using stochastic methods if possible (mean values or other statistics may be shown in the case of stochastic recruitment scenarios). This set of projections encompasses six harvest scenarios designed to satisfy the requirements of Amendment 56, the National Environmental Protection Act, and the Magnuson-Stevens Fishery Conservation and Management Act (MSFCMA). For a description of scenarios see Projections and Harvest Alternatives. All units in t.")%>%
+   flextable::font(fontname = "Times New Roman", part = "all") %>% 
+  flextable::width(j = 1, width = 0.5, unit = 'in') %>%
+  flextable::fontsize(size = 10, part = "all")
+```
+
+\pagebreak
+
+```{r projectionsF}
+proj_temp <- read.csv(here::here(year,'mgmt','2020.1-2023','processed','mscen_f.csv'))
+proj_temp$year <- as.character(proj_temp$year)
+proj_temp[,2:8] <- sapply(proj_temp[,2:8], FUN = function(x)  format(round(as.numeric(x), 2), nsmall = 3))
+names(proj_temp) <- c("Year",	"Maximum permissible F",	"Author’s F* (pre-specified catch)",	"Half maximum F",	"5-year average F",	"No fishing",	"Overfished",	"Approaching overfished")
+flextable::regulartable(proj_temp) %>%  
+  flextable::set_caption("Table of 13-year projected fishing mortality rates corresponding to the alternative harvest scenarios, using stochastic methods if possible (mean values or other statistics may be shown in the case of stochastic recruitment scenarios). This set of projections encompasses six harvest scenarios designed to satisfy the requirements of Amendment 56, the National Environmental Protection Act, and the Magnuson-Stevens Fishery Conservation and Management Act (MSFCMA). For a description of scenarios see Projections and Harvest Alternatives. All units in t.")%>%
+  flextable::font(fontname = "Times New Roman", part = "all") %>% 
+  flextable::width(j = 1, width = 0.5, unit = 'in') %>%
+  flextable::fontsize(size = 10, part = "all")
+```
+
+
