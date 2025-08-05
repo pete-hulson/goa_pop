@@ -8,6 +8,7 @@ library(tidyverse)
 library(Matrix)
 library(here)
 library(scico)
+theme_set(afscassess::theme_report())
 
 # globals ---- 
 year = 2025
@@ -241,7 +242,7 @@ pars = readRDS(here::here(year, 'rtmb_bridge', "pars.rds"))
 # )
 
 # match the base model
-obj <- RTMB::MakeADFun(cmb(bridge, data),
+obj <- RTMB::MakeADFun(cmb(base, data),
                        pars)
 fit <- nlminb(start = obj$par,
               objective = obj$fn,
@@ -280,7 +281,7 @@ data.frame(Likelihood = c("Catch", "Survey", "Fish age", "Survey age", "Fish siz
                           sum(c(rpt$ssqcatch, rpt$like_srv, rpt$like_fish_age, rpt$like_srv_age, 
                                 rpt$like_fish_size, rpt$like_rec, rpt$f_regularity,
                                 rpt$sprpen, rpt$nll_M, rpt$nll_q, rpt$nll_sigmaR))), 4)) %>% 
-  mutate(Difference = ADMB - RTMB) %>% 
+  mutate(Difference =  RTMB - ADMB) %>% 
   vroom::vroom_write(here::here(2025, "sep_pt", "tables", "like_tbl.csv"), delim=",")
 
 
@@ -298,21 +299,27 @@ pars = readRDS(here::here(year, 'rtmb_bridge', "pars.rds"))
 
 data.frame(Item = c("M", "q", "Log mean recruitment", "Log mean F", 'a50_1', 'delta_1', 'a50_3', 'delta_3', 'a50_4', 'delta_4', 'a50_survey', 'delta_survey',
                     "2024 Total biomass", "2024 Spawning biomass", "2024 OFL", "2024 F OFL", " 2024 ABC", "2024 F ABC"),
-           ADMB = round(c(exp(pars$log_M), exp(pars$log_q), pars$log_mean_R, pars$log_mean_F, a50_vals[1], 
-                          delta_vals[1], a50_vals[2], delta_vals[2], a50_vals[3], delta_vals[3], 
+           ADMB = round(c(exp(pars$log_M), exp(pars$log_q), pars$log_mean_R, pars$log_mean_F, exp(pars$log_a50C)[1], 
+                          pars$deltaC[1], exp(pars$log_a50C)[2], pars$deltaC[2], exp(pars$log_a50C)[3], pars$deltaC[3], 
                           exp(pars$log_a50S), pars$deltaS, tot, sp, ofl, fofl, abc, fabc), 4),
            RTMB = round(c(rpt$M, rpt$q, rpt$log_mean_R, rpt$log_mean_F, rpt$a50C[1], rpt$deltaC[1], 
                           rpt$a50C[2], rpt$deltaC[2], rpt$a50C[3], rpt$deltaC[3], rpt$a50S, rpt$deltaS,
                           prj$tot_bio, prj$spawn_bio, prj$catch_ofl, prj$F35, prj$catch_abc, prj$F40),4)) %>% 
   mutate(Difference = ADMB - RTMB) %>% 
-  flextable::flextable()
+  flextable::flextable() %>% 
+  flextable::colformat_double(
+    i = c(13:15,17),  j = 2:4,
+    big.mark = ",", 
+    digits = 2, 
+    na_str = "N/A"
+  )
 
 
 data.frame(Item = c("M", "q", "Log mean recruitment", "Log mean F", "2024 Total biomass", "2024 Spawning biomass", "2024 OFL", "2024 F OFL", " 2024 ABC", "2024 F ABC"),
            ADMB = round(c(exp(pars$log_M), exp(pars$log_q), pars$log_mean_R, pars$log_mean_F, tot, sp, ofl, fofl, abc, fabc), 4),
            RTMB = round(c(rpt$M, rpt$q, rpt$log_mean_R, rpt$log_mean_F,
                           prj$tot_bio, prj$spawn_bio, prj$catch_ofl, prj$F35, prj$catch_abc, prj$F40),4)) %>% 
-  mutate(Difference = ADMB - RTMB) %>% 
+  mutate(Difference = RTMB - ADMB) %>% 
   vroom::vroom_write(here::here(2025, "sep_pt", "tables", "par_tbl.csv"), delim=",")
 
 # data likelihood
